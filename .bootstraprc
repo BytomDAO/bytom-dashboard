@@ -1,0 +1,52 @@
+{
+  bootstrapVersion: 3,
+
+  // This gets loaded before bootstrap/variables
+  preBootstrapCustomizations: ./static/styles/_bootstrap-overrides.scss,
+
+  // Imports app styles into project
+  appStyles: ./static/styles/app.scss,
+
+  env: {
+    development: {
+      extractStyles: false
+    },
+    production: {
+      extractStyles: true
+    }
+  },
+
+  styleLoaders: ['style', 'css', 'postcss', 'sass'],
+
+  // Bootstrap styles
+  styles: {
+    mixins: true,
+    normalize: true,
+    glyphicons: true,
+    scaffolding: true,
+    type: true,
+    code: true,
+    grid: true,
+    tables: true,
+    forms: true,
+    buttons: true,
+    alerts: true,
+    labels: true,
+    dropdowns: true,
+    input-groups: true,
+    navs: true,
+    navbar: true,
+    wells: true,
+    jumbotron: true,
+    pagination: true,
+    pager: true,
+    panels: true,
+    close: true,
+    utilities: true,
+    responsive-utilities: true,
+    button-groups: true
+  },
+
+  // Bootstrap scripts
+  scripts: false
+}

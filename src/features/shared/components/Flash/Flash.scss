@@ -1,0 +1,35 @@
+.main {
+  display: flex;
+}
+
+.alert {
+  padding: 15px;
+  border-bottom: 1px solid transparent;
+}
+
+.info {
+  background-color: $alert-info-bg;
+  border-color: $alert-info-border;
+  color: $alert-info-text;
+}
+
+.success {
+  background-color: $success-background;
+  border-color: $success-border;
+  color: $success;
+}
+
+.danger {
+  background-color: $highlight-danger-background;
+  border-color: $highlight-danger-border;
+  color: $highlight-danger;
+}
+
+.content {
+  width: 100%;
+  flex: 1;
+
+  p {
+    margin: 0;
+  }
+}

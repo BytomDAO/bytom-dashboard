@@ -1,0 +1,38 @@
+.main {
+  border: 1px solid $border-color;
+  margin-top: $grid-gutter-width/2;
+  padding: $grid-gutter-width;
+  margin-bottom: $grid-gutter-width;
+
+  > div {
+    margin-bottom: $gutter-size/2;
+  }
+}
+
+.options {
+  width: 100%;
+
+  td { border: none; }
+}
+
+.options .radio {
+  margin-right: 8px;
+}
+
+
+.label {
+  width: 220px;
+
+  label {
+    font-weight: normal;
+    line-height: 36px;
+  }
+}
+
+.field {
+  :global {
+    .form-group {
+      margin: 0;
+    }
+  }
+}

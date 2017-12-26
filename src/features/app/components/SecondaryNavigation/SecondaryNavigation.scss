@@ -1,0 +1,66 @@
+.main {
+  background: $background-color;
+  border-radius: $border-radius-standard;
+  position: absolute;
+  top: $title-height - 8px;
+  right: $gutter-size/2;
+  width: $sidebar-width - $gutter-size;
+  z-index: 11;
+
+  a {
+    display: block;
+    padding: 1px 0;
+    color: $text-color;
+  }
+
+  .active {
+    color: $highlight-default;
+  }
+}
+
+.navigation {
+  padding: 0;
+  list-style-type: none;
+  margin-top: 8px;
+  margin-bottom: 8px;
+
+  li {
+    padding: 0 20px;
+  }
+}
+
+.navigationTitle {
+  font-size: $font-size-caps;
+  text-transform: uppercase;
+  padding: 3px 20px;
+}
+
+.logOut {
+  margin-top: 5px;
+  border-top: 1px solid $border-color;
+  margin-bottom: -3px;
+
+  a {
+    padding-top: 5px;
+  }
+}
+
+.activeIcon {
+  display: none;
+}
+
+.active .activeIcon {
+  display: inline;
+}
+
+.active .icon {
+  display: none;
+}
+
+.iconWrapper {
+  img {
+    width: 28px;
+    height: 28px;
+    margin-top: -2px;
+  }
+}

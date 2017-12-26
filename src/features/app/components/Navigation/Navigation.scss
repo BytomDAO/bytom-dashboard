@@ -1,0 +1,55 @@
+.main {
+  a {
+    display: block;
+    padding: 1px 0;
+    color: $highlight-inverse-color;
+    font-size: $font-size-nav;
+  }
+
+  .active,
+  .active:hover,
+  .active:focus {
+    color: $highlight-default;
+  }
+
+  a:hover,
+  a:focus {
+    text-decoration: none;
+    color: lighten($highlight-inverse-color, 15%);
+  }
+}
+
+.navigation {
+  padding: 0;
+  list-style-type: none;
+  margin-top: $gutter-size/2;
+  margin-bottom: 0;
+  padding: 0 $gutter-size;
+}
+
+.navigationTitle {
+  color: $highlight-inverse-color;
+  font-size: $font-size-caps;
+  text-transform: uppercase;
+  padding: 3px 0;
+}
+
+.activeIcon {
+  display: none;
+}
+
+.active .activeIcon {
+  display: inline;
+}
+
+.active .icon {
+  display: none;
+}
+
+.iconWrapper {
+  img {
+    width: 28px;
+    height: 28px;
+    margin-top: -2px;
+  }
+}

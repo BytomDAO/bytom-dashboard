@@ -1,0 +1,18 @@
+.main {
+  background: $background-color;
+  max-width: 50%;
+  padding: $gutter-size;
+  margin: 0 auto;
+}
+
+.hex {
+  word-break: break-all;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+
+  margin-top: 5px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 10px;
+  background-color: #EEE;
+}

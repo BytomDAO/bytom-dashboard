@@ -1,0 +1,42 @@
+.suggestionsContainer {
+  position: relative;
+}
+
+.suggestionsList {
+  background: $body-bg;
+  border: 1px solid $input-border;
+  border-radius: $input-border-radius-large;
+  box-shadow: 0px 0px 4px transparentize($text-color, 0.5);
+  list-style-type: none;
+  margin-top: 6px;
+  max-height: 200px;
+  overflow-y: scroll;
+  padding: 0;
+  position: absolute;
+  top: 40px;
+  width: 100%;
+  z-index: 10;
+}
+
+.suggestion {
+  border-bottom: 1px solid $input-border;
+
+  &:last-child {
+    border: none;
+  }
+
+  div {
+    padding: 0;
+  }
+
+  span {
+    padding: 12px;
+    display: inline-block;
+    width: 100%;
+  }
+}
+
+.suggestionFocused {
+  color: $brand-primary;
+  background: #e6e6e6;
+}

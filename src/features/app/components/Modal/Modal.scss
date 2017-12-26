@@ -1,0 +1,42 @@
+.main {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 100;
+}
+.backdrop {
+  background: transparentize(black, 0.2);
+  width: 100%;
+  height: 100%;
+}
+
+.content {
+  background: $background-color;
+  padding: 30px;
+  position: absolute;
+  top: 10%;
+  left: calc(50% - 250px);
+  width: 500px;
+  max-height: 80%;
+  overflow: scroll;
+
+  pre {
+    white-space: pre-wrap;
+    background: $background-content-color;
+    display: inline-block;
+    padding: 8px 12px;
+    color: $text-color;
+    line-height: 1.4;
+  }
+}
+
+.wide {
+  left: calc(50% - 425px);
+  width: 850px;
+}
+
+.cancel {
+  color: $text-color;
+}

@@ -1,0 +1,85 @@
+.main {
+  padding: $gutter-size/2 $gutter-size;
+}
+
+.search_field_full, .search_field_half, .sum_by_field {
+  display: inline-block;
+  position: relative;
+}
+
+.searchField {
+  position: relative;
+}
+
+.search_field_full {
+  width: 100%;
+}
+
+.search_field_half {
+  width: 55%;
+  padding-right: $gutter-size/2;
+}
+
+.sum_by_field {
+  width: 45%;
+}
+
+.label {
+  padding-left: 20px;
+}
+
+.search_input {
+  height: 50px;
+  padding: 10px 20px 10px 45px;
+  border: 1px solid $border-color;
+  height: 44px;
+  color: $text-strong-color;
+  border-radius: 25px;
+  background-image: url('images/search.png');
+  background-repeat: no-repeat;
+  background-size: 15px 15px;
+  background-position: 20px center;
+}
+
+.sum_by_input {
+  background-image: url('images/sum.png');
+}
+
+.showSumBy {
+  border: 1px solid $border-color;
+  border-radius: 25px;
+  color: $text-light-color;
+  padding: 0px 10px;
+  position: absolute;
+  right: $gutter-size/2;
+  bottom: 8px;
+
+  &:hover {
+    cursor: pointer;
+    background-color: $background-emphasis-color;
+  }
+}
+
+.search_input::-webkit-input-placeholder {
+  color: #b6bcc5;
+}
+
+.submit {
+  position: absolute;
+  left: -9999px;
+}
+
+.clearSearch {
+  display: inline-block;
+  text-decoration: underline;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.queryTime {
+  display: inline-block;
+  padding: 4px 20px;
+  opacity: 0.66
+}

@@ -1,0 +1,31 @@
+.submitTable {
+  border-spacing: 5px;
+
+  tr:first-child td {
+    padding-bottom: $gutter-size/2;
+  }
+
+  td input {
+    margin-right: 7px;
+  }
+
+  td {
+    padding: 0;
+    vertical-align: top;
+  }
+
+  label {
+    margin-bottom: 0;
+    color: $text-strong-color;
+  }
+
+  .submitDescription {
+    font-weight: normal;
+    color: $text-color;
+    line-height: 1.4;
+  }
+}
+
+.actionInfo {
+  margin-bottom: $gutter-size;
+}

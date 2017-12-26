@@ -1,0 +1,21 @@
+.main {
+  border: 1px solid $border-color;
+  padding: $gutter-size;
+  margin-bottom: $gutter-size;
+}
+
+.error {
+  border-color: $highlight-danger-border;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: $gutter-size;
+}
+
+.title {
+  color: $text-strong-color;
+  font-size: $font-size-form-section-title;
+  font-weight: bold;
+}
