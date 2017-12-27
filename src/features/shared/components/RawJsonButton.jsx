@@ -1,5 +1,5 @@
 import React from 'react'
-import { Connection } from 'chain-sdk'
+import { Connection } from 'sdk'
 
 class RawJsonButton extends React.Component {
   showRawJson(item){

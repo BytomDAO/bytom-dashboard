@@ -13,12 +13,7 @@ const makeRoutes = (store, type, List, New, Show, Update, options = {}) => {
       return
     }
 
-    const pageNumber = parseInt(state.location.query.page || 1)
-    if (pageNumber == 1) {
-      store.dispatch(actions[type].fetchPage(query, pageNumber, { refresh: true }))
-    } else {
-      store.dispatch(actions[type].fetchPage(query, pageNumber))
-    }
+    store.dispatch(actions[type].fetchAll())
   }
 
   const childRoutes = []
@@ -54,7 +49,10 @@ const makeRoutes = (store, type, List, New, Show, Update, options = {}) => {
     name: options.name || humanize(type + 's'),
     indexRoute: {
       component: List,
-      onEnter: (nextState, replace) => { loadPage(nextState, replace) },
+      onEnter: (nextState, replace) => {
+        debugger
+        loadPage(nextState, replace)
+      },
       onChange: (_, nextState, replace) => { loadPage(nextState, replace) }
     },
     childRoutes: childRoutes

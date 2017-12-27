@@ -1,6 +1,6 @@
 /* global process */
 
-import chainSdk from 'chain-sdk'
+import chainSdk from 'sdk'
 import { store } from 'app'
 
 import { useRouterHistory } from 'react-router'
@@ -11,7 +11,7 @@ if (process.env.NODE_ENV === 'production') {
   apiHost = window.location.origin
   basename = '/dashboard'
 } else {
-  apiHost = process.env.API_URL || 'http://localhost:3000/api'
+  apiHost = process.env.API_URL || 'http://localhost:9888'
   basename = ''
 }
 

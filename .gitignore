@@ -4,3 +4,4 @@ npm-debug.log
 public
 errorShots
 .idea
+.DS_Store

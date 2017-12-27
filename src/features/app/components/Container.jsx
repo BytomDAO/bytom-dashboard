@@ -88,8 +88,8 @@ class Container extends React.Component {
 export default connect(
   (state) => ({
     authOk: !state.core.requireClientToken || state.core.validToken,
-    configKnown: state.core.configKnown,
-    configured: state.core.configured,
+    configKnown: true,
+    configured: true,
     onTestnet: state.core.onTestnet,
   }),
   (dispatch) => ({
