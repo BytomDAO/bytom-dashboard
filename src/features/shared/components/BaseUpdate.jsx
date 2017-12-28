@@ -6,7 +6,7 @@ export const mapStateToProps = ( type ) => ( /* state */ ) => ({
 })
 
 export const mapDispatchToProps = (type) => (dispatch) => ({
-  fetchItem: (id) => dispatch(actions[type].fetchItems({filter: `id='${id}'`})).then((resp) => {
+  fetchItem: (id) => dispatch(actions[type].fetchItems({id: `${id}`})).then((resp) => {
     return resp
   }),
   submitForm: (data, id) => dispatch(actions[type].submitUpdateForm(data, id))

@@ -36,7 +36,7 @@ class AssetShow extends BaseShow {
             items={[
               {label: 'ID', value: item.id},
               {label: 'Alias', value: item.alias},
-              {label: 'Tags', value: item.tags, editUrl: `/assets/${item.id}/tags`},
+              {label: 'Tags', value: item.tags || {}, editUrl: `/assets/${item.id}/tags`},
               {label: 'Definition', value: item.definition},
               {label: 'xpubs', value: (item.xpubs || []).length},
               {label: 'Quorum', value: item.quorum},
@@ -70,11 +70,11 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = ( dispatch ) => ({
-  fetchItem: (id) => dispatch(actions.asset.fetchItems({filter: `id='${id}'`})),
+  fetchItem: (id) => dispatch(actions.asset.fetchItems({id: `${id}`})),
   showCirculation: (item) => {
-    let filter = `asset_id='${item.id}'`
+    let filter = `id='${item.id}'`
     if (item.alias) {
-      filter = `asset_alias='${item.alias}'`
+      filter = `alias='${item.alias}'`
     }
 
     dispatch(actions.balance.pushList({ filter }))
