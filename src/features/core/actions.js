@@ -8,7 +8,7 @@ const fetchCoreInfo = (options = {}) => {
   return (dispatch) => {
     return chainClient().config.info()
       .then((info) => {
-        dispatch(updateInfo(info))
+        // dispatch(updateInfo(info))
       })
       .catch((err) => {
         if (options.throw || !err.status) {

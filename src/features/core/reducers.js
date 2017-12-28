@@ -14,9 +14,9 @@ const coreConfigReducer = (key, state, defaultState, action) => {
 }
 
 const buildConfigReducer = (key, state, defaultState, action) => {
-  if (action.type == 'UPDATE_CORE_INFO') {
-	return action.param.buildConfig[key] || defaultState
-  }
+  // if (action.type == 'UPDATE_CORE_INFO') {
+	// return action.param.buildConfig[key] || defaultState
+  // }
 
   return state || defaultState
 }

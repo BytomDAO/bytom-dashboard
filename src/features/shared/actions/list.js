@@ -23,7 +23,9 @@ export default function(type, options = {}) {
       const promise = clientApi().query(params)
 
       promise.then(
-        (resp) => dispatch(receive(resp))
+        (resp) => {
+          dispatch(receive(resp))
+        }
       )
 
       return promise
@@ -59,12 +61,8 @@ export default function(type, options = {}) {
         dispatch(_load(query, getFilterStore(), options)).then((resp) => {
           if (!resp || resp.type == 'ERROR') return
 
-          if (resp && resp.last) {
-            return Promise.resolve(resp)
-          } else if (!fullPage()) {
-            options.refresh = false
-            return dispatch(fetchNextPage)
-          }
+          options.refresh = false
+          return Promise.resolve(resp)
         })
 
       return dispatch(fetchNextPage)

@@ -19,19 +19,12 @@ class EmptyList extends React.Component {
         <span className={`${styles.emptyLabel} ${styles.noResultsLabel}`}>
           There are no {this.props.objectName}s
         </span>
-        {this.props.firstTimeContent}
-      </div>
-    } else if (!this.props.showFirstTimeFlow) {
-      emptyBlock = <div className={styles.emptyContainer}>
-        <span className={`${styles.emptyLabel} ${styles.noResultsLabel}`}>No results for query:</span>
-        <code className={styles.code}>{this.props.currentFilter.filter}</code>
       </div>
     }
 
     const classNames = [
       'flex-container',
-      styles.empty,
-      {[styles.noResults]: !this.props.showFirstTimeFlow}
+      styles.empty
     ]
 
     return (
@@ -47,12 +40,8 @@ EmptyList.propTypes = {
   type: React.PropTypes.string,
   objectName: React.PropTypes.string,
   newButton: React.PropTypes.object,
-  noRecords: React.PropTypes.bool,
-  skipCreate: React.PropTypes.bool,
   loadedOnce: React.PropTypes.bool,
-  currentFilter: React.PropTypes.object,
-  showFirstTimeFlow: React.PropTypes.bool,
-  firstTimeContent: React.PropTypes.object
+  showFirstTimeFlow: React.PropTypes.bool
 }
 
 export default EmptyList

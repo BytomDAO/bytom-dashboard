@@ -7,7 +7,7 @@ const defaultIdFunc = (item) => item.id
 export const itemsReducer = (type, idFunc = defaultIdFunc) => (state = {}, action) => {
   if (action.type == `RECEIVED_${type.toUpperCase()}_ITEMS`) {
     const newObjects = {}
-    action.param.items.forEach(item => {
+    action.param.data.forEach(item => {
       if (!item.id) { item.id = idFunc(item) }
       newObjects[idFunc(item)] = item
     })
@@ -20,20 +20,6 @@ export const itemsReducer = (type, idFunc = defaultIdFunc) => (state = {}, actio
 }
 
 export const queryItemsReducer = (type, idFunc = defaultIdFunc) => (state = [], action) => {
-  if (action.type == `APPEND_${type.toUpperCase()}_PAGE`) {
-    let newItemIds = action.param.items.map((item, index) => idFunc(item, index))
-
-    if (action.refresh) return newItemIds
-    else {
-      return uniq([...state, ...newItemIds])
-    }
-  } else if (action.type == `DELETE_${type.toUpperCase()}`) {
-    const index = state.indexOf(action.id)
-    if (index >= 0) {
-      state.splice(index, 1)
-      return [...state]
-    }
-  }
   return state
 }
 

@@ -3,9 +3,6 @@ import { connect } from 'react-redux'
 import actions from 'actions'
 import { Main, Config, Login, Loading, Modal } from './'
 
-const CORE_POLLING_TIME = 2 * 1000
-const TESTNET_INFO_POLLING_TIME = 30 * 1000
-
 class Container extends React.Component {
   constructor(props) {
     super(props)
@@ -32,20 +29,6 @@ class Container extends React.Component {
     } else {
       this.props.showConfiguration()
     }
-  }
-
-  componentWillMount() {
-    const checkTestnet = () => {
-      if (this.props.onTestnet) this.props.fetchTestnetInfo()
-    }
-
-    this.props.fetchInfo().then(() => {
-      checkTestnet()
-      this.redirectRoot(this.props)
-    })
-
-    setInterval(() => this.props.fetchInfo(), CORE_POLLING_TIME)
-    setInterval(() => checkTestnet(), TESTNET_INFO_POLLING_TIME)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -93,8 +76,6 @@ export default connect(
     onTestnet: state.core.onTestnet,
   }),
   (dispatch) => ({
-    fetchInfo: options => dispatch(actions.core.fetchCoreInfo(options)),
-    fetchTestnetInfo: () => dispatch(actions.testnet.fetchTestnetInfo()),
     showRoot: () => dispatch(actions.app.showRoot),
     showConfiguration: () => dispatch(actions.app.showConfiguration()),
   })

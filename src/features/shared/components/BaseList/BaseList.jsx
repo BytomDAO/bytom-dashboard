@@ -3,9 +3,8 @@ import actions from 'actions'
 import { connect as reduxConnect } from 'react-redux'
 import { pluralize, capitalize, humanize } from 'utility/string'
 import componentClassNames from 'utility/componentClassNames'
-import { PageContent, PageTitle, Pagination, SearchBar } from '../'
+import { PageContent, PageTitle } from '../'
 import EmptyList from './EmptyList'
-import { pageSize } from 'utility/environment'
 
 class ItemList extends React.Component {
   render() {
@@ -34,14 +33,6 @@ class ItemList extends React.Component {
         title={title}
         actions={actions}
       />
-
-      {!this.props.skipQuery && !this.props.showFirstTimeFlow &&
-        <SearchBar key='search-bar'
-          {...this.props.searchState}
-          pushList={this.props.pushList}
-          currentFilter={this.props.currentFilter}
-          defaultFilter={this.props.defaultFilter}
-        />}
     </div>
 
     const rootClassNames = componentClassNames(this, 'flex-container')
@@ -58,18 +49,11 @@ class ItemList extends React.Component {
             newButton={newButton}
             showFirstTimeFlow={this.props.showFirstTimeFlow}
             skipCreate={this.props.skipCreate}
-            loadedOnce={this.props.loadedOnce}
-            currentFilter={this.props.currentFilter} />
+            loadedOnce={this.props.loadedOnce} />
 
         </div>
       )
     } else {
-      let pagination = <Pagination
-          currentPage={this.props.currentPage}
-          currentFilter={this.props.currentFilter}
-          isLastPage={this.props.isLastPage}
-          pushList={this.props.pushList} />
-
       const items = this.props.items.map((item) =>
         <this.props.listItemComponent key={item.id} item={item} {...this.props.itemActions}/>)
       const Wrapper = this.props.wrapperComponent
@@ -80,8 +64,6 @@ class ItemList extends React.Component {
 
           <PageContent>
             {Wrapper ? <Wrapper {...this.props.wrapperProps}>{items}</Wrapper> : items}
-
-            {pagination}
           </PageContent>
         </div>
       )
@@ -90,35 +72,20 @@ class ItemList extends React.Component {
 }
 
 export const mapStateToProps = (type, itemComponent, additionalProps = {}) => (state, ownProps) => {
-  const currentPage = Math.max(parseInt(ownProps.location.query.page) || 1, 1)
-  // TODO: this should be renamed `currentQuery`; we should
-  // do some renaminng in here
-  const currentFilter = ownProps.location.query || {}
-  const currentQueryString = currentFilter.filter || ''
-  const currentQuery = state[type].queries[currentQueryString] || {}
-  const currentIds = currentQuery.itemIds || []
-  const cursor = currentQuery.cursor || {}
-
-  const lastPageIndex = Math.ceil(currentIds.length/pageSize) - 1
-  const isLastPage = ((currentPage - 1) == lastPageIndex) && cursor && cursor.lastPage
-  const startIndex = (currentPage - 1) * pageSize
-  const items = currentIds.slice(startIndex, startIndex + pageSize).map(
-    id => state[type].items[id]
-  ).filter(item => item != undefined)
+  let items = state[type].items
+  let target = []
+  for (let key in items) {
+    target.push(items[key])
+  }
 
   return {
-    currentPage: currentPage,
-    currentFilter: currentFilter,
-    items: items,
-    isLastPage: isLastPage,
-
-    loadedOnce: Object.keys(state[type].queries).length > 0,
+    items: target,
+    loadedOnce: true,
     type: type,
     listItemComponent: itemComponent,
-    searchState: { queryTime: currentQuery.queryTime },
 
-    noResults: items.length == 0,
-    showFirstTimeFlow: items.length == 0 && currentQueryString == '',
+    noResults: target.length == 0,
+    showFirstTimeFlow: target.length == 0,
 
     ...additionalProps
   }

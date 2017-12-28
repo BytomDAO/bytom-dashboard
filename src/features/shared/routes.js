@@ -3,16 +3,7 @@ import { humanize } from 'utility/string'
 import actions from 'actions'
 
 const makeRoutes = (store, type, List, New, Show, Update, options = {}) => {
-  const loadPage = (state, replace) => {
-    const query = state.location.query
-    if (query.filter && options.skipFilter) {
-      replace(state.location.pathname)
-      return
-    } else if (query.filter === undefined && options.defaultFilter) {
-      replace(`${state.location.pathname}?filter=${options.defaultFilter}`)
-      return
-    }
-
+  const loadPage = () => {
     store.dispatch(actions[type].fetchAll())
   }
 
@@ -50,7 +41,6 @@ const makeRoutes = (store, type, List, New, Show, Update, options = {}) => {
     indexRoute: {
       component: List,
       onEnter: (nextState, replace) => {
-        debugger
         loadPage(nextState, replace)
       },
       onChange: (_, nextState, replace) => { loadPage(nextState, replace) }
