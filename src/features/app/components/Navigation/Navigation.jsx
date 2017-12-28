@@ -51,6 +51,18 @@ class Navigation extends React.Component {
             </Link>
           </li>
         </ul>
+
+        <ul className={styles.navigation}>
+          <li className={styles.navigationTitle}>services</li>
+          {this.props.mockhsm &&
+          <li>
+            <Link to='/mockhsms' activeClassName={styles.active}>
+              {navIcon('mockhsm', styles)}
+              MockHSM
+            </Link>
+          </li>
+          }
+        </ul>
       </div>
     )
   }
@@ -68,7 +80,7 @@ export default connect(
     return {
       routing: state.routing, // required for <Link>s to update active state on navigation
       showSync: state.core.configured && !state.core.generator,
-      mockhsm: state.core.mockhsm,
+      mockhsm: true,
       docVersion
     }
   },

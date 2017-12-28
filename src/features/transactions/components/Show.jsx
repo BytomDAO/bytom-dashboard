@@ -82,7 +82,7 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = ( dispatch ) => ({
-  fetchItem: (id) => dispatch(actions.fetchItems({filter: `id='${id}'`}))
+  fetchItem: (id) => dispatch(actions.fetchItems({id: `${id}`}))
 })
 
 export default connect(
