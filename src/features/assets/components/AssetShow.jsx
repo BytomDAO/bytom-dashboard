@@ -38,20 +38,18 @@ class AssetShow extends BaseShow {
               {label: 'Alias', value: item.alias},
               {label: 'Tags', value: item.tags, editUrl: `/assets/${item.id}/tags`},
               {label: 'Definition', value: item.definition},
-              {label: 'Keys', value: item.keys.length},
+              {label: 'xpubs', value: (item.xpubs || []).length},
               {label: 'Quorum', value: item.quorum},
             ]}
           />
 
-          {item.keys.map((key, index) =>
+          {(item.xpubs || []).map((key, index) =>
             <KeyValueTable
               key={index}
-              title={`Key ${index + 1}`}
+              title={`xpub ${index + 1}`}
               items={[
                 {label: 'Index', value: index},
-                {label: 'Root Xpub', value: key.rootXpub},
-                {label: 'Asset Pubkey', value: key.assetPubkey},
-                {label: 'Asset Derivation Path', value: key.assetDerivationPath},
+                {label: 'Asset Pubkey', value: key},
               ]}
             />
           )}
