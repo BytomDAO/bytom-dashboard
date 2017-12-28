@@ -100,5 +100,9 @@ export function buildUnspentDisplay(output) {
 }
 
 export function buildBalanceDisplay(balance) {
-  return buildDisplay({amount: balance.amount, ...balance.sumBy}, balanceFields)
+  return buildDisplay({
+    amount: balance.amount,
+    assetId: balance.assetId,
+    accountAlias: balance.accountAlias
+  }, balanceFields)
 }

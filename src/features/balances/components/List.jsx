@@ -6,11 +6,9 @@ const type = 'balance'
 const newStateToProps = (state, ownProps) => {
   const props =  {
     ...BaseList.mapStateToProps(type, ListItem)(state, ownProps),
-    skipCreate: true,
-    defaultFilter: "is_local='yes'"
+    skipCreate: true
   }
 
-  props.searchState.sumBy = ownProps.location.query.sumBy || ''
   return props
 }
 

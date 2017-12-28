@@ -71,7 +71,7 @@ class ItemList extends React.Component {
   }
 }
 
-export const mapStateToProps = (type, itemComponent, additionalProps = {}) => (state, ownProps) => {
+export const mapStateToProps = (type, itemComponent, additionalProps = {}) => (state) => {
   let items = state[type].items
   let target = []
   for (let key in items) {
