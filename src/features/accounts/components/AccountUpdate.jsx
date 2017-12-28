@@ -20,7 +20,7 @@ class Form extends React.Component {
 
   componentDidMount() {
     this.props.fetchItem(this.props.params.id).then(resp => {
-      if (resp.items.length == 0) {
+      if (resp.data.length == 0) {
         this.setState({notFound: true})
       }
     })
@@ -48,7 +48,7 @@ class Form extends React.Component {
       <code>{item.alias ? item.alias :item.id}</code>
     </span>
 
-    const tagsString = Object.keys(item.tags).length === 0 ? '{\n\t\n}' : JSON.stringify(item.tags, null, 1)
+    const tagsString = Object.keys(item.tags || {}).length === 0 ? '{\n\t\n}' : JSON.stringify(item.tags || {}, null, 1)
     const tagLines = tagsString.split(/\r\n|\r|\n/).length
     let JsonFieldHeight
 
@@ -87,7 +87,7 @@ const mapStateToProps = (state, ownProps) => ({
 const initialValues = (state, ownProps) => {
   const item = state.account.items[ownProps.params.id]
   if (item) {
-    const tags = Object.keys(item.tags).length === 0 ? '{\n\t\n}' : JSON.stringify(item.tags, null, 1)
+    const tags = Object.keys(item.tags || {}).length === 0 ? '{\n\t\n}' : JSON.stringify(item.tags || {}, null, 1)
     return {
       initialValues: {
         tags: tags

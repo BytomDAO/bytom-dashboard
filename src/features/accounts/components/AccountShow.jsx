@@ -58,7 +58,7 @@ class AccountShow extends BaseShow {
             items={[
               {label: 'ID', value: item.id},
               {label: 'Alias', value: item.alias},
-              {label: 'Tags', value: item.tags || [], editUrl: `/accounts/${item.id}/tags`},
+              {label: 'Tags', value: item.tags || {}, editUrl: `/accounts/${item.id}/tags`},
               {label: 'Keys', value: (item.keys || []).length},
               {label: 'Quorum', value: item.quorum},
             ]}
