@@ -58,13 +58,13 @@ class AccountShow extends BaseShow {
             items={[
               {label: 'ID', value: item.id},
               {label: 'Alias', value: item.alias},
-              {label: 'Tags', value: item.tags, editUrl: `/accounts/${item.id}/tags`},
-              {label: 'Keys', value: item.keys.length},
+              {label: 'Tags', value: item.tags || [], editUrl: `/accounts/${item.id}/tags`},
+              {label: 'Keys', value: (item.keys || []).length},
               {label: 'Quorum', value: item.quorum},
             ]}
           />
 
-          {item.keys.map((key, index) =>
+          {(item.keys || []).map((key, index) =>
             <KeyValueTable
               key={index}
               title={`Key ${index + 1}`}
@@ -92,7 +92,7 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = ( dispatch ) => ({
-  fetchItem: (id) => dispatch(actions.account.fetchItems({filter: `id='${id}'`})),
+  fetchItem: (id) => dispatch(actions.account.fetchItems({id: `${id}`})),
   showTransactions: (item) => {
     let filter = `inputs(account_id='${item.id}') OR outputs(account_id='${item.id}')`
     if (item.alias) {

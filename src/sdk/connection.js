@@ -100,7 +100,7 @@ class Connection {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json',
+        // 'Content-Type': 'application/json',
 
         // TODO(jeffomatic): The Fetch API has inconsistent behavior between
         // browser implementations and polyfills.
