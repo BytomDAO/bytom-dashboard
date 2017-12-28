@@ -44,7 +44,6 @@ class Show extends BaseShow {
               {label: 'Block ID', value: item.blockId},
               {label: 'Block Height', value: item.blockHeight},
               {label: 'Position', value: item.position},
-              {label: 'Local?', value: item.isLocal},
               {label: 'Reference Data', value: item.referenceData},
             ]}
           />
