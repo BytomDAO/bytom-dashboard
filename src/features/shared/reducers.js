@@ -6,8 +6,8 @@ const defaultIdFunc = (item) => item.id
 
 export const itemsReducer = (type, idFunc = defaultIdFunc) => (state = {}, action) => {
   if (action.type == `RECEIVED_${type.toUpperCase()}_ITEMS`) {
-    const newObjects = {}
-    action.param.data.forEach(item => {
+    const newObjects = {};
+    (action.param.data || []).forEach(item => {
       if (!item.id) { item.id = idFunc(item) }
       newObjects[idFunc(item)] = item
     })

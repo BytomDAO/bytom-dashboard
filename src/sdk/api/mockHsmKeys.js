@@ -5,7 +5,7 @@ const shared = require('../shared')
   * Cryptographic private keys are the primary authorization mechanism on a
   * blockchain. For development environments, Chain Core provides a convenient
   * MockHSM.
-  * 
+  *
   * More info: {@link https://chain.com/docs/core/build-applications/keys}
   *
   * @typedef {Object} MockHsmKey
@@ -59,7 +59,7 @@ const mockHsmKeysAPI = (client) => {
         params.pageSize = params.aliases.length
       }
 
-      return shared.query(client, 'mockHsm.keys', '/mockhsm/list-keys', params, {cb})
+      return shared.query(client, 'mockHsm.keys', '/list-keys', params, {cb})
     },
 
     /**
