@@ -19,7 +19,7 @@ class PageTitle extends React.Component {
             <ul className={styles.crumbs}>
               {this.props.breadcrumbs.map(crumb =>
                 <li className={styles.crumb} key={crumb.name}>
-                  {!crumb.last && <Link to={crumb.path}>
+                  {!crumb.last && <Link to={'/' + crumb.path}>
                     {capitalize(crumb.name)}
                     <img src={chevron} className={styles.chevron} />
                   </Link>}
