@@ -51,8 +51,9 @@ class AccountShow extends BaseShow {
             object='account'
             title='Details'
             actions={[
-              <button key='show-txs' className='btn btn-link' onClick={this.props.showTransactions.bind(this, item)}>Transactions</button>,
-              <button key='show-balances' className='btn btn-link' onClick={this.props.showBalances.bind(this, item)}>Balances</button>,
+              // TODO: add back first 2 buttons
+              // <button key='show-txs' className='btn btn-link' onClick={this.props.showTransactions.bind(this, item)}>Transactions</button>,
+              // <button key='show-balances' className='btn btn-link' onClick={this.props.showBalances.bind(this, item)}>Balances</button>,
               <RawJsonButton key='raw-json' item={item} />
             ]}
             items={[
