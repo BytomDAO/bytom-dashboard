@@ -123,7 +123,7 @@ class Form extends React.Component {
             </div>
         </FormSection>
 
-        {!this.state.showAdvanced &&
+        {false && !this.state.showAdvanced &&
           <FormSection>
             <a href='#'
               className={styles.showAdvanced}
@@ -137,7 +137,7 @@ class Form extends React.Component {
           </FormSection>
         }
 
-        {this.state.showAdvanced && <FormSection title='Advanced Options'>
+        {false && this.state.showAdvanced && <FormSection title='Advanced Options'>
           <div>
             <TextField
               title='Base transaction'
