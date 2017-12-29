@@ -45,12 +45,11 @@ class Form extends React.Component {
   }
 
   submitWithValidation(data) {
-    const lagThreshold = 5
-    if (this.props.replicationLag === null || this.props.replicationLag >= lagThreshold) {
-      return Promise.reject({
-        _error: `Replication lag must be less than ${lagThreshold} to submit transactions via the dashboard. Please wait for the local core to catch up to the generator.`
-      })
-    }
+    // if (this.props.replicationLag === null || this.props.replicationLag >= lagThreshold) {
+    //   return Promise.reject({
+    //     _error: `Replication lag must be less than ${lagThreshold} to submit transactions via the dashboard. Please wait for the local core to catch up to the generator.`
+    //   })
+    // }
 
     return new Promise((resolve, reject) => {
       this.props.submitForm(data)
@@ -114,11 +113,11 @@ class Form extends React.Component {
               >
                 <MenuItem eventKey='issue'>Issue</MenuItem>
                 <MenuItem eventKey='spend_account'>Spend from account</MenuItem>
-                <MenuItem eventKey='spend_account_unspent_output'>Spend unspent output</MenuItem>
+                {/*<MenuItem eventKey='spend_account_unspent_output'>Spend unspent output</MenuItem>*/}
                 <MenuItem eventKey='control_account'>Control with account</MenuItem>
                 <MenuItem eventKey='control_receiver'>Control with receiver</MenuItem>
-                <MenuItem eventKey='retire'>Retire</MenuItem>
-                <MenuItem eventKey='set_transaction_reference_data'>Set transaction reference data</MenuItem>
+                {/*<MenuItem eventKey='retire'>Retire</MenuItem>*/}
+                {/*<MenuItem eventKey='set_transaction_reference_data'>Set transaction reference data</MenuItem>*/}
               </DropdownButton>
             </div>
         </FormSection>
@@ -204,7 +203,6 @@ const validate = values => {
 export default BaseNew.connect(
   state => ({
     ...BaseNew.mapStateToProps('transaction')(state),
-    replicationLag: state.core.replicationLag,
   }),
   BaseNew.mapDispatchToProps('transaction'),
   reduxForm({

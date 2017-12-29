@@ -111,7 +111,7 @@ export default class ActionItem extends React.Component {
         {visible.amount &&
           <TextField title='Amount' fieldProps={amount} />}
 
-        {this.state.referenceDataOpen &&
+        {false && this.state.referenceDataOpen &&
           <JsonField title='Reference data' fieldProps={referenceData} />
         }
         {!this.state.referenceDataOpen &&

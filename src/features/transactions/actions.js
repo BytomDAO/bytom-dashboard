@@ -59,8 +59,8 @@ function preprocessTransaction(formParams) {
 
 function getTemplateXpubs(tpl) {
   const xpubs = []
-  tpl.signingInstructions.forEach((instruction) => {
-    instruction.witnessComponents.forEach((component) => {
+  tpl['signing_instructions'].forEach((instruction) => {
+    instruction['witness_components'].forEach((component) => {
       component.keys.forEach((key) => {
         xpubs.push(key.xpub)
       })
@@ -73,7 +73,16 @@ form.submitForm = (formParams) => function(dispatch) {
   const buildPromise = chainClient().transactions.build(builder => {
     const processed = preprocessTransaction(formParams)
 
-    builder.actions = processed.actions
+    builder.actions = processed.actions.map(action => {
+      return {
+        amount: action.amount,
+        account_id: action.accountId,
+        account_alias: action.accountAlias,
+        asset_id: action.assetId,
+        asset_alias: action.assetAlias,
+        type: action.type
+      }
+    })
     if (processed.baseTransaction) {
       builder.baseTransaction = processed.baseTransaction
     }
@@ -81,7 +90,7 @@ form.submitForm = (formParams) => function(dispatch) {
 
   if (formParams.submitAction == 'submit') {
     return buildPromise
-      .then(tpl => {
+      .then(({data: tpl}) => {
         const signer = chainSigner()
 
         getTemplateXpubs(tpl).forEach(key => {
@@ -104,13 +113,14 @@ form.submitForm = (formParams) => function(dispatch) {
   // submitAction == 'generate'
   return buildPromise
     .then(tpl => {
+      const data = tpl.data
       const signer = chainSigner()
 
-      getTemplateXpubs(tpl).forEach(key => {
+      getTemplateXpubs(data).forEach(key => {
         signer.addKey(key, chainClient().mockHsm.signerConnection)
       })
 
-      return signer.sign({...tpl, allowAdditionalActions: true})
+      return signer.sign({...data, allowAdditionalActions: true})
     })
     .then(signed => {
       const id = uuid.v4()

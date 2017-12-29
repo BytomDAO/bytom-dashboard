@@ -367,7 +367,7 @@ const transactionsAPI = (client) => {
       }
 
       return shared.tryCallback(
-        client.request('/build-transaction', [builder]).then(resp => checkForError(resp[0])),
+        client.request('/build-transaction', builder, true),
         cb
       )
     },

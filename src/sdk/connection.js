@@ -87,14 +87,14 @@ class Connection {
    * @param  {object} [body={}]
    * @returns {Promise}
    */
-  request(path, body = {}) {
+  request(path, body = {}, skipSnakeize = false) {
     if (!body) {
       body = {}
     }
 
     // Convert camelcased request body field names to use snakecase for API
     // processing.
-    const snakeBody = snakeize(body) // Ssssssssssss
+    const snakeBody = skipSnakeize ? body : snakeize(body) // Ssssssssssss
 
     let req = {
       method: 'POST',
@@ -171,7 +171,7 @@ class Connection {
       }).then((body) => {
         // After processing the response, convert snakecased field names to
         // camelcase to match language conventions.
-        return camelize(body)
+        return skipSnakeize? body : camelize(body)
       })
     })
   }
