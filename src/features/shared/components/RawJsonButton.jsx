@@ -3,7 +3,7 @@ import { Connection } from 'sdk'
 
 class RawJsonButton extends React.Component {
   showRawJson(item){
-    const snakeCased = Connection.snakeize(item)
+    const snakeCased = Connection.snakeize({...item})
     this.props.showJsonModal(<pre>{JSON.stringify(snakeCased, null, 2)}</pre>)
   }
 
