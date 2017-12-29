@@ -28,9 +28,9 @@ class AssetShow extends BaseShow {
             object='asset'
             title='Details'
             actions={[
-              <button key='show-circulation' className='btn btn-link' onClick={this.props.showCirculation.bind(this, item)}>
-                Circulation
-              </button>,
+              // <button key='show-circulation' className='btn btn-link' onClick={this.props.showCirculation.bind(this, item)}>
+              //  Circulation
+              // </button>,
               <RawJsonButton key='raw-json' item={item} />
             ]}
             items={[
