@@ -110,7 +110,7 @@ module.exports = {
   },
 
   create: (client, path, params = {}, opts = {}) => {
-    const object = Object.assign({ clientToken: uuid.v4() }, params)
+    const object = Object.assign({}, params)
     let body = object
     if (!opts.skipArray) {
       body = [body]
