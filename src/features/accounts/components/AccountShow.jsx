@@ -70,6 +70,7 @@ class AccountShow extends BaseShow {
               title={`XPUB ${index + 1}`}
               items={[
                 {label: 'Account Xpub', value: key},
+                {label: 'Key Index', value: item.keyIndex},
               ]}
             />
           )}
