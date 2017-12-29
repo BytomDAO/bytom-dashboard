@@ -101,7 +101,7 @@ const accountsAPI = (client) => {
      * @param {objectCallback} [callback] - Optional callback. Use instead of Promise return value as desired.
      * @returns {Promise<Account>} Newly created account.
      */
-    create: (params, cb) => shared.create(client, '/create-account', params, {cb}),
+    create: (params, cb) => shared.create(client, '/create-account', params, {cb, skipArray: true}),
 
     /**
      * Create multiple new accounts.
