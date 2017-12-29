@@ -3,7 +3,6 @@ import { pageSize } from 'utility/environment'
 import { push, replace } from 'react-router-redux'
 
 export default function(type, options = {}) {
-  const className = options.className || type.charAt(0).toUpperCase() + type.slice(1)
   const listPath  = options.listPath || `/${type}s`
   const clientApi = () => options.clientApi ? options.clientApi() : chainClient()[`${type}s`]
 
@@ -35,33 +34,16 @@ export default function(type, options = {}) {
   // Fetch all items up to the specified page, and persist the results to
   // the filter-specific store
   const fetchPage = (query, pageNumber = 1, options = {}) => {
-    const getPageSlice = (list, page) => {
-      const pageStart = page * pageSize
-      return (list.itemIds || []).slice(pageStart, pageStart + pageSize)
-    }
-
     const listId =  query.filter || ''
     pageNumber = parseInt(pageNumber || 1)
 
     return (dispatch, getState) => {
       const getFilterStore = () => getState()[type].queries[listId] || {}
 
-      const fullPage = () => {
-        // Return early to load all pages if -1 is passed
-        if (pageNumber == -1) return
-
-        const list = getFilterStore()
-        const currentPage = getPageSlice(list, pageNumber)
-        return currentPage.length == pageSize
-      }
-
-      if (!options.refresh && fullPage()) return Promise.resolve({})
-
       const fetchNextPage = () =>
         dispatch(_load(query, getFilterStore(), options)).then((resp) => {
           if (!resp || resp.type == 'ERROR') return
 
-          options.refresh = false
           return Promise.resolve(resp)
         })
 
