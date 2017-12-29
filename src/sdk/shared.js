@@ -99,12 +99,7 @@ module.exports = {
 
   singletonBatchRequest: (client, path, params = {}, cb) => {
     return tryCallback(
-      batchRequest(client, path, [params]).then(batch => {
-        if (batch.errors[0]) {
-          throw errors.newBatchError(batch.errors[0])
-        }
-        return batch.successes[0]
-      }),
+      client.request(path, params),
       cb
     )
   },

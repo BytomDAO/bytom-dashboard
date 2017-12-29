@@ -119,7 +119,12 @@ const accountsAPI = (client) => {
      * @param {objectCallback} [cb] - Optional callback. Use instead of Promise return value as desired.
      * @returns {Promise<Object>} Success message.
      */
-    updateTags: (params, cb) => shared.singletonBatchRequest(client, '/update-account-tags', params, cb),
+    updateTags: (params, cb) => {
+      return shared.singletonBatchRequest(client, '/update-account-tags', {
+        account_info: params.id,
+        tags: params.tags
+      }, cb)
+    },
 
     /**
      * Update tags for multiple assets.
