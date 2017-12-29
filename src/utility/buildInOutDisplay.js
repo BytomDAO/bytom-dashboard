@@ -14,7 +14,11 @@ const mappings = {
   accountAlias: 'Account Alias',
   accountTags: 'Account Tags',
   controlProgram: 'Control Program',
+  programIndex: 'Program Index',
   spentOutputId: 'Spent Output ID',
+  refData: 'Reference Data',
+  sourceId: 'Source ID',
+  sourcePos: 'Source Postion',
   issuanceProgram: 'Issuance Program',
   isLocal: 'Local?',
   referenceData: 'Reference Data',
@@ -71,6 +75,10 @@ const unspentFields = [
   'accountAlias',
   'accountTags',
   'controlProgram',
+  'programIndex',
+  'refData',
+  'sourceId',
+  'sourcePos',
   'isLocal',
   'referenceData',
 ]
@@ -96,7 +104,18 @@ export function buildTxOutputDisplay(output) {
 }
 
 export function buildUnspentDisplay(output) {
-  return buildDisplay(output, unspentFields)
+  const normalized = {
+    amount: output.amount,
+    accountId: output.accountId,
+    accountAlias: output.alias,
+    assetId: output.assetId,
+    controlProgram: output.program,
+    programIndex: output.programIndex,
+    refData: output.refData,
+    sourceId: output.sourceId,
+    sourcePos: output.sourcePos
+  }
+  return buildDisplay(normalized, unspentFields)
 }
 
 export function buildBalanceDisplay(balance) {
