@@ -164,7 +164,7 @@ const accountsAPI = (client) => {
      * @param {objectCallback} [callback] - Optional callback. Use instead of Promise return value as desired.
      * @returns {Promise<Receiver>} Newly created receiver.
      */
-    createReceiver: (params, cb) => shared.create(client, '/create-account-receiver', params, {cb}),
+    createReceiver: (params, cb) => shared.create(client, '/create-account-receiver', params, {cb, skipArray: true}),
 
     /**
      * Create multiple receivers under the specified accounts.

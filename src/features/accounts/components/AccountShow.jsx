@@ -18,8 +18,8 @@ class AccountShow extends BaseShow {
 
   createReceiver() {
     this.props.createReceiver({
-      accountId: this.props.item.id
-    }).then((receiver) => this.props.showReceiver(<div>
+      account_info:this.props.item.alias
+    }).then(({data: receiver}) => this.props.showReceiver(<div>
       <p>Copy this one-time use receiver to use in a transaction:</p>
       <CopyableBlock value={JSON.stringify(receiver, null, 1)} />
     </div>))
