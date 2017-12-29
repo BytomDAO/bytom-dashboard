@@ -39,7 +39,7 @@ const shared = require('../shared')
 
 /**
  * API for interacting with {@link Asset assets}.
- * 
+ *
  * More info: {@link https://chain.com/docs/core/build-applications/assets}
  * @module AssetsApi
  */
@@ -84,7 +84,7 @@ const assetsAPI = (client) => {
      * @param {objectCallback} [callback] - Optional callback. Use instead of Promise return value as desired.
      * @returns {Promise<Asset>} Newly created asset.
      */
-    create: (params, cb) => shared.create(client, '/create-asset', params, {cb}),
+    create: (params, cb) => shared.create(client, '/create-asset', params, {cb, skipArray: true}),
 
     /**
      * Create multiple new assets.
