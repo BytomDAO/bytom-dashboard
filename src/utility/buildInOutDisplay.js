@@ -122,6 +122,7 @@ export function buildBalanceDisplay(balance) {
   return buildDisplay({
     amount: balance.amount,
     assetId: balance.assetId,
+    assetAlias: balance.assetAlias,
     accountAlias: balance.accountAlias
   }, balanceFields)
 }

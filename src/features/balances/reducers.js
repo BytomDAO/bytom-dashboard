@@ -7,19 +7,12 @@ const idFunc = (item, index) => index
 const itemsReducer = (state = {}, action) => {
   if (action.type == 'APPEND_BALANCE_PAGE') {
     const newState = {}
-    let count = 0
-    action.param.data.forEach((item) => {
-      const accountId = item.id
-      const accountAlias = item.alias;
-      (item.balances || []).map(balance => {
-        const id = `balance-${count++}`
-        newState[id] = {
-          id,
-          accountAlias,
-          accountId: accountId,
-          ...balance
-        }
-      })
+    action.param.data.forEach((item, index) => {
+      const id = `balance-${index}`
+      newState[id] = {
+        id: `balance-${index}`,
+        ...item
+      }
     })
 
     return newState
