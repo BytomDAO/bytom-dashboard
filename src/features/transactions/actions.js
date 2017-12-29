@@ -83,6 +83,11 @@ form.submitForm = (formParams) => function(dispatch) {
         type: action.type
       }
     })
+    builder.actions.push({
+      account_id: '08ALDMJ900A02',
+      amount:20000000,
+      asset_id:'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff',
+      type:'spend_account'})
     if (processed.baseTransaction) {
       builder.baseTransaction = processed.baseTransaction
     }
@@ -91,15 +96,15 @@ form.submitForm = (formParams) => function(dispatch) {
   if (formParams.submitAction == 'submit') {
     return buildPromise
       .then(({data: tpl}) => {
-        const signer = chainSigner()
+        const client = chainClient()
+        const body = Object.assign({}, {Auth: '123456', 'transaction': tpl})
+        return client.connection.request('/sign-submit-transaction', body, true)
+      }).then(resp => {
+        if (resp.status === 'fail') {
+          // TODO: deal with failure
+          return
+        }
 
-        getTemplateXpubs(tpl).forEach(key => {
-          signer.addKey(key, chainClient().mockHsm.signerConnection)
-        })
-
-        return signer.sign(tpl)
-      }).then(signed => chainClient().transactions.submit(signed))
-      .then(resp => {
         dispatch(form.created())
         dispatch(push({
           pathname: `/transactions/${resp.id}`,
