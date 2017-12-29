@@ -21,7 +21,10 @@ class AccountShow extends BaseShow {
       account_info:this.props.item.alias
     }).then(({data: receiver}) => this.props.showReceiver(<div>
       <p>Copy this one-time use receiver to use in a transaction:</p>
-      <CopyableBlock value={JSON.stringify(receiver, null, 1)} />
+      <CopyableBlock value={JSON.stringify({
+        controlProgram: receiver.controlProgram,
+        expiresAt: receiver.expiresAt
+      }, null, 1)} />
     </div>))
   }
 
