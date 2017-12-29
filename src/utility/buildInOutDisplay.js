@@ -107,10 +107,10 @@ export function buildUnspentDisplay(output) {
   const normalized = {
     amount: output.amount,
     accountId: output.accountId,
-    accountAlias: output.alias,
+    accountAlias: output.accountAlias,
     assetId: output.assetId,
     controlProgram: output.program,
-    programIndex: output.programIndex,
+    programIndex: output.controlProgramIndex,
     refData: output.refData,
     sourceId: output.sourceId,
     sourcePos: output.sourcePos
