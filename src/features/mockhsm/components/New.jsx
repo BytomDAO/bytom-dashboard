@@ -18,7 +18,7 @@ class New extends React.Component {
 
   render() {
     const {
-      fields: { alias },
+      fields: { alias, password },
       error,
       handleSubmit,
       submitting
@@ -33,13 +33,14 @@ class New extends React.Component {
 
         <FormSection title='Key Information'>
           <TextField title='Alias' placeholder='Alias' fieldProps={alias} autoFocus={true} />
+          <TextField title='Password' placeholder='Password' fieldProps={password} autoFocus={false} type={'password'} />
         </FormSection>
       </FormContainer>
     )
   }
 }
 
-const fields = [ 'alias' ]
+const fields = [ 'alias', 'password' ]
 export default BaseNew.connect(
   BaseNew.mapStateToProps('mockhsm'),
   BaseNew.mapDispatchToProps('mockhsm'),

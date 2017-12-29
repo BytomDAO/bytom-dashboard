@@ -14,7 +14,8 @@ const TEXT_FIELD_PROPS = [
 class TextField extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {type: 'text'}
+    const type = props.type || 'text'
+    this.state = {type}
   }
 
   render() {

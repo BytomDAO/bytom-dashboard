@@ -38,7 +38,7 @@ const mockHsmKeysAPI = (client) => {
     create: (params, cb) => {
       let body = Object.assign({ clientToken: uuid.v4() }, params)
       return shared.tryCallback(
-        client.request('/mockhsm/create-key', body).then(data => data),
+        client.request('/create-key', body).then(data => data),
         cb
       )
     },
