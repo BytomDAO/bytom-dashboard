@@ -114,7 +114,7 @@ export default class ActionItem extends React.Component {
         {false && this.state.referenceDataOpen &&
           <JsonField title='Reference data' fieldProps={referenceData} />
         }
-        {!this.state.referenceDataOpen &&
+        {false && !this.state.referenceDataOpen &&
           <button type='button' className='btn btn-link' onClick={this.openReferenceData}>
             Add reference data
           </button>
