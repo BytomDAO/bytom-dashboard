@@ -138,7 +138,7 @@ const configAPI = (client) => {
      * @returns {Promise<CoreInfo>} Requested info of specified Chain Core.
      */
     info: (cb) => shared.tryCallback(
-      client.request('/info'),
+      client.request('/net-info'),
       cb
     ),
   }

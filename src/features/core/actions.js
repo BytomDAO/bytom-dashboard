@@ -8,7 +8,7 @@ const fetchCoreInfo = (options = {}) => {
   return (dispatch) => {
     return chainClient().config.info()
       .then((info) => {
-        // dispatch(updateInfo(info))
+        dispatch(updateInfo(info))
       })
       .catch((err) => {
         if (options.throw || !err.status) {
@@ -31,7 +31,6 @@ let actions = {
   clearSession,
   logIn: (token) => (dispatch) => {
     dispatch(setClientToken(token))
-    debugger
     return dispatch(fetchCoreInfo({throw: true}))
       .then(() => dispatch({type: 'USER_LOG_IN'})
     )

@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import styles from './Navigation.scss'
 import { navIcon } from '../../utils'
+import Sync from '../Sync/Sync'
 
 class Navigation extends React.Component {
   constructor(props) {
@@ -63,6 +64,8 @@ class Navigation extends React.Component {
           </li>
           }
         </ul>
+
+        {<Sync />}
       </div>
     )
   }
