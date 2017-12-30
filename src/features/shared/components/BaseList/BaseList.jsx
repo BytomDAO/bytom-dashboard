@@ -13,16 +13,16 @@ class ItemList extends React.Component {
     const actions = [...(this.props.actions || [])]
 
     const labelTitleMap = {
-      transactions: '交易',
-      accounts: '账户',
-      assets: '资产',
-      balances: '账单',
+      transactions: 'Transactions',
+      accounts: 'Accounts',
+      assets: 'Assets',
+      balances: 'Balances',
       'unspent outputs': 'UTXO'
     }
     const title = labelTitleMap[label] || capitalize(label)
 
     const newButton = <button key='showCreate' className='btn btn-primary' onClick={this.props.showCreate}>
-      + {'新建'}
+      + {'New'}
     </button>
     if (!this.props.skipCreate) {
       actions.push(newButton)

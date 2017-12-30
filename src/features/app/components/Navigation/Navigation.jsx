@@ -23,31 +23,31 @@ class Navigation extends React.Component {
           <li>
             <Link to='/transactions' activeClassName={styles.active}>
               {navIcon('transaction', styles)}
-              交易
+              Transactions
             </Link>
           </li>
           <li>
             <Link to='/accounts' activeClassName={styles.active}>
               {navIcon('account', styles)}
-              账户
+              Accounts
             </Link>
           </li>
           <li>
             <Link to='/assets' activeClassName={styles.active}>
               {navIcon('asset', styles)}
-              资产
+              Assets
             </Link>
           </li>
           <li>
             <Link to='/balances' activeClassName={styles.active}>
               {navIcon('balance', styles)}
-              账单
+              Balances
             </Link>
           </li>
           <li>
             <Link to='/unspents' activeClassName={styles.active}>
               {navIcon('unspent', styles)}
-              UTXO
+              Unspent outputs
             </Link>
           </li>
         </ul>
