@@ -1,5 +1,4 @@
-import uuid from 'uuid'
-import { chainClient, chainSigner } from 'utility/environment'
+import { chainClient } from 'utility/environment'
 import { parseNonblankJSON } from 'utility/string'
 import { push } from 'react-router-redux'
 import { baseCreateActions, baseListActions } from 'features/shared/actions'
@@ -57,18 +56,6 @@ function preprocessTransaction(formParams) {
   return builder
 }
 
-function getTemplateXpubs(tpl) {
-  const xpubs = []
-  tpl['signing_instructions'].forEach((instruction) => {
-    instruction['witness_components'].forEach((component) => {
-      component.keys.forEach((key) => {
-        xpubs.push(key.xpub)
-      })
-    })
-  })
-  return xpubs
-}
-
 form.submitForm = (formParams) => function(dispatch) {
   const buildPromise = chainClient().transactions.build(builder => {
     const processed = preprocessTransaction(formParams)
@@ -114,30 +101,6 @@ form.submitForm = (formParams) => function(dispatch) {
         }))
       })
   }
-
-  // submitAction == 'generate'
-  return buildPromise
-    .then(tpl => {
-      const data = tpl.data
-      const signer = chainSigner()
-
-      getTemplateXpubs(data).forEach(key => {
-        signer.addKey(key, chainClient().mockHsm.signerConnection)
-      })
-
-      return signer.sign({...data, allowAdditionalActions: true})
-    })
-    .then(signed => {
-      const id = uuid.v4()
-      dispatch({
-        type: 'GENERATED_TX_HEX',
-        generated: {
-          id: id,
-          hex: signed.rawTransaction,
-        },
-      })
-      dispatch(push(`/transactions/generated/${id}`))
-    })
 }
 
 export default {
