@@ -70,11 +70,6 @@ form.submitForm = (formParams) => function(dispatch) {
         type: action.type
       }
     })
-    builder.actions.push({
-      account_id: '08ALDMJ900A02',
-      amount:20000000,
-      asset_id:'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff',
-      type:'spend_account'})
     if (processed.baseTransaction) {
       builder.baseTransaction = processed.baseTransaction
     }
