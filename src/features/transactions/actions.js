@@ -79,7 +79,7 @@ form.submitForm = (formParams) => function(dispatch) {
     return buildPromise
       .then(({data: tpl}) => {
         const client = chainClient()
-        const body = Object.assign({}, {Auth: '123456', 'transaction': tpl})
+        const body = Object.assign({}, {auth: '123456', 'transaction': tpl})
         return client.connection.request('/sign-submit-transaction', body, true)
       }).then(resp => {
         if (resp.status === 'fail') {

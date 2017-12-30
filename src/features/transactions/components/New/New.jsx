@@ -116,7 +116,7 @@ class Form extends React.Component {
                 {/*<MenuItem eventKey='spend_account_unspent_output'>Spend unspent output</MenuItem>*/}
                 <MenuItem eventKey='control_account'>Control with account</MenuItem>
                 <MenuItem eventKey='control_receiver'>Control with receiver</MenuItem>
-                {/*<MenuItem eventKey='retire'>Retire</MenuItem>*/}
+                <MenuItem eventKey='retire'>Retire</MenuItem>
                 {/*<MenuItem eventKey='set_transaction_reference_data'>Set transaction reference data</MenuItem>*/}
               </DropdownButton>
             </div>
