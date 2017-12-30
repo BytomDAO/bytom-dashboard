@@ -89,10 +89,7 @@ form.submitForm = (formParams) => function(dispatch) {
 
         dispatch(form.created())
         dispatch(push({
-          pathname: `/transactions/${resp.data.txid}`,
-          state: {
-            preserveFlash: true
-          }
+          pathname: '/transactions'
         }))
       })
   }
