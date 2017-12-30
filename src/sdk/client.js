@@ -116,8 +116,8 @@ class Client {
    * @param {object} [body={}]
    * @returns {Promise}
    */
-  request(path, body = {}) {
-    return this.connection.request(path, body)
+  request(path, body = {}, skipSnakeize = false) {
+    return this.connection.request(path, body, skipSnakeize)
   }
 }
 
