@@ -31,6 +31,10 @@ class Container extends React.Component {
     }
   }
 
+  componentWillMount() {
+    this.props.showRoot()
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.authOk != this.props.authOk ||
         nextProps.configKnown != this.props.configKnown ||
