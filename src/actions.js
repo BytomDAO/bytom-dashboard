@@ -20,7 +20,7 @@ const actions = {
   balance,
   configuration,
   core,
-  mockhsm,
+  key: mockhsm,
   testnet,
   transaction,
   transactionFeed,

@@ -4,6 +4,8 @@ import actions from 'actions'
 
 const makeRoutes = (store, type, List, New, Show, Update, options = {}) => {
   const loadPage = () => {
+    console.log(actions)
+    console.log(type)
     store.dispatch(actions[type].fetchAll())
   }
 

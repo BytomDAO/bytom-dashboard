@@ -51,7 +51,7 @@ const makeRootReducer = () => (state, action) => {
     balance,
     core,
     form,
-    mockhsm,
+    key: mockhsm,
     routing,
     testnet,
     transaction,

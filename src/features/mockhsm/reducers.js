@@ -1,7 +1,7 @@
 import { reducers } from 'features/shared'
 import { combineReducers } from 'redux'
 
-const type = 'mockhsm'
+const type = 'key'
 const idFunc = item => item.xpub
 
 export default combineReducers({
