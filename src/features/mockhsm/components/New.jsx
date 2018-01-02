@@ -42,8 +42,8 @@ class New extends React.Component {
 
 const fields = [ 'alias', 'password' ]
 export default BaseNew.connect(
-  BaseNew.mapStateToProps('mockhsm'),
-  BaseNew.mapDispatchToProps('mockhsm'),
+  BaseNew.mapStateToProps('key'),
+  BaseNew.mapDispatchToProps('key'),
   reduxForm({
     form: 'newMockHsmKey',
     fields,
