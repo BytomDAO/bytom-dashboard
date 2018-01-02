@@ -59,7 +59,7 @@ class Navigation extends React.Component {
           <li>
             <Link to='/mockhsms' activeClassName={styles.active}>
               {navIcon('mockhsm', styles)}
-              MockHSM
+              Keys
             </Link>
           </li>
           }

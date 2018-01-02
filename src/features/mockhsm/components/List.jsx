@@ -7,7 +7,7 @@ const type = 'mockhsm'
 export default BaseList.connect(
   BaseList.mapStateToProps(type, ListItem, {
     skipQuery: true,
-    label: 'MockHSM keys',
+    label: 'Keys',
     wrapperComponent: TableList,
     wrapperProps: {
       titles: ['Alias', 'xpub']

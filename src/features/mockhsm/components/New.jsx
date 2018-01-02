@@ -27,7 +27,7 @@ class New extends React.Component {
     return(
       <FormContainer
         error={error}
-        label='New MockHSM key'
+        label='New key'
         onSubmit={handleSubmit(this.submitWithErrors)}
         submitting={submitting} >
 
