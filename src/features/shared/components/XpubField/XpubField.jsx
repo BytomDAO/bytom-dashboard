@@ -112,8 +112,8 @@ XpubField.propTypes = {
 export default connect(
   (state) => {
     let keys = []
-    for (var key in state.mockhsm.items) {
-      const item = state.mockhsm.items[key]
+    for (var key in state.key.items) {
+      const item = state.key.items[key]
       keys.push({
         ...item,
         label: item.alias ? item.alias : item.id.slice(0, 32) + '...'
@@ -121,7 +121,7 @@ export default connect(
     }
 
     return {
-      autocompleteIsLoaded: state.mockhsm.autocompleteIsLoaded,
+      autocompleteIsLoaded: state.key.autocompleteIsLoaded,
       mockhsmKeys: keys,
     }
   },
