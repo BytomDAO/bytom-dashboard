@@ -31,7 +31,7 @@ class Sync extends React.Component {
       testnetNextReset
     } = this.props
 
-    if (snapshot && snapshot.inProgress) { // Currently downloading the snapshot.
+    if (false && snapshot && snapshot.inProgress) { // Currently downloading the snapshot.
       const downloaded = (snapshot.downloaded / snapshot.size) * 100
 
       return <ul className={`${navStyles.navigation} ${styles.main}`}>
@@ -50,36 +50,40 @@ class Sync extends React.Component {
 
     const elems = []
 
-    if (onTestnet) {
+    if (false && onTestnet) {
       elems.push(<li key='sync-title' className={navStyles.navigationTitle}>chain testnet sync</li>)
     } else {
       elems.push(<li key='sync-title' className={navStyles.navigationTitle}>generator sync</li>)
     }
 
-    if (onTestnet && !testnetError && testnetNextReset) {
+    if (false && onTestnet && !testnetError && testnetNextReset) {
       const diff = testnetNextReset.diff(moment(), 'seconds')
       if (diff < 2 * 24 * 60 * 60) {
         elems.push(<li key='sync-reset-warning'><span className={styles.testnetReset}>Next reset: {humanizeDuration(diff)}</span></li>)
       }
     }
 
-    if (onTestnet && testnetError) {
-      elems.push(<li key='sync-error'>
-        <Link to='/core'>
-          {navIcon('error', navStyles)}
-          <span className={styles.testnetError}>Chain Testnet error</span>
-        </Link>
-      </li>)
-    } else {
-      if (replicationLag === null || replicationLag >= 2) {
-        elems.push(<li key='sync-lag'>Blocks behind: {replicationLag === null ? '-' : replicationLag}</li>)
+    // if (onTestnet && testnetError) {
+    //   elems.push(<li key='sync-error'>
+    //     <Link to='/core'>
+    //       {navIcon('error', navStyles)}
+    //       <span className={styles.testnetError}>Chain Testnet error</span>
+    //     </Link>
+    //   </li>)
+    // } else {
+    //   if (replicationLag === null || replicationLag >= 2) {
+    //     elems.push(<li key='sync-lag'>Blocks behind: {replicationLag === null ? '-' : replicationLag}</li>)
+    //
+    //     if (syncEstimates.replicationLag) {
+    //       elems.push(<li key='sync-time'>Time remaining: {humanizeDuration(syncEstimates.replicationLag)}</li>)
+    //     }
+    //   } else {
+    //     elems.push(<li key='sync-done'>Local core fully synced.</li>)
+    //   }
+    // }
 
-        if (syncEstimates.replicationLag) {
-          elems.push(<li key='sync-time'>Time remaining: {humanizeDuration(syncEstimates.replicationLag)}</li>)
-        }
-      } else {
-        elems.push(<li key='sync-done'>Local core fully synced.</li>)
-      }
+    if (!this.state) {
+      return <ul></ul>
     }
 
     const arr = Object.keys(this.state).map(key => {
