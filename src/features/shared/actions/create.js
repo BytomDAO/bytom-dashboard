@@ -53,6 +53,10 @@ export default function(type, options = {}) {
       return function(dispatch) {
         return promise.then(() => clientApi.create(data)
           .then((resp) => {
+            if (resp.status === 'fail') {
+              throw new Error(resp.msg)
+            }
+
             dispatch(created(resp))
 
             if (options.createModal) {
