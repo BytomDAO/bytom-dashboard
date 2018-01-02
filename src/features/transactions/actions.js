@@ -61,14 +61,21 @@ form.submitForm = (formParams) => function(dispatch) {
     const processed = preprocessTransaction(formParams)
 
     builder.actions = processed.actions.map(action => {
-      return {
+      let result = {
         amount: action.amount,
         account_id: action.accountId,
         account_alias: action.accountAlias,
         asset_id: action.assetId,
         asset_alias: action.assetAlias,
-        type: action.type
+        type: action.type,
       }
+      if (action.receiver) {
+        result.receiver = {
+          control_program: action.receiver.controlProgram,
+          expires_at: action.receiver.expiresAt
+        }
+      }
+      return result
     })
     if (processed.baseTransaction) {
       builder.baseTransaction = processed.baseTransaction
