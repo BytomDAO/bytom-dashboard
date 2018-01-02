@@ -33,7 +33,7 @@ class New extends React.Component {
 
         <FormSection title='Key Information'>
           <TextField title='Alias' placeholder='Alias' fieldProps={alias} autoFocus={true} />
-          <TextField title='Password' placeholder='Password' fieldProps={password} autoFocus={false} type={'password'} />
+          {/*<TextField title='Password' placeholder='Password' fieldProps={password} autoFocus={false} type={'password'} />*/}
         </FormSection>
       </FormContainer>
     )
