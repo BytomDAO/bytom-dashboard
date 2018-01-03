@@ -92,13 +92,7 @@ export default function(type, options = {}) {
           refresh: refresh,
         })
       }).catch(err => {
-        if (options.defaultKey && filter.indexOf('\'') < 0 && filter.indexOf('=') < 0) {
-          dispatch(pushList({
-            filter: `${options.defaultKey}='${query.filter}'`
-          }, null, {replace: true}))
-        } else {
-          return dispatch({type: 'ERROR', payload: err})
-        }
+        return dispatch({type: 'ERROR', payload: err})
       })
     }
   }
