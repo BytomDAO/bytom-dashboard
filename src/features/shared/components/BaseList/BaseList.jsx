@@ -80,7 +80,7 @@ export const mapStateToProps = (type, itemComponent, additionalProps = {}) => (s
 
   return {
     items: target,
-    loadedOnce: true,
+    loadedOnce: state[type].queries.loadedOnce,
     type: type,
     listItemComponent: itemComponent,
 

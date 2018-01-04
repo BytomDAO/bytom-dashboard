@@ -50,14 +50,11 @@ export const listViewReducer = (type, idFunc = defaultIdFunc) => combineReducers
   queryTime: queryTimeReducer(type)
 })
 
-export const queriesReducer = (type, idFunc = defaultIdFunc) => (state = {}, action) => {
+export const queriesReducer = (type) => (state = {}, action) => {
   if (action.type == `APPEND_${type.toUpperCase()}_PAGE`) {
-    const query = action.param.next.filter || ''
-    const list = state[query] || {}
-
     return {
       ...state,
-      [query]: listViewReducer(type, idFunc)(list, action)
+      loadedOnce: true
     }
   }
 
