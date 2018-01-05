@@ -1,5 +1,4 @@
 import { chainClient } from 'utility/environment'
-import { pageSize } from 'utility/environment'
 import { push, replace } from 'react-router-redux'
 
 export default function(type, options = {}) {
