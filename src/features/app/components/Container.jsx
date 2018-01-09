@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import actions from 'actions'
 import { Main, Config, Login, Loading, Modal } from './'
 
+const CORE_POLLING_TIME = 2 * 1000
+
 class Container extends React.Component {
   constructor(props) {
     super(props)
@@ -32,7 +34,11 @@ class Container extends React.Component {
   }
 
   componentWillMount() {
-    this.props.showRoot()
+    this.props.fetchInfo().then(() => {
+      this.redirectRoot(this.props)
+    })
+
+    setInterval(() => this.props.fetchInfo(), CORE_POLLING_TIME)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -48,7 +54,7 @@ class Container extends React.Component {
     let layout
 
     if (!this.props.authOk) {
-      layout = <Login />
+      layout = <Login/>
     } else if (!this.props.configKnown) {
       return <Loading>Connecting to Chain Core...</Loading>
     } else if (!this.props.configured) {
@@ -80,6 +86,7 @@ export default connect(
     onTestnet: state.core.onTestnet,
   }),
   (dispatch) => ({
+    fetchInfo: options => dispatch(actions.core.fetchCoreInfo(options)),
     showRoot: () => dispatch(actions.app.showRoot),
     showConfiguration: () => dispatch(actions.app.showConfiguration()),
   })

@@ -32,8 +32,7 @@ let actions = {
   logIn: (token) => (dispatch) => {
     dispatch(setClientToken(token))
     return dispatch(fetchCoreInfo({throw: true}))
-      .then(() => dispatch({type: 'USER_LOG_IN'})
-    )
+      .then(() => dispatch({type: 'USER_LOG_IN'}))
   }
 }
 
