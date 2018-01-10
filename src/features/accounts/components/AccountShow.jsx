@@ -14,18 +14,30 @@ class AccountShow extends BaseShow {
     super(props)
 
     this.createReceiver = this.createReceiver.bind(this)
+    this.createAddress = this.createAddress.bind(this)
   }
 
   createReceiver() {
     this.props.createReceiver({
       account_info:this.props.item.alias
-    }).then(({data: receiver}) => this.props.showReceiver(<div>
+    }).then(({data: receiver}) => this.props.showModal(<div>
       <p>Copy this one-time use receiver to use in a transaction:</p>
       <CopyableBlock value={JSON.stringify({
         controlProgram: receiver.controlProgram,
         expiresAt: receiver.expiresAt
       }, null, 1)} />
     </div>))
+  }
+
+  createAddress() {
+    this.props.createAddress({
+      account_info:this.props.item.alias
+    }).then(({data}) => {
+      this.props.showModal(<div>
+        <p>Copy this one-time use receiver to use in a transaction:</p>
+        <CopyableBlock value={data.address} />
+      </div>)
+    })
   }
 
   render() {
@@ -42,9 +54,9 @@ class AccountShow extends BaseShow {
         <PageTitle
           title={title}
           actions={[
-            <button className='btn btn-link' onClick={this.createReceiver}>
-              Create receiver
-            </button>
+            <button className='btn btn-link' onClick={this.createAddress}>
+              Create address
+            </button>,
           ]}
         />
 
@@ -113,7 +125,8 @@ const mapDispatchToProps = ( dispatch ) => ({
     dispatch(actions.balance.pushList({ filter }))
   },
   createReceiver: (data) => dispatch(actions.account.createReceiver(data)),
-  showReceiver: (body) => dispatch(actions.app.showModal(
+  createAddress: (data) => dispatch(actions.account.createAddress(data)),
+  showModal: (body) => dispatch(actions.app.showModal(
     body,
     actions.app.hideModal
   ))

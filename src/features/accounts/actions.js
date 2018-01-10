@@ -19,6 +19,9 @@ let actions = {
   ...update,
   createReceiver: (data) => () => {
     return chainClient().accounts.createReceiver(data)
+  },
+  createAddress: (data) => () => {
+    return chainClient().accounts.createAddress(data)
   }
 }
 

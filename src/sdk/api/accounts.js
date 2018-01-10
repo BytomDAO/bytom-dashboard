@@ -171,6 +171,8 @@ const accountsAPI = (client) => {
      */
     createReceiver: (params, cb) => shared.create(client, '/create-account-receiver', params, {cb, skipArray: true}),
 
+    createAddress: (params, cb) => shared.create(client, '/create-account-address', params, {cb, skipArray: true}),
+
     /**
      * Create multiple receivers under the specified accounts.
      *
