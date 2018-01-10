@@ -1,4 +1,4 @@
-# Chain Core Dashboard
+# Bytom Dashboard
 
 ## Development
 
@@ -39,25 +39,6 @@ directory with `eslint`, run:
 npm run lint src
 ```
 
-#### Tests
-
-The Chain Core Dashboard has a series of integration tests that can be run
-against a running core. First, start Chain Core and Dashboard on their default
-ports of 1999 and 3000 respective. Then, start tests with the command:
-
-```
-npm test
-```
-
-There an extended test suite that can be run with:
-
-```
-npm run testExtended
-```
-
-(Note: The extended test suite can take significantly longer to run, as test
-  files cannot be run in parallel).
-
 ### React + Redux
 
 #### ES6
@@ -96,35 +77,3 @@ with `MyComponent.scss` imported as a stylesheet into `MyComponent.jsx`.
 
 Additionally, if there is an `index.js` file in `src/components/Common`, it
 will appropriately add the newly created component to the index exports.
-
-
-## Production
-
-In production environments, Chain Core Dashboard is served from within `cored`. The contents
-of the application are packaged into a single Go source file that maps generated
-filenames to file contents.
-
-To deploy an updated dashboard to production:
-
-1. Package the dashboard in production mode using `webpack` with:
-
-    ```sh
-    $ npm run build
-    ```
-
-2. Bundle the packaged output into an updated `dashboard.go`:
-
-    ```sh
-    $ go install ./cmd/gobundle
-    $ gobundle -package dashboard dashboard/public > generated/dashboard/dashboard.go
-    $ gofmt -w generated/dashboard/dashboard.go
-    ```
-
-3. Commit the resulting `dashboard.go`, then rebuild and start `cored`
-
-    ```sh
-    $ go install ./cmd/cored
-    $ cored
-    ```
-
-    Dashboard will be served at the root path from the `cored` server.
