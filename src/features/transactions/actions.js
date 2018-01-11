@@ -62,6 +62,7 @@ form.submitForm = (formParams) => function(dispatch) {
 
     builder.actions = processed.actions.map(action => {
       let result = {
+        address: action.address,
         amount: action.amount,
         account_id: action.accountId,
         account_alias: action.accountAlias,

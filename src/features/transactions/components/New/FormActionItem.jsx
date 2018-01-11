@@ -7,6 +7,7 @@ const SPEND_ACCOUNT_KEY = 'spend_account'
 const SPEND_UNSPENT_KEY = 'spend_account_unspent_output'
 const CONTROL_ACCOUNT_KEY = 'control_account'
 const CONTROL_RECEIVER_KEY = 'control_receiver'
+const CONTROL_ADDRESS_KEY = 'control_address'
 const RETIRE_ASSET_KEY = 'retire'
 const TRANSACTION_REFERENCE_DATA = 'set_transaction_reference_data'
 
@@ -16,6 +17,7 @@ const actionLabels = {
   [SPEND_UNSPENT_KEY]: 'Spend unspent output',
   [CONTROL_ACCOUNT_KEY]: 'Control with account',
   [CONTROL_RECEIVER_KEY]: 'Control with receiver',
+  [CONTROL_ADDRESS_KEY]: 'Control with address',
   [RETIRE_ASSET_KEY]: 'Retire',
   [TRANSACTION_REFERENCE_DATA]: 'Set transaction reference data',
 }
@@ -26,6 +28,7 @@ const visibleFields = {
   [SPEND_UNSPENT_KEY]: {outputId: true},
   [CONTROL_ACCOUNT_KEY]: {asset: true, account: true, amount: true},
   [CONTROL_RECEIVER_KEY]: {asset: true, receiver: true, amount: true},
+  [CONTROL_ADDRESS_KEY]: {asset: true, address: true, amount: true},
   [RETIRE_ASSET_KEY]: {asset: true, amount: true},
   [TRANSACTION_REFERENCE_DATA]: {},
 }
@@ -54,6 +57,7 @@ export default class ActionItem extends React.Component {
     const {
       outputId,
       type,
+      address,
       accountId,
       accountAlias,
       receiver,
@@ -94,6 +98,8 @@ export default class ActionItem extends React.Component {
 
         {visible.receiver &&
           <JsonField title='Receiver' fieldProps={receiver} />}
+
+        {visible.address && <TextField title='Address' fieldProps={address} />}
 
         {visible.outputId &&
           <TextField title='Output ID' fieldProps={outputId} />}
