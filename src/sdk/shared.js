@@ -2,63 +2,10 @@ const uuid = require('uuid')
 const errors = require('./errors')
 const Page = require('./page')
 
-/**
- * @callback objectCallback
- * @param {error} error
- * @param {Object} object - Object response from API.
- */
-
-/**
- * @callback batchCallback
- * @param {error} error
- * @param {BatchResponse} batchResponse - Newly created objects (and errors).
- */
-
-/**
- * Called once for each item in the result set.
- *
- * @callback QueryProcessor
- * @param {Object} item - Item to process.
- * @param {function} next - Call to proceed to the next item for processing.
- * @param {function(err)} done - Call to terminate iteration through the result
- *                               set. Accepts an optional error argument which
- *                               will be passed to the promise rejection or
- *                               callback depending on async calling style.
- */
-
- /**
-  * @typedef {Object} Key
-  * @global
-  *
-  * @property {String} rootXpub
-  * @property {String} accountXpub
-  * @property {String[]} accountDerivationPath
-  */
-
-/**
- * @class
- */
 class BatchResponse {
-  /**
-   * constructor
-   *
-   * @param  {Array<Object>} resp - List of items which are objects or errors.
-   */
   constructor(resp) {
-    /**
-     * Items from the input array which were successfully processed. This value
-     * is a sparsely populated array, maintaining the indexes of the items as
-     * they were originally submitted.
-     * @type {Array<Object>}
-     */
     this.successes = []
 
-    /**
-     * Items from the input array which resulted in an error. This value
-     * is a sparsely populated array, maintaining the indexes of the items as
-     * they were originally submitted.
-     * @type {Array<Object>}
-     */
     this.errors = []
 
     resp.forEach((item, index) => {
@@ -69,10 +16,6 @@ class BatchResponse {
       }
     })
 
-    /**
-     * Original input array
-     * @type {Array<Object>}
-     */
     this.response = resp
   }
 }

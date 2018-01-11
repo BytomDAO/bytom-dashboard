@@ -60,10 +60,6 @@ const camelize = (object) => {
   return object
 }
 
-/**
- * @class
- * Connection information for an instance of Chain Core.
- */
 class Connection {
   /**
    * constructor - create a new Chain client object capable of interacting with
