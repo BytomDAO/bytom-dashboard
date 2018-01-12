@@ -23,16 +23,16 @@ class NewToken extends React.Component {
         <FormSection title='Token information'>
           <TextField title='Token Name' fieldProps={guardData.id} autoFocus={true} />
         </FormSection>
-        <FormSection title='Policy'>
-          {policyOptions.map(option => {
-            if (option.hidden) return
+        {/*<FormSection title='Policy'>*/}
+          {/*{policyOptions.map(option => {*/}
+            {/*if (option.hidden) return*/}
 
-            return <CheckboxField key={option.label}
-              title={option.label}
-              hint={option.hint}
-              fieldProps={policies[option.value]} />
-          })}
-        </FormSection>
+            {/*return <CheckboxField key={option.label}*/}
+              {/*title={option.label}*/}
+              {/*hint={option.hint}*/}
+              {/*fieldProps={policies[option.value]} />*/}
+          {/*})}*/}
+        {/*</FormSection>*/}
 
       </FormContainer>
     )

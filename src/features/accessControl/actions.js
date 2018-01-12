@@ -62,22 +62,14 @@ export default {
     return dispatch => {
       return chainClient().accessTokens.create({
         id: body.guardData.id,
-        type: 'client', // TODO: remove me when deprecated!
-      }).then(tokenResp =>
-        setPolicies(body, data.policies).then(grantResp => {
-          dispatch(appActions.showModal(
-            <TokenCreateModal token={tokenResp.token}/>,
-            appActions.hideModal
-          ))
-
-          dispatch({ type: 'CREATED_TOKEN_WITH_GRANT', grantResp })
-
-          dispatch(push({
-            pathname: '/access-control',
-            search: '?type=token',
-            state: {preserveFlash: true},
-          }))
-        })
+      }).then(tokenResp =>{
+        dispatch({ type: 'CREATED_TOKEN_WITH_GRANT', tokenResp })
+        dispatch(push({
+          pathname: '/access-control',
+          search: '?type=token',
+          state: {preserveFlash: true},
+        }))
+      }
       ).catch(err => { throw {_error: err} })
     }
   },
