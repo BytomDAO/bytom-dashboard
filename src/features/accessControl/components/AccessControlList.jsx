@@ -31,11 +31,11 @@ class AccessControlList extends React.Component {
               Tokens
           </button>
 
-          <button
-            className={`btn btn-default ${styles.btn} ${this.props.certificatesButtonStyle}`}
-            onClick={this.props.showCertificates}>
-              Certificates
-          </button>
+          {/*<button*/}
+            {/*className={`btn btn-default ${styles.btn} ${this.props.certificatesButtonStyle}`}*/}
+            {/*onClick={this.props.showCertificates}>*/}
+              {/*Certificates*/}
+          {/*</button>*/}
         </div>
 
         {this.props.tokensSelected && <div>

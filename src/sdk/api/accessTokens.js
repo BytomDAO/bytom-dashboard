@@ -7,7 +7,7 @@ const accessTokens = (client) => {
 
     query: (params, cb) => shared.query(client, 'accessTokens', '/list-access-tokens', params, {cb}),
 
-    queryAll: (params, processor, cb) => shared.queryAll(client, 'list-access-tokens', params, processor, cb),
+    queryAll: (params, processor, cb) => shared.queryAll(client, '/list-access-tokens', params, processor, cb),
 
     delete: (id, cb) => shared.tryCallback(
       client.request('/delete-access-token', {id: id}),

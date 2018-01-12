@@ -143,7 +143,7 @@ module.exports = {
         }).catch(reject) // fail processor loop on query failure
       }
 
-      nextPage()
+      // nextPage()
     })
 
     return tryCallback(promise, cb)

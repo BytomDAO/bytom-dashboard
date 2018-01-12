@@ -1,6 +1,6 @@
 import AccessControlList from './components/AccessControlList'
 import NewToken from './components/NewToken'
-import NewCertificate from './components/NewCertificate'
+// import NewCertificate from './components/NewCertificate'
 import { makeRoutes } from 'features/shared'
 import actions from './actions'
 
@@ -37,10 +37,10 @@ export default (store) => {
     component: NewToken
   })
 
-  routes.childRoutes.push({
-    path: 'add-certificate',
-    component: NewCertificate
-  })
+  // routes.childRoutes.push({
+  //   path: 'add-certificate',
+  //   component: NewCertificate
+  // })
 
   return routes
 }

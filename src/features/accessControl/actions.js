@@ -42,12 +42,12 @@ export default {
 
       return Promise.all([
         chainClient().authorizationGrants.list(),
-        chainClient().accessTokens.queryAll({}, (token, next) => {
-          tokens.push(token)
-          next()
-        })
+        // chainClient().accessTokens.queryAll({}, (token, next) => {
+        //   tokens.push(token)
+        //   next()
+        // })
       ]).then(result => {
-        const grants = result[0].items
+        const grants = result[0].data
         return dispatch({ type: 'RECEIVED_ACCESS_GRANTS', grants, tokens })
       })
     }

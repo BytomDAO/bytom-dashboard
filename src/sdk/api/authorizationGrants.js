@@ -22,7 +22,7 @@ const authorizationGrants = (client) => ({
   ),
 
   list: (cb) =>
-    shared.query(client, 'accessTokens', '/list-authorization-grants', {}, {cb}),
+    shared.query(client, 'accessTokens', '/list-access-tokens', {}, {cb}),
 })
 
 module.exports = authorizationGrants
