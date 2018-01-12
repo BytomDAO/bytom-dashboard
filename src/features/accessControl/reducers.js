@@ -69,39 +69,40 @@ export default (state = {ids: [], items: {}}, action) => {
         [id]: item
       }
     }
-  } else if (action.type == 'END_POLICY_EDITING') {
-    const id = action.id
-    const item = {...state.items[id]}
-    item.isEditing = false
-    if (action.policies) {
-      item.grants = Object.keys(action.policies)
-        .filter(policy => action.policies[policy])
-        .map(policy => ({
-          ...item.grants.find(grant => grant.policy == policy),
-          policy: policy
-        }))
-    }
-
-    return {
-      ids: state.ids,
-      items: {
-        ...state.items,
-        [id]: item
-      }
-    }
+  // } else if (action.type == 'END_POLICY_EDITING') {
+  //   const id = action.id
+  //   const item = {...state.items[id]}
+  //   item.isEditing = false
+  //   if (action.policies) {
+  //     item.grants = Object.keys(action.policies)
+  //       .filter(policy => action.policies[policy])
+  //       .map(policy => ({
+  //         ...item.grants.find(grant => grant.policy == policy),
+  //         policy: policy
+  //       }))
+  //   }
+  //
+  //   return {
+  //     ids: state.ids,
+  //     items: {
+  //       ...state.items,
+  //       [id]: item
+  //     }
+  //   }
   } else if (action.type == 'DELETE_ACCESS_TOKEN') {
-    const ids = [...state.ids]
-    const items = {...state.items}
+    const tokens = [...state.tokens]
+    const ids = state.tokens.map(token => token.id)
+    // const ids = [...state.ids]
+    // const items = {...state.items}
 
     const idToRemove = action.id
     const deleteIndex = ids.indexOf(idToRemove)
-    ids.splice(deleteIndex, 1)
+    tokens.splice(deleteIndex, 1)
 
-    delete items[idToRemove]
+    // delete items[idToRemove]
 
     return {
-      ids,
-      items
+      tokens
     }
   }
 

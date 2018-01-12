@@ -138,7 +138,7 @@ export default {
   },
 
   deleteToken: grant => {
-    const id = grant.guardData.id
+    const id = grant.id
     if (!window.confirm(`Really delete access token "${id}"?`)) {
       return
     }

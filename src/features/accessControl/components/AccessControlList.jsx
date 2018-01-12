@@ -13,7 +13,7 @@ class AccessControlList extends React.Component {
       delete: this.props.delete,
     }
     const tokenList = <TableList titles={['Token Name', 'Token']}>
-      {(this.props.tokens || []).map(item => <GrantListItem key={item.id} item={item} {...itemProps} />)}
+      {(this.props.tokens).map(item => <GrantListItem key={item.id} item={item} {...itemProps} />)}
     </TableList>
 
     // const certList = <TableList titles={['Certificate', 'Policies']}>
@@ -68,7 +68,7 @@ const mapStateToProps = (state, ownProps) => {
   const certificatesSelected = ownProps.location.query.type != 'token'
 
   return {
-    tokens: items,
+    tokens: items || [],
     certs: items,
     tokensSelected,
     certificatesSelected,
