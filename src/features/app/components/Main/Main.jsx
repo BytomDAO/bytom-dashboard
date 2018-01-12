@@ -3,7 +3,7 @@ import styles from './Main.scss'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import actions from 'actions'
-import { Navigation } from '../'
+import { Navigation, SecondaryNavigation } from '../'
 
 class Main extends React.Component {
 
@@ -30,6 +30,13 @@ class Main extends React.Component {
               <Link to={'/'}>
                 <img src={logo} className={styles.brand_image} />
               </Link>
+
+              <span>
+                <span className={styles.settings} onClick={this.toggleDropdown}>
+                  <img src={require('images/navigation/settings.png')}/>
+                </span>
+                {this.props.showDropwdown && <SecondaryNavigation/>}
+              </span>
             </div>
 
             <Navigation />
