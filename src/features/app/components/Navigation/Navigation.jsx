@@ -21,6 +21,7 @@ class Navigation extends React.Component {
     return (
       <div className={styles.main}>
         <ul className={styles.navigation}>
+          <li className={styles.navigationTitle}>core data</li>
           <li>
             <Link to='/transactions' activeClassName={styles.active}>
               {navIcon('transaction', styles)}
