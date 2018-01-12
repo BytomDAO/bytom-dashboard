@@ -5,6 +5,9 @@ export default (state = {ids: [], items: {}}, action) => {
   if (action.type == 'RECEIVED_ACCESS_GRANTS') {
     const newObjects = {}
 
+    return {
+      tokens: action.grants
+    }
     action.tokens.forEach(token => {
       const tokenGuard = {
         id: token.id

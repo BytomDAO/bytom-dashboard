@@ -12,13 +12,13 @@ class AccessControlList extends React.Component {
       beginEditing: this.props.beginEditing,
       delete: this.props.delete,
     }
-    const tokenList = <TableList titles={['Token Name', 'Policies']}>
-      {this.props.tokens.map(item => <GrantListItem key={item.id} item={item} {...itemProps} />)}
+    const tokenList = <TableList titles={['Token Name', 'Token']}>
+      {(this.props.tokens || []).map(item => <GrantListItem key={item.id} item={item} {...itemProps} />)}
     </TableList>
 
-    const certList = <TableList titles={['Certificate', 'Policies']}>
-      {this.props.certs.map(item => <GrantListItem key={item.id} item={item} {...itemProps} />)}
-    </TableList>
+    // const certList = <TableList titles={['Certificate', 'Policies']}>
+    //   {this.props.certs.map(item => <GrantListItem key={item.id} item={item} {...itemProps} />)}
+    // </TableList>
 
     return (<div>
       <PageTitle title='Access control' />
@@ -48,28 +48,28 @@ class AccessControlList extends React.Component {
           {tokenList}
         </div>}
 
-        {this.props.certificatesSelected && <div>
-          <button
-            className={`btn btn-primary ${styles.newBtn}`}
-            onClick={this.props.showAddCertificate}>
-              + Register certificate
-          </button>
+        {/*{this.props.certificatesSelected && <div>*/}
+          {/*<button*/}
+            {/*className={`btn btn-primary ${styles.newBtn}`}*/}
+            {/*onClick={this.props.showAddCertificate}>*/}
+              {/*+ Register certificate*/}
+          {/*</button>*/}
 
-          {certList}
-        </div>}
+          {/*{certList}*/}
+        {/*</div>}*/}
       </PageContent>
     </div>)
   }
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const items = state.accessControl.ids.map(id => state.accessControl.items[id])
+  const items = state.accessControl.tokens
   const tokensSelected = ownProps.location.query.type == 'token'
   const certificatesSelected = ownProps.location.query.type != 'token'
 
   return {
-    tokens: items.filter(item => item.guardType == 'access_token'),
-    certs: items.filter(item => item.guardType == 'x509'),
+    tokens: items,
+    certs: items,
     tokensSelected,
     certificatesSelected,
     tokensButtonStyle: tokensSelected && styles.active,
