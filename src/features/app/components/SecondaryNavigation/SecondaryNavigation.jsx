@@ -29,12 +29,16 @@ class SecondaryNavigation extends React.Component {
               {/*Core status*/}
             {/*</Link>*/}
           {/*</li>*/}
-          <li>
-            <Link to='/access-control' activeClassName={styles.active}>
-              {navIcon('network', styles)}
-              Access Control
-            </Link>
-          </li>
+
+          {
+            this.props.canViewTokens &&
+            <li>
+              <Link to='/access-control' activeClassName={styles.active}>
+                {navIcon('network', styles)}
+                Access Control
+              </Link>
+            </li>
+          }
 
           {this.props.canLogOut && <li className={styles.logOut}>
             <a href='#' onClick={this.logOut}>
@@ -50,7 +54,8 @@ class SecondaryNavigation extends React.Component {
 
 export default connect(
   (state) => ({
-    canLogOut: state.core.requireClientToken,
+    canLogOut: !!state.core.clientToken,
+    canViewTokens: !state.core.clientToken
   }),
   (dispatch) => ({
     logOut: () => dispatch(actions.core.clearSession)
