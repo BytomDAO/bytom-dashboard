@@ -31,12 +31,16 @@ class Main extends React.Component {
                 <img src={logo} className={styles.brand_image} />
               </Link>
 
-              <span>
-                <span className={styles.settings} onClick={this.toggleDropdown}>
-                  <img src={require('images/navigation/settings.png')}/>
+              {
+                !this.props.clientToken &&
+                <span>
+                  <span className={styles.settings} onClick={this.toggleDropdown}>
+                    <img src={require('images/navigation/settings.png')}/>
+                  </span>
+                  {this.props.showDropwdown && <SecondaryNavigation/>}
                 </span>
-                {this.props.showDropwdown && <SecondaryNavigation/>}
-              </span>
+              }
+
             </div>
 
             <Navigation />
@@ -57,6 +61,7 @@ class Main extends React.Component {
 export default connect(
   (state) => ({
     canLogOut: state.core.requireClientToken,
+    clientToken: state.core.clientToken,
     connected: true,
     showDropwdown: state.app.dropdownState == 'open',
   }),
