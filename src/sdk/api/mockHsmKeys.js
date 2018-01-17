@@ -20,6 +20,8 @@ const mockHsmKeysAPI = (client) => {
     },
 
     queryAll: (params, processor, cb) => shared.queryAll(client, 'mockHsm.keys', params, processor, cb),
+
+    export: (xpub) => client.request('/export-private-key', {xpub, password: '123456'})
   }
 }
 

@@ -40,9 +40,9 @@ class GrantListItem extends React.Component {
             {/*Edit*/}
           {/*</button>*/}
 
-          {<button className='btn btn-link' onClick={this.props.delete.bind(this, item)}>
+          <button className='btn btn-link' onClick={this.props.delete.bind(this, item)}>
             Delete
-          </button>}
+          </button>
         </td>}
         {/*{item.isEditing && <td colSpan='2'>*/}
           {/*<EditPolicies item={item}/>*/}
