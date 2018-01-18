@@ -5,8 +5,11 @@ const mockHsmKeysAPI = (client) => {
   return {
     create: (params, cb) => {
       let body = Object.assign({ clientToken: uuid.v4() }, params, {password: '123456'})
+      const uri = body.xprv ? '/import-private-key' : '/create-key'
+
+      debugger
       return shared.tryCallback(
-        client.request('/create-key', body).then(data => data),
+        client.request(uri, body).then(data => data),
         cb
       )
     },
