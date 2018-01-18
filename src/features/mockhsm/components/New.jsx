@@ -47,5 +47,14 @@ export default BaseNew.connect(
   reduxForm({
     form: 'newMockHsmKey',
     fields,
+    validate: values => {
+      const errors = {}
+
+      if (!values.alias) {
+        errors.alias = 'Key alias is required'
+      }
+
+      return errors
+    }
   })(New)
 )
