@@ -99,9 +99,9 @@ export default BaseNew.connect(
       if (!values.alias) {
         errors.alias = 'Key alias is required'
       }
-      if (!values.accountAlias) {
-        errors.accountAlias = 'Account alias is required'
-      }
+      // if (!values.accountAlias) {
+      //   errors.accountAlias = 'Account alias is required'
+      // }
 
       return errors
     }
