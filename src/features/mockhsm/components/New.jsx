@@ -61,7 +61,6 @@ class New extends React.Component {
 
         <FormSection title='Key Information'>
           <TextField title='Alias' placeholder='Alias' fieldProps={alias} autoFocus={true} />
-          {/*<TextField title='Password' placeholder='Password' fieldProps={password} autoFocus={false} type={'password'} />*/}
           <div>
             <input type='checkbox' id='private_key_file_input'
                    checked={this.state.import}
@@ -80,6 +79,7 @@ class New extends React.Component {
             <input type='file' style={{'display': 'flex', 'alignItems': 'center', 'fontSize': '12px'}}
                    onChange={this.handleFileChange.bind(this)}/>
           }
+          <TextField title='Password' placeholder='Password' fieldProps={password} autoFocus={false} type={'password'} />
         </FormSection>
       </FormContainer>
     )
