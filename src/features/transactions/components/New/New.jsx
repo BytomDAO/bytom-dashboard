@@ -45,12 +45,6 @@ class Form extends React.Component {
   }
 
   submitWithValidation(data) {
-    // if (this.props.replicationLag === null || this.props.replicationLag >= lagThreshold) {
-    //   return Promise.reject({
-    //     _error: `Replication lag must be less than ${lagThreshold} to submit transactions via the dashboard. Please wait for the local core to catch up to the generator.`
-    //   })
-    // }
-
     return new Promise((resolve, reject) => {
       this.props.submitForm(data)
         .catch((err) => {
@@ -72,7 +66,7 @@ class Form extends React.Component {
 
   render() {
     const {
-      fields: { baseTransaction, actions, submitAction },
+      fields: { baseTransaction, actions, submitAction, password },
       error,
       handleSubmit,
       submitting
@@ -220,7 +214,9 @@ export default BaseNew.connect(
       'actions[].referenceData',
       'actions[].type',
       'actions[].address',
+      'actions[].password',
       'submitAction',
+      'password'
     ],
     validate,
     initialValues: {

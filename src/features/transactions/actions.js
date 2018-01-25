@@ -57,6 +57,7 @@ function preprocessTransaction(formParams) {
 }
 
 form.submitForm = (formParams) => function(dispatch) {
+  const {password} = formParams
   const buildPromise = chainClient().transactions.build(builder => {
     const processed = preprocessTransaction(formParams)
 
@@ -87,7 +88,7 @@ form.submitForm = (formParams) => function(dispatch) {
     return buildPromise
       .then(({data: tpl}) => {
         const client = chainClient()
-        const body = Object.assign({}, {auth: '123456', 'transaction': tpl})
+        const body = Object.assign({}, {password, 'transaction': tpl})
         return client.connection.request('/sign-submit-transaction', body, true)
       }).then(resp => {
         if (resp.status === 'fail') {

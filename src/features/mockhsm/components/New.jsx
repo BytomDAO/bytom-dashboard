@@ -79,7 +79,10 @@ class New extends React.Component {
             <input type='file' style={{'display': 'flex', 'alignItems': 'center', 'fontSize': '12px'}}
                    onChange={this.handleFileChange.bind(this)}/>
           }
-          <TextField title='Password' placeholder='Password' fieldProps={password} autoFocus={false} type={'password'} />
+
+          {false &&
+            <TextField title='Password' placeholder='Password' fieldProps={password} autoFocus={false} type={'password'} />
+          }
         </FormSection>
       </FormContainer>
     )

@@ -23,9 +23,9 @@ const actionLabels = {
 }
 
 const visibleFields = {
-  [ISSUE_KEY]: {asset: true, amount: true},
-  [SPEND_ACCOUNT_KEY]: {asset: true, account: true, amount: true},
-  [SPEND_UNSPENT_KEY]: {outputId: true},
+  [ISSUE_KEY]: {asset: true, amount: true, password: true},
+  [SPEND_ACCOUNT_KEY]: {asset: true, account: true, amount: true, password: true},
+  [SPEND_UNSPENT_KEY]: {outputId: true, password: true},
   [CONTROL_ACCOUNT_KEY]: {asset: true, account: true, amount: true},
   [CONTROL_RECEIVER_KEY]: {asset: true, receiver: true, amount: true},
   [CONTROL_ADDRESS_KEY]: {asset: true, address: true, amount: true},
@@ -63,6 +63,7 @@ export default class ActionItem extends React.Component {
       receiver,
       assetId,
       assetAlias,
+      password,
       amount,
       referenceData } = this.props.fieldProps
 
@@ -116,6 +117,10 @@ export default class ActionItem extends React.Component {
 
         {visible.amount &&
           <TextField title='Amount' fieldProps={amount} />}
+
+        {visible.password && false &&
+          <TextField title='Password' placeholder='Password' fieldProps={password} autoFocus={false} type={'password'} />
+        }
 
         {false && this.state.referenceDataOpen &&
           <JsonField title='Reference data' fieldProps={referenceData} />
