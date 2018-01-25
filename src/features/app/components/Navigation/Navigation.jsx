@@ -46,12 +46,6 @@ class Navigation extends React.Component {
               Balances
             </Link>
           </li>
-          <li>
-            <Link to='/unspents' activeClassName={styles.active}>
-              {navIcon('unspent', styles)}
-              Unspent outputs
-            </Link>
-          </li>
         </ul>
 
         <ul className={styles.navigation}>
@@ -64,6 +58,16 @@ class Navigation extends React.Component {
             </Link>
           </li>
           }
+        </ul>
+
+        <ul className={styles.navigation}>
+          <li className={styles.navigationTitle}>advanced</li>
+          <li>
+            <Link to='/unspents' activeClassName={styles.active}>
+              {navIcon('unspent', styles)}
+              Unspent outputs
+            </Link>
+          </li>
         </ul>
 
         {<Sync />}
