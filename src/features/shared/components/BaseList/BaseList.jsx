@@ -83,7 +83,6 @@ export const mapStateToProps = (type, itemComponent, additionalProps = {}) => (s
     loadedOnce: state[type].queries.loadedOnce,
     type: type,
     listItemComponent: itemComponent,
-
     noResults: target.length == 0,
     showFirstTimeFlow: target.length == 0,
 
