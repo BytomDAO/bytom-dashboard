@@ -72,7 +72,16 @@ class ItemList extends React.Component {
 }
 
 export const mapStateToProps = (type, itemComponent, additionalProps = {}) => (state) => {
-  let items = state[type].items
+  let items = Object.assign({}, state[type].items)
+
+  if (type === 'key') {
+    state[type].importStatus.forEach(status => {
+      if (items[status.id]) {
+        Object.assign(items[status.id], status)
+      }
+    })
+  }
+
   let target = []
   for (let key in items) {
     target.push(items[key])
