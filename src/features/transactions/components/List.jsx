@@ -6,7 +6,6 @@ import { pageSize } from '../../../utility/environment'
 
 const type = 'transaction'
 
-
 class List extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.blockHeight != this.props.blockHeight) {
@@ -17,18 +16,12 @@ class List extends React.Component {
   }
   render() {
     const ItemList = BaseList.ItemList
-    //pagination create
-    let pagination = null
-    if(!this.props.noResults){
-      pagination = <Pagination
-        currentPage={this.props.currentPage}
-        isLastPage={this.props.isLastPage}
-        pushList={this.props.pushList}/>
-    }
-
     return <div>
       <ItemList {...this.props}/>
-      {pagination}
+      {!this.props.noResults && <Pagination
+        currentPage={this.props.currentPage}
+        isLastPage={this.props.isLastPage}
+        pushList={this.props.pushList}/>}
     </div>
   }
 }
