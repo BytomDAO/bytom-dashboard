@@ -7,12 +7,13 @@ import styles from './ListItem.scss'
 class ListItem extends React.Component {
   render() {
     const item = this.props.item
+    const lang = this.props.lang
 
     return(
       <div className={styles.main}>
         <div className={styles.titleBar}>
           <div className={styles.title}>
-            <label>Transaction ID:</label>
+            <label>{lang === 'zh' ? '交易ID:' : 'Transaction ID:'}</label>
             &nbsp;<code>{item.id}</code>&nbsp;
 
             <span className={styles.timestamp}>
@@ -20,11 +21,11 @@ class ListItem extends React.Component {
             </span>
           </div>
           <Link className={styles.viewLink} to={`/transactions/${item.id}`}>
-            View details
+            {lang === 'zh' ? '查看详情' : 'View details'}
           </Link>
         </div>
 
-        <Summary transaction={item} />
+        <Summary transaction={item} lang={lang}/>
       </div>
     )
   }

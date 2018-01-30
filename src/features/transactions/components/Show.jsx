@@ -16,6 +16,7 @@ class Show extends BaseShow {
 
   render() {
     const item = this.props.item
+    const lang = this.props.lang
 
     let view
     if (item) {
@@ -37,7 +38,7 @@ class Show extends BaseShow {
           </Section>
 
           <KeyValueTable
-            title='Details'
+            title={lang === 'zh' ? '详情' : 'Details'}
             items={[
               {label: 'ID', value: item.id},
               {label: 'Timestamp', value: item.timestamp},
@@ -51,7 +52,7 @@ class Show extends BaseShow {
           {item.inputs.map((input, index) =>
             <KeyValueTable
               key={index}
-              title={index == 0 ? 'Inputs' : ''}
+              title={index == 0 ? lang === 'zh' ? '输入' : 'Inputs' : ''}
               items={buildTxInputDisplay(input)}
             />
           )}
@@ -59,7 +60,7 @@ class Show extends BaseShow {
           {item.outputs.map((output, index) =>
             <KeyValueTable
               key={index}
-              title={index == 0 ? 'Outputs' : ''}
+              title={index == 0 ? lang === 'zh' ? '输出' : 'Outputs' : ''}
               items={buildTxOutputDisplay(output)}
             />
           )}
@@ -77,7 +78,8 @@ import { actions } from 'features/transactions'
 import { connect } from 'react-redux'
 
 const mapStateToProps = (state, ownProps) => ({
-  item: state.transaction.items[ownProps.params.id]
+  item: state.transaction.items[ownProps.params.id],
+  lang: state.core.lang
 })
 
 const mapDispatchToProps = ( dispatch ) => ({

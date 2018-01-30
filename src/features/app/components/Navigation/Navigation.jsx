@@ -18,6 +18,7 @@ class Navigation extends React.Component {
   }
 
   render() {
+    const lang = this.props.lang
     return (
       <div className={styles.main}>
         <ul className={styles.navigation}>
@@ -25,25 +26,25 @@ class Navigation extends React.Component {
           <li>
             <Link to='/transactions' activeClassName={styles.active}>
               {navIcon('transaction', styles)}
-              Transactions
+              { lang === 'zh' ? '交易' : 'Transactions' }
             </Link>
           </li>
           <li>
             <Link to='/accounts' activeClassName={styles.active}>
               {navIcon('account', styles)}
-              Accounts
+              { lang === 'zh' ? '账户' : 'Accounts' }
             </Link>
           </li>
           <li>
             <Link to='/assets' activeClassName={styles.active}>
               {navIcon('asset', styles)}
-              Assets
+              { lang === 'zh' ? '资产' : 'Assets' }
             </Link>
           </li>
           <li>
             <Link to='/balances' activeClassName={styles.active}>
               {navIcon('balance', styles)}
-              Balances
+              { lang === 'zh' ? '余额' : 'Balances' }
             </Link>
           </li>
         </ul>
@@ -54,7 +55,7 @@ class Navigation extends React.Component {
           <li>
             <Link to='/keys' activeClassName={styles.active}>
               {navIcon('mockhsm', styles)}
-              Keys
+              { lang === 'zh' ? '密钥' : 'Keys' }
             </Link>
           </li>
           }
@@ -88,6 +89,7 @@ export default connect(
     return {
       routing: state.routing, // required for <Link>s to update active state on navigation
       showSync: state.core.configured && !state.core.generator,
+      lang: state.core.lang,
       mockhsm: true,
       docVersion
     }
