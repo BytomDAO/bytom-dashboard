@@ -75,9 +75,9 @@ export const mapStateToProps = (type, itemComponent, additionalProps = {}) => (s
   let items = Object.assign({}, state[type].items)
 
   if (type === 'key') {
-    state[type].importStatus.forEach(status => {
-      if (items[status.id]) {
-        Object.assign(items[status.id], status)
+    (state[type].importStatus || []).forEach(status => {
+      if (items[status.xpub]) {
+        Object.assign(items[status.xpub], status)
       }
     })
   }

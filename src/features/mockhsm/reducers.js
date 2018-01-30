@@ -4,9 +4,8 @@ import { combineReducers } from 'redux'
 const type = 'key'
 const idFunc = item => item.xpub
 
-const importStatusReducer = (state = {}, action) => {
+const importStatusReducer = (state = [], action) => {
   if (action.type === 'RECEIVED_IMPORT_STATUS') {
-    window.console.log(action.data)
     return action.data
   }
 
