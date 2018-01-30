@@ -6,15 +6,14 @@ class PaginationField extends React.Component {
   render() {
     const handlePageChange = (PageNumber) => this.props.pushList([],PageNumber)
     const noOfPaginationBtn = 5
-
+    const centerClassName = 'text-center'
     return (
-     <div>
-        <Pagination
+     <div className={centerClassName}>
+        <Pagination className={styles['mt-0']}
           first
           prev
           next
           last
-          ellipsis
           boundaryLinks
           activePage = {this.props.currentPage}
           items = {this.props.totalNumberPage}
