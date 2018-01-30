@@ -19,7 +19,7 @@ import NotFound from './NotFound'
 import ObjectSelectorField from './ObjectSelectorField/ObjectSelectorField'
 import PageContent from './PageContent/PageContent'
 import PageTitle from './PageTitle/PageTitle'
-import Pagination from './Pagination/Pagination'
+import PaginationField from './Pagination/PaginationField'
 import RawJsonButton from './RawJsonButton'
 import RelativeTime from './RelativeTime'
 import RoutingContainer from './RoutingContainer'
@@ -53,7 +53,7 @@ export {
   ObjectSelectorField,
   PageContent,
   PageTitle,
-  Pagination,
+  PaginationField,
   RawJsonButton,
   RelativeTime,
   RoutingContainer,
