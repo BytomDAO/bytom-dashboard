@@ -41,11 +41,11 @@ export default BaseList.connect(
 const mapStateToProps = (type, itemComponent, additionalProps = {}) => {
   return (state, ownProps) => {
     const currentPage = Math.max(parseInt(ownProps.location.query.page) || 1, 1)
-    const lastPageIndex = pageSize - 1
-    const isLastPage = ((currentPage - 1) == lastPageIndex)
-    const startIndex = (currentPage - 1) * pageSize
     const totalItems = state[type].items
     const keysArray = Object.keys(totalItems)
+    const lastPageIndex = Math.ceil(keysArray.length/pageSize) - 1
+    const isLastPage = ((currentPage - 1) == lastPageIndex)
+    const startIndex = (currentPage - 1) * pageSize
     const currentItems = keysArray.slice(startIndex, startIndex + pageSize).map(
       id => totalItems[id]
     ).filter(item => item != undefined)
