@@ -21,7 +21,6 @@ class List extends React.Component {
       {!this.props.noResults && <PaginationField
         currentPage = { this.props.currentPage }
         totalNumberPage = { this.props.totalNumberPage }
-        isLastPage = { this.props.isLastPage }
         pushList = { this.props.pushList }/>}
     </div>
   }
@@ -45,8 +44,6 @@ const mapStateToProps = (type, itemComponent, additionalProps = {}) => {
     const totalItems = state[type].items
     const keysArray = Object.keys(totalItems)
     const totalNumberPage = Math.ceil(keysArray.length/pageSize)
-    const lastPageIndex = totalNumberPage - 1
-    const isLastPage = ((currentPage - 1) == lastPageIndex)
     const startIndex = (currentPage - 1) * pageSize
     const currentItems = keysArray.slice(startIndex, startIndex + pageSize).map(
       id => totalItems[id]
@@ -54,7 +51,6 @@ const mapStateToProps = (type, itemComponent, additionalProps = {}) => {
 
     return {
       currentPage: currentPage,
-      isLastPage: isLastPage,
       totalNumberPage: totalNumberPage,
       items: currentItems,
       loadedOnce: state[type].queries.loadedOnce,
