@@ -9,11 +9,10 @@ class PaginationField extends React.Component {
     const centerClassName = 'text-center'
     return (
      <div className={centerClassName}>
-        <Pagination className={styles['mt-0']}
-          first
-          prev
-          next
-          last
+        <Pagination
+          bsClass={styles['pagination-S']}
+          prev=  "&larr;"
+          next=  "&rarr;"
           boundaryLinks
           activePage = {this.props.currentPage}
           items = {this.props.totalNumberPage}

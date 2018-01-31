@@ -11,29 +11,55 @@
   }
 }
 
-.mt-0{
-  margin-top: 0;
-}
-
-.button {
-  border: 2px solid $highlight-default;
-  color: $highlight-default;
-  cursor: pointer;
-  display: block;
-  line-height: 26px;
-  font-size: $font-size-btn-lg;
-  height: 30px;
-  width: 30px;
-  border-radius: 15px;
-
-  &:hover {
-    border-color: $highlight-secondary;
+.pagination-S {
+  list-style-type:none;
+  li{
+    position: relative;
+    display: inline-block;
+    a,span{
+      position: relative;
+      float: left;
+      line-height: 26px;
+      text-decoration: none;
+      color: $highlight-default;;
+      height: 30px;
+      width: 30px;
+      border-radius: 15px;
+      padding: 2px;
+      &:hover{
+        color: $highlight-secondary;
+      }
+    }
+    span[aria-label="Previous"],
+    span[aria-label="Next"]
+    {
+      border: 2px solid $highlight-default;
+      color: $highlight-default;
+      cursor: pointer;
+      display: block;
+      font-size: $font-size-btn-lg;
+      margin: -2px;
+      &:hover {
+        border-color: $highlight-secondary;
+        color: $highlight-secondary;
+      }
+    }
+  }
+  :global .active{
+    a{
+      background-color: $highlight-default;
+      color: $background-color;
+    }
+  }
+  :global .disabled {
+    span{
+      border-color: $text-color;
+      color: $text-color;
+    }
+    span[aria-label="Previous"],
+    span[aria-label="Next"]{
+      display:none;
+    }
   }
 }
 
-.disabled {
-  border-color: $text-color;
-  color: $text-color;
-  opacity: 0;
-  pointer-events: none;
-}
