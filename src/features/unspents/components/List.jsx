@@ -1,7 +1,7 @@
 import React from 'react'
-import { BaseList, Pagination } from 'features/shared/components'
+import { BaseList, PaginationField } from 'features/shared/components'
 import ListItem from './ListItem'
-import {UTXOpageSize} from '../../../utility/environment'
+import {UTXOpageSize, UTXOUTXOpageSize} from '../../../utility/environment'
 
 const type = 'unspent'
 
@@ -10,10 +10,10 @@ class List extends React.Component {
     const ItemList = BaseList.ItemList
     return <div>
       <ItemList {...this.props}/>
-      {!this.props.noResults && <Pagination
-        currentPage={this.props.currentPage}
-        isLastPage={this.props.isLastPage}
-        pushList={this.props.pushList}/>}
+      {!this.props.noResults && <PaginationField
+        currentPage = { this.props.currentPage }
+        totalNumberPage = { this.props.totalNumberPage }
+        pushList = { this.props.pushList }/>}
     </div>
   }
 }
@@ -35,8 +35,7 @@ const mapStateToProps = (type, itemComponent, additionalProps = {}) => {
     const currentPage = Math.max(parseInt(ownProps.location.query.page) || 1, 1)
     const totalItems = state[type].items
     const keysArray = Object.keys(totalItems)
-    const lastPageIndex = Math.ceil(keysArray.length/UTXOpageSize) - 1
-    const isLastPage = ((currentPage - 1) == lastPageIndex)
+    const totalNumberPage = Math.ceil(keysArray.length/UTXOpageSize)
     const startIndex = (currentPage - 1) * UTXOpageSize
     const currentItems = keysArray.slice(startIndex, startIndex + UTXOpageSize).map(
       id => totalItems[id]
@@ -44,7 +43,7 @@ const mapStateToProps = (type, itemComponent, additionalProps = {}) => {
 
     return {
       currentPage: currentPage,
-      isLastPage: isLastPage,
+      totalNumberPage: totalNumberPage,
       items: currentItems,
       loadedOnce: state[type].queries.loadedOnce,
       type: type,
