@@ -29,9 +29,16 @@ class ListItem extends React.Component {
         <td>{item.alias}</td>
         <td><code>{item.xpub}</code></td>
         <td>
-          <button className='btn btn-link' onClick={this.echo.bind(this, item)}>
-            Export private key
-          </button>
+          {
+            (item.complete === undefined || item.complete === true) &&
+            <button className='btn btn-link' onClick={this.echo.bind(this, item)}>
+              Export private key
+            </button>
+          }
+          {
+            item.complete !== undefined && item.complete === false &&
+            <span>{`${34}% imported...`}</span>
+          }
         </td>
       </tr>
     )

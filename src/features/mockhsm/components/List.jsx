@@ -16,7 +16,7 @@ class KeyList extends BaseList.ItemList {
         data
       })
 
-      if (data.length > 0) {
+      if ((data || []).filter(item => !item.complete).length > 0) {
         window.setTimeout(this.setStat, 5000)
       }
     })
