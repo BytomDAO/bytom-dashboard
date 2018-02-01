@@ -7,14 +7,16 @@ import makeRoutes from 'routes'
 import actions from 'actions'
 import styles from './PageTitle.scss'
 import componentClassNames from 'utility/componentClassNames'
+import classNames from 'classnames'
 
 class PageTitle extends React.Component {
   render() {
     const chevron = require('images/chevron.png')
+    const className = classNames(styles.main, 'navbar', 'navbar-fixed-top')
 
     return(
       <div className={componentClassNames(this)}>
-        <div className={styles.main}>
+        <div className={className}>
           <div className={styles.navigation}>
             <ul className={styles.crumbs}>
               {this.props.breadcrumbs.map(crumb =>
