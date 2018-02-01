@@ -26,7 +26,7 @@ export const route = (currentStep) => (state = 'transactions', action) => {
 
 export const userInputs = (currentStep) => (state = { accounts: [] }, action) => {
   if (action.type == 'UPDATE_TUTORIAL' && currentStep.objectType == action.object) {
-    if (action.object == 'mockhsm') return { ...state, mockhsm: action.data }
+    if (action.object == 'key') return { ...state, key: action.data }
     if (action.object == 'asset') return { ...state, asset: action.data }
     if (action.object == 'account') {
       return { ...state, accounts: [...state.accounts, action.data] }

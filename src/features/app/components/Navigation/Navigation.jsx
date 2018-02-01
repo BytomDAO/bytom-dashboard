@@ -58,6 +58,12 @@ class Navigation extends React.Component {
             </Link>
           </li>
           }
+          <li>
+            <a href='#' onClick={this.openTutorial}>
+              {navIcon('tutorial', styles)}
+              Tutorial
+            </a>
+          </li>
         </ul>
 
         <ul className={styles.navigation}>
@@ -69,6 +75,7 @@ class Navigation extends React.Component {
             </Link>
           </li>
         </ul>
+
 
         {<Sync />}
       </div>

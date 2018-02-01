@@ -44,7 +44,7 @@ export const flashMessages = (state = {}, action) => {
 
     case 'CREATED_MOCKHSM': {
       return newSuccess(state, <p>
-        Created key. <Link to='mockhsms/create'>Create another?</Link>
+        Created key. <Link to='keys/create'>Create another?</Link>
       </p>)
     }
 

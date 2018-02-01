@@ -42,14 +42,14 @@ class TutorialInfo extends React.Component {
                 if ('index' in contentLine){
                   replacement = replacement[contentLine['index']]
                 }
-                str = str.replace('STRING', replacement['alias'])
+                // str = str.replace('STRING', replacement['alias'])
+                str = str.replace('STRING', replacement)
               }
 
               return <p key={i}>{str}</p>
             })}
           </div>
 
-          {nextButton}
         </div>
     </div>
     )

@@ -12,7 +12,8 @@ import classNames from 'classnames'
 class PageTitle extends React.Component {
   render() {
     const chevron = require('images/chevron.png')
-    const className = classNames(styles.main, 'navbar', 'navbar-fixed-top')
+    // const className = classNames(styles.main, 'navbar', 'navbar-fixed-top')
+    const className = classNames(styles.main)
 
     return(
       <div className={componentClassNames(this)}>
