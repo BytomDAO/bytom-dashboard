@@ -1,8 +1,9 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import { Link } from 'react-router'
+import {connect} from 'react-redux'
+import {DropdownButton, MenuItem} from 'react-bootstrap'
+import {Link} from 'react-router'
 import styles from './Navigation.scss'
-import { navIcon } from '../../utils'
+import {navIcon} from '../../utils'
 import Sync from '../Sync/Sync'
 
 class Navigation extends React.Component {
@@ -26,25 +27,25 @@ class Navigation extends React.Component {
           <li>
             <Link to='/transactions' activeClassName={styles.active}>
               {navIcon('transaction', styles)}
-              { lang === 'zh' ? '交易' : 'Transactions' }
+              {lang === 'zh' ? '交易' : 'Transactions'}
             </Link>
           </li>
           <li>
             <Link to='/accounts' activeClassName={styles.active}>
               {navIcon('account', styles)}
-              { lang === 'zh' ? '账户' : 'Accounts' }
+              {lang === 'zh' ? '账户' : 'Accounts'}
             </Link>
           </li>
           <li>
             <Link to='/assets' activeClassName={styles.active}>
               {navIcon('asset', styles)}
-              { lang === 'zh' ? '资产' : 'Assets' }
+              {lang === 'zh' ? '资产' : 'Assets'}
             </Link>
           </li>
           <li>
             <Link to='/balances' activeClassName={styles.active}>
               {navIcon('balance', styles)}
-              { lang === 'zh' ? '余额' : 'Balances' }
+              {lang === 'zh' ? '余额' : 'Balances'}
             </Link>
           </li>
         </ul>
@@ -55,7 +56,7 @@ class Navigation extends React.Component {
           <li>
             <Link to='/keys' activeClassName={styles.active}>
               {navIcon('mockhsm', styles)}
-              { lang === 'zh' ? '密钥' : 'Keys' }
+              {lang === 'zh' ? '密钥' : 'Keys'}
             </Link>
           </li>
           }
@@ -71,7 +72,22 @@ class Navigation extends React.Component {
           </li>
         </ul>
 
-        {<Sync />}
+        <ul className={`${styles.navigation} ${styles.border}`}>
+          <li className={styles.navigationTitle}>language</li>
+          <li>
+            <DropdownButton
+              className={`btn btn-default ${styles.addAction} ${styles.smallFont} ${styles.langBtn}`}
+              id='input-dropdown-addon'
+              title={this.props.lang === 'zh' ? '中文' : 'English'}
+              onSelect={this.props.setLang}
+            >
+              <MenuItem className={`${styles.smallFont}`} eventKey='zh'>中文</MenuItem>
+              <MenuItem className={`${styles.smallFont}`} eventKey='en'>English</MenuItem>
+            </DropdownButton>
+          </li>
+        </ul>
+
+        {<Sync/>}
       </div>
     )
   }
@@ -95,6 +111,12 @@ export default connect(
     }
   },
   (dispatch) => ({
-    openTutorial: () => dispatch({ type: 'OPEN_TUTORIAL' })
+    openTutorial: () => dispatch({type: 'OPEN_TUTORIAL'}),
+    setLang: (event) => {
+      dispatch({
+        type: 'UPDATE_CORE_LANGUAGE',
+        lang: event
+      })
+    }
   })
 )(Navigation)

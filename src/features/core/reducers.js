@@ -206,8 +206,11 @@ const snapshot = (state = null, action) => {
 
 const version = (state, action) => coreConfigReducer('version', state, 'N/A', action)
 
-const lang = () => {
-  return window.navigator.language.startsWith('zh') ? 'zh' : 'en'
+const lang = (state = window.navigator.language.startsWith('zh') ? 'zh' : 'en', action) => {
+  if (action.type === 'UPDATE_CORE_LANGUAGE') {
+    return action.lang || ''
+  }
+  return state
 }
 
 export default combineReducers({

@@ -1,6 +1,5 @@
 import React from 'react'
 import navStyles from '../Navigation/Navigation.scss'
-import styles from './Sync.scss'
 import { chainClient } from 'utility/environment'
 
 class Sync extends React.Component {
@@ -25,7 +24,7 @@ class Sync extends React.Component {
     })
     arr.unshift(<li key='sync-title' className={navStyles.navigationTitle}>Network status</li>)
 
-    return <ul className={`${navStyles.navigation} ${styles.main}`}>{arr}</ul>
+    return <ul className={`${navStyles.navigation}`}>{arr}</ul>
   }
 }
 

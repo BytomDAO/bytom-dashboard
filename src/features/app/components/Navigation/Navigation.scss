@@ -1,3 +1,9 @@
+.border {
+  padding-top: $gutter-size;
+  border-top: 1px solid $border-inverse-color;
+  margin-top: $gutter-size;
+}
+
 .main {
   a {
     display: block;
@@ -16,6 +22,18 @@
   a:focus {
     text-decoration: none;
     color: lighten($highlight-inverse-color, 15%);
+  }
+}
+
+.langBtn {
+  width: 80px !important;
+  height: 30px;
+}
+
+.smallFont {
+  font-size: 12px;
+  & > a {
+    font-size: 12px;
   }
 }
 
