@@ -1,5 +1,6 @@
 import { BaseNew, FormContainer, FormSection, FieldLabel, JsonField, TextField } from 'features/shared/components'
 import { DropdownButton, MenuItem } from 'react-bootstrap'
+import { replace } from 'react-router-redux'
 import { reduxForm } from 'redux-form'
 import ActionItem from './FormActionItem'
 import React from 'react'
@@ -14,6 +15,7 @@ class Form extends React.Component {
 
     this.submitWithValidation = this.submitWithValidation.bind(this)
     this.addActionItem = this.addActionItem.bind(this)
+    this.normalAction = this.normalAction.bind(this)
     this.removeActionItem = this.removeActionItem.bind(this)
     this.toggleDropwdown = this.toggleDropwdown.bind(this)
     this.closeDropdown = this.closeDropdown.bind(this)
@@ -34,6 +36,21 @@ class Form extends React.Component {
       referenceData: '{\n\t\n}'
     })
     this.closeDropdown()
+  }
+
+  normalAction(){
+    this.props.fields.actions.addField({
+      type: 'spend_account',
+      // referenceData: '{\n\t\n}'
+    })
+    this.props.fields.actions.addField({
+      type: 'spend_account',
+      // referenceData: '{\n\t\n}'
+    })
+    this.props.fields.actions.addField({
+      type: 'control_address',
+      // referenceData: '{\n\t\n}'
+    })
   }
 
   disableSubmit(actions) {
@@ -71,6 +88,8 @@ class Form extends React.Component {
       handleSubmit,
       submitting
     } = this.props
+    // const { account, amount, asset, gas, address } = this.props.fieldProps
+
 
     let submitLabel = 'Submit transaction'
     if (submitAction.value == 'generate') {
@@ -78,6 +97,7 @@ class Form extends React.Component {
     }
 
     return(
+
       <FormContainer
         error={error}
         label='New transaction'
@@ -86,8 +106,40 @@ class Form extends React.Component {
         showSubmitIndicator={true}
         submitting={submitting}
         disabled={this.disableSubmit(actions)} >
+        {/*disabled={false} >*/}
 
-        <FormSection title='Actions'>
+
+        <div className={`btn-group ${styles.btnGroup}`} role='group'>
+          <button
+            className={`btn btn-default ${styles.btn} ${this.props.normalButtonStyle}`}
+            onClick={(e) => {
+              e.preventDefault()
+              this.setState({showAdvanced: false})
+              this.normalAction
+            }} >
+             {/*onClick={this.props.showNormal} >*/}
+            Normal
+          </button>
+
+          <button
+            className={`btn btn-default ${styles.btn} ${this.props.advancedButtonStyle}`}
+            onClick={(e) => {
+              e.preventDefault()
+              this.setState({showAdvanced: true})
+            }} >
+            Advanced
+          </button>
+        </div>
+
+        { !this.state.showAdvanced && <FormSection title='Normal Trasaction'>
+          <TextField title='Account' fieldProps={actions}/>
+          <TextField title='Amount' fieldProps={actions}/>
+          <TextField title='Asset' fieldProps={actions}/>
+          <TextField title='Gas' fieldProps={actions}/>
+          <TextField title='Address' fieldProps={actions}/>
+        </FormSection>}
+
+        { this.state.showAdvanced && <FormSection title='Actions'>
           {actions.map((action, index) =>
             <ActionItem
               key={index}
@@ -105,6 +157,7 @@ class Form extends React.Component {
                 title='+ Add action'
                 onSelect={this.addActionItem}
               >
+                {/*<MenuItem eventKey='normal_mode'>normal</MenuItem>*/}
                 <MenuItem eventKey='issue'>Issue</MenuItem>
                 <MenuItem eventKey='spend_account'>Spend from account</MenuItem>
                 {/*<MenuItem eventKey='spend_account_unspent_output'>Spend unspent output</MenuItem>*/}
@@ -115,7 +168,7 @@ class Form extends React.Component {
                 {/*<MenuItem eventKey='set_transaction_reference_data'>Set transaction reference data</MenuItem>*/}
               </DropdownButton>
             </div>
-        </FormSection>
+        </FormSection>}
 
         {false && !this.state.showAdvanced &&
           <FormSection>
@@ -195,10 +248,30 @@ const validate = values => {
   return errors
 }
 
-export default BaseNew.connect(
-  state => ({
+const mapStateToProps = (state, ownProps) => {
+  const normalSelected = ownProps.location.query.type == 'normal'
+  const advancedSelected = ownProps.location.query.type != 'normal'
+
+  return {
+    normalSelected,
+    advancedSelected,
     ...BaseNew.mapStateToProps('transaction')(state),
+
+  }
+}
+
+const mapDispatchToProps = (dispatch) => ({
+  showNormal: () => dispatch(replace('transaction/create?type=normal')),
+  showAdvanced: () => dispatch(replace('transaction/create?type=advanced'))
+})
+
+export default BaseNew.connect(
+  // (state, ownProps) => ({
+  (state) => ({
+    ...BaseNew.mapStateToProps('transaction')(state)
+    // ...mapStateToProps(state, ownProps)
   }),
+  // mapDispatchToProps,
   BaseNew.mapDispatchToProps('transaction'),
   reduxForm({
     form: 'NewTransactionForm',
@@ -215,6 +288,11 @@ export default BaseNew.connect(
       'actions[].type',
       'actions[].address',
       'actions[].password',
+      // 'account',
+      // 'amount',
+      // 'asset',
+      // 'gas',
+      // 'address',
       'submitAction',
       'password'
     ],
@@ -225,3 +303,5 @@ export default BaseNew.connect(
   }
   )(Form)
 )
+
+
