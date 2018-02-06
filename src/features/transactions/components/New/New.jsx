@@ -38,19 +38,52 @@ class Form extends React.Component {
   }
 
   normalAction(){
-    this.props.fields.actions.addField({
+    const actions = this.props.fields.actions
+    //gas
+    actions.addField({
       type: 'spend_account',
-      // referenceData: '{\n\t\n}'
+      assetAlias: 'btm',
+      referenceData: '{\n\t\n}'
     })
-    this.props.fields.actions.addField({
+    //spend from
+    actions.addField({
       type: 'spend_account',
-      // referenceData: '{\n\t\n}'
+      referenceData: '{\n\t\n}'
     })
-    this.props.fields.actions.addField({
+    //address
+    actions.addField({
       type: 'control_address',
-      // referenceData: '{\n\t\n}'
+      referenceData: '{\n\t\n}'
     })
   }
+
+  // normalAction(normalTransaction){
+  //   const actions = this.props.fields.actions
+  //   //gas
+  //   actions.addField({
+  //     type: 'spend_account',
+  //     accountAlias: normalTransaction.account.value,
+  //     assetAlias: 'btm',
+  //     amount: normalTransaction.gas.value,
+  //     referenceData: '{\n\t\n}'
+  //   })
+  //   //spend from
+  //   actions.addField({
+  //     type: 'spend_account',
+  //     accountAlias: normalTransaction.account.value,
+  //     assetAlias: normalTransaction.asset.value,
+  //     amount: normalTransaction.amount.value,
+  //     referenceData: '{\n\t\n}'
+  //   })
+  //   //address
+  //   actions.addField({
+  //     type: 'control_address',
+  //     address: normalTransaction.address.value,
+  //     assetAlias: normalTransaction.asset.value,
+  //     amount: normalTransaction.amount.value,
+  //     referenceData: '{\n\t\n}'
+  //   })
+  // }
 
   emptyActionItem(actions){
     actions.map(() => this.removeActionItem())
@@ -65,6 +98,7 @@ class Form extends React.Component {
   }
 
   submitWithValidation(data) {
+    // this.normalAction(this.props.fields.normalTransaction)
     return new Promise((resolve, reject) => {
       this.props.submitForm(data)
         .catch((err) => {
@@ -86,7 +120,7 @@ class Form extends React.Component {
 
   render() {
     const {
-      fields: { baseTransaction, actions, submitAction, password },
+      fields: { baseTransaction, actions, submitAction, password, normalTransaction },
       error,
       handleSubmit,
       submitting
@@ -100,7 +134,6 @@ class Form extends React.Component {
     }
 
     return(
-
       <FormContainer
         error={error}
         label='New transaction'
@@ -108,8 +141,8 @@ class Form extends React.Component {
         onSubmit={handleSubmit(this.submitWithValidation)}
         showSubmitIndicator={true}
         submitting={submitting}
-        disabled={this.disableSubmit(actions)} >
-        {/*disabled={false} >*/}
+        // disabled={this.disableSubmit(actions)} >
+        disabled={false} >
 
 
         <div className={`btn-group ${styles.btnGroup}`} role='group'>
@@ -136,9 +169,14 @@ class Form extends React.Component {
         </div>
 
         { this.state.showNormal && <FormSection title='Normal Trasaction'>
-          <TextField title='Account' fieldProps={actions}/>
-          <TextField title='Amount' fieldProps={actions}/>
+          {/*<TextField title='Account' fieldProps={normalTransaction.account}/>*/}
+          {/*<TextField title='Asset' fieldProps={normalTransaction.asset}/>*/}
+          {/*<TextField title='Amount' fieldProps={normalTransaction.amount}/>*/}
+          {/*<TextField title='Gas' fieldProps={normalTransaction.gas}/>*/}
+          {/*<TextField title='Address' fieldProps={normalTransaction.address}/>*/}
+          <TextField title='Account' fieldProps={actions[0].accountAlias} />
           <TextField title='Asset' fieldProps={actions}/>
+          <TextField title='Amount' fieldProps={actions}/>
           <TextField title='Gas' fieldProps={actions}/>
           <TextField title='Address' fieldProps={actions}/>
         </FormSection>}
@@ -272,11 +310,11 @@ export default BaseNew.connect(
       'actions[].type',
       'actions[].address',
       'actions[].password',
-      // 'account',
-      // 'amount',
-      // 'asset',
-      // 'gas',
-      // 'address',
+      'normalTransaction.account',
+      'normalTransaction.amount',
+      'normalTransaction.asset',
+      'normalTransaction.gas',
+      'normalTransaction.address',
       'submitAction',
       'password'
     ],
