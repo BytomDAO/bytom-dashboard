@@ -85,15 +85,19 @@ form.submitForm = (formParams) => function(dispatch) {
 
   if (formParams.submitAction == 'submit') {
     return buildPromise
-      .then(({data: tpl}) => {
+      .then((resp) => {
+        if (resp.status === 'fail') {
+          throw new Error(resp.msg)
+        }
+
+        const tpl = resp.data
         const password = (tpl.signing_instructions || []).map(() => '123456')
         const client = chainClient()
         const body = Object.assign({}, {password, 'transaction': tpl})
         return client.connection.request('/sign-submit-transaction', body, true)
       }).then(resp => {
         if (resp.status === 'fail') {
-          // TODO: deal with failure
-          return
+          throw new Error(resp.msg)
         }
 
         dispatch(form.created())
