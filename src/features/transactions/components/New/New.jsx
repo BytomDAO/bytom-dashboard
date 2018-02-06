@@ -1,6 +1,5 @@
 import { BaseNew, FormContainer, FormSection, FieldLabel, JsonField, TextField } from 'features/shared/components'
 import { DropdownButton, MenuItem } from 'react-bootstrap'
-import { replace } from 'react-router-redux'
 import { reduxForm } from 'redux-form'
 import ActionItem from './FormActionItem'
 import React from 'react'
@@ -15,7 +14,7 @@ class Form extends React.Component {
 
     this.submitWithValidation = this.submitWithValidation.bind(this)
     this.addActionItem = this.addActionItem.bind(this)
-    this.normalAction = this.normalAction.bind(this)
+    // this.normalAction = this.normalAction.bind(this)
     this.removeActionItem = this.removeActionItem.bind(this)
     this.toggleDropwdown = this.toggleDropwdown.bind(this)
     this.closeDropdown = this.closeDropdown.bind(this)
@@ -51,6 +50,10 @@ class Form extends React.Component {
       type: 'control_address',
       // referenceData: '{\n\t\n}'
     })
+  }
+
+  emptyActionItem(actions){
+    actions.map(() => this.removeActionItem())
   }
 
   disableSubmit(actions) {
@@ -114,8 +117,8 @@ class Form extends React.Component {
             className={`btn btn-default ${styles.btn} ${this.props.normalButtonStyle}`}
             onClick={(e) => {
               e.preventDefault()
-              this.setState({showAdvanced: false})
-              this.normalAction
+              this.normalAction()
+              this.setState({showNormal: true})
             }} >
              {/*onClick={this.props.showNormal} >*/}
             Normal
@@ -125,13 +128,14 @@ class Form extends React.Component {
             className={`btn btn-default ${styles.btn} ${this.props.advancedButtonStyle}`}
             onClick={(e) => {
               e.preventDefault()
-              this.setState({showAdvanced: true})
+              this.emptyActionItem(actions)
+              this.setState({showNormal: false})
             }} >
             Advanced
           </button>
         </div>
 
-        { !this.state.showAdvanced && <FormSection title='Normal Trasaction'>
+        { this.state.showNormal && <FormSection title='Normal Trasaction'>
           <TextField title='Account' fieldProps={actions}/>
           <TextField title='Amount' fieldProps={actions}/>
           <TextField title='Asset' fieldProps={actions}/>
@@ -139,7 +143,7 @@ class Form extends React.Component {
           <TextField title='Address' fieldProps={actions}/>
         </FormSection>}
 
-        { this.state.showAdvanced && <FormSection title='Actions'>
+        { !this.state.showNormal && <FormSection title='Actions'>
           {actions.map((action, index) =>
             <ActionItem
               key={index}
@@ -248,30 +252,10 @@ const validate = values => {
   return errors
 }
 
-const mapStateToProps = (state, ownProps) => {
-  const normalSelected = ownProps.location.query.type == 'normal'
-  const advancedSelected = ownProps.location.query.type != 'normal'
-
-  return {
-    normalSelected,
-    advancedSelected,
-    ...BaseNew.mapStateToProps('transaction')(state),
-
-  }
-}
-
-const mapDispatchToProps = (dispatch) => ({
-  showNormal: () => dispatch(replace('transaction/create?type=normal')),
-  showAdvanced: () => dispatch(replace('transaction/create?type=advanced'))
-})
-
 export default BaseNew.connect(
-  // (state, ownProps) => ({
   (state) => ({
     ...BaseNew.mapStateToProps('transaction')(state)
-    // ...mapStateToProps(state, ownProps)
   }),
-  // mapDispatchToProps,
   BaseNew.mapDispatchToProps('transaction'),
   reduxForm({
     form: 'NewTransactionForm',
