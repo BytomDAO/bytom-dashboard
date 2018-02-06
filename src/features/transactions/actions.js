@@ -93,7 +93,8 @@ form.submitForm = (formParams) => function(dispatch) {
       }).then(resp => {
         if (resp.status === 'fail') {
           // TODO: deal with failure
-          return
+          throw(resp.msg)
+          // return
         }
 
         dispatch(form.created())
