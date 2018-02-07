@@ -48,6 +48,11 @@ class Form extends React.Component {
     this.props.fields.actions.removeField(index)
   }
 
+  emptyActions(actions){
+    // debugger
+    actions.map((value,key)=> this.removeActionItem(key))
+  }
+
   submitWithValidation(data) {
     return new Promise((resolve, reject) => {
       this.props.submitForm(data)
@@ -98,6 +103,7 @@ class Form extends React.Component {
             className={`btn btn-default ${styles.btn} ${this.props.normalButtonStyle}`}
             onClick={(e) => {
               e.preventDefault()
+              this.emptyActions(actions)
               this.setState({showAdvance: false})
             }} >
             Normal
