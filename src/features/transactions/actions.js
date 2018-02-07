@@ -18,8 +18,13 @@ function preprocessTransaction(formParams) {
   }
 
   const normalT = formParams.normalTransaction
-  debugger
-  if(normalT != null){
+
+  //normal transaction page
+  let normalTSuccess = true
+  for (let key in normalT){
+    normalTSuccess = normalTSuccess && (normalT[key] != undefined)
+  }
+  if(normalTSuccess && builder.actions.length == 0){
     builder.actions.push({accountAlias: normalT.account, assetAlias: 'btm', amount: normalT.gas, type: 'spend_account'})
     builder.actions.push({accountAlias: normalT.account, assetAlias: normalT.asset, amount: normalT.amount, type: 'spend_account'})
     builder.actions.push({address: normalT.address, assetAlias: normalT.asset, amount: normalT.amount, type: 'control_address'})

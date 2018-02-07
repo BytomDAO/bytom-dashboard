@@ -14,7 +14,6 @@ class Form extends React.Component {
 
     this.submitWithValidation = this.submitWithValidation.bind(this)
     this.addActionItem = this.addActionItem.bind(this)
-    // this.normalAction = this.normalAction.bind(this)
     this.removeActionItem = this.removeActionItem.bind(this)
     this.toggleDropwdown = this.toggleDropwdown.bind(this)
     this.closeDropdown = this.closeDropdown.bind(this)
@@ -37,60 +36,12 @@ class Form extends React.Component {
     this.closeDropdown()
   }
 
-  normalAction(){
-    const actions = this.props.fields.actions
-    //gas
-    actions.addField({
-      type: 'spend_account',
-      assetAlias: 'btm',
-      referenceData: '{\n\t\n}'
-    })
-    //spend from
-    actions.addField({
-      type: 'spend_account',
-      referenceData: '{\n\t\n}'
-    })
-    //address
-    actions.addField({
-      type: 'control_address',
-      referenceData: '{\n\t\n}'
-    })
-  }
-
-  // normalAction(normalTransaction){
-  //   const actions = this.props.fields.actions
-  //   //gas
-  //   actions.addField({
-  //     type: 'spend_account',
-  //     accountAlias: normalTransaction.account.value,
-  //     assetAlias: 'btm',
-  //     amount: normalTransaction.gas.value,
-  //     referenceData: '{\n\t\n}'
-  //   })
-  //   //spend from
-  //   actions.addField({
-  //     type: 'spend_account',
-  //     accountAlias: normalTransaction.account.value,
-  //     assetAlias: normalTransaction.asset.value,
-  //     amount: normalTransaction.amount.value,
-  //     referenceData: '{\n\t\n}'
-  //   })
-  //   //address
-  //   actions.addField({
-  //     type: 'control_address',
-  //     address: normalTransaction.address.value,
-  //     assetAlias: normalTransaction.asset.value,
-  //     amount: normalTransaction.amount.value,
-  //     referenceData: '{\n\t\n}'
-  //   })
-  // }
-
-  emptyActionItem(actions){
-    actions.map(() => this.removeActionItem())
-  }
-
-  disableSubmit(actions) {
-    return actions.length == 0 & !this.state.showAdvanced
+  disableSubmit(actions, normalTransaction) {
+    let isNormalShow = true
+    for (let key in normalTransaction){
+      isNormalShow = isNormalShow & normalTransaction[key].dirty
+    }
+    return !isNormalShow & actions.length == 0 & !this.state.showAdvanced
   }
 
   removeActionItem(index) {
@@ -98,8 +49,6 @@ class Form extends React.Component {
   }
 
   submitWithValidation(data) {
-    // this.normalAction(this.props.fields.normalTransaction)
-    // debugger
     return new Promise((resolve, reject) => {
       this.props.submitForm(data)
         .catch((err) => {
@@ -127,13 +76,6 @@ class Form extends React.Component {
       handleSubmit,
       submitting
     } = this.props
-    // const { account, amount, asset, gas, address } = this.props.fieldProps
-
-    // const valueOnChange = event => {
-    //   const value = this.props.onChange(event).value
-    //   actions[1].assetAlias.value = value
-    //   // this.setState({actions[1].accountAlias : value })
-    // }
 
     let submitLabel = 'Submit transaction'
     if (submitAction.value == 'generate') {
@@ -148,8 +90,7 @@ class Form extends React.Component {
         onSubmit={handleSubmit(this.submitWithValidation)}
         showSubmitIndicator={true}
         submitting={submitting}
-        // disabled={this.disableSubmit(actions)} >
-        disabled={false} >
+        disabled={this.disableSubmit(actions, normalTransaction)} >
 
 
         <div className={`btn-group ${styles.btnGroup}`} role='group'>
@@ -269,13 +210,6 @@ class Form extends React.Component {
 }
 
 const validate = values => {
-  const normalT = values.normalTransaction
-  values.actions.push({accountAlias: normalT.account, assetAlias: 'btm', amount: normalT.gas, type: 'spend_account'})
-  values.actions.push({accountAlias: normalT.account, assetAlias: normalT.asset, amount: normalT.amount, type: 'spend_account'})
-  values.actions.push({address: normalT.address, assetAlias: normalT.asset, amount: normalT.amount, type: 'control_address'})
-
-  // debugger
-
   const errors = {actions: {}}
 
   // Base transaction
