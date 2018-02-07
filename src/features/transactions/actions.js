@@ -17,6 +17,14 @@ function preprocessTransaction(formParams) {
     actions: copy.actions,
   }
 
+  const normalT = formParams.normalTransaction
+  debugger
+  if(normalT != null){
+    builder.actions.push({accountAlias: normalT.account, assetAlias: 'btm', amount: normalT.gas, type: 'spend_account'})
+    builder.actions.push({accountAlias: normalT.account, assetAlias: normalT.asset, amount: normalT.amount, type: 'spend_account'})
+    builder.actions.push({address: normalT.address, assetAlias: normalT.asset, amount: normalT.amount, type: 'control_address'})
+  }
+
   if (builder.baseTransaction == '') {
     delete builder.baseTransaction
   }
