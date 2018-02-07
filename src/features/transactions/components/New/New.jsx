@@ -99,6 +99,7 @@ class Form extends React.Component {
 
   submitWithValidation(data) {
     // this.normalAction(this.props.fields.normalTransaction)
+    // debugger
     return new Promise((resolve, reject) => {
       this.props.submitForm(data)
         .catch((err) => {
@@ -118,6 +119,7 @@ class Form extends React.Component {
     })
   }
 
+
   render() {
     const {
       fields: { baseTransaction, actions, submitAction, password, normalTransaction },
@@ -127,6 +129,11 @@ class Form extends React.Component {
     } = this.props
     // const { account, amount, asset, gas, address } = this.props.fieldProps
 
+    // const valueOnChange = event => {
+    //   const value = this.props.onChange(event).value
+    //   actions[1].assetAlias.value = value
+    //   // this.setState({actions[1].accountAlias : value })
+    // }
 
     let submitLabel = 'Submit transaction'
     if (submitAction.value == 'generate') {
@@ -150,10 +157,8 @@ class Form extends React.Component {
             className={`btn btn-default ${styles.btn} ${this.props.normalButtonStyle}`}
             onClick={(e) => {
               e.preventDefault()
-              this.normalAction()
-              this.setState({showNormal: true})
+              this.setState({showAdvance: false})
             }} >
-             {/*onClick={this.props.showNormal} >*/}
             Normal
           </button>
 
@@ -161,27 +166,21 @@ class Form extends React.Component {
             className={`btn btn-default ${styles.btn} ${this.props.advancedButtonStyle}`}
             onClick={(e) => {
               e.preventDefault()
-              this.emptyActionItem(actions)
-              this.setState({showNormal: false})
+              this.setState({showAdvance: true})
             }} >
             Advanced
           </button>
         </div>
 
-        { this.state.showNormal && <FormSection title='Normal Trasaction'>
-          {/*<TextField title='Account' fieldProps={normalTransaction.account}/>*/}
-          {/*<TextField title='Asset' fieldProps={normalTransaction.asset}/>*/}
-          {/*<TextField title='Amount' fieldProps={normalTransaction.amount}/>*/}
-          {/*<TextField title='Gas' fieldProps={normalTransaction.gas}/>*/}
-          {/*<TextField title='Address' fieldProps={normalTransaction.address}/>*/}
-          <TextField title='Account' fieldProps={actions[0].accountAlias} />
-          <TextField title='Asset' fieldProps={actions}/>
-          <TextField title='Amount' fieldProps={actions}/>
-          <TextField title='Gas' fieldProps={actions}/>
-          <TextField title='Address' fieldProps={actions}/>
+        { !this.state.showAdvance && <FormSection title='Normal Trasaction'>
+          <TextField title='Account' fieldProps={normalTransaction.account}/>
+          <TextField title='Asset' fieldProps={normalTransaction.asset}/>
+          <TextField title='Amount' fieldProps={normalTransaction.amount}/>
+          <TextField title='Gas' fieldProps={normalTransaction.gas}/>
+          <TextField title='Address' fieldProps={normalTransaction.address}/>
         </FormSection>}
 
-        { !this.state.showNormal && <FormSection title='Actions'>
+        { this.state.showAdvance && <FormSection title='Actions'>
           {actions.map((action, index) =>
             <ActionItem
               key={index}
@@ -270,6 +269,13 @@ class Form extends React.Component {
 }
 
 const validate = values => {
+  const normalT = values.normalTransaction
+  values.actions.push({accountAlias: normalT.account, assetAlias: 'btm', amount: normalT.gas, type: 'spend_account'})
+  values.actions.push({accountAlias: normalT.account, assetAlias: normalT.asset, amount: normalT.amount, type: 'spend_account'})
+  values.actions.push({address: normalT.address, assetAlias: normalT.asset, amount: normalT.amount, type: 'control_address'})
+
+  // debugger
+
   const errors = {actions: {}}
 
   // Base transaction
