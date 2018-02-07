@@ -49,7 +49,6 @@ class Form extends React.Component {
   }
 
   emptyActions(actions){
-    // debugger
     actions.map((value,key)=> this.removeActionItem(key))
   }
 
@@ -100,7 +99,7 @@ class Form extends React.Component {
 
         <div className={`btn-group ${styles.btnGroup}`} role='group'>
           <button
-            className={`btn btn-default ${styles.btn} ${this.props.normalButtonStyle}`}
+            className={`btn btn-default ${this.state.showAdvance ? null: 'active'}`}
             onClick={(e) => {
               e.preventDefault()
               this.emptyActions(actions)
@@ -110,7 +109,7 @@ class Form extends React.Component {
           </button>
 
           <button
-            className={`btn btn-default ${styles.btn} ${this.props.advancedButtonStyle}`}
+            className={`btn btn-default ${this.state.showAdvance ? 'active': null}`}
             onClick={(e) => {
               e.preventDefault()
               this.setState({showAdvance: true})
