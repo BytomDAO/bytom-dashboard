@@ -2,8 +2,6 @@ import React from 'react'
 import { ErrorBanner, HiddenField, Autocomplete, JsonField, TextField, ObjectSelectorField } from 'features/shared/components'
 import styles from './FormActionItem.scss'
 
-// const NORMAL_KEY = ''
-
 const ISSUE_KEY = 'issue'
 const SPEND_ACCOUNT_KEY = 'spend_account'
 const SPEND_UNSPENT_KEY = 'spend_account_unspent_output'
@@ -25,7 +23,6 @@ const actionLabels = {
 }
 
 const visibleFields = {
-  // [NORMAL_KEY]: {account: true, asset: true, amount:true, amount:true, address:true},
   [ISSUE_KEY]: {asset: true, amount: true, password: true},
   [SPEND_ACCOUNT_KEY]: {asset: true, account: true, amount: true, password: true},
   [SPEND_UNSPENT_KEY]: {outputId: true, password: true},
