@@ -19,15 +19,19 @@ function preprocessTransaction(formParams) {
 
   const normalT = formParams.normalTransaction
 
-  //normal transaction page
-  let normalTSuccess = true
-  for (let key in normalT){
-    normalTSuccess = normalTSuccess && (normalT[key] != undefined)
-  }
-  if(normalTSuccess && builder.actions.length == 0){
-    builder.actions.push({accountAlias: normalT.account, assetAlias: 'btm', amount: normalT.gas, type: 'spend_account'})
-    builder.actions.push({accountAlias: normalT.account, assetAlias: normalT.asset, amount: normalT.amount, type: 'spend_account'})
-    builder.actions.push({address: normalT.address, assetAlias: normalT.asset, amount: normalT.amount, type: 'control_address'})
+  // //normal transaction page
+  // let normalTSuccess = true
+  // for (let key in normalT){
+  //   if(key == 'accountAlias' || key == 'accountId'){
+  //
+  //   }
+  //   normalTSuccess = normalTSuccess && (normalT[key] != undefined)
+  // }
+  // debugger
+  if( builder.actions.length == 0){
+    builder.actions.push({accountAlias: normalT.accountAlias, accountId: normalT.accountId, assetAlias: 'btm', amount: normalT.gas, type: 'spend_account'})
+    builder.actions.push({accountAlias: normalT.accountAlias, accountId: normalT.accountId, assetAlias: normalT.assetAlias, assetId: normalT.assetId, amount: normalT.amount, type: 'spend_account'})
+    builder.actions.push({address: normalT.address, assetAlias: normalT.assetAlias, assetId: normalT.assetId, amount: normalT.amount, type: 'control_address'})
   }
 
   if (builder.baseTransaction == '') {

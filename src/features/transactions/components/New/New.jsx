@@ -1,9 +1,11 @@
-import { BaseNew, FormContainer, FormSection, FieldLabel, JsonField, TextField } from 'features/shared/components'
+import { BaseNew, FormContainer, FormSection, FieldLabel, JsonField, TextField, Autocomplete, ObjectSelectorField, SelectField } from 'features/shared/components'
 import { DropdownButton, MenuItem } from 'react-bootstrap'
 import { reduxForm } from 'redux-form'
 import ActionItem from './FormActionItem'
 import React from 'react'
 import styles from './New.scss'
+
+const rangeOptions = [250000000, 200000000, 100000000].map(val => ({label: val+' btm', value: val}))
 
 class Form extends React.Component {
   constructor(props) {
@@ -37,11 +39,13 @@ class Form extends React.Component {
   }
 
   disableSubmit(actions, normalTransaction) {
-    let isNormalShow = true
-    for (let key in normalTransaction){
-      isNormalShow = isNormalShow & normalTransaction[key].dirty
-    }
-    return !isNormalShow & actions.length == 0 & !this.state.showAdvanced
+    // let isNormalShow = true
+    // for (let key in normalTransaction){
+    //   isNormalShow = isNormalShow & normalTransaction[key].dirty
+    // }
+    // return !isNormalShow & actions.length == 0 & !this.state.showAdvanced
+    // return  actions.length == 0 & !this.state.showAdvanced
+    return  false
   }
 
   removeActionItem(index) {
@@ -119,11 +123,50 @@ class Form extends React.Component {
         </div>
 
         { !this.state.showAdvance && <FormSection title='Normal Trasaction'>
-          <TextField title='Account' fieldProps={normalTransaction.account}/>
-          <TextField title='Asset' fieldProps={normalTransaction.asset}/>
-          <TextField title='Amount' fieldProps={normalTransaction.amount}/>
-          <TextField title='Gas' fieldProps={normalTransaction.gas}/>
-          <TextField title='Address' fieldProps={normalTransaction.address}/>
+          <label className={styles.title}>From</label>
+          <div className={styles.main}>
+            <ObjectSelectorField
+              title='Account'
+              aliasField={Autocomplete.AccountAlias}
+              fieldProps={{
+                id: normalTransaction.accountId,
+                alias: normalTransaction.accountAlias
+              }}
+            />
+            <ObjectSelectorField
+              title='Asset'
+              aliasField={Autocomplete.AssetAlias}
+              fieldProps={{
+                id: normalTransaction.assetId,
+                alias: normalTransaction.assetAlias
+              }}
+            />
+          </div>
+
+          <label className={styles.title}>To</label>
+          <div className={styles.main}>
+            <TextField title='Address' fieldProps={normalTransaction.address}/>
+            <TextField title='Amount' fieldProps={normalTransaction.amount}/>
+          </div>
+
+          <label className={styles.title}>Gas</label>
+
+          <div className={styles.optionsBtnContianer}>
+            {/*<SelectField options={rangeOptions}*/}
+                         {/*title='Gas'*/}
+                         {/*skipEmpty={true}*/}
+                         {/*fieldProps={normalTransaction.gas} />*/}
+            {rangeOptions.map((option) =>
+              <label className={styles.optionsBtn}>
+                <input type='radio'
+                {...normalTransaction.gas}
+                value={option.value}
+                />
+                {option.label}
+              </label>
+            )}
+          </div>
+
         </FormSection>}
 
         { this.state.showAdvance && <FormSection title='Actions'>
@@ -137,38 +180,38 @@ class Form extends React.Component {
               remove={this.removeActionItem}
             />)}
 
-            <div className={`btn-group ${styles.addActionContainer} ${this.state.showDropdown && 'open'}`}>
-              <DropdownButton
-                className={`btn btn-default ${styles.addAction}`}
-                id='input-dropdown-addon'
-                title='+ Add action'
-                onSelect={this.addActionItem}
-              >
-                {/*<MenuItem eventKey='normal_mode'>normal</MenuItem>*/}
-                <MenuItem eventKey='issue'>Issue</MenuItem>
-                <MenuItem eventKey='spend_account'>Spend from account</MenuItem>
-                {/*<MenuItem eventKey='spend_account_unspent_output'>Spend unspent output</MenuItem>*/}
-                <MenuItem eventKey='control_account'>Control with account</MenuItem>
-                <MenuItem eventKey='control_receiver'>Control with receiver</MenuItem>
-                <MenuItem eventKey='control_address'>Control with address</MenuItem>
-                <MenuItem eventKey='retire'>Retire</MenuItem>
-                {/*<MenuItem eventKey='set_transaction_reference_data'>Set transaction reference data</MenuItem>*/}
-              </DropdownButton>
-            </div>
+          <div className={`btn-group ${styles.addActionContainer} ${this.state.showDropdown && 'open'}`}>
+            <DropdownButton
+              className={`btn btn-default ${styles.addAction}`}
+              id='input-dropdown-addon'
+              title='+ Add action'
+              onSelect={this.addActionItem}
+            >
+              {/*<MenuItem eventKey='normal_mode'>normal</MenuItem>*/}
+              <MenuItem eventKey='issue'>Issue</MenuItem>
+              <MenuItem eventKey='spend_account'>Spend from account</MenuItem>
+              {/*<MenuItem eventKey='spend_account_unspent_output'>Spend unspent output</MenuItem>*/}
+              <MenuItem eventKey='control_account'>Control with account</MenuItem>
+              <MenuItem eventKey='control_receiver'>Control with receiver</MenuItem>
+              <MenuItem eventKey='control_address'>Control with address</MenuItem>
+              <MenuItem eventKey='retire'>Retire</MenuItem>
+              {/*<MenuItem eventKey='set_transaction_reference_data'>Set transaction reference data</MenuItem>*/}
+            </DropdownButton>
+          </div>
         </FormSection>}
 
         {false && !this.state.showAdvanced &&
-          <FormSection>
-            <a href='#'
-              className={styles.showAdvanced}
-              onClick={(e) => {
-                e.preventDefault()
-                this.setState({showAdvanced: true})
-              }}
-            >
-              Show advanced options
-            </a>
-          </FormSection>
+        <FormSection>
+          <a href='#'
+             className={styles.showAdvanced}
+             onClick={(e) => {
+               e.preventDefault()
+               this.setState({showAdvanced: true})
+             }}
+          >
+            Show advanced options
+          </a>
+        </FormSection>
         }
 
         {false && this.state.showAdvanced && <FormSection title='Advanced Options'>
@@ -182,29 +225,29 @@ class Form extends React.Component {
             <FieldLabel>Transaction Build Type</FieldLabel>
             <table className={styles.submitTable}>
               <tbody>
-                <tr>
-                  <td><input id='submit_action_submit' type='radio' {...submitAction} value='submit' checked={submitAction.value == 'submit'} /></td>
-                  <td>
-                    <label htmlFor='submit_action_submit'>Submit transaction to blockchain</label>
-                    <br />
-                    <label htmlFor='submit_action_submit' className={styles.submitDescription}>
-                      This transaction will be signed by the MockHSM and submitted to the blockchain.
-                    </label>
-                  </td>
-                </tr>
-                <tr>
-                  <td><input id='submit_action_generate' type='radio' {...submitAction} value='generate' checked={submitAction.value == 'generate'} /></td>
-                  <td>
-                    <label htmlFor='submit_action_generate'>Allow additional actions</label>
-                    <br />
-                    <label htmlFor='submit_action_generate' className={styles.submitDescription}>
-                      These actions will be signed by the MockHSM and returned as a
-                      transaction hex string, which should be used as the base
-                      transaction in a multi-party swap. This transaction will be
-                      valid for one hour.
-                    </label>
-                  </td>
-                </tr>
+              <tr>
+                <td><input id='submit_action_submit' type='radio' {...submitAction} value='submit' checked={submitAction.value == 'submit'} /></td>
+                <td>
+                  <label htmlFor='submit_action_submit'>Submit transaction to blockchain</label>
+                  <br />
+                  <label htmlFor='submit_action_submit' className={styles.submitDescription}>
+                    This transaction will be signed by the MockHSM and submitted to the blockchain.
+                  </label>
+                </td>
+              </tr>
+              <tr>
+                <td><input id='submit_action_generate' type='radio' {...submitAction} value='generate' checked={submitAction.value == 'generate'} /></td>
+                <td>
+                  <label htmlFor='submit_action_generate'>Allow additional actions</label>
+                  <br />
+                  <label htmlFor='submit_action_generate' className={styles.submitDescription}>
+                    These actions will be signed by the MockHSM and returned as a
+                    transaction hex string, which should be used as the base
+                    transaction in a multi-party swap. This transaction will be
+                    valid for one hour.
+                  </label>
+                </td>
+              </tr>
               </tbody>
             </table>
           </div>
@@ -255,9 +298,11 @@ export default BaseNew.connect(
       'actions[].type',
       'actions[].address',
       'actions[].password',
-      'normalTransaction.account',
+      'normalTransaction.accountAlias',
+      'normalTransaction.accountId',
       'normalTransaction.amount',
-      'normalTransaction.asset',
+      'normalTransaction.assetAlias',
+      'normalTransaction.assetId',
       'normalTransaction.gas',
       'normalTransaction.address',
       'submitAction',

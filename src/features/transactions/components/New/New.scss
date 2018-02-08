@@ -33,3 +33,31 @@
 .btnGroup {
   margin-top: $gutter-size;
 }
+
+.title{
+  color:  $text-strong-color;
+  font-size: $font-size-btn-lg;
+}
+
+.main {
+  border: 1px solid $border-color;
+  padding: $gutter-size;
+  margin-bottom: $gutter-size;
+}
+
+.optionsBtnContianer{
+  //display: flex;
+  //justify-content: space-between;
+}
+
+.optionsBtn{
+  //display: inline-block;
+  display: block;
+  border: 1px solid $border-color;
+  border-radius: 3px;
+  text-align: center;
+  padding: 10px 8px;
+  input{
+    margin: 0 5px;
+  }
+}
