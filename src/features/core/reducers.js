@@ -206,8 +206,10 @@ const snapshot = (state = null, action) => {
 
 const version = (state, action) => coreConfigReducer('version', state, 'N/A', action)
 
-const lang = (state = window.navigator.language.startsWith('zh') ? 'zh' : 'en', action) => {
+const defaultLang = window.localStorage.getItem('language') || (window.navigator.language.startsWith('zh') ? 'zh' : 'en')
+const lang = (state = defaultLang, action) => {
   if (action.type === 'UPDATE_CORE_LANGUAGE') {
+    window.localStorage.setItem('language', action.lang || '')
     return action.lang || ''
   }
   return state
