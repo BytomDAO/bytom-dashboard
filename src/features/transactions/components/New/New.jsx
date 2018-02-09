@@ -32,17 +32,9 @@ class Form extends React.Component {
     }
   }
 
-  // balanceWidgetUnconnected({ accountId, accountAlias, assetId, assetAlias }) {
   balanceAmount(accountAlias, assetAlias ) {
-    if(accountAlias != '' && assetAlias != ''){
-      let balances = this.props.balances
-      for(let key in balances){
-        if(balances[key].accountAlias == accountAlias && balances[key].assetAlias == assetAlias){
-          return balances[key].amount
-        }
-      }
-    }
-    return
+    let balances = this.props.balances
+    return balances[[accountAlias, assetAlias]] || 0
   }
 
   toggleDropwdown() {
@@ -306,14 +298,19 @@ const validate = values => {
 
 export default BaseNew.connect(
   (state) => {
-    let balances = []
-    for (var key in state.balance.items) {
+    let balances ={}
+    for (var key in state.balance.items){
       const item = state.balance.items[key]
-      balances.push({
-        ...item,
-        // label: item.alias ? item.alias : item.id.slice(0, 32) + '...'
-      })
+      balances[[item.accountAlias , item.assetAlias]] = item.amount
     }
+
+    // Nested Object Structure
+    // let balances ={}
+    // for (var key in state.balance.items){
+    //   const item = state.balance.items[key]
+    //   if (!balances[[item.accountAlias , item.accountId]]) balances[[item.accountAlias , item.accountId]] = {}
+    //   balances[[item.accountAlias , item.accountId]][[item.assetAlias , item.assetId]] = item.amount
+    // }
 
     return {
       autocompleteIsLoaded: state.key.autocompleteIsLoaded,
@@ -324,7 +321,7 @@ export default BaseNew.connect(
   (dispatch) => ({
     didLoadAutocomplete: () => dispatch(balanceActions.didLoadAutocomplete),
     fetchAll: (cb) => dispatch(balanceActions.fetchAll(cb)),
-    ...BaseNew.mapDispatchToProps('transaction')
+    ...BaseNew.mapDispatchToProps('transaction')(dispatch)
   }),
   reduxForm({
     form: 'NewTransactionForm',
