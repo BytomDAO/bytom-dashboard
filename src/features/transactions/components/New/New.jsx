@@ -4,8 +4,10 @@ import { reduxForm } from 'redux-form'
 import ActionItem from './FormActionItem'
 import React from 'react'
 import styles from './New.scss'
+import balanceActions from 'features/balances/actions'
 
-const rangeOptions = [250000000, 200000000, 100000000].map(val => ({label: val+' btm', value: val}))
+
+const rangeOptions = [250000000, 200000000, 100000000].map(val => ({label: val+' BTM', value: val}))
 
 class Form extends React.Component {
   constructor(props) {
@@ -20,6 +22,27 @@ class Form extends React.Component {
     this.toggleDropwdown = this.toggleDropwdown.bind(this)
     this.closeDropdown = this.closeDropdown.bind(this)
     this.disableSubmit = this.disableSubmit.bind(this)
+  }
+
+  componentDidMount() {
+    if (!this.props.autocompleteIsLoaded) {
+      this.props.fetchAll().then(() => {
+        this.props.didLoadAutocomplete()
+      })
+    }
+  }
+
+  // balanceWidgetUnconnected({ accountId, accountAlias, assetId, assetAlias }) {
+  balanceAmount(accountAlias, assetAlias ) {
+    if(accountAlias != '' && assetAlias != ''){
+      let balances = this.props.balances
+      for(let key in balances){
+        if(balances[key].accountAlias == accountAlias && balances[key].assetAlias == assetAlias){
+          return balances[key].amount
+        }
+      }
+    }
+    return
   }
 
   toggleDropwdown() {
@@ -53,7 +76,9 @@ class Form extends React.Component {
   }
 
   emptyActions(actions){
-    actions.map((value,key)=> this.removeActionItem(key))
+    if(actions.length != 0){
+      actions.map(()=> this.removeActionItem(0))
+    }
   }
 
   submitWithValidation(data) {
@@ -147,6 +172,8 @@ class Form extends React.Component {
           <div className={styles.main}>
             <TextField title='Address' fieldProps={normalTransaction.address}/>
             <TextField title='Amount' fieldProps={normalTransaction.amount}/>
+            <small className='value-balance'>{this.balanceAmount(normalTransaction.accountAlias.value,
+              normalTransaction.assetAlias.value)} available</small>
           </div>
 
           <label className={styles.title}>Gas</label>
@@ -187,7 +214,6 @@ class Form extends React.Component {
               title='+ Add action'
               onSelect={this.addActionItem}
             >
-              {/*<MenuItem eventKey='normal_mode'>normal</MenuItem>*/}
               <MenuItem eventKey='issue'>Issue</MenuItem>
               <MenuItem eventKey='spend_account'>Spend from account</MenuItem>
               {/*<MenuItem eventKey='spend_account_unspent_output'>Spend unspent output</MenuItem>*/}
@@ -279,10 +305,27 @@ const validate = values => {
 }
 
 export default BaseNew.connect(
-  (state) => ({
-    ...BaseNew.mapStateToProps('transaction')(state)
+  (state) => {
+    let balances = []
+    for (var key in state.balance.items) {
+      const item = state.balance.items[key]
+      balances.push({
+        ...item,
+        // label: item.alias ? item.alias : item.id.slice(0, 32) + '...'
+      })
+    }
+
+    return {
+      autocompleteIsLoaded: state.key.autocompleteIsLoaded,
+      balances: balances,
+      ...BaseNew.mapStateToProps('transaction')(state)
+    }
+  },
+  (dispatch) => ({
+    didLoadAutocomplete: () => dispatch(balanceActions.didLoadAutocomplete),
+    fetchAll: (cb) => dispatch(balanceActions.fetchAll(cb)),
+    ...BaseNew.mapDispatchToProps('transaction')
   }),
-  BaseNew.mapDispatchToProps('transaction'),
   reduxForm({
     form: 'NewTransactionForm',
     fields: [
