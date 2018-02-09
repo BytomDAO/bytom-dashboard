@@ -1,3 +1,4 @@
+import uuid from 'uuid'
 import { chainClient } from 'utility/environment'
 import { parseNonblankJSON } from 'utility/string'
 import { push } from 'react-router-redux'
@@ -106,6 +107,32 @@ form.submitForm = (formParams) => function(dispatch) {
         }))
       })
   }
+
+  // submitAction == 'generate'
+  return buildPromise.then(resp => {
+    if (resp.status === 'fail') {
+      throw new Error(resp.msg)
+    }
+
+    const tpl = resp.data
+    const password = (tpl.signing_instructions || []).map(() => '123456')
+    const client = chainClient()
+    const body = Object.assign({}, {password, 'transaction': tpl})
+    return client.connection.request('/sign-transaction', body, true)
+  }).then(resp => {
+    if (resp.status === 'fail') {
+      throw new Error(resp.msg)
+    }
+    const id = uuid.v4()
+    dispatch({
+      type: 'GENERATED_TX_HEX',
+      generated: {
+        id: id,
+        hex: resp.data.raw_transaction,
+      },
+    })
+    dispatch(push(`/transactions/generated/${id}`))
+  })
 }
 
 export default {
