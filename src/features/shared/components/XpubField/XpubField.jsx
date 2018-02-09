@@ -7,7 +7,7 @@ import actions from 'features/mockhsm/actions'
 const methodOptions = {
   mockhsm: 'Use existing MockHSM key',
   // generate: 'Generate new MockHSM key',
-  // provide: 'Provide existing xpub',
+  provide: 'Provide existing xpub',
 }
 
 class XpubField extends React.Component {
@@ -76,13 +76,13 @@ class XpubField extends React.Component {
               <tr key={`key-${this.props.index}-option-${key}`}>
                 <td className={styles.label}>
                   <label>
-                    {/*<input type='radio'*/}
-                      {/*className={styles.radio}*/}
-                      {/*name={`keys-${this.props.index}`}*/}
-                      {/*onChange={typeOnChange}*/}
-                      {/*checked={key == typeProps.value}*/}
-                      {/*value={key}*/}
-                    {/*/>*/}
+                    <input type='radio'
+                      className={styles.radio}
+                      name={`keys-${this.props.index}`}
+                      onChange={typeOnChange}
+                      checked={key == typeProps.value}
+                      value={key}
+                    />
                     {methodOptions[key]}
                   </label>
                 </td>
