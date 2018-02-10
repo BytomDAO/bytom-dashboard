@@ -32,9 +32,22 @@ class Form extends React.Component {
     }
   }
 
-  balanceAmount(accountAlias, assetAlias ) {
+  balanceAmount(normalTransaction) {
     let balances = this.props.balances
-    return balances[[accountAlias, assetAlias]] || 0
+    let filteredBalances = balances
+    if (normalTransaction.accountAlias.value) {
+      filteredBalances = filteredBalances.filter(balance => balance.accountAlias === normalTransaction.accountAlias.value)
+    }
+    if (normalTransaction.accountId.value) {
+      filteredBalances = filteredBalances.filter(balance => balance.accountId === normalTransaction.accountId.value)
+    }
+    if (normalTransaction.assetAlias.value) {
+      filteredBalances = filteredBalances.filter(balance => balance.assetAlias === normalTransaction.assetAlias.value)
+    }
+    if (normalTransaction.assetId.value) {
+      filteredBalances = filteredBalances.filter(balance => balance.assetId === normalTransaction.assetId.value)
+    }
+    return filteredBalances.length === 1 ? filteredBalances[0].amount : null
   }
 
   toggleDropwdown() {
@@ -107,6 +120,11 @@ class Form extends React.Component {
       submitLabel = 'Generate transaction hex'
     }
 
+    const showAvailableBalance = (normalTransaction.accountAlias.value || normalTransaction.accountId.value) &&
+      (normalTransaction.assetAlias.value || normalTransaction.assetId.value)
+    const availableBalance = this.balanceAmount(normalTransaction)
+    window.console.log(normalTransaction)
+
     return(
       <FormContainer
         error={error}
@@ -128,7 +146,6 @@ class Form extends React.Component {
             }} >
             Normal
           </button>
-
           <button
             className={`btn btn-default ${this.state.showAdvance ? 'active': null}`}
             onClick={(e) => {
@@ -164,8 +181,8 @@ class Form extends React.Component {
           <div className={styles.main}>
             <TextField title='Address' fieldProps={normalTransaction.address}/>
             <TextField title='Amount' fieldProps={normalTransaction.amount}/>
-            <small className='value-balance'>{this.balanceAmount(normalTransaction.accountAlias.value,
-              normalTransaction.assetAlias.value)} available</small>
+            {showAvailableBalance && availableBalance &&
+            <small className='value-balance'>{availableBalance} available</small>}
           </div>
 
           <label className={styles.title}>Gas</label>
@@ -298,23 +315,14 @@ const validate = values => {
 
 export default BaseNew.connect(
   (state) => {
-    let balances ={}
-    for (var key in state.balance.items){
-      const item = state.balance.items[key]
-      balances[[item.accountAlias , item.assetAlias]] = item.amount
+    let balances = []
+    for (let key in state.balance.items) {
+      balances.push(state.balance.items[key])
     }
-
-    // Nested Object Structure
-    // let balances ={}
-    // for (var key in state.balance.items){
-    //   const item = state.balance.items[key]
-    //   if (!balances[[item.accountAlias , item.accountId]]) balances[[item.accountAlias , item.accountId]] = {}
-    //   balances[[item.accountAlias , item.accountId]][[item.assetAlias , item.assetId]] = item.amount
-    // }
 
     return {
       autocompleteIsLoaded: state.key.autocompleteIsLoaded,
-      balances: balances,
+      balances,
       ...BaseNew.mapStateToProps('transaction')(state)
     }
   },
