@@ -19,7 +19,7 @@ class Main extends React.Component {
   }
 
   render() {
-    let logo = require('images/logo-bytom-white.png')
+    let logo = require('images/logo-bytom-white.svg')
 
     return (
       <div className={styles.main}
