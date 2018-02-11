@@ -29,3 +29,37 @@
 .actionInfo {
   margin-bottom: $gutter-size;
 }
+
+.btnGroup {
+  margin-top: $gutter-size;
+}
+
+.title{
+  color:  $text-strong-color;
+  font-size: $font-size-btn-lg;
+}
+
+.main {
+  border: 1px solid $border-color;
+  padding: $gutter-size;
+  margin-bottom: $gutter-size;
+}
+
+.optionsBtnContianer{
+  display: flex;
+  flex-direction: column;
+  border-radius: 3px;
+  input{
+    margin: 0 5px;
+  }
+  & > label {
+    height: 40px;
+    overflow-y: hidden;
+  }
+  & > label > label {
+    line-height: 36px;
+  }
+  .form-group {
+    margin-bottom: 0 !important;
+  }
+}

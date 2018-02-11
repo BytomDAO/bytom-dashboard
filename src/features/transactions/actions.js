@@ -18,6 +18,13 @@ function preprocessTransaction(formParams) {
     actions: copy.actions,
   }
 
+  const normalT = formParams.normalTransaction
+  if( builder.actions.length == 0){
+    builder.actions.push({accountAlias: normalT.accountAlias, accountId: normalT.accountId, assetAlias: 'btm', amount: Number(normalT.gas.price), type: 'spend_account'})
+    builder.actions.push({accountAlias: normalT.accountAlias, accountId: normalT.accountId, assetAlias: normalT.assetAlias, assetId: normalT.assetId, amount: normalT.amount, type: 'spend_account'})
+    builder.actions.push({address: normalT.address, assetAlias: normalT.assetAlias, assetId: normalT.assetId, amount: normalT.amount, type: 'control_address'})
+  }
+
   if (builder.baseTransaction == '') {
     delete builder.baseTransaction
   }
