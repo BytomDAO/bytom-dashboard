@@ -46,18 +46,22 @@
 }
 
 .optionsBtnContianer{
-  //display: flex;
-  //justify-content: space-between;
-}
-
-.optionsBtn{
-  //display: inline-block;
-  display: block;
+  display: flex;
+  flex-direction: column;
   border: 1px solid $border-color;
   border-radius: 3px;
-  text-align: center;
-  padding: 10px 8px;
+  padding: 30px;
   input{
     margin: 0 5px;
+  }
+  & > label {
+    height: 40px;
+    overflow-y: hidden;
+  }
+  & > label > label {
+    line-height: 36px;
+  }
+  .form-group {
+    margin-bottom: 0 !important;
   }
 }

@@ -6,8 +6,20 @@ import React from 'react'
 import styles from './New.scss'
 import balanceActions from 'features/balances/actions'
 
-
-const rangeOptions = [250000000, 200000000, 100000000].map(val => ({label: val+' BTM', value: val}))
+const rangeOptions = [
+  {
+    label: 'Standard',
+    value: '20000000'
+  },
+  {
+    label: 'Fast',
+    value: '25000000'
+  },
+  {
+    label: 'Customize',
+    value: ''
+  }
+]
 
 class Form extends React.Component {
   constructor(props) {
@@ -30,6 +42,9 @@ class Form extends React.Component {
         this.props.didLoadAutocomplete()
       })
     }
+
+    this.props.fields.normalTransaction.gas.type.onChange(rangeOptions[0].label)
+    this.props.fields.normalTransaction.gas.price.onChange(rangeOptions[0].value)
   }
 
   balanceAmount(normalTransaction) {
@@ -120,10 +135,16 @@ class Form extends React.Component {
       submitLabel = 'Generate transaction hex'
     }
 
+    const gasOnChange = event => {
+      normalTransaction.gas.type.onChange(event)
+
+      const range = rangeOptions.find(item => item.label === event.target.value)
+      normalTransaction.gas.price.onChange(range.value)
+    }
+
     const showAvailableBalance = (normalTransaction.accountAlias.value || normalTransaction.accountId.value) &&
       (normalTransaction.assetAlias.value || normalTransaction.assetId.value)
     const availableBalance = this.balanceAmount(normalTransaction)
-    window.console.log(normalTransaction)
 
     return(
       <FormContainer
@@ -186,21 +207,31 @@ class Form extends React.Component {
           </div>
 
           <label className={styles.title}>Gas</label>
-
-          <div className={styles.optionsBtnContianer}>
-            {/*<SelectField options={rangeOptions}*/}
-                         {/*title='Gas'*/}
-                         {/*skipEmpty={true}*/}
-                         {/*fieldProps={normalTransaction.gas} />*/}
-            {rangeOptions.map((option) =>
-              <label className={styles.optionsBtn}>
-                <input type='radio'
-                {...normalTransaction.gas}
-                value={option.value}
-                />
-                {option.label}
-              </label>
-            )}
+          <div>
+            <label className={styles.optionsBtnContianer}>
+              {rangeOptions.map((option) =>
+                <label>
+                  <label>
+                    <input type='radio'
+                           {...normalTransaction.gas.type}
+                           onChange={gasOnChange}
+                           value={option.label}
+                           checked={option.label == normalTransaction.gas.type.value}
+                    />
+                    { option.label }
+                  </label>
+                  {
+                    option.label === 'Customize' && normalTransaction.gas.type.value === 'Customize' &&
+                    <label>
+                      <TextField
+                        autoFocus={true}
+                        fieldProps={normalTransaction.gas.price}
+                        placeholder='Enter gas' />
+                    </label>
+                  }
+                </label>
+              )}
+            </label>
           </div>
 
         </FormSection>}
@@ -352,6 +383,8 @@ export default BaseNew.connect(
       'normalTransaction.assetAlias',
       'normalTransaction.assetId',
       'normalTransaction.gas',
+      'normalTransaction.gas.type',
+      'normalTransaction.gas.price',
       'normalTransaction.address',
       'submitAction',
       'password'
