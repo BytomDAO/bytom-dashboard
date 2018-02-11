@@ -25,7 +25,8 @@ class Form extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      showDropdown: false
+      showDropdown: false,
+      showAdvanced: false
     }
 
     this.submitWithValidation = this.submitWithValidation.bind(this)
@@ -82,13 +83,17 @@ class Form extends React.Component {
   }
 
   disableSubmit(actions, normalTransaction) {
-    // let isNormalShow = true
-    // for (let key in normalTransaction){
-    //   isNormalShow = isNormalShow & normalTransaction[key].dirty
-    // }
-    // return !isNormalShow & actions.length == 0 & !this.state.showAdvanced
-    // return  actions.length == 0 & !this.state.showAdvanced
-    return  false
+    if (this.showAdvance) {
+      return actions.length == 0 & !this.state.showAdvanced
+    }
+
+    const hasValue = target => {
+      return !!(target && target.value)
+    }
+
+    return !((hasValue(normalTransaction.accountId) || hasValue(normalTransaction.accountAlias)) &&
+      (hasValue(normalTransaction.assetId)|| hasValue(normalTransaction.assetAlias)) &&
+      hasValue(normalTransaction.address) && (hasValue(normalTransaction.amount)))
   }
 
   removeActionItem(index) {
