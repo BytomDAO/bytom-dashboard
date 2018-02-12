@@ -1,3 +1,4 @@
+import uuid from 'uuid'
 import { chainClient } from 'utility/environment'
 import { parseNonblankJSON } from 'utility/string'
 import { push } from 'react-router-redux'
@@ -15,6 +16,13 @@ function preprocessTransaction(formParams) {
   const builder = {
     baseTransaction: copy.baseTransaction,
     actions: copy.actions,
+  }
+
+  const normalT = formParams.normalTransaction
+  if( builder.actions.length == 0){
+    builder.actions.push({accountAlias: normalT.accountAlias, accountId: normalT.accountId, assetAlias: 'btm', amount: Number(normalT.gas.price), type: 'spend_account'})
+    builder.actions.push({accountAlias: normalT.accountAlias, accountId: normalT.accountId, assetAlias: normalT.assetAlias, assetId: normalT.assetId, amount: normalT.amount, type: 'spend_account'})
+    builder.actions.push({address: normalT.address, assetAlias: normalT.assetAlias, assetId: normalT.assetId, amount: normalT.amount, type: 'control_address'})
   }
 
   if (builder.baseTransaction == '') {
@@ -106,6 +114,32 @@ form.submitForm = (formParams) => function(dispatch) {
         }))
       })
   }
+
+  // submitAction == 'generate'
+  return buildPromise.then(resp => {
+    if (resp.status === 'fail') {
+      throw new Error(resp.msg)
+    }
+
+    const tpl = resp.data
+    const password = (tpl.signing_instructions || []).map(() => '123456')
+    const client = chainClient()
+    const body = Object.assign({}, {password, 'transaction': tpl})
+    return client.connection.request('/sign-transaction', body, true)
+  }).then(resp => {
+    if (resp.status === 'fail') {
+      throw new Error(resp.msg)
+    }
+    const id = uuid.v4()
+    dispatch({
+      type: 'GENERATED_TX_HEX',
+      generated: {
+        id: id,
+        hex: resp.data.raw_transaction,
+      },
+    })
+    dispatch(push(`/transactions/generated/${id}`))
+  })
 }
 
 export default {

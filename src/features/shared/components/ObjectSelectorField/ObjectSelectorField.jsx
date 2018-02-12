@@ -34,6 +34,19 @@ class ObjectSelectorField extends React.Component {
   }
 
   render() {
+    const idOnChange = (event) => {
+      this.props.fieldProps.id.onChange(event.target.value)
+      this.props.fieldProps.alias.onChange('')
+    }
+
+    const aliasOnChange = value => {
+      this.props.fieldProps.alias.onChange(value)
+      this.props.fieldProps.id.onChange('')
+    }
+
+    const idProps = Object.assign({...this.props.fieldProps.id}, {onChange: idOnChange})
+    const aliasProps = Object.assign({...this.props.fieldProps.alias}, {onChange: aliasOnChange})
+
     return(
       <div className='form-group'>
         {this.props.title && <FieldLabel>{this.props.title}</FieldLabel>}
@@ -54,13 +67,13 @@ class ObjectSelectorField extends React.Component {
             <input className='form-control'
               type={this.state.type}
               placeholder={`${this.props.title} ID`}
-              {...this.props.fieldProps.id} />}
+              {...idProps} />}
 
           {this.state.selected == ALIAS_SELECTED &&
             <this.props.aliasField
               className={styles.aliasFieldGroupItem}
               placeholder={`Start typing ${this.props.title.toLowerCase()} alias...`}
-              fieldProps={this.props.fieldProps.alias} />}
+              fieldProps={aliasProps} />}
 
         </div>
         {this.props.hint && <span className='help-block'>{this.props.hint}</span>}
