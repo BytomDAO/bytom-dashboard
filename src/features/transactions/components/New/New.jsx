@@ -83,8 +83,8 @@ class Form extends React.Component {
   }
 
   disableSubmit(actions, normalTransaction) {
-    if (this.showAdvance) {
-      return actions.length == 0 & !this.state.showAdvanced
+    if (this.state.showAdvance) {
+      return actions.length == 0 && !this.state.showAdvanced
     }
 
     const hasValue = target => {
@@ -201,14 +201,14 @@ class Form extends React.Component {
                 alias: normalTransaction.assetAlias
               }}
             />
+            {showAvailableBalance && availableBalance &&
+            <small className={styles.balanceHint}>{availableBalance} available</small>}
           </div>
 
           <label className={styles.title}>To</label>
           <div className={styles.main}>
             <TextField title='Address' fieldProps={normalTransaction.address}/>
             <TextField title='Amount' fieldProps={normalTransaction.amount}/>
-            {showAvailableBalance && availableBalance &&
-            <small className='value-balance'>{availableBalance} available</small>}
           </div>
 
           <label className={styles.title}>Gas</label>

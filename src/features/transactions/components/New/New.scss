@@ -45,6 +45,11 @@
   margin-bottom: $gutter-size;
 }
 
+.balanceHint {
+  position: relative;
+  top: -30px;
+}
+
 .optionsBtnContianer{
   display: flex;
   flex-direction: column;
