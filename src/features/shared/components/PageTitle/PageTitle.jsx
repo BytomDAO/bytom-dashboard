@@ -17,7 +17,7 @@ class PageTitle extends React.Component {
 
     return(
       <div className={componentClassNames(this)}>
-        <div className={className}>
+        <div className={className} style={{marginTop: this.props.margintop+'px'}}>
           <div className={styles.navigation}>
             <ul className={styles.crumbs}>
               {this.props.breadcrumbs.map(crumb =>

@@ -3,6 +3,23 @@ import { Link } from 'react-router'
 import styles from './TutorialHeader.scss'
 
 class TutorialHeader extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      tutorialHeight: 0
+    }
+    this.handleTutorialHeight = this.handleTutorialHeight.bind(this)
+  }
+
+  componentDidUpdate() {
+    this.handleTutorialHeight()
+  }
+
+  handleTutorialHeight() {
+    if (this.state.tutorialHeight != this.tutorialContainer.clientHeight){
+      this.setState({tutorialHeight: this.tutorialContainer.clientHeight})
+    }
+  }
 
   render() {
     if(!this.props.tutorial.isShowing || this.props.currentStep.component == 'TutorialModal'){
@@ -13,7 +30,7 @@ class TutorialHeader extends React.Component {
       )
     } else {
       return (
-        <div className={`${styles.main} ${this.props.showTutorial && styles.collapsed}`}>
+        <div className={`${styles.main} ${this.props.showTutorial && styles.collapsed}`} ref={element => this.tutorialContainer = element}>
           <div className={styles.header}>
             {this.props.currentStep.title}
             <div className={styles.skip}>
