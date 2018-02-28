@@ -5,6 +5,8 @@
   height: $title-height;
   display: flex;
   align-items: center;
+  left: $sidebar-width;
+  z-index: 100;
   code {
     display: inline-block;
     font-size: $font-size-code;
@@ -47,7 +49,7 @@
     height: 10px;
     position: absolute;
     right: -2px;
-    top: calc(50% - 5px;)
+    top: calc(50% - 5px) ;
   }
 }
 
