@@ -38,6 +38,7 @@ const makeRoutes = (store, type, List, New, Show, Update, options = {}) => {
     path: options.path || type + 's',
     component: RoutingContainer,
     name: options.name || humanize(type + 's'),
+    name_zh: options.name_zh,
     indexRoute: {
       component: List,
       onEnter: (nextState, replace) => {
