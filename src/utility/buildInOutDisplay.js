@@ -109,6 +109,7 @@ export function buildUnspentDisplay(output) {
     accountId: output.accountId,
     accountAlias: output.accountAlias,
     assetId: output.assetId,
+    assetAlias: output.assetAlias,
     controlProgram: output.program,
     programIndex: output.controlProgramIndex,
     refData: output.refData,
