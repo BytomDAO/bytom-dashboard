@@ -18,6 +18,7 @@ class SecondaryNavigation extends React.Component {
   }
 
   render() {
+    const lang = this.props.lang
     return (
       <div className={styles.main}>
         <ul className={styles.navigation}>
@@ -35,7 +36,7 @@ class SecondaryNavigation extends React.Component {
             <li>
               <Link to='/access-control' activeClassName={styles.active}>
                 {navIcon('network', styles)}
-                Access Control
+                { lang === 'zh' ?  '访问控制' : 'Access Control'}
               </Link>
             </li>
           }
@@ -43,7 +44,7 @@ class SecondaryNavigation extends React.Component {
           {this.props.canLogOut && <li className={styles.logOut}>
             <a href='#' onClick={this.logOut}>
               {navIcon('logout', styles)}
-              Log Out
+              { lang === 'zh' ?  '退出' : 'Log Out' }
             </a>
           </li>}
         </ul>
@@ -55,7 +56,8 @@ class SecondaryNavigation extends React.Component {
 export default connect(
   (state) => ({
     canLogOut: !!state.core.clientToken,
-    canViewTokens: !state.core.clientToken
+    canViewTokens: !state.core.clientToken,
+    lang: state.core.lang
   }),
   (dispatch) => ({
     logOut: () => dispatch(actions.core.clearSession)

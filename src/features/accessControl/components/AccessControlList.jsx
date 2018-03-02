@@ -22,7 +22,7 @@ class AccessControlList extends React.Component {
     // </TableList>
 
     return (<div>
-      <PageTitle title='Access control' />
+      <PageTitle title={ lang==='zh'? '访问控制' : 'Access control'} />
 
       <PageContent>
         <div className={`btn-group ${styles.btnGroup}`} role='group'>
