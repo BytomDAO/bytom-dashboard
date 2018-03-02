@@ -21,7 +21,7 @@ class Show extends BaseShow {
     let view
     if (item) {
       const title = <span>
-        {'Transaction '}
+        {lang === 'zh' ? '交易' : 'Transaction '}
         &nbsp;<code>{item.id}</code>
       </span>
 
@@ -30,11 +30,11 @@ class Show extends BaseShow {
 
         <PageContent>
           <Section
-            title='Summary'
+            title={lang === 'zh' ? '概括' : 'Summary'}
             actions={[
               <RawJsonButton key='raw-json' item={item} />
             ]}>
-            <Summary transaction={item} />
+            <Summary transaction={item} lang={lang}/>
           </Section>
 
           <KeyValueTable

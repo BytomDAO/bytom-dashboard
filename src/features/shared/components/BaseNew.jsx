@@ -1,8 +1,9 @@
 import { connect as reduxConnect } from 'react-redux'
 import actions from 'actions'
 
-export const mapStateToProps = ( type ) => ( /* state */ ) => ({
+export const mapStateToProps = ( type ) => (  state  ) => ({
   type: type,
+  lang: state.core.lang
 })
 
 export const mapDispatchToProps = (type) => (dispatch) => ({

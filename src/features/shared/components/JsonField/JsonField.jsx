@@ -14,7 +14,8 @@ class JsonField extends React.Component {
   }
 
   render() {
-    const hint = this.props.hint || 'Contents must be represented as a JSON object'
+    const lang = this.props.lang
+    const hint = this.props.hint ||  lang === 'zh' ? '内容必须表示为JSON对象' : 'Contents must be represented as a JSON object'
     const fieldProps = this.props.fieldProps
     const displayProps = {
       mode: 'json',

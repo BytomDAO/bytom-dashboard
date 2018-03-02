@@ -8,6 +8,7 @@ import Tutorial from 'features/tutorial/components/Tutorial'
 
 class FormContainer extends React.Component {
   render() {
+    const lang = this.props.lang
     return(
       <div className={componentClassNames(this, 'flex-container')}>
         <PageTitle title={this.props.label} />
@@ -25,7 +26,7 @@ class FormContainer extends React.Component {
 
                 <div className={styles.submit}>
                   <button type='submit' className='btn btn-primary' disabled={this.props.submitting || this.props.disabled}>
-                    {this.props.submitLabel || 'Submit'}
+                    {this.props.submitLabel ||  ( lang === 'zh' ? '提交' : 'Submit' )}
                   </button>
 
                   {this.props.showSubmitIndicator && this.props.submitting &&

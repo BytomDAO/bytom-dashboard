@@ -9,14 +9,17 @@ import balanceActions from 'features/balances/actions'
 const rangeOptions = [
   {
     label: 'Standard',
+    label_zh: '标准',
     value: '20000000'
   },
   {
     label: 'Fast',
+    label_zh: '快速',
     value: '25000000'
   },
   {
     label: 'Customize',
+    label_zh: '自定义',
     value: ''
   }
 ]
@@ -134,10 +137,11 @@ class Form extends React.Component {
       handleSubmit,
       submitting
     } = this.props
+    const lang = this.props.lang
 
-    let submitLabel = 'Submit transaction'
+    let submitLabel = lang === 'zh' ? '提交交易' : 'Submit transaction'
     if (submitAction.value == 'generate') {
-      submitLabel = 'Generate transaction hex'
+      submitLabel = lang === 'zh' ? '生成交易hex' : 'Generate transaction hex'
     }
 
     const gasOnChange = event => {
@@ -154,7 +158,7 @@ class Form extends React.Component {
     return(
       <FormContainer
         error={error}
-        label='New transaction'
+        label={ lang === 'zh' ? '新建交易' :'New transaction' }
         submitLabel={submitLabel}
         onSubmit={handleSubmit(this.submitWithValidation)}
         showSubmitIndicator={true}
@@ -170,7 +174,7 @@ class Form extends React.Component {
               this.emptyActions(actions)
               this.setState({showAdvance: false})
             }} >
-            Normal
+            { lang === 'zh' ? '简单交易' : 'Normal' }
           </button>
           <button
             className={`btn btn-default ${this.state.showAdvance ? 'active': null}`}
@@ -178,15 +182,15 @@ class Form extends React.Component {
               e.preventDefault()
               this.setState({showAdvance: true})
             }} >
-            Advanced
+            { lang === 'zh' ? '高级交易' : 'Advanced' }
           </button>
         </div>
 
-        { !this.state.showAdvance && <FormSection title='Normal Trasaction'>
-          <label className={styles.title}>From</label>
+        { !this.state.showAdvance && <FormSection title={ lang === 'zh' ? '简单交易' : 'Normal Trasaction' }>
+          <label className={styles.title}>{ lang === 'zh' ? '从' : 'From' }</label>
           <div className={styles.main}>
             <ObjectSelectorField
-              title='Account'
+              title={ lang === 'zh' ? '账户' :'Account' }
               aliasField={Autocomplete.AccountAlias}
               fieldProps={{
                 id: normalTransaction.accountId,
@@ -194,7 +198,7 @@ class Form extends React.Component {
               }}
             />
             <ObjectSelectorField
-              title='Asset'
+              title={ lang === 'zh' ? '资产' : 'Asset' }
               aliasField={Autocomplete.AssetAlias}
               fieldProps={{
                 id: normalTransaction.assetId,
@@ -205,7 +209,7 @@ class Form extends React.Component {
             <small className={styles.balanceHint}>{availableBalance} available</small>}
           </div>
 
-          <label className={styles.title}>To</label>
+          <label className={styles.title}>{ lang === 'zh' ? '至' : 'To' }</label>
           <div className={styles.main}>
             <TextField title='Address' fieldProps={normalTransaction.address}/>
             <TextField title='Amount' fieldProps={normalTransaction.amount}/>
@@ -223,7 +227,7 @@ class Form extends React.Component {
                            value={option.label}
                            checked={option.label == normalTransaction.gas.type.value}
                     />
-                    { option.label }
+                    { lang === 'zh' ? option.label_zh :  option.label }
                   </label>
                   {
                     option.label === 'Customize' && normalTransaction.gas.type.value === 'Customize' &&
@@ -280,12 +284,12 @@ class Form extends React.Component {
                 this.setState({showAdvanced: true})
               }}
             >
-              Show advanced options
+              { lang === 'zh' ? '显示高级选项' : 'Show advanced options'}
             </a>
           </FormSection>
         }
 
-        {this.state.showAdvance && this.state.showAdvanced && <FormSection title='Advanced Options'>
+        {this.state.showAdvance && this.state.showAdvanced && <FormSection title={ lang === 'zh' ? '高级选项' :'Advanced Options' }>
           <div>
             <TextField
               title='Base transaction'
@@ -299,23 +303,25 @@ class Form extends React.Component {
               <tr>
                 <td><input id='submit_action_submit' type='radio' {...submitAction} value='submit' checked={submitAction.value == 'submit'} /></td>
                 <td>
-                  <label htmlFor='submit_action_submit'>Submit transaction to blockchain</label>
+                  <label htmlFor='submit_action_submit'>{ lang === 'zh' ? '向区块链提交交易' :'Submit transaction to blockchain' }</label>
                   <br />
                   <label htmlFor='submit_action_submit' className={styles.submitDescription}>
-                    This transaction will be signed by the MockHSM and submitted to the blockchain.
+                    { lang === 'zh' ? '此次交易将通过密钥签名然后提交到区块链。' :
+                      'This transaction will be signed by the MockHSM and submitted to the blockchain.' }
                   </label>
                 </td>
               </tr>
               <tr>
                 <td><input id='submit_action_generate' type='radio' {...submitAction} value='generate' checked={submitAction.value == 'generate'} /></td>
                 <td>
-                  <label htmlFor='submit_action_generate'>Allow additional actions</label>
+                  <label htmlFor='submit_action_generate'>{ lang === 'zh' ? '允许更多actions' : 'Allow additional actions' }</label>
                   <br />
                   <label htmlFor='submit_action_generate' className={styles.submitDescription}>
-                    These actions will be signed by the MockHSM and returned as a
-                    transaction hex string, which should be used as the base
-                    transaction in a multi-party swap. This transaction will be
-                    valid for one hour.
+                    { lang === 'zh' ? '这些actions将通过密钥签名然后作为一个交易 hex 字符串返回， 字符串可以用做base transaction于 multi-party swap。' +
+                      '此次交易将持续有效一个小时。' :
+                      'These actions will be signed by the MockHSM and returned as a transaction hex string, ' +
+                      'which should be used as the base transaction in a multi-party swap. This transaction ' +
+                      'will be valid for one hour.'  }
                   </label>
                 </td>
               </tr>
@@ -358,6 +364,7 @@ export default BaseNew.connect(
 
     return {
       autocompleteIsLoaded: state.key.autocompleteIsLoaded,
+      lang: state.core.lang,
       balances,
       ...BaseNew.mapStateToProps('transaction')(state)
     }

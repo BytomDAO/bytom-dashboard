@@ -15,6 +15,7 @@ class AccessControlList extends React.Component {
     const tokenList = <TableList titles={['Token Name', 'Token']}>
       {(this.props.tokens).map(item => <GrantListItem key={item.id} item={item} {...itemProps} />)}
     </TableList>
+    const lang = this.props.lang
 
     // const certList = <TableList titles={['Certificate', 'Policies']}>
     //   {this.props.certs.map(item => <GrantListItem key={item.id} item={item} {...itemProps} />)}
@@ -42,7 +43,7 @@ class AccessControlList extends React.Component {
           <button
             className={`btn btn-primary ${styles.newBtn}`}
             onClick={this.props.showTokenCreate}>
-              + New token
+            + {lang === 'zh' ? '新建 token' : 'New token'}
           </button>
 
           {tokenList}
@@ -74,6 +75,7 @@ const mapStateToProps = (state, ownProps) => {
     certificatesSelected,
     tokensButtonStyle: tokensSelected && styles.active,
     certificatesButtonStyle: certificatesSelected && styles.active,
+    lang: state.core.lang
   }
 }
 

@@ -23,6 +23,7 @@ class ListItem extends React.Component {
 
   render() {
     const item = this.props.item
+    const lang = this.props.lang
 
     return(
       <tr>
@@ -32,7 +33,7 @@ class ListItem extends React.Component {
           {
             (item.complete === undefined || item.complete === true) &&
             <button className='btn btn-link' onClick={this.echo.bind(this, item)}>
-              Export private key
+              { lang === 'zh' ? '导出私钥' : 'Export private key' }
             </button>
           }
           {

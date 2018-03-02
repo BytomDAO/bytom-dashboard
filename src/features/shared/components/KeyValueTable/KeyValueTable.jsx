@@ -56,7 +56,7 @@ class KeyValueTable extends React.Component {
                 <td className={styles.label}>{item.label}</td>
                 <td className={styles.value}>{this.renderValue(item)}
                   {item.editUrl && <Link to={item.editUrl} className={styles.edit}>
-                    <span className={`${styles.pencil} glyphicon glyphicon-pencil`}></span>Edit
+                    <span className={`${styles.pencil} glyphicon glyphicon-pencil`}></span>{ this.props.lang === 'zh' ? '编辑' : 'Edit' }
                   </Link>}
                 </td>
               </tr>

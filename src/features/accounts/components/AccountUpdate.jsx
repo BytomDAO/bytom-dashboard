@@ -31,6 +31,7 @@ class Form extends React.Component {
       return <NotFound />
     }
     const item = this.props.item
+    const lang = this.props.lang
 
     if (!item) {
       return <div>Loading...</div>
@@ -44,7 +45,7 @@ class Form extends React.Component {
     } = this.props
 
     const title = <span>
-      {'Edit account tags '}
+      {lang === 'zh' ? '编辑账户标签' : 'Edit account tags '}
       <code>{item.alias ? item.alias :item.id}</code>
     </span>
 
@@ -64,16 +65,24 @@ class Form extends React.Component {
       error={error}
       label={title}
       onSubmit={handleSubmit(this.submitWithErrors)}
-      submitting={submitting} >
+      submitting={submitting}
+      lang={lang}>
 
-      <FormSection title='Account Tags'>
+      <FormSection title= {lang === 'zh' ? '账户标签' : 'Account Tags' }>
         <JsonField
           height={JsonFieldHeight}
-          fieldProps={tags} />
+          fieldProps={tags}
+          lang={lang} />
 
         <p>
-          Note: Account tags can be used for querying transactions, unspent outputs, and balances. Queries reflect the account tags that are present when transactions are submitted. Only new transaction activity will reflect the updated tags. <a href={`${docsRoot}/core/build-applications/accounts#update-tags-on-existing-accounts`} target='_blank' style={{whiteSpace: 'nowrap'}}>
-            Learn more →</a>
+          { lang === 'zh' ? ('注意：账户标签可用于查询交易，unspent outputs和余额。查询反映了提交交易时出现的帐户标签。只有新的交易活动才会反映更新后的标签。 '
+          ) :(
+            'Note: Account tags can be used for querying transactions, unspent outputs, and balances.' +
+            ' Queries reflect the account tags that are present when transactions are submitted. ' +
+            'Only new transaction activity will reflect the updated tags. '
+          )}
+          <a href={`${docsRoot}/core/build-applications/accounts#update-tags-on-existing-accounts`} target='_blank' style={{whiteSpace: 'nowrap'}}>
+            { lang === 'zh' ? '了解更多' : 'Learn more'} →</a>
         </p>
       </FormSection>
     </FormContainer>
@@ -81,7 +90,8 @@ class Form extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  item: state.account.items[ownProps.params.id]
+  item: state.account.items[ownProps.params.id],
+  lang: state.core.lang
 })
 
 const initialValues = (state, ownProps) => {

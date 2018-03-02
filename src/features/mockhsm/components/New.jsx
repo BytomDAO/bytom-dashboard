@@ -51,15 +51,17 @@ class New extends React.Component {
       handleSubmit,
       submitting
     } = this.props
+    const lang = this.props.lang
 
     return(
       <FormContainer
         error={error}
-        label='New key'
+        label={ lang === 'zh' ? '新建密钥' :'New key'}
         onSubmit={handleSubmit(this.submitWithErrors)}
-        submitting={submitting} >
+        submitting={submitting}
+        lang={lang}>
 
-        <FormSection title='Key Information'>
+        <FormSection title={ lang === 'zh' ? '密钥信息' : 'Key Information' }>
           <TextField title='Alias' placeholder='Alias' fieldProps={alias} autoFocus={true} />
           <div>
             <input type='checkbox' id='private_key_file_input'
@@ -67,7 +69,7 @@ class New extends React.Component {
                    onChange={this.handleCheckedChange.bind(this)}/>
             <label htmlFor='private_key_file_input'
                    style={{'marginLeft': '5px', 'userSelect': 'none'}}>
-              import from file
+              { lang === 'zh' ? '从文件中导入' : 'import from file' }
             </label>
           </div>
           {
