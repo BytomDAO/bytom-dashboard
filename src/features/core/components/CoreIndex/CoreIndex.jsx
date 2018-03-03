@@ -6,12 +6,24 @@ import React from 'react'
 import styles from './CoreIndex.scss'
 import testnetUtils from 'features/testnet/utils'
 import { docsRoot } from 'utility/environment'
+import Sync from 'features/app/components/Sync/Sync'
+
 
 class CoreIndex extends React.Component {
   constructor(props) {
     super(props)
     this.state = {}
+
+    const fetchInfo = () => {
+      chainClient().config.info().then(resp => {
+        this.setState({requestStatus : resp.data})
+      })
+    }
+
+
+    setInterval(fetchInfo.bind(this), 2 * 1000)
     this.deleteClick = this.deleteClick.bind(this)
+
   }
 
   deleteClick() {
@@ -127,13 +139,31 @@ class CoreIndex extends React.Component {
       }
     }
 
-    let networkStatusBlock = (
-      <div className={[styles.right, styles.col].join(' ')}>
-        <div>
-          <h4>Network status</h4>
+    let requestStatusBlock =  this.state.requestStatus && (
+      <div className={styles['sub-row']}>
+        <h4>Request status</h4>
 
-          <table className={styles.table}>
-            <tbody>
+        <table className={styles.table}>
+          <tbody>
+          {Object.keys(this.state.requestStatus).map(key => (
+            <tr key={key}>
+              <td className={styles.row_label}> { key }: </td>
+              <td className={styles.row_value}>{ String(this.state.requestStatus[key])}</td>
+            </tr>))}
+          </tbody>
+        </table>
+
+        {testnetErr && <ErrorBanner title='Chain Testnet error' error={testnetErr} />}
+      </div>
+    )
+
+    let networkStatusBlock = (
+      <div className={styles.right}>
+        {/*<div>*/}
+          <div className={[styles.top, styles['sub-row']].join(' ')}>
+            <h4>Network status</h4>
+            <table className={styles.table}>
+              <tbody>
               <tr>
                 <td className={styles.row_label}>Generator block:</td>
                 <td className={styles.row_value}>{this.props.core.generatorBlockHeight}</td>
@@ -148,13 +178,28 @@ class CoreIndex extends React.Component {
                   {this.props.core.replicationLag === null ? '???' : this.props.core.replicationLag}
                 </td>
               </tr>
-            </tbody>
-          </table>
+              </tbody>
+            </table>
+          </div>
+
+          {requestStatusBlock}
 
           {testnetErr && <ErrorBanner title='Chain Testnet error' error={testnetErr} />}
         </div>
-      </div>
+
+      // </div>
     )
+
+
+
+
+    // let requestStatusBlock =  this.state.requestStatus && (
+    //   Object.keys(this.state.requestStatus).map(key => (
+    //     <tr key={key}>
+    //       <td className={styles.row_label}> { key }: </td>
+    //       <td className={styles.row_value}>{ String(this.state.requestStatus[key])}</td>
+    //     </tr>))
+    // )
 
     let resetDataBlock = (
       <div className='row'>

@@ -87,7 +87,7 @@ class Navigation extends React.Component {
           </li>
         </ul>
 
-        {<Sync/>}
+        {/*{<Sync/>}*/}
       </div>
     )
   }
