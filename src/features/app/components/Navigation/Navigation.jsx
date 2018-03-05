@@ -72,20 +72,20 @@ class Navigation extends React.Component {
           </li>
         </ul>
 
-        <ul className={`${styles.navigation} ${styles.border}`}>
-          <li className={styles.navigationTitle}>language</li>
-          <li>
-            <DropdownButton
-              className={`btn btn-default ${styles.addAction} ${styles.smallFont} ${styles.langBtn}`}
-              id='input-dropdown-addon'
-              title={this.props.lang === 'zh' ? '中文' : 'English'}
-              onSelect={this.props.setLang}
-            >
-              <MenuItem className={`${styles.smallFont}`} eventKey='zh'>中文</MenuItem>
-              <MenuItem className={`${styles.smallFont}`} eventKey='en'>English</MenuItem>
-            </DropdownButton>
-          </li>
-        </ul>
+        {/*<ul className={`${styles.navigation} ${styles.border}`}>*/}
+          {/*<li className={styles.navigationTitle}>language</li>*/}
+          {/*<li>*/}
+            {/*<DropdownButton*/}
+              {/*className={`btn btn-default ${styles.addAction} ${styles.smallFont} ${styles.langBtn}`}*/}
+              {/*id='input-dropdown-addon'*/}
+              {/*title={this.props.lang === 'zh' ? '中文' : 'English'}*/}
+              {/*onSelect={this.props.setLang}*/}
+            {/*>*/}
+              {/*<MenuItem className={`${styles.smallFont}`} eventKey='zh'>中文</MenuItem>*/}
+              {/*<MenuItem className={`${styles.smallFont}`} eventKey='en'>English</MenuItem>*/}
+            {/*</DropdownButton>*/}
+          {/*</li>*/}
+        {/*</ul>*/}
 
         {/*{<Sync/>}*/}
       </div>

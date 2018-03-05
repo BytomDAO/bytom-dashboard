@@ -1,5 +1,6 @@
 import { chainClient } from 'utility/environment'
 import { connect } from 'react-redux'
+import { DropdownButton, MenuItem } from 'react-bootstrap'
 import componentClassNames from 'utility/componentClassNames'
 import { PageContent, ErrorBanner, PageTitle } from 'features/shared/components'
 import React from 'react'
@@ -13,17 +14,18 @@ class CoreIndex extends React.Component {
   constructor(props) {
     super(props)
     this.state = {}
-
-    const fetchInfo = () => {
-      chainClient().config.info().then(resp => {
-        this.setState({requestStatus : resp.data})
-      })
-    }
-
-
-    setInterval(fetchInfo.bind(this), 2 * 1000)
     this.deleteClick = this.deleteClick.bind(this)
+  }
 
+  componentDidMount() {
+    const fetchInfo = () => {
+      if(this.refs.requestComponent) {
+        chainClient().config.info().then(resp => {
+          this.setState({requestStatus: resp.data})
+        })
+      }
+    }
+    setInterval(fetchInfo.bind(this), 2 * 1000)
   }
 
   deleteClick() {
@@ -68,6 +70,18 @@ class CoreIndex extends React.Component {
     } else {
       generatorUrl = this.props.core.generatorUrl
     }
+
+    let languageBlock =  (
+      <DropdownButton
+        className={'btn btn-default'}
+        id='input-dropdown-addon'
+        title={this.props.core.lang === 'zh' ? '中文' : 'English'}
+        onSelect={this.props.setLang}
+      >
+        <MenuItem eventKey='zh'>中文</MenuItem>
+        <MenuItem eventKey='en'>English</MenuItem>
+      </DropdownButton>
+    )
 
     let configBlock = (
       <div className={[styles.left, styles.col].join(' ')}>
@@ -124,6 +138,13 @@ class CoreIndex extends React.Component {
                 <td className={styles.row_label}>Blockchain ID:</td>
                 <td><code className={styles.block_hash}>{this.props.core.blockchainId}</code></td>
               </tr>
+              <tr>
+                <td colSpan={2}><hr /></td>
+              </tr>
+              <tr>
+                <td className={styles.row_label}>Language:</td>
+                <td><code className={styles.block_hash}>{languageBlock}</code></td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -139,27 +160,24 @@ class CoreIndex extends React.Component {
       }
     }
 
-    let requestStatusBlock =  this.state.requestStatus && (
-      <div className={styles['sub-row']}>
-        <h4>Request status</h4>
-
-        <table className={styles.table}>
-          <tbody>
-          {Object.keys(this.state.requestStatus).map(key => (
-            <tr key={key}>
-              <td className={styles.row_label}> { key }: </td>
-              <td className={styles.row_value}>{ String(this.state.requestStatus[key])}</td>
-            </tr>))}
-          </tbody>
-        </table>
-
-        {testnetErr && <ErrorBanner title='Chain Testnet error' error={testnetErr} />}
-      </div>
+    let requestStatusBlock =
+        this.state.requestStatus && (<div className={styles['sub-row']}>
+          <h4>Request status</h4>
+          <table className={styles.table}>
+            <tbody>
+            {Object.keys(this.state.requestStatus).map(key => (
+              <tr key={key}>
+                <td className={styles.row_label}> {key}: </td>
+                <td className={styles.row_value}>{ String(this.state.requestStatus[key])}</td>
+              </tr>))}
+            </tbody>
+          </table>
+        </div>
     )
 
     let networkStatusBlock = (
       <div className={styles.right}>
-        {/*<div>*/}
+        <div ref="requestComponent">
           <div className={[styles.top, styles['sub-row']].join(' ')}>
             <h4>Network status</h4>
             <table className={styles.table}>
@@ -181,25 +199,12 @@ class CoreIndex extends React.Component {
               </tbody>
             </table>
           </div>
-
           {requestStatusBlock}
-
-          {testnetErr && <ErrorBanner title='Chain Testnet error' error={testnetErr} />}
         </div>
-
-      // </div>
+        {testnetErr && <ErrorBanner title='Chain Testnet error' error={testnetErr} />}
+      </div>
     )
 
-
-
-
-    // let requestStatusBlock =  this.state.requestStatus && (
-    //   Object.keys(this.state.requestStatus).map(key => (
-    //     <tr key={key}>
-    //       <td className={styles.row_label}> { key }: </td>
-    //       <td className={styles.row_value}>{ String(this.state.requestStatus[key])}</td>
-    //     </tr>))
-    // )
 
     let resetDataBlock = (
       <div className='row'>
@@ -243,7 +248,6 @@ class CoreIndex extends React.Component {
             {configBlock}
             {networkStatusBlock}
           </div>
-
           {resetDataBlock}
         </PageContent>
       </div>
@@ -259,7 +263,14 @@ const mapStateToProps = (state) => ({
   testnetNextReset: state.testnet.nextReset,
 })
 
-const mapDispatchToProps = () => ({})
+const mapDispatchToProps = (dispatch) => ({
+  setLang: (event) => {
+    dispatch({
+      type: 'UPDATE_CORE_LANGUAGE',
+      lang: event
+    })
+  }
+})
 
 export default connect(
   mapStateToProps,
