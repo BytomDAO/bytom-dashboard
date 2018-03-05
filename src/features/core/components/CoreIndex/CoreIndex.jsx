@@ -102,6 +102,10 @@ class CoreIndex extends React.Component {
                 <td><code>{this.props.core.version}</code></td>
               </tr>
               <tr>
+                <td className={styles.row_label}>Language:</td>
+                <td>{this.props.core.lang === 'zh' ? '中文' : 'English'}</td>
+              </tr>
+              <tr>
                 <td className={styles.row_label}>MockHSM enabled:</td>
                 <td><code>{this.props.core.mockhsm.toString()}</code></td>
               </tr>
@@ -137,13 +141,6 @@ class CoreIndex extends React.Component {
               <tr>
                 <td className={styles.row_label}>Blockchain ID:</td>
                 <td><code className={styles.block_hash}>{this.props.core.blockchainId}</code></td>
-              </tr>
-              <tr>
-                <td colSpan={2}><hr /></td>
-              </tr>
-              <tr>
-                <td className={styles.row_label}>Language:</td>
-                <td><code className={styles.block_hash}>{languageBlock}</code></td>
               </tr>
             </tbody>
           </table>
