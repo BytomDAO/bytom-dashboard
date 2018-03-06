@@ -1,13 +1,12 @@
 import { chainClient } from 'utility/environment'
 import { connect } from 'react-redux'
-import { DropdownButton, MenuItem } from 'react-bootstrap'
 import componentClassNames from 'utility/componentClassNames'
-import { PageContent, ErrorBanner, PageTitle } from 'features/shared/components'
+import { PageContent, ErrorBanner, PageTitle, CheckboxField } from 'features/shared/components'
 import React from 'react'
 import styles from './CoreIndex.scss'
 import testnetUtils from 'features/testnet/utils'
 import { docsRoot } from 'utility/environment'
-import Sync from 'features/app/components/Sync/Sync'
+// import CheckboxField from '../../../shared/components/CheckboxField/CheckboxField'
 
 
 class CoreIndex extends React.Component {
@@ -71,18 +70,6 @@ class CoreIndex extends React.Component {
       generatorUrl = this.props.core.generatorUrl
     }
 
-    let languageBlock =  (
-      <DropdownButton
-        className={'btn btn-default'}
-        id='input-dropdown-addon'
-        title={this.props.core.lang === 'zh' ? '中文' : 'English'}
-        onSelect={this.props.setLang}
-      >
-        <MenuItem eventKey='zh'>中文</MenuItem>
-        <MenuItem eventKey='en'>English</MenuItem>
-      </DropdownButton>
-    )
-
     let configBlock = (
       <div className={[styles.left, styles.col].join(' ')}>
         <div>
@@ -141,6 +128,15 @@ class CoreIndex extends React.Component {
               <tr>
                 <td className={styles.row_label}>Blockchain ID:</td>
                 <td><code className={styles.block_hash}>{this.props.core.blockchainId}</code></td>
+              </tr>
+              <tr>
+                <td className={styles.row_label}>Show Advanced Options: </td>
+                <td>
+                  <label className={styles.switch}>
+                    <input type="checkbox"/>
+                    <span className={styles.slider}></span>
+                  </label>
+                </td>
               </tr>
             </tbody>
           </table>
