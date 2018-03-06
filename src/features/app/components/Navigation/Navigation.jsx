@@ -1,6 +1,5 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {DropdownButton, MenuItem} from 'react-bootstrap'
 import {Link} from 'react-router'
 import styles from './Navigation.scss'
 import {navIcon} from '../../utils'
@@ -87,7 +86,7 @@ class Navigation extends React.Component {
           {/*</li>*/}
         {/*</ul>*/}
 
-        {/*{<Sync/>}*/}
+        <Sync/>
       </div>
     )
   }
