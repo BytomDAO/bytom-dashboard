@@ -61,7 +61,7 @@ class Navigation extends React.Component {
           }
         </ul>
 
-        <ul className={styles.navigation}>
+        { this.props.showNavAdvance && <ul className={styles.navigation}>
           <li className={styles.navigationTitle}>advanced</li>
           <li>
             <Link to='/unspents' activeClassName={styles.active}>
@@ -69,22 +69,7 @@ class Navigation extends React.Component {
               Unspent outputs
             </Link>
           </li>
-        </ul>
-
-        {/*<ul className={`${styles.navigation} ${styles.border}`}>*/}
-          {/*<li className={styles.navigationTitle}>language</li>*/}
-          {/*<li>*/}
-            {/*<DropdownButton*/}
-              {/*className={`btn btn-default ${styles.addAction} ${styles.smallFont} ${styles.langBtn}`}*/}
-              {/*id='input-dropdown-addon'*/}
-              {/*title={this.props.lang === 'zh' ? '中文' : 'English'}*/}
-              {/*onSelect={this.props.setLang}*/}
-            {/*>*/}
-              {/*<MenuItem className={`${styles.smallFont}`} eventKey='zh'>中文</MenuItem>*/}
-              {/*<MenuItem className={`${styles.smallFont}`} eventKey='en'>English</MenuItem>*/}
-            {/*</DropdownButton>*/}
-          {/*</li>*/}
-        {/*</ul>*/}
+        </ul>}
 
         <Sync/>
       </div>
@@ -106,7 +91,8 @@ export default connect(
       showSync: state.core.configured && !state.core.generator,
       lang: state.core.lang,
       mockhsm: true,
-      docVersion
+      docVersion,
+      showNavAdvance: state.app.navAdvancedState == 'on' || window.localStorage.getItem('NavState') === 'advance'
     }
   },
   (dispatch) => ({

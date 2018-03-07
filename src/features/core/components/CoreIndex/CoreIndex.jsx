@@ -1,12 +1,12 @@
 import { chainClient } from 'utility/environment'
 import { connect } from 'react-redux'
 import componentClassNames from 'utility/componentClassNames'
-import { PageContent, ErrorBanner, PageTitle, CheckboxField } from 'features/shared/components'
+import { PageContent, ErrorBanner, PageTitle } from 'features/shared/components'
 import React from 'react'
 import styles from './CoreIndex.scss'
 import testnetUtils from 'features/testnet/utils'
 import { docsRoot } from 'utility/environment'
-// import CheckboxField from '../../../shared/components/CheckboxField/CheckboxField'
+import actions from 'actions'
 
 
 class CoreIndex extends React.Component {
@@ -14,6 +14,7 @@ class CoreIndex extends React.Component {
     super(props)
     this.state = {}
     this.deleteClick = this.deleteClick.bind(this)
+    this.handleAdvancedOptionChange = this.handleAdvancedOptionChange.bind(this)
   }
 
   componentDidMount() {
@@ -49,6 +50,17 @@ class CoreIndex extends React.Component {
     })
   }
 
+  handleAdvancedOptionChange(event) {
+    const target = event.target
+    if( target.checked ){
+      this.props.showNavAdvanced()
+      window.localStorage.setItem('NavState', 'advance')
+    }else{
+      this.props.hideNavAdvanced()
+      window.localStorage.setItem('NavState', 'normal')
+    }
+  }
+
   render() {
     const {
       onTestnet,
@@ -69,6 +81,8 @@ class CoreIndex extends React.Component {
     } else {
       generatorUrl = this.props.core.generatorUrl
     }
+
+    let navState = window.localStorage.getItem('NavState') === 'advance'
 
     let configBlock = (
       <div className={[styles.left, styles.col].join(' ')}>
@@ -130,10 +144,17 @@ class CoreIndex extends React.Component {
                 <td><code className={styles.block_hash}>{this.props.core.blockchainId}</code></td>
               </tr>
               <tr>
-                <td className={styles.row_label}>Show Advanced Options: </td>
+                <td colSpan={2}><hr /></td>
+              </tr>
+              <tr>
+                <td className={styles.row_label}>Advanced: </td>
                 <td>
                   <label className={styles.switch}>
-                    <input type="checkbox"/>
+                    <input
+                      type='checkbox'
+                      onChange={this.handleAdvancedOptionChange}
+                      checked={navState}
+                    />
                     <span className={styles.slider}></span>
                   </label>
                 </td>
@@ -170,7 +191,7 @@ class CoreIndex extends React.Component {
 
     let networkStatusBlock = (
       <div className={styles.right}>
-        <div ref="requestComponent">
+        <div ref='requestComponent'>
           <div className={[styles.top, styles['sub-row']].join(' ')}>
             <h4>Network status</h4>
             <table className={styles.table}>
@@ -197,7 +218,6 @@ class CoreIndex extends React.Component {
         {testnetErr && <ErrorBanner title='Chain Testnet error' error={testnetErr} />}
       </div>
     )
-
 
     let resetDataBlock = (
       <div className='row'>
@@ -257,12 +277,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  setLang: (event) => {
-    dispatch({
-      type: 'UPDATE_CORE_LANGUAGE',
-      lang: event
-    })
-  }
+  showNavAdvanced: () => dispatch(actions.app.showNavAdvanced),
+  hideNavAdvanced: () => dispatch(actions.app.hideNavAdvanced)
 })
 
 export default connect(
