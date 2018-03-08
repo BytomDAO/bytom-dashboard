@@ -57,7 +57,7 @@ class ItemList extends React.Component {
       )
     } else {
       const items = this.props.items.map((item) =>
-        <this.props.listItemComponent key={item.id} item={item} lang={this.props.lang} {...this.props.itemActions}/>)
+        <this.props.listItemComponent key={item.id} item={item} lang={this.props.lang} btmAmountUnit={this.props.btmAmountUnit} {...this.props.itemActions}/>)
       const Wrapper = this.props.wrapperComponent
 
       return(
@@ -94,6 +94,7 @@ export const mapStateToProps = (type, itemComponent, additionalProps = {}) => (s
     loadedOnce: state[type].queries.loadedOnce,
     type: type,
     lang: state.core.lang,
+    btmAmountUnit: state.core.btmAmountUnit,
     listItemComponent: itemComponent,
     noResults: target.length == 0,
     showFirstTimeFlow: target.length == 0,

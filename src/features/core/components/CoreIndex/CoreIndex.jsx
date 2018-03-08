@@ -1,5 +1,6 @@
 import { chainClient } from 'utility/environment'
 import { connect } from 'react-redux'
+import {DropdownButton, MenuItem} from 'react-bootstrap'
 import componentClassNames from 'utility/componentClassNames'
 import { PageContent, ErrorBanner, PageTitle } from 'features/shared/components'
 import React from 'react'
@@ -12,9 +13,12 @@ import actions from 'actions'
 class CoreIndex extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      btmAmountUnit: 'BTM'
+    }
     this.deleteClick = this.deleteClick.bind(this)
     this.handleAdvancedOptionChange = this.handleAdvancedOptionChange.bind(this)
+    this.changeBTMamount = this.changeBTMamount.bind(this)
   }
 
   componentDidMount() {
@@ -48,6 +52,11 @@ class CoreIndex extends React.Component {
         deleteDisabled: false,
       })
     })
+  }
+
+  changeBTMamount(value) {
+    this.setState({ btmAmountUnit: value })
+    this.props.uptdateBtmAmountUnit(value)
   }
 
   handleAdvancedOptionChange(event) {
@@ -157,6 +166,22 @@ class CoreIndex extends React.Component {
                     />
                     <span className={styles.slider}></span>
                   </label>
+                </td>
+              </tr>
+              <tr>
+                <td className={styles.row_label} >Unit to show amount in </td>
+                <td>
+                  <DropdownButton
+                    bsSize='xsmall'
+                    id='input-dropdown-amount'
+                    title={this.state.btmAmountUnit}
+                    // title={this.props.lang === 'zh' ? '中' : 'EN'}
+                    onSelect={this.changeBTMamount}
+                  >
+                    <MenuItem eventKey='BTM'>BTM</MenuItem>
+                    <MenuItem eventKey='mBTM'>mBTM</MenuItem>
+                    <MenuItem eventKey='NEU'>NEU</MenuItem>
+                  </DropdownButton>
                 </td>
               </tr>
             </tbody>
@@ -278,7 +303,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   showNavAdvanced: () => dispatch(actions.app.showNavAdvanced),
-  hideNavAdvanced: () => dispatch(actions.app.hideNavAdvanced)
+  hideNavAdvanced: () => dispatch(actions.app.hideNavAdvanced),
+  uptdateBtmAmountUnit: (param) => dispatch(actions.core.updateBTMAmountUnit(param))
 })
 
 export default connect(

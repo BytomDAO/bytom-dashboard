@@ -215,6 +215,13 @@ const lang = (state = defaultLang, action) => {
   return state
 }
 
+const btmAmountUnit = (state = 'BTM', action) => {
+  if (action.type == 'UPDATE_BTM_AMOUNT_UNIT') {
+    return action.param
+  }
+  return state
+}
+
 export default combineReducers({
   blockchainId,
   blockHeight,
@@ -242,5 +249,6 @@ export default combineReducers({
   syncEstimates,
   validToken,
   version,
-  lang
+  lang,
+  btmAmountUnit
 })
