@@ -95,6 +95,32 @@ const buildDisplay = (item, fields) => {
   return details
 }
 
+const fomateDecimal = (src,pos) => {
+  let srcString = src.toString()
+  var rs = srcString.indexOf('.')
+  if (rs < 0) {
+    rs = srcString.length
+    srcString += '.'
+  }
+  while (srcString.length <= rs + pos) {
+    srcString += '0'
+  }
+  return srcString
+}
+
+const normalizeAmount = (assetAlias, amount, btmAmountUnit) => {
+  //normalize BTM Amount
+  if (assetAlias === 'btm') {
+    switch (btmAmountUnit){
+      case 'BTM':
+        return fomateDecimal(amount/100000000, 8)
+      case 'mBTM':
+        return fomateDecimal(amount/100000, 5)
+    }
+  }
+  return amount
+}
+
 export function buildTxInputDisplay(input) {
   return buildDisplay(input, txInputFields)
 }
@@ -103,9 +129,9 @@ export function buildTxOutputDisplay(output) {
   return buildDisplay(output, txOutputFields)
 }
 
-export function buildUnspentDisplay(output) {
+export function buildUnspentDisplay(output, btmAmountUnit) {
   const normalized = {
-    amount: output.amount,
+    amount: normalizeAmount(output.assetAlias, output.amount, btmAmountUnit),
     accountId: output.accountId,
     accountAlias: output.accountAlias,
     assetId: output.assetId,
@@ -119,9 +145,9 @@ export function buildUnspentDisplay(output) {
   return buildDisplay(normalized, unspentFields)
 }
 
-export function buildBalanceDisplay(balance) {
+export function buildBalanceDisplay(balance, btmAmountUnit) {
   return buildDisplay({
-    amount: balance.amount,
+    amount: normalizeAmount(balance.assetAlias, balance.amount, btmAmountUnit),
     assetId: balance.assetId,
     assetAlias: balance.assetAlias,
     accountAlias: balance.accountAlias

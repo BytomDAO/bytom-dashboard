@@ -174,8 +174,7 @@ class CoreIndex extends React.Component {
                   <DropdownButton
                     bsSize='xsmall'
                     id='input-dropdown-amount'
-                    title={this.state.btmAmountUnit}
-                    // title={this.props.lang === 'zh' ? '中' : 'EN'}
+                    title={this.props.core.btmAmountUnit || this.state.btmAmountUnit}
                     onSelect={this.changeBTMamount}
                   >
                     <MenuItem eventKey='BTM'>BTM</MenuItem>
