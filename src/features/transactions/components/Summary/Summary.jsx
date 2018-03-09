@@ -50,16 +50,43 @@ class Summary extends React.Component {
     const summary = this.normalizeInouts(inouts)
     const items = []
 
+    const fomateDecimal = (src,pos) => {
+      let srcString = src.toString()
+      var rs = srcString.indexOf('.')
+      if (rs < 0) {
+        rs = srcString.length
+        srcString += '.'
+      }
+      while (srcString.length <= rs + pos) {
+        srcString += '0'
+      }
+      return srcString
+    }
+
+    const normalizeBtmAmountUnit = (assetID, amount, btmAmountUnit) => {
+      //normalize BTM Amount
+      if (assetID === 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff') {
+        switch (btmAmountUnit){
+          case 'BTM':
+            return fomateDecimal(amount/100000000, 8)
+          case 'mBTM':
+            return fomateDecimal(amount/100000, 5)
+        }
+      }
+      return amount
+    }
+
     Object.keys(summary).forEach((assetId) => {
       const asset = summary[assetId]
       const nonAccountTypes = ['issue','retire']
+
 
       nonAccountTypes.forEach((type) => {
         if (asset[type] > 0) {
           items.push({
             type: INOUT_TYPES[type],
             rawAction: type,
-            amount: asset[type],
+            amount: normalizeBtmAmountUnit(assetId, asset[type], this.props.btmAmountUnit),
             asset: asset.alias ? asset.alias : <code className={styles.rawId}>{assetId}</code>,
             assetId: assetId,
           })
@@ -83,7 +110,7 @@ class Summary extends React.Component {
             items.push({
               type: INOUT_TYPES[type],
               rawAction: type,
-              amount: account[type],
+              amount: normalizeBtmAmountUnit(assetId, account[type], this.props.btmAmountUnit),
               asset: asset.alias ? asset.alias : <code className={styles.rawId}>{assetId}</code>,
               assetId: assetId,
               direction: type == 'spend' ? 'from' : 'to',

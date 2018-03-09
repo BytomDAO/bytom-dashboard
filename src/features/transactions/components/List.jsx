@@ -56,6 +56,7 @@ const mapStateToProps = (type, itemComponent, additionalProps = {}) => {
       loadedOnce: state[type].queries.loadedOnce,
       type: type,
       lang: state.core.lang,
+      btmAmountUnit: state.core.btmAmountUnit,
       listItemComponent: itemComponent,
       noResults: currentItems.length == 0,
       showFirstTimeFlow: currentItems.length == 0,

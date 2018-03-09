@@ -25,7 +25,7 @@ class ListItem extends React.Component {
           </Link>
         </div>
 
-        <Summary transaction={item} lang={lang}/>
+        <Summary transaction={item} lang={lang} btmAmountUnit={this.props.btmAmountUnit}/>
       </div>
     )
   }

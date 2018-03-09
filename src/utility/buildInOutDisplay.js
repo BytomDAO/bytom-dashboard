@@ -85,11 +85,15 @@ const unspentFields = [
 
 const balanceFields = Object.keys(mappings)
 
-const buildDisplay = (item, fields) => {
+const buildDisplay = (item, fields, btmAmountUnit) => {
   const details = []
   fields.forEach(key => {
     if (item.hasOwnProperty(key)) {
-      details.push({label: mappings[key], value: item[key]})
+      if(key === 'amount'){
+        details.push({label: mappings[key], value: normalizeAmount(item['assetId'], item[key], btmAmountUnit)})
+      }else{
+        details.push({label: mappings[key], value: item[key]})
+      }
     }
   })
   return details
@@ -108,9 +112,9 @@ const fomateDecimal = (src,pos) => {
   return srcString
 }
 
-const normalizeAmount = (assetAlias, amount, btmAmountUnit) => {
+const normalizeAmount = (assetID, amount, btmAmountUnit) => {
   //normalize BTM Amount
-  if (assetAlias === 'btm') {
+  if (assetID === 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff') {
     switch (btmAmountUnit){
       case 'BTM':
         return fomateDecimal(amount/100000000, 8)
@@ -125,13 +129,13 @@ export function buildTxInputDisplay(input) {
   return buildDisplay(input, txInputFields)
 }
 
-export function buildTxOutputDisplay(output) {
-  return buildDisplay(output, txOutputFields)
+export function buildTxOutputDisplay(output, btmAmountUnit) {
+  return buildDisplay(output, txOutputFields,btmAmountUnit)
 }
 
 export function buildUnspentDisplay(output, btmAmountUnit) {
   const normalized = {
-    amount: normalizeAmount(output.assetAlias, output.amount, btmAmountUnit),
+    amount: output.amount,
     accountId: output.accountId,
     accountAlias: output.accountAlias,
     assetId: output.assetId,
@@ -142,14 +146,14 @@ export function buildUnspentDisplay(output, btmAmountUnit) {
     sourceId: output.sourceId,
     sourcePos: output.sourcePos
   }
-  return buildDisplay(normalized, unspentFields)
+  return buildDisplay(normalized, unspentFields, btmAmountUnit)
 }
 
 export function buildBalanceDisplay(balance, btmAmountUnit) {
   return buildDisplay({
-    amount: normalizeAmount(balance.assetAlias, balance.amount, btmAmountUnit),
+    amount: balance.amount,
     assetId: balance.assetId,
     assetAlias: balance.assetAlias,
     accountAlias: balance.accountAlias
-  }, balanceFields)
+  }, balanceFields, btmAmountUnit)
 }

@@ -215,8 +215,10 @@ const lang = (state = defaultLang, action) => {
   return state
 }
 
-const btmAmountUnit = (state = 'BTM', action) => {
+const defaultBtmAmountUnit = window.localStorage.getItem('BtmAmountUnit') || 'BTM'
+const btmAmountUnit = (state = defaultBtmAmountUnit, action) => {
   if (action.type == 'UPDATE_BTM_AMOUNT_UNIT') {
+    window.localStorage.setItem('BtmAmountUnit', action.param)
     return action.param
   }
   return state
