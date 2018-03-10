@@ -1,10 +1,13 @@
-import { BaseNew, FormContainer, FormSection, FieldLabel, JsonField, TextField, Autocomplete, ObjectSelectorField, SelectField } from 'features/shared/components'
+import { BaseNew, FormContainer, FormSection, FieldLabel, JsonField, TextField, Autocomplete, ObjectSelectorField, AmountUnitField } from 'features/shared/components'
 import { DropdownButton, MenuItem } from 'react-bootstrap'
 import { reduxForm } from 'redux-form'
 import ActionItem from './FormActionItem'
 import React from 'react'
 import styles from './New.scss'
 import balanceActions from 'features/balances/actions'
+import { normalizeBTMAmountUnit } from 'utility/buildInOutDisplay'
+import normalizeBTMAmountInput from '../../../../utility/buildInOutDisplay'
+
 
 const rangeOptions = [
   {
@@ -66,7 +69,8 @@ class Form extends React.Component {
     if (normalTransaction.assetId.value) {
       filteredBalances = filteredBalances.filter(balance => balance.assetId === normalTransaction.assetId.value)
     }
-    return filteredBalances.length === 1 ? filteredBalances[0].amount : null
+
+    return filteredBalances.length === 1 ? normalizeBTMAmountUnit(filteredBalances[0].assetId, filteredBalances[0].amount, this.props.btmAmountUnit) : null
   }
 
   toggleDropwdown() {
@@ -212,7 +216,14 @@ class Form extends React.Component {
           <label className={styles.title}>{ lang === 'zh' ? '至' : 'To' }</label>
           <div className={styles.main}>
             <TextField title='Address' fieldProps={normalTransaction.address}/>
-            <TextField title='Amount' fieldProps={normalTransaction.amount}/>
+            <TextField title='Amount' fieldProps={normalTransaction.amount}
+            />
+            <AmountUnitField
+              title='Amount'
+              fieldProps={normalTransaction.amount}
+              format={normalizeBTMAmountInput}
+              normalize={value => value*100000000}
+            />
           </div>
 
           <label className={styles.title}>Gas</label>
@@ -365,6 +376,7 @@ export default BaseNew.connect(
     return {
       autocompleteIsLoaded: state.key.autocompleteIsLoaded,
       lang: state.core.lang,
+      btmAmountUnit: state.core.btmAmountUnit,
       balances,
       ...BaseNew.mapStateToProps('transaction')(state)
     }

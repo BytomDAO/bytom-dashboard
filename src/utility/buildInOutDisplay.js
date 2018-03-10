@@ -99,17 +99,20 @@ const buildDisplay = (item, fields, btmAmountUnit) => {
   return details
 }
 
-const fomateDecimal = (src,pos) => {
-  let srcString = src.toString()
-  var rs = srcString.indexOf('.')
-  if (rs < 0) {
-    rs = srcString.length
-    srcString += '.'
+const formatDecimal = (src,pos) => {
+  if(src != null ){
+    let srcString = src.toString()
+    var rs = srcString.indexOf('.')
+    if (rs < 0) {
+      rs = srcString.length
+      srcString += '.'
+    }
+    while (srcString.length <= rs + pos) {
+      srcString += '0'
+    }
+    return srcString
   }
-  while (srcString.length <= rs + pos) {
-    srcString += '0'
-  }
-  return srcString
+  return src
 }
 
 const normalizeAmount = (assetID, amount, btmAmountUnit) => {
@@ -117,12 +120,46 @@ const normalizeAmount = (assetID, amount, btmAmountUnit) => {
   if (assetID === 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff') {
     switch (btmAmountUnit){
       case 'BTM':
-        return fomateDecimal(amount/100000000, 8)
+        return formatDecimal(amount/100000000, 8)+' BTM'
       case 'mBTM':
-        return fomateDecimal(amount/100000, 5)
+        return formatDecimal(amount/100000, 5)+' mBTM'
+      case 'NEU':
+        return amount+' NEU'
     }
   }
   return amount
+}
+
+const normalizeBTMAmountInput = (value, pos) => {
+  if (!value) {
+    return value
+  }
+  const onlyNums = value.replace(/[^0-9.]/g, '')
+
+  // Create an array with sections split by .
+  const sections = onlyNums.split('.')
+
+  // Remove any leading 0s apart from single 0
+  if (sections[0] !== '0' && sections[0] !== '00') {
+    sections[0] = sections[0].replace(/^0+/, '')
+  } else {
+    sections[0] = '0'
+  }
+
+  // If numbers exist after first .
+  if (sections[1]) {
+    return sections[0] + '.' + sections[1].slice(0, 8)
+  } else if (value.indexOf('.') !== -1) {
+    return sections[0] + '.'
+  } else {
+    return sections[0]
+  }
+}
+
+export default normalizeBTMAmountInput
+
+export function normalizeBTMAmountUnit(assetID, amount, btmAmountUnit) {
+  return normalizeAmount(assetID, amount, btmAmountUnit)
 }
 
 export function buildTxInputDisplay(input) {
