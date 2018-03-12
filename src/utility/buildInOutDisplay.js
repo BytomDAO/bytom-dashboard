@@ -130,11 +130,13 @@ const normalizeAmount = (assetID, amount, btmAmountUnit) => {
   return amount
 }
 
-const normalizeBTMAmountInput = (value, pos) => {
+export function formatBTMAmount(value, pos)  {
   if (!value) {
     return value
   }
-  const onlyNums = value.replace(/[^0-9.]/g, '')
+
+  // debugger
+  const onlyNums = value.toString().replace(/[^0-9.]/g, '')
 
   // Create an array with sections split by .
   const sections = onlyNums.split('.')
@@ -148,15 +150,37 @@ const normalizeBTMAmountInput = (value, pos) => {
 
   // If numbers exist after first .
   if (sections[1]) {
-    return sections[0] + '.' + sections[1].slice(0, 8)
-  } else if (value.indexOf('.') !== -1) {
+    return sections[0] + '.' + sections[1].slice(0, pos)
+  } else if (onlyNums.indexOf('.') !== -1) {
     return sections[0] + '.'
   } else {
     return sections[0]
   }
 }
 
-export default normalizeBTMAmountInput
+export function parseBTMAmount(value, pos){
+  const onlyNums = value.replace(/[^0-9.]/g, '')
+  const sections = onlyNums.split('.')
+
+  if (sections[0] !== '') {
+    if( sections[0] !== '0' && sections[0] !== '00' ){
+      //If decimal number exist.
+      let numDecimal = ''
+
+      if (sections[1]) {
+        numDecimal = sections[1].slice(0, pos)
+      }
+      while (numDecimal.length < pos) {
+        numDecimal += '0'
+      }
+      return sections[0] + numDecimal
+    }else {
+      return '0'
+    }
+  }
+
+  return onlyNums
+}
 
 export function normalizeBTMAmountUnit(assetID, amount, btmAmountUnit) {
   return normalizeAmount(assetID, amount, btmAmountUnit)
