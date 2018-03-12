@@ -21,7 +21,8 @@ class AmountUnitField extends React.Component {
     this.state = {
       showDropdown: false,
       selected: 'BTM',
-      value: props.value,
+      pos: 8,
+      value: props.fieldProps.value,
     }
 
     this.select = this.select.bind(this)
@@ -31,11 +32,6 @@ class AmountUnitField extends React.Component {
     this.handleBlur = this.handleBlur.bind(this)
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      value: nextProps.value,
-    })
-  }
 
   toggleDropwdown() {
     this.setState({ showDropdown: !this.state.showDropdown })
@@ -47,25 +43,24 @@ class AmountUnitField extends React.Component {
 
   select(value) {
     this.setState({ selected: value })
-    const amount = this.props.fieldProps.value
     switch (value){
       case 'BTM':
-        this.props.fieldProps.value = amount/100000000
+        this.setState({pos: 8})
         break
       case 'mBTM':
-        this.props.fieldProps.value = amount/100000
+        this.setState({pos: 5})
         break
       case 'NEU':
-        this.props.fieldProps.value = amount
+        this.setState({pos: 0})
     }
     this.closeDropdown()
   }
 
   handleBlur() {
-    if (this.props.onBlur) {
+    if (this.props.fieldProps.onBlur) {
       // Swallow the event to prevent Redux Form from
       // extracting the form value
-      this.props.onBlur()
+      this.props.fieldProps.onBlur()
     }
   }
 
@@ -74,13 +69,11 @@ class AmountUnitField extends React.Component {
 
     // Update the internal state to trigger a re-render
     // using the formatted value
-    this.setState({value: value})
-
-    if (this.props.onChange) {
+    this.setState({ value: value })
+    if (this.props.fieldProps.onChange) {
       // Notify the normalized value
-      debugger
-      this.props.onChange(
-        this.props.normalize(value)
+      this.props.fieldProps.onChange(
+        this.props.normalize(value, this.state.pos )
       )
     }
   }
@@ -93,16 +86,12 @@ class AmountUnitField extends React.Component {
       <div className='form-group'>
         {this.props.title && <FieldLabel>{this.props.title}</FieldLabel>}
         <div className='input-group'>
-
-
           {<input className='form-control'
             type={this.state.type}
-            placeholder={this.props.placeholder}
-            autoFocus={!!this.props.autoFocus}
             {...fieldProps}
-            value={this.props.format(this.state.value)}
-            onChange={this.handleChange}
+            value={this.props.format(this.state.value, this.state.pos)}
             onBlur={this.handleBlur}
+            onChange={this.handleChange}
           />}
 
 
