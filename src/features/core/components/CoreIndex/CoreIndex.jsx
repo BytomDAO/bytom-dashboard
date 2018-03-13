@@ -8,6 +8,7 @@ import styles from './CoreIndex.scss'
 import testnetUtils from 'features/testnet/utils'
 import { docsRoot } from 'utility/environment'
 import actions from 'actions'
+import {navAdvancedState} from '../../../app/reducers'
 
 
 class CoreIndex extends React.Component {
@@ -63,10 +64,8 @@ class CoreIndex extends React.Component {
     const target = event.target
     if( target.checked ){
       this.props.showNavAdvanced()
-      window.localStorage.setItem('NavState', 'advance')
     }else{
       this.props.hideNavAdvanced()
-      window.localStorage.setItem('NavState', 'normal')
     }
   }
 
@@ -91,7 +90,7 @@ class CoreIndex extends React.Component {
       generatorUrl = this.props.core.generatorUrl
     }
 
-    let navState = window.localStorage.getItem('NavState') === 'advance'
+    let navState = this.props.navAdvancedState === 'advance'
 
     let configBlock = (
       <div className={[styles.left, styles.col].join(' ')}>
@@ -294,6 +293,7 @@ class CoreIndex extends React.Component {
 
 const mapStateToProps = (state) => ({
   core: state.core,
+  navAdvancedState: state.app.navAdvancedState,
   onTestnet: state.core.onTestnet,
   testnetBlockchainMismatch: testnetUtils.isBlockchainMismatch(state),
   testnetNetworkMismatch: testnetUtils.isCrosscoreRpcMismatch(state),

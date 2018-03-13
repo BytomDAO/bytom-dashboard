@@ -119,11 +119,11 @@ export const modal = (state = { isShowing: false }, action) => {
   return state
 }
 
-export const navAdvancedState = (state = '', action) => {
+export const navAdvancedState = (state = 'normal', action) => {
   if (action.type == 'SHOW_NAV_ADVANCE') {
-    return state === '' ? 'on' : ''
+    return state === 'normal' ? 'advance' : 'normal'
   } else if (action.type == 'HIDE_NAV_ADVANCE') {
-    return ''
+    return 'normal'
   }
   return state
 }

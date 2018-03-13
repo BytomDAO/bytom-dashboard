@@ -92,7 +92,7 @@ export default connect(
       lang: state.core.lang,
       mockhsm: true,
       docVersion,
-      showNavAdvance: state.app.navAdvancedState == 'on' || window.localStorage.getItem('NavState') === 'advance'
+      showNavAdvance: state.app.navAdvancedState === 'advance'
     }
   },
   (dispatch) => ({

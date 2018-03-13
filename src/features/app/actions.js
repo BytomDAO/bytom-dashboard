@@ -7,7 +7,7 @@ const actions = {
   hideModal: { type: 'HIDE_MODAL' },
   showNavAdvanced: { type: 'SHOW_NAV_ADVANCE' },
   hideNavAdvanced: (dispatch, getState) => {
-    if (getState().app.navAdvancedState === 'on' ) {
+    if (getState().app.navAdvancedState === 'advance' ) {
       dispatch({ type: 'HIDE_NAV_ADVANCE' })
     }
   },

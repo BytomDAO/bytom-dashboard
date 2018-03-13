@@ -197,6 +197,13 @@ export const connected = (state = true, action) => {
   return state
 }
 
+export const btmAmountUnit = (state = 'BTM' , action) => {
+  if (action.type == 'UPDATE_BTM_AMOUNT_UNIT') {
+    return action.param
+  }
+  return state
+}
+
 const snapshot = (state = null, action) => {
   if (action.type == 'UPDATE_CORE_INFO') {
     return action.param.snapshot || null // snapshot may be undefined, which Redux doesn't like.
@@ -215,14 +222,6 @@ const lang = (state = defaultLang, action) => {
   return state
 }
 
-const defaultBtmAmountUnit = window.localStorage.getItem('BtmAmountUnit') || 'BTM'
-const btmAmountUnit = (state = defaultBtmAmountUnit, action) => {
-  if (action.type == 'UPDATE_BTM_AMOUNT_UNIT') {
-    window.localStorage.setItem('BtmAmountUnit', action.param)
-    return action.param
-  }
-  return state
-}
 
 export default combineReducers({
   blockchainId,

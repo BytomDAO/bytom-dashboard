@@ -16,6 +16,10 @@ export const exportState = (store) => () => {
       // requirement, we won't need to store these anymore.
       requireClientToken: (state.core || {}).requireClientToken,
       validToken: (state.core || {}).validToken,
+      btmAmountUnit: (state.core || {}).btmAmountUnit,
+    },
+    app:{
+      navAdvancedState : (state.app || {}).navAdvancedState,
     },
     transaction: {
       generated: (state.transaction || {}).generated,
