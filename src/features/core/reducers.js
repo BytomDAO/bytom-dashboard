@@ -204,6 +204,14 @@ export const btmAmountUnit = (state = 'BTM' , action) => {
   return state
 }
 
+const defaultLang = window.navigator.language.startsWith('zh') ? 'zh' : 'en'
+const lang = (state = defaultLang, action) => {
+  if (action.type === 'UPDATE_CORE_LANGUAGE') {
+    return action.lang || ''
+  }
+  return state
+}
+
 const snapshot = (state = null, action) => {
   if (action.type == 'UPDATE_CORE_INFO') {
     return action.param.snapshot || null // snapshot may be undefined, which Redux doesn't like.
@@ -212,15 +220,6 @@ const snapshot = (state = null, action) => {
 }
 
 const version = (state, action) => coreConfigReducer('version', state, 'N/A', action)
-
-const defaultLang = window.localStorage.getItem('language') || (window.navigator.language.startsWith('zh') ? 'zh' : 'en')
-const lang = (state = defaultLang, action) => {
-  if (action.type === 'UPDATE_CORE_LANGUAGE') {
-    window.localStorage.setItem('language', action.lang || '')
-    return action.lang || ''
-  }
-  return state
-}
 
 
 export default combineReducers({

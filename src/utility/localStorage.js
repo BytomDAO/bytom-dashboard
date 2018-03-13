@@ -17,6 +17,7 @@ export const exportState = (store) => () => {
       requireClientToken: (state.core || {}).requireClientToken,
       validToken: (state.core || {}).validToken,
       btmAmountUnit: (state.core || {}).btmAmountUnit,
+      lang: (state.core || {}).lang
     },
     app:{
       navAdvancedState : (state.app || {}).navAdvancedState,
