@@ -88,7 +88,7 @@ class Form extends React.Component {
   }
 
   disableSubmit(actions, normalTransaction) {
-    if (this.state.showAdvance) {
+    if (this.state.showAdvanceTx) {
       return actions.length == 0 && !this.state.showAdvanced
     }
 
@@ -157,6 +157,9 @@ class Form extends React.Component {
       (normalTransaction.assetAlias.value || normalTransaction.assetId.value)
     const availableBalance = this.balanceAmount(normalTransaction)
 
+    const showBtmAmountUnit = (normalTransaction.assetAlias.value === 'btm' ||
+      normalTransaction.assetId.value === 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff')
+
     return(
       <FormContainer
         error={error}
@@ -170,25 +173,25 @@ class Form extends React.Component {
 
         <div className={`btn-group ${styles.btnGroup}`} role='group'>
           <button
-            className={`btn btn-default ${this.state.showAdvance ? null: 'active'}`}
+            className={`btn btn-default ${this.state.showAdvanceTx ? null: 'active'}`}
             onClick={(e) => {
               e.preventDefault()
               this.emptyActions(actions)
-              this.setState({showAdvance: false})
+              this.setState({showAdvanceTx: false})
             }} >
             { lang === 'zh' ? '简单交易' : 'Normal' }
           </button>
           <button
-            className={`btn btn-default ${this.state.showAdvance ? 'active': null}`}
+            className={`btn btn-default ${this.state.showAdvanceTx ? 'active': null}`}
             onClick={(e) => {
               e.preventDefault()
-              this.setState({showAdvance: true})
+              this.setState({showAdvanceTx: true})
             }} >
             { lang === 'zh' ? '高级交易' : 'Advanced' }
           </button>
         </div>
 
-        { !this.state.showAdvance && <FormSection title={ lang === 'zh' ? '简单交易' : 'Normal Trasaction' }>
+        { !this.state.showAdvanceTx && <FormSection title={ lang === 'zh' ? '简单交易' : 'Normal Trasaction' }>
           <label className={styles.title}>{ lang === 'zh' ? '从' : 'From' }</label>
           <div className={styles.main}>
             <ObjectSelectorField
@@ -214,16 +217,16 @@ class Form extends React.Component {
           <label className={styles.title}>{ lang === 'zh' ? '至' : 'To' }</label>
           <div className={styles.main}>
             <TextField title='Address' fieldProps={normalTransaction.address}/>
-            <TextField title='Amount' fieldProps={normalTransaction.amount}
-            />
-            <AmountUnitField
+            {!showBtmAmountUnit && <TextField title='Amount' fieldProps={normalTransaction.amount}
+            />}
+            {showBtmAmountUnit && <AmountUnitField
               title='Amount'
               fieldProps={{
                 ...normalTransaction.amount,
               }}
               format={formatBTMAmount}
               normalize={parseBTMAmount}
-            />
+            />}
           </div>
 
           <label className={styles.title}>Gas</label>
@@ -256,7 +259,7 @@ class Form extends React.Component {
 
         </FormSection>}
 
-        { this.state.showAdvance && <FormSection title='Actions'>
+        { this.state.showAdvanceTx && <FormSection title='Actions'>
           {actions.map((action, index) =>
             <ActionItem
               key={index}
@@ -286,7 +289,7 @@ class Form extends React.Component {
           </div>
         </FormSection>}
 
-        {this.state.showAdvance && !this.state.showAdvanced &&
+        {this.state.showAdvanceTx && !this.state.showAdvanced &&
           <FormSection>
             <a href='#'
               className={styles.showAdvanced}
@@ -300,7 +303,7 @@ class Form extends React.Component {
           </FormSection>
         }
 
-        {this.state.showAdvance && this.state.showAdvanced && <FormSection title={ lang === 'zh' ? '高级选项' :'Advanced Options' }>
+        {this.state.showAdvanceTx && this.state.showAdvanced && <FormSection title={ lang === 'zh' ? '高级选项' :'Advanced Options' }>
           <div>
             <TextField
               title='Base transaction'
