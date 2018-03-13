@@ -201,8 +201,12 @@ export function normalizeBTMAmountUnit(assetID, amount, btmAmountUnit) {
   return normalizeGlobalBTMAmount(assetID, amount, btmAmountUnit)
 }
 
-export function converIntToDec(Int, Decipoint){
-  return formatIntNumToPosDecimal(Int, Decipoint)
+export function addZeroToDecimalPosition(value, deciPoint){
+  return addZeroToDecimalPos(value, deciPoint)
+}
+
+export function converIntToDec(int, deciPoint){
+  return formatIntNumToPosDecimal(int, deciPoint)
 }
 
 export function buildTxInputDisplay(input) {

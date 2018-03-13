@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './AmountUnitField.scss'
 import { DropdownButton, MenuItem } from 'react-bootstrap'
-import { converIntToDec } from 'utility/buildInOutDisplay'
+import { converIntToDec, addZeroToDecimalPosition } from 'utility/buildInOutDisplay'
 import { FieldLabel } from 'features/shared/components'
 import pick from 'lodash/pick'
 
@@ -62,7 +62,9 @@ class AmountUnitField extends React.Component {
     this.closeDropdown()
   }
 
-  handleBlur() {
+  handleBlur(event) {
+    const value = event.target.value
+    this.setState({ value: addZeroToDecimalPosition( value, this.state.pos ) })
     if (this.props.fieldProps.onBlur) {
       // Swallow the event to prevent Redux Form from
       // extracting the form value
