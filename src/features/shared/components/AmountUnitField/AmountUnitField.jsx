@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './AmountUnitField.scss'
 import { DropdownButton, MenuItem } from 'react-bootstrap'
-import { converIntToDec, addZeroToDecimalPosition } from 'utility/buildInOutDisplay'
+import { converIntToDec, addZeroToDecimalPosition, formatBTMAmount, parseBTMAmount } from 'utility/buildInOutDisplay'
 import { FieldLabel } from 'features/shared/components'
 import pick from 'lodash/pick'
 
@@ -80,7 +80,7 @@ class AmountUnitField extends React.Component {
     if (this.props.fieldProps.onChange) {
       // Notify the normalized value
       this.props.fieldProps.onChange(
-        this.props.normalize(value, this.state.pos )
+        parseBTMAmount(value, this.state.pos )
       )
     }
   }
@@ -96,7 +96,7 @@ class AmountUnitField extends React.Component {
           {<input className='form-control'
             type={this.state.type}
             {...fieldProps}
-            value={this.props.format(this.state.value, this.state.pos)}
+            value={formatBTMAmount(this.state.value, this.state.pos)}
             onBlur={this.handleBlur}
             onChange={this.handleChange}
           />}

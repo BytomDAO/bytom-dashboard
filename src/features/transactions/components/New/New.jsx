@@ -5,7 +5,7 @@ import ActionItem from './FormActionItem'
 import React from 'react'
 import styles from './New.scss'
 import balanceActions from 'features/balances/actions'
-import { normalizeBTMAmountUnit, formatBTMAmount, parseBTMAmount } from 'utility/buildInOutDisplay'
+import { normalizeBTMAmountUnit } from 'utility/buildInOutDisplay'
 
 const rangeOptions = [
   {
@@ -219,13 +219,7 @@ class Form extends React.Component {
             <TextField title='Address' fieldProps={normalTransaction.address}/>
             {!showBtmAmountUnit && <TextField title='Amount' fieldProps={normalTransaction.amount}
             />}
-            {showBtmAmountUnit && <AmountUnitField
-              title='Amount'
-              fieldProps={{
-                ...normalTransaction.amount,
-              }}
-              format={formatBTMAmount}
-              normalize={parseBTMAmount}
+            {showBtmAmountUnit && <AmountUnitField title='Amount' fieldProps={normalTransaction.amount}
             />}
           </div>
 
