@@ -1,6 +1,7 @@
 import React from 'react'
 import styles from './AmountUnitField.scss'
 import { DropdownButton, MenuItem } from 'react-bootstrap'
+import { converIntToDec } from 'utility/buildInOutDisplay'
 import { FieldLabel } from 'features/shared/components'
 import pick from 'lodash/pick'
 
@@ -43,15 +44,20 @@ class AmountUnitField extends React.Component {
 
   select(value) {
     this.setState({ selected: value })
+    const amount = this.props.fieldProps.value
     switch (value){
       case 'BTM':
         this.setState({pos: 8})
+        this.setState({value: converIntToDec(amount, 8)})
         break
       case 'mBTM':
         this.setState({pos: 5})
+        this.setState({value: converIntToDec(amount, 5)})
         break
       case 'NEU':
         this.setState({pos: 0})
+        this.setState({value: amount})
+
     }
     this.closeDropdown()
   }
@@ -66,7 +72,6 @@ class AmountUnitField extends React.Component {
 
   handleChange(event) {
     const value = event.target.value
-
     // Update the internal state to trigger a re-render
     // using the formatted value
     this.setState({ value: value })

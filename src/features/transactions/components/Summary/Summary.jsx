@@ -1,6 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router'
+import { converIntToDec } from 'utility/buildInOutDisplay'
 import styles from './Summary.scss'
+
 
 const INOUT_TYPES = {
   issue: 'Issue',
@@ -50,27 +52,14 @@ class Summary extends React.Component {
     const summary = this.normalizeInouts(inouts)
     const items = []
 
-    const fomateDecimal = (src,pos) => {
-      let srcString = src.toString()
-      var rs = srcString.indexOf('.')
-      if (rs < 0) {
-        rs = srcString.length
-        srcString += '.'
-      }
-      while (srcString.length <= rs + pos) {
-        srcString += '0'
-      }
-      return srcString
-    }
-
     const normalizeBtmAmountUnit = (assetID, amount, btmAmountUnit) => {
       //normalize BTM Amount
       if (assetID === 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff') {
         switch (btmAmountUnit){
           case 'BTM':
-            return fomateDecimal(amount/100000000, 8)
+            return converIntToDec(amount, 8)
           case 'mBTM':
-            return fomateDecimal(amount/100000, 5)
+            return converIntToDec(amount, 5)
         }
       }
       return amount

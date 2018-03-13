@@ -90,7 +90,7 @@ const buildDisplay = (item, fields, btmAmountUnit) => {
   fields.forEach(key => {
     if (item.hasOwnProperty(key)) {
       if(key === 'amount'){
-        details.push({label: mappings[key], value: normalizeAmount(item['assetId'], item[key], btmAmountUnit)})
+        details.push({label: mappings[key], value: normalizeGlobalBTMAmount(item['assetId'], item[key], btmAmountUnit)})
       }else{
         details.push({label: mappings[key], value: item[key]})
       }
@@ -99,7 +99,7 @@ const buildDisplay = (item, fields, btmAmountUnit) => {
   return details
 }
 
-const formatDecimal = (src,pos) => {
+const addZeroToDecimalPos = (src,pos) => {
   if(src != null ){
     let srcString = src.toString()
     var rs = srcString.indexOf('.')
@@ -115,14 +115,26 @@ const formatDecimal = (src,pos) => {
   return src
 }
 
-const normalizeAmount = (assetID, amount, btmAmountUnit) => {
+const formatIntNumToPosDecimal = (neu,pos) => {
+  if(neu != null ){
+    let neuString = neu.toString()
+    if(neuString.length<=8){
+      return addZeroToDecimalPos((neu/Math.pow(10, pos)), pos)
+    }else {
+      return neuString.slice(0, -pos) + '.' + neuString.slice(-pos)
+    }
+  }
+  return neu
+}
+
+const normalizeGlobalBTMAmount = (assetID, amount, btmAmountUnit) => {
   //normalize BTM Amount
   if (assetID === 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff') {
     switch (btmAmountUnit){
       case 'BTM':
-        return formatDecimal(amount/100000000, 8)+' BTM'
+        return formatIntNumToPosDecimal(amount, 8)+' BTM'
       case 'mBTM':
-        return formatDecimal(amount/100000, 5)+' mBTM'
+        return formatIntNumToPosDecimal(amount, 5)+' mBTM'
       case 'NEU':
         return amount+' NEU'
     }
@@ -135,7 +147,6 @@ export function formatBTMAmount(value, pos)  {
     return value
   }
 
-  // debugger
   const onlyNums = value.toString().replace(/[^0-9.]/g, '')
 
   // Create an array with sections split by .
@@ -159,31 +170,39 @@ export function formatBTMAmount(value, pos)  {
 }
 
 export function parseBTMAmount(value, pos){
+  if (!value) {
+    return value
+  }
+
   const onlyNums = value.replace(/[^0-9.]/g, '')
   const sections = onlyNums.split('.')
 
-  if (sections[0] !== '') {
-    if( sections[0] !== '0' && sections[0] !== '00' ){
-      //If decimal number exist.
-      let numDecimal = ''
+  let numDecimal = ''
 
-      if (sections[1]) {
-        numDecimal = sections[1].slice(0, pos)
-      }
-      while (numDecimal.length < pos) {
-        numDecimal += '0'
-      }
-      return sections[0] + numDecimal
-    }else {
-      return '0'
-    }
+  if (sections[1]) {
+    numDecimal = sections[1].slice(0, pos)
+  }
+  while (numDecimal.length < pos) {
+    numDecimal += '0'
   }
 
-  return onlyNums
+  //remove all the leading 0s
+  let amountNum = sections[0] + numDecimal
+  if(/^0*$/.test(amountNum)){
+    amountNum = '0'
+  }else {
+    amountNum = amountNum.replace(/^0+/, '')
+  }
+
+  return amountNum
 }
 
 export function normalizeBTMAmountUnit(assetID, amount, btmAmountUnit) {
-  return normalizeAmount(assetID, amount, btmAmountUnit)
+  return normalizeGlobalBTMAmount(assetID, amount, btmAmountUnit)
+}
+
+export function converIntToDec(Int, Decipoint){
+  return formatIntNumToPosDecimal(Int, Decipoint)
 }
 
 export function buildTxInputDisplay(input) {
