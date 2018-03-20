@@ -44,7 +44,7 @@
 .settings {
   cursor: pointer;
   line-height: $title-height;
-  padding: 0 20px;
+  padding-right: 10px;
   position: absolute;
   right: 0;
   top: 0;
@@ -53,6 +53,16 @@
     width: 28px;
     height: 28px;
   }
+}
+
+.languages {
+  border: none;
+  background-color: transparentize($background-content-color, 0.9);
+  color: $background-content-color;
+  margin: 6px 20px 5px 30px !important;
+  padding: 5px;
+  height: 27px;
+  line-height: 27px !important;
 }
 
 .connectionIssue {

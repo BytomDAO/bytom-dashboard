@@ -1,5 +1,5 @@
 import React from 'react'
-import { ErrorBanner, HiddenField, Autocomplete, JsonField, TextField, ObjectSelectorField } from 'features/shared/components'
+import { ErrorBanner, HiddenField, Autocomplete, JsonField, TextField, ObjectSelectorField, AmountUnitField } from 'features/shared/components'
 import styles from './FormActionItem.scss'
 
 const ISSUE_KEY = 'issue'
@@ -73,6 +73,9 @@ export default class ActionItem extends React.Component {
       this.props.remove(this.props.index)
     }
 
+    const btmAmounUnitVisible = (assetAlias.value === 'btm' ||
+      assetId.value === 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff' )
+
     const classNames = [styles.main]
     if (type.error) classNames.push(styles.error)
 
@@ -115,8 +118,11 @@ export default class ActionItem extends React.Component {
             }}
           />}
 
-        {visible.amount &&
+        {visible.amount && !btmAmounUnitVisible &&
           <TextField title='Amount' fieldProps={amount} />}
+
+        {visible.amount && btmAmounUnitVisible &&
+          <AmountUnitField title='Amount' fieldProps={amount} />}
 
         {visible.password && false &&
           <TextField title='Password' placeholder='Password' fieldProps={password} autoFocus={false} type={'password'} />

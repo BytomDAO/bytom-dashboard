@@ -119,6 +119,15 @@ export const modal = (state = { isShowing: false }, action) => {
   return state
 }
 
+export const navAdvancedState = (state = 'normal', action) => {
+  if (action.type == 'SHOW_NAV_ADVANCE') {
+    return state === 'normal' ? 'advance' : 'normal'
+  } else if (action.type == 'HIDE_NAV_ADVANCE') {
+    return 'normal'
+  }
+  return state
+}
+
 export const dropdownState = (state = '', action) => {
   if (action.type == 'TOGGLE_DROPDOWN') {
     return state === '' ? 'open' : ''
@@ -133,4 +142,5 @@ export default combineReducers({
   flashMessages,
   modal,
   dropdownState,
+  navAdvancedState
 })

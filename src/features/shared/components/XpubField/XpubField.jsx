@@ -10,6 +10,12 @@ const methodOptions = {
   provide: 'Provide existing xpub',
 }
 
+const methodOptionsZh = {
+  mockhsm: '使用已有的密钥',
+  // generate: 'Generate new MockHSM key',
+  provide: '提供已有的xpub',
+}
+
 class XpubField extends React.Component {
   constructor(props) {
     super(props)
@@ -38,6 +44,7 @@ class XpubField extends React.Component {
       valueProps,
       mockhsmKeys,
     } = this.props
+    const lang = this.props.lang
 
     const typeOnChange = event => {
       const value = typeProps.onChange(event).value
@@ -83,7 +90,7 @@ class XpubField extends React.Component {
                       checked={key == typeProps.value}
                       value={key}
                     />
-                    {methodOptions[key]}
+                    { lang === 'zh' ? methodOptionsZh[key] : methodOptions[key]}
                   </label>
                 </td>
 
@@ -123,6 +130,7 @@ export default connect(
     return {
       autocompleteIsLoaded: state.key.autocompleteIsLoaded,
       mockhsmKeys: keys,
+      lang: state.core.lang
     }
   },
   (dispatch) => ({

@@ -13,7 +13,7 @@ class ListItem extends React.Component {
             actions={[
               <RawJsonButton key='raw-json' item={this.props.item} />
             ]}
-            items={buildUnspentDisplay(this.props.item)} />)
+            items={buildUnspentDisplay(this.props.item, this.props.btmAmountUnit)} />)
   }
 }
 

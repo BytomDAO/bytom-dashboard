@@ -52,6 +52,7 @@ const mapStateToProps = (state) => {
   const routes = makeRoutes()
   const pathname = state.routing.locationBeforeTransitions.pathname
   const breadcrumbs = []
+  const lang = state.core.lang
 
   let currentRoutes = routes.childRoutes
   let currentPath = []
@@ -65,8 +66,12 @@ const mapStateToProps = (state) => {
       currentPath.push(component)
 
       if (!match.skipBreadcrumb) {
+        let crumbName =  match.name || humanize(component)
+        if( lang === 'zh' &&  match.name_zh ){
+          crumbName = match.name_zh
+        }
         breadcrumbs.push({
-          name: match.name || humanize(component),
+          name: crumbName ,
           path: currentPath.join('/')
         })
       }

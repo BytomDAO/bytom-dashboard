@@ -23,24 +23,29 @@ class Form extends React.Component {
       handleSubmit,
       submitting
     } = this.props
+    const lang = this.props.lang
 
     return(
       <FormContainer
         error={error}
-        label='New account'
+        label={ lang === 'zh' ? '新建账户' : 'New account' }
         onSubmit={handleSubmit(this.submitWithErrors)}
-        submitting={submitting} >
+        submitting={submitting}
+        lang={lang}
+      >
 
-        <FormSection title='Account Information'>
+        <FormSection title={ lang === 'zh' ? '账户信息' : 'Account Information' }>
           <TextField title='Alias' placeholder='Alias' fieldProps={alias} autoFocus={true} />
-          <JsonField title='Tags' fieldProps={tags} />
+          <JsonField title='Tags' fieldProps={tags} lang={ lang } />
         </FormSection>
 
-        <FormSection title='Keys and Signing'>
+        <FormSection title={ lang === 'zh' ? '密钥和签名' : 'Keys and Signing' }>
           <KeyConfiguration
             xpubs={xpubs}
             quorum={quorum}
-            quorumHint='Number of keys required for transfer' />
+            quorumHint={ lang === 'zh' ? '传输所需的密钥数' : 'Number of keys required for transfer' }
+            lang={lang}
+          />
         </FormSection>
       </FormContainer>
     )

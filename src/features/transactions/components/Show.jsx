@@ -17,11 +17,12 @@ class Show extends BaseShow {
   render() {
     const item = this.props.item
     const lang = this.props.lang
+    const btmAmountUnit = this.props.btmAmountUnit
 
     let view
     if (item) {
       const title = <span>
-        {'Transaction '}
+        {lang === 'zh' ? '交易' : 'Transaction '}
         &nbsp;<code>{item.id}</code>
       </span>
 
@@ -30,11 +31,11 @@ class Show extends BaseShow {
 
         <PageContent>
           <Section
-            title='Summary'
+            title={lang === 'zh' ? '概括' : 'Summary'}
             actions={[
               <RawJsonButton key='raw-json' item={item} />
             ]}>
-            <Summary transaction={item} />
+            <Summary transaction={item} lang={lang} btmAmountUnit={btmAmountUnit}/>
           </Section>
 
           <KeyValueTable
@@ -60,7 +61,7 @@ class Show extends BaseShow {
             <KeyValueTable
               key={index}
               title={index == 0 ? lang === 'zh' ? '输出' : 'Outputs' : ''}
-              items={buildTxOutputDisplay(output)}
+              items={buildTxOutputDisplay(output, btmAmountUnit)}
             />
           )}
         </PageContent>
@@ -78,7 +79,8 @@ import { connect } from 'react-redux'
 
 const mapStateToProps = (state, ownProps) => ({
   item: state.transaction.items[ownProps.params.id],
-  lang: state.core.lang
+  lang: state.core.lang,
+  btmAmountUnit: state.core.btmAmountUnit
 })
 
 const mapDispatchToProps = ( dispatch ) => ({

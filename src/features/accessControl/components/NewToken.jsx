@@ -12,15 +12,17 @@ class NewToken extends React.Component {
       handleSubmit,
       submitting
     } = this.props
+    const lang = this.props.lang
 
     return(
       <FormContainer
         error={error}
-        label='New access token'
+        label={ lang === 'zh' ? '新建 access token' : 'New access token' }
         onSubmit={handleSubmit(this.props.submitForm)}
-        submitting={submitting} >
+        submitting={submitting}
+        lang={lang}>
 
-        <FormSection title='Token information'>
+        <FormSection title={ lang === 'zh' ? 'Token 信息' : 'Token information' }>
           <TextField title='Token Name' fieldProps={guardData.id} autoFocus={true} />
         </FormSection>
         {/*<FormSection title='Policy'>*/}

@@ -1,6 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router'
+import { converIntToDec } from 'utility/buildInOutDisplay'
 import styles from './Summary.scss'
+
 
 const INOUT_TYPES = {
   issue: 'Issue',
@@ -50,16 +52,30 @@ class Summary extends React.Component {
     const summary = this.normalizeInouts(inouts)
     const items = []
 
+    const normalizeBtmAmountUnit = (assetID, amount, btmAmountUnit) => {
+      //normalize BTM Amount
+      if (assetID === 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff') {
+        switch (btmAmountUnit){
+          case 'BTM':
+            return converIntToDec(amount, 8)
+          case 'mBTM':
+            return converIntToDec(amount, 5)
+        }
+      }
+      return amount
+    }
+
     Object.keys(summary).forEach((assetId) => {
       const asset = summary[assetId]
       const nonAccountTypes = ['issue','retire']
+
 
       nonAccountTypes.forEach((type) => {
         if (asset[type] > 0) {
           items.push({
             type: INOUT_TYPES[type],
             rawAction: type,
-            amount: asset[type],
+            amount: normalizeBtmAmountUnit(assetId, asset[type], this.props.btmAmountUnit),
             asset: asset.alias ? asset.alias : <code className={styles.rawId}>{assetId}</code>,
             assetId: assetId,
           })
@@ -83,7 +99,7 @@ class Summary extends React.Component {
             items.push({
               type: INOUT_TYPES[type],
               rawAction: type,
-              amount: account[type],
+              amount: normalizeBtmAmountUnit(assetId, account[type], this.props.btmAmountUnit),
               asset: asset.alias ? asset.alias : <code className={styles.rawId}>{assetId}</code>,
               assetId: assetId,
               direction: type == 'spend' ? 'from' : 'to',

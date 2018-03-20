@@ -31,6 +31,7 @@ class Form extends React.Component {
       return <NotFound />
     }
     const item = this.props.item
+    const lang = this.props.lang
 
     if (!item) {
       return <div>Loading...</div>
@@ -44,7 +45,7 @@ class Form extends React.Component {
     } = this.props
 
     const title = <span>
-      {'Edit asset tags '}
+      {lang === 'zh' ? '编辑资产tags' : 'Edit asset tags '}
       <code>{item.alias ? item.alias :item.id}</code>
     </span>
 
@@ -64,16 +65,24 @@ class Form extends React.Component {
       error={error}
       label={title}
       onSubmit={handleSubmit(this.submitWithErrors)}
-      submitting={submitting} >
+      submitting={submitting}
+      lang={lang}>
 
-      <FormSection title='Asset Tags'>
+    <FormSection title='Asset Tags'>
         <JsonField
           height={JsonFieldHeight}
-          fieldProps={tags} />
+          fieldProps={tags}
+          lang={lang} />
 
         <p>
-          Note: Asset tags can be used for querying transactions, unspent outputs, and balances. Queries reflect the account tags that are present when transactions are submitted. Only new transaction activity will reflect the updated tags. <a href={`${docsRoot}/core/build-applications/assets#update-tags-on-existing-assets`} target='_blank' style={{whiteSpace: 'nowrap'}}>
-            Learn more →</a>
+          { lang === 'zh' ? ('注意：资产标签可用于查询交易，unspent outputs和余额。查询反映了提交交易时出现的资产标签。只有新的交易活动才会反映更新后的标签。 '
+          ) :(
+            'Note: Asset tags can be used for querying transactions, unspent outputs, and balances. ' +
+            'Queries reflect the asset tags that are present when transactions are submitted.' +
+            ' Only new transaction activity will reflect the updated tags. '
+          )}
+           <a href={`${docsRoot}/core/build-applications/assets#update-tags-on-existing-assets`} target='_blank' style={{whiteSpace: 'nowrap'}}>
+             { lang === 'zh' ? '了解更多' : 'Learn more'} →</a>
         </p>
       </FormSection>
     </FormContainer>
@@ -81,7 +90,8 @@ class Form extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  item: state.asset.items[ownProps.params.id]
+  item: state.asset.items[ownProps.params.id],
+  lang: state.core.lang
 })
 
 const initialValues = (state, ownProps) => {

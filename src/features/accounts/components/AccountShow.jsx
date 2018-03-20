@@ -30,23 +30,25 @@ class AccountShow extends BaseShow {
   }
 
   createAddress() {
+    const lang = this.props.lang
     this.props.createAddress({
       account_info:this.props.item.alias
     }).then(({data}) => {
       this.props.showModal(<div>
-        <p>Copy this one-time use receiver to use in a transaction:</p>
-        <CopyableBlock value={data.address} />
+        <p>{ lang === 'zh' ? '拷贝这个一次性receiver以用于交易中：' : 'Copy this one-time use receiver to use in a transaction:' }</p>
+        <CopyableBlock value={data.address} lang={lang} />
       </div>)
     })
   }
 
   render() {
     const item = this.props.item
+    const lang = this.props.lang
 
     let view
     if (item) {
       const title = <span>
-        {'Account '}
+        { lang === 'zh' ? '账户' :'Account '}
         <code>{item.alias ? item.alias : item.id}</code>
       </span>
 
@@ -55,7 +57,7 @@ class AccountShow extends BaseShow {
           title={title}
           actions={[
             <button className='btn btn-link' onClick={this.createAddress}>
-              Create address
+              { lang === 'zh' ? '新建地址' : 'Create address' }
             </button>,
           ]}
         />
@@ -64,7 +66,7 @@ class AccountShow extends BaseShow {
           <KeyValueTable
             id={item.id}
             object='account'
-            title='Details'
+            title={ lang === 'zh' ? '详情' : 'Details' }
             actions={[
               // TODO: add back first 2 buttons
               // <button key='show-txs' className='btn btn-link' onClick={this.props.showTransactions.bind(this, item)}>Transactions</button>,
@@ -78,6 +80,7 @@ class AccountShow extends BaseShow {
               {label: 'xpubs', value: (item.xpubs || []).length},
               {label: 'Quorum', value: item.quorum},
             ]}
+            lang={lang}
           />
 
           {(item.xpubs || []).map((key, index) =>
@@ -88,6 +91,7 @@ class AccountShow extends BaseShow {
                 {label: 'Account Xpub', value: key},
                 {label: 'Key Index', value: item.keyIndex},
               ]}
+              lang={lang}
             />
           )}
         </PageContent>
@@ -103,7 +107,8 @@ import { connect } from 'react-redux'
 import actions from 'actions'
 
 const mapStateToProps = (state, ownProps) => ({
-  item: state.account.items[ownProps.params.id]
+  item: state.account.items[ownProps.params.id],
+  lang: state.core.lang
 })
 
 const mapDispatchToProps = ( dispatch ) => ({

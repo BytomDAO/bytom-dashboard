@@ -12,7 +12,8 @@ class CopyableBlock extends React.Component {
       <div className={styles.main}>
         <pre className={styles.pre}>{this.props.value}</pre>
         <div className={styles.copyButton}>
-          <button className='btn btn-default btn-sm' onClick={this.copyClick.bind(this)}>Copy to clipboard</button>
+          <button className='btn btn-default btn-sm' onClick={this.copyClick.bind(this)}>
+            { this.props.lang === 'zh' ? '拷贝到剪贴板' : 'Copy to clipboard' }</button>
         </div>
       </div>
     )

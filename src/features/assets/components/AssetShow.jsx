@@ -11,11 +11,12 @@ import componentClassNames from 'utility/componentClassNames'
 class AssetShow extends BaseShow {
   render() {
     const item = this.props.item
+    const lang = this.props.lang
 
     let view
     if (item) {
       const title = <span>
-        {'Asset '}
+        { lang === 'zh' ? '资产' :'Asset ' }
         <code>{item.alias ? item.alias :item.id}</code>
       </span>
 
@@ -26,7 +27,7 @@ class AssetShow extends BaseShow {
           <KeyValueTable
             id={item.id}
             object='asset'
-            title='Details'
+            title={ lang === 'zh' ? '详情' : 'Details' }
             actions={[
               // <button key='show-circulation' className='btn btn-link' onClick={this.props.showCirculation.bind(this, item)}>
               //  Circulation
@@ -41,6 +42,7 @@ class AssetShow extends BaseShow {
               {label: 'xpubs', value: (item.xpubs || []).length},
               {label: 'Quorum', value: item.quorum},
             ]}
+            lang={lang}
           />
 
           {(item.xpubs || []).map((key, index) =>
@@ -51,6 +53,7 @@ class AssetShow extends BaseShow {
                 {label: 'Index', value: index},
                 {label: 'Asset Pubkey', value: key},
               ]}
+              lang={lang}
             />
           )}
         </PageContent>
@@ -66,7 +69,8 @@ import { connect } from 'react-redux'
 import actions from 'actions'
 
 const mapStateToProps = (state, ownProps) => ({
-  item: state.asset.items[ownProps.params.id]
+  item: state.asset.items[ownProps.params.id],
+  lang: state.core.lang
 })
 
 const mapDispatchToProps = ( dispatch ) => ({
