@@ -98,90 +98,90 @@ class CoreIndex extends React.Component {
           <h4>Configuration</h4>
           <table className={styles.table}>
             <tbody>
-              <tr>
-                <td className={styles.row_label}>Core type:</td>
-                <td>{this.props.core.coreType}</td>
-              </tr>
-              <tr>
-                <td className={styles.row_label}>Setup time:</td>
-                <td>{this.props.core.configuredAt}</td>
-              </tr>
-              <tr>
-                <td className={styles.row_label}>Version:</td>
-                <td><code>{this.props.core.version}</code></td>
-              </tr>
-              <tr>
-                <td className={styles.row_label}>Language:</td>
-                <td>{this.props.core.lang === 'zh' ? '中文' : 'English'}</td>
-              </tr>
-              <tr>
-                <td className={styles.row_label}>MockHSM enabled:</td>
-                <td><code>{this.props.core.mockhsm.toString()}</code></td>
-              </tr>
-              <tr>
-                <td className={styles.row_label}>Localhost auth:</td>
-                <td><code>{this.props.core.localhostAuth.toString()}</code></td>
-              </tr>
-              <tr>
-                <td className={styles.row_label}>Reset enabled:</td>
-                <td><code>{this.props.core.reset.toString()}</code></td>
-              </tr>
-              <tr>
-                <td className={styles.row_label}>Non-TLS HTTP requests enabled:</td>
-                <td><code>{this.props.core.httpOk.toString()}</code></td>
-              </tr>
-              <tr>
-                <td colSpan={2}><hr /></td>
-              </tr>
-              <tr>
-                <td className={styles.row_label}>Generator URL:</td>
-                <td>{generatorUrl}</td>
-              </tr>
-              {onTestnet && !!testnetNextReset &&
-                <tr>
-                  <td className={styles.row_label}>Next Chain Testnet data reset:</td>
-                  <td>{testnetNextReset.toString()}</td>
-                </tr>}
-              {!this.props.core.generator &&
-                <tr>
-                  <td className={styles.row_label}>Generator Access Token:</td>
-                  <td><code>{this.props.core.generatorAccessToken}</code></td>
-                </tr>}
-              <tr>
-                <td className={styles.row_label}>Blockchain ID:</td>
-                <td><code className={styles.block_hash}>{this.props.core.blockchainId}</code></td>
-              </tr>
-              <tr>
-                <td colSpan={2}><hr /></td>
-              </tr>
-              <tr>
-                <td className={styles.row_label}>Advanced: </td>
-                <td>
-                  <label className={styles.switch}>
-                    <input
-                      type='checkbox'
-                      onChange={this.handleAdvancedOptionChange}
-                      checked={navState}
-                    />
-                    <span className={styles.slider}></span>
-                  </label>
-                </td>
-              </tr>
-              <tr>
-                <td className={styles.row_label} >Unit to show amount in </td>
-                <td>
-                  <DropdownButton
-                    bsSize='xsmall'
-                    id='input-dropdown-amount'
-                    title={this.props.core.btmAmountUnit || this.state.btmAmountUnit}
-                    onSelect={this.changeBTMamount}
-                  >
-                    <MenuItem eventKey='BTM'>BTM</MenuItem>
-                    <MenuItem eventKey='mBTM'>mBTM</MenuItem>
-                    <MenuItem eventKey='NEU'>NEU</MenuItem>
-                  </DropdownButton>
-                </td>
-              </tr>
+            {/*<tr>*/}
+            {/*<td className={styles.row_label}>Core type:</td>*/}
+            {/*<td>{this.props.core.coreType}</td>*/}
+            {/*</tr>*/}
+            {/*<tr>*/}
+            {/*<td className={styles.row_label}>Setup time:</td>*/}
+            {/*<td>{this.props.core.configuredAt}</td>*/}
+            {/*</tr>*/}
+            {/*<tr>*/}
+            {/*<td className={styles.row_label}>Version:</td>*/}
+            {/*<td><code>{this.props.core.version}</code></td>*/}
+            {/*</tr>*/}
+            <tr>
+              <td className={styles.row_label}>Language:</td>
+              <td>{this.props.core.lang === 'zh' ? '中文' : 'English'}</td>
+            </tr>
+            {/*<tr>*/}
+            {/*<td className={styles.row_label}>MockHSM enabled:</td>*/}
+            {/*<td><code>{this.props.core.mockhsm.toString()}</code></td>*/}
+            {/*</tr>*/}
+            {/*<tr>*/}
+            {/*<td className={styles.row_label}>Localhost auth:</td>*/}
+            {/*<td><code>{this.props.core.localhostAuth.toString()}</code></td>*/}
+            {/*</tr>*/}
+            {/*<tr>*/}
+            {/*<td className={styles.row_label}>Reset enabled:</td>*/}
+            {/*<td><code>{this.props.core.reset.toString()}</code></td>*/}
+            {/*</tr>*/}
+            {/*<tr>*/}
+            {/*<td className={styles.row_label}>Non-TLS HTTP requests enabled:</td>*/}
+            {/*<td><code>{this.props.core.httpOk.toString()}</code></td>*/}
+            {/*</tr>*/}
+            {/*<tr>*/}
+            {/*<td colSpan={2}><hr /></td>*/}
+            {/*</tr>*/}
+            {/*<tr>*/}
+            {/*<td className={styles.row_label}>Generator URL:</td>*/}
+            {/*<td>{generatorUrl}</td>*/}
+            {/*</tr>*/}
+            {/*{onTestnet && !!testnetNextReset &&*/}
+            {/*<tr>*/}
+            {/*<td className={styles.row_label}>Next Chain Testnet data reset:</td>*/}
+            {/*<td>{testnetNextReset.toString()}</td>*/}
+            {/*</tr>}*/}
+            {/*{!this.props.core.generator &&*/}
+            {/*<tr>*/}
+            {/*<td className={styles.row_label}>Generator Access Token:</td>*/}
+            {/*<td><code>{this.props.core.generatorAccessToken}</code></td>*/}
+            {/*</tr>}*/}
+            {/*<tr>*/}
+            {/*<td className={styles.row_label}>Blockchain ID:</td>*/}
+            {/*<td><code className={styles.block_hash}>{this.props.core.blockchainId}</code></td>*/}
+            {/*</tr>*/}
+            <tr>
+              <td colSpan={2}><hr /></td>
+            </tr>
+            <tr>
+              <td className={styles.row_label}>Advanced: </td>
+              <td>
+                <label className={styles.switch}>
+                  <input
+                    type='checkbox'
+                    onChange={this.handleAdvancedOptionChange}
+                    checked={navState}
+                  />
+                  <span className={styles.slider}></span>
+                </label>
+              </td>
+            </tr>
+            <tr>
+              <td className={styles.row_label} >Unit to show amount in </td>
+              <td>
+                <DropdownButton
+                  bsSize='xsmall'
+                  id='input-dropdown-amount'
+                  title={this.props.core.btmAmountUnit || this.state.btmAmountUnit}
+                  onSelect={this.changeBTMamount}
+                >
+                  <MenuItem eventKey='BTM'>BTM</MenuItem>
+                  <MenuItem eventKey='mBTM'>mBTM</MenuItem>
+                  <MenuItem eventKey='NEU'>NEU</MenuItem>
+                </DropdownButton>
+              </td>
+            </tr>
             </tbody>
           </table>
         </div>
@@ -198,8 +198,8 @@ class CoreIndex extends React.Component {
     }
 
     let requestStatusBlock =
-        this.state.requestStatus && (<div className={styles['sub-row']}>
-          <h4>Request status</h4>
+      this.state.requestStatus && (<div className={styles['sub-row']}>
+          <h4>Network status</h4>
           <table className={styles.table}>
             <tbody>
             {Object.keys(this.state.requestStatus).map(key => (
@@ -210,32 +210,32 @@ class CoreIndex extends React.Component {
             </tbody>
           </table>
         </div>
-    )
+      )
 
     let networkStatusBlock = (
       <div className={styles.right}>
         <div ref='requestComponent'>
-          <div className={[styles.top, styles['sub-row']].join(' ')}>
-            <h4>Network status</h4>
-            <table className={styles.table}>
-              <tbody>
-              <tr>
-                <td className={styles.row_label}>Generator block:</td>
-                <td className={styles.row_value}>{this.props.core.generatorBlockHeight}</td>
-              </tr>
-              <tr>
-                <td className={styles.row_label}>Local block:</td>
-                <td className={styles.row_value}>{this.props.core.blockHeight}</td>
-              </tr>
-              <tr>
-                <td className={styles.row_label}>Replication lag:</td>
-                <td className={`${styles.replication_lag} ${styles[this.props.core.replicationLagClass]}`}>
-                  {this.props.core.replicationLag === null ? '???' : this.props.core.replicationLag}
-                </td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
+          {/*<div className={[styles.top, styles['sub-row']].join(' ')}>*/}
+          {/*<h4>Network status</h4>*/}
+          {/*<table className={styles.table}>*/}
+          {/*<tbody>*/}
+          {/*<tr>*/}
+          {/*<td className={styles.row_label}>Generator block:</td>*/}
+          {/*<td className={styles.row_value}>{this.props.core.generatorBlockHeight}</td>*/}
+          {/*</tr>*/}
+          {/*<tr>*/}
+          {/*<td className={styles.row_label}>Local block:</td>*/}
+          {/*<td className={styles.row_value}>{this.props.core.blockHeight}</td>*/}
+          {/*</tr>*/}
+          {/*<tr>*/}
+          {/*<td className={styles.row_label}>Replication lag:</td>*/}
+          {/*<td className={`${styles.replication_lag} ${styles[this.props.core.replicationLagClass]}`}>*/}
+          {/*{this.props.core.replicationLag === null ? '???' : this.props.core.replicationLag}*/}
+          {/*</td>*/}
+          {/*</tr>*/}
+          {/*</tbody>*/}
+          {/*</table>*/}
+          {/*</div>*/}
           {requestStatusBlock}
         </div>
         {testnetErr && <ErrorBanner title='Chain Testnet error' error={testnetErr} />}
@@ -280,11 +280,11 @@ class CoreIndex extends React.Component {
         <PageTitle title='Core' />
 
         <PageContent>
-          <div className={`${styles.top} ${styles.flex}`}>
+          <div className={`${styles.flex}`}>
             {configBlock}
             {networkStatusBlock}
           </div>
-          {resetDataBlock}
+          {/*{resetDataBlock}*/}
         </PageContent>
       </div>
     )
