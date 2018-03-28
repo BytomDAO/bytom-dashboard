@@ -19,7 +19,7 @@ class AccountShow extends BaseShow {
 
   createReceiver() {
     this.props.createReceiver({
-      account_info:this.props.item.alias
+      account_alias:this.props.item.alias
     }).then(({data: receiver}) => this.props.showModal(<div>
       <p>Copy this one-time use address to use in a transaction:</p>
       <CopyableBlock value={JSON.stringify({
@@ -32,7 +32,7 @@ class AccountShow extends BaseShow {
   createAddress() {
     const lang = this.props.lang
     this.props.createAddress({
-      account_info:this.props.item.alias
+      account_alias:this.props.item.alias
     }).then(({data}) => {
       this.props.showModal(<div>
         <p>{ lang === 'zh' ? '拷贝这个一次性receiver以用于交易中：' : 'Copy this one-time use receiver to use in a transaction:' }</p>
