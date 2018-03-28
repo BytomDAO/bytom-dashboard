@@ -53,7 +53,7 @@ class Show extends BaseShow {
             <KeyValueTable
               key={index}
               title={index == 0 ? lang === 'zh' ? '输入' : 'Inputs' : ''}
-              items={buildTxInputDisplay(input)}
+              items={buildTxInputDisplay(input, btmAmountUnit)}
             />
           )}
 

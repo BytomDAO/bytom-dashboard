@@ -209,8 +209,8 @@ export function converIntToDec(int, deciPoint){
   return formatIntNumToPosDecimal(int, deciPoint)
 }
 
-export function buildTxInputDisplay(input) {
-  return buildDisplay(input, txInputFields)
+export function buildTxInputDisplay(input, btmAmountUnit) {
+  return buildDisplay(input, txInputFields, btmAmountUnit)
 }
 
 export function buildTxOutputDisplay(output, btmAmountUnit) {
