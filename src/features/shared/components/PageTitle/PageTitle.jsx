@@ -7,16 +7,14 @@ import makeRoutes from 'routes'
 import actions from 'actions'
 import styles from './PageTitle.scss'
 import componentClassNames from 'utility/componentClassNames'
-import classNames from 'classnames'
 
 class PageTitle extends React.Component {
   render() {
     const chevron = require('images/chevron.png')
-    const className = classNames(styles.main, 'navbar', 'navbar-fixed-top')
 
     return(
       <div className={componentClassNames(this)}>
-        <div className={className}>
+        <div className={`${styles.main} navbar navbar-fixed-top`}>
           <div className={styles.navigation}>
             <ul className={styles.crumbs}>
               {this.props.breadcrumbs.map(crumb =>
@@ -39,7 +37,8 @@ class PageTitle extends React.Component {
           </ul>}
         </div>
 
-        <Flash messages={this.props.flashMessages}
+        <Flash className={styles.flash}
+          messages={this.props.flashMessages}
           markFlashDisplayed={this.props.markFlashDisplayed}
           dismissFlash={this.props.dismissFlash}
         />

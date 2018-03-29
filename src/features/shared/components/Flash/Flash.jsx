@@ -37,7 +37,7 @@ class Flash extends React.Component {
     })
 
     return (
-      <div>
+      <div className={this.props.className}>
         {messages}
       </div>
     )
