@@ -157,7 +157,7 @@ class Form extends React.Component {
       (normalTransaction.assetAlias.value || normalTransaction.assetId.value)
     const availableBalance = this.balanceAmount(normalTransaction)
 
-    const showBtmAmountUnit = (normalTransaction.assetAlias.value === 'btm' ||
+    const showBtmAmountUnit = (normalTransaction.assetAlias.value === 'BTM' ||
       normalTransaction.assetId.value === 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff')
 
     return(

@@ -73,7 +73,7 @@ export default class ActionItem extends React.Component {
       this.props.remove(this.props.index)
     }
 
-    const btmAmounUnitVisible = (assetAlias.value === 'btm' ||
+    const btmAmounUnitVisible = (assetAlias.value === 'BTM' ||
       assetId.value === 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff' )
 
     const classNames = [styles.main]
