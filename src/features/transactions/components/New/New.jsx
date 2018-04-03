@@ -360,7 +360,7 @@ const validate = values => {
   // Actions
   let numError
   values.actions.forEach((action, index) => {
-    numError = (!/^[0-9.]*$/i.test(values.actions[index].amount))
+    numError = (!/^\d+(\.\d+)?$/i.test(values.actions[index].amount))
     if ( numError) {
       errors.actions[index] = {...errors.actions[index], amount: 'Invalid amount type'}
     }
@@ -368,10 +368,10 @@ const validate = values => {
 
   // Numerical
   let normalTx = values.normalTransaction || ''
-  if (!/^[0-9.]*$/i.test(normalTx.amount)) {
+  if (!/^\d+(\.\d+)?$/i.test(normalTx.amount)) {
     errors.normalTransaction.amount = 'Invalid amount type'
   }
-  if (!/^[0-9.]*$/i.test(normalTx.gas.price)) {
+  if (!/^\d+(\.\d+)?$/i.test(normalTx.gas.price)) {
     errors.normalTransaction.gas.price = 'Invalid amount type'
   }
 

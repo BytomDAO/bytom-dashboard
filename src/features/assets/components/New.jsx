@@ -60,7 +60,7 @@ const validate = values => {
     if (fieldError) { errors[key] = fieldError }
   })
 
-  if (!values.alias) { errors.alias = 'Require' }
+  if (!values.alias) { errors.alias = 'Asset alias is required' }
 
   return errors
 }
