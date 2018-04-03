@@ -60,6 +60,8 @@ const validate = values => {
     if (fieldError) { errors[key] = fieldError }
   })
 
+  if (!values.alias) { errors.alias = 'Require' }
+
   return errors
 }
 
