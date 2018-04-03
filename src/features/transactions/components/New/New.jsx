@@ -25,6 +25,8 @@ const rangeOptions = [
   }
 ]
 
+const btmID = 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
+
 class Form extends React.Component {
   constructor(props) {
     super(props)
@@ -224,32 +226,36 @@ class Form extends React.Component {
           </div>
 
           <label className={styles.title}>Gas</label>
-          <div>
-            <label className={styles.optionsBtnContianer}>
+          <table className={styles.optionsBtnContianer}>
               {rangeOptions.map((option) =>
-                <label>
-                  <label>
-                    <input type='radio'
-                           {...normalTransaction.gas.type}
-                           onChange={gasOnChange}
-                           value={option.label}
-                           checked={option.label == normalTransaction.gas.type.value}
-                    />
-                    { lang === 'zh' ? option.label_zh :  option.label }
-                  </label>
-                  {
-                    option.label === 'Customize' && normalTransaction.gas.type.value === 'Customize' &&
-                    <label>
-                      <TextField
-                        autoFocus={true}
-                        fieldProps={normalTransaction.gas.price}
-                        placeholder='Enter gas' />
+                <tr className={styles.optionsBtn}>
+                  <td className={styles.optionsLabel}>
+                    <label >
+                      <input type='radio'
+                             {...normalTransaction.gas.type}
+                             onChange={gasOnChange}
+                             value={option.label}
+                             checked={option.label == normalTransaction.gas.type.value}
+                      />
+                      { lang === 'zh' ? option.label_zh :  option.label }
                     </label>
-                  }
-                </label>
+                  </td>
+                  <td>
+                    { option.label == normalTransaction.gas.type.value&& option.label !== 'Customize'
+                    && normalizeBTMAmountUnit(btmID, option.value, this.props.btmAmountUnit) }
+                    {
+                      option.label === 'Customize' && normalTransaction.gas.type.value === 'Customize' &&
+                      <div>
+                        <AmountUnitField
+                          autoFocus={true}
+                          fieldProps={normalTransaction.gas.price}
+                          placeholder='Enter gas' />
+                      </div>
+                    }
+                  </td>
+                </tr>
               )}
-            </label>
-          </div>
+          </table>
 
         </FormSection>}
 
@@ -343,7 +349,7 @@ class Form extends React.Component {
 }
 
 const validate = values => {
-  const errors = {actions: {}}
+  const errors = {actions: {}, normalTransaction:{gas:{}}}
 
   // Base transaction
   let baseTx = values.baseTransaction || ''
@@ -352,13 +358,22 @@ const validate = values => {
   }
 
   // Actions
-  let fieldError
+  let numError
   values.actions.forEach((action, index) => {
-    fieldError = JsonField.validator(values.actions[index].referenceData)
-    if (fieldError) {
-      errors.actions[index] = {...errors.actions[index], referenceData: fieldError}
+    numError = (!/^\d+(\.\d+)?$/i.test(values.actions[index].amount))
+    if ( numError) {
+      errors.actions[index] = {...errors.actions[index], amount: 'Invalid amount type'}
     }
   })
+
+  // Numerical
+  let normalTx = values.normalTransaction || ''
+  if (!/^\d+(\.\d+)?$/i.test(normalTx.amount)) {
+    errors.normalTransaction.amount = 'Invalid amount type'
+  }
+  if (!/^\d+(\.\d+)?$/i.test(normalTx.gas.price)) {
+    errors.normalTransaction.gas.price = 'Invalid amount type'
+  }
 
   return errors
 }

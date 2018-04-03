@@ -97,6 +97,8 @@ class AmountUnitField extends React.Component {
             type={this.state.type}
             {...fieldProps}
             value={formatBTMAmount(this.state.value, this.state.pos)}
+            placeholder={this.props.placeholder}
+            autoFocus={!!this.props.autoFocus}
             onBlur={this.handleBlur}
             onChange={this.handleChange}
           />}

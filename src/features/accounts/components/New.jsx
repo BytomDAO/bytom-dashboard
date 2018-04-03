@@ -58,6 +58,8 @@ const validate = values => {
   const tagError = JsonField.validator(values.tags)
   if (tagError) { errors.tags = tagError }
 
+  if (!values.alias) { errors.alias = 'Account alias is required' }
+
   return errors
 }
 
