@@ -368,13 +368,9 @@ const validate = values => {
 
   // Numerical
   let normalTx = values.normalTransaction || ''
-  if (!/^\d+(\.\d+)?$/i.test(normalTx.amount)) {
+  if (normalTx.amount && !/^\d+(\.\d+)?$/i.test(normalTx.amount)) {
     errors.normalTransaction.amount = 'Invalid amount type'
   }
-  if (!/^\d+(\.\d+)?$/i.test(normalTx.gas.price)) {
-    errors.normalTransaction.gas.price = 'Invalid amount type'
-  }
-
   return errors
 }
 
