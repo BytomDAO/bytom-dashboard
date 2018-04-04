@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from './Main.scss'
-import {DropdownButton, MenuItem} from 'react-bootstrap'
+import { MenuItem, Dropdown } from 'react-bootstrap'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import actions from 'actions'
@@ -32,18 +32,26 @@ class Main extends React.Component {
                 <img src={logo} className={styles.brand_image} />
               </Link>
 
-              <DropdownButton
-                className={styles.languages}
+              <Dropdown
+                id='dropdown-custom-1'
                 bsSize='xsmall'
-                noCaret
+                className={styles.languagesContainer}
                 pullRight
-                id='input-dropdown-addon'
-                title={this.props.lang === 'zh' ? '中' : 'EN'}
                 onSelect={this.props.setLang}
               >
-                <MenuItem eventKey='zh'>中文</MenuItem>
-                <MenuItem eventKey='en'>ENGLISH</MenuItem>
-              </DropdownButton>
+                <Dropdown.Toggle
+                  className={styles.languages}
+                  noCaret
+                >
+                  {this.props.lang === 'zh' ? '中' : 'EN'}
+                </Dropdown.Toggle>
+                <Dropdown.Menu
+                  className={styles.languagesMenu}
+                >
+                  <MenuItem eventKey='zh'>中文</MenuItem>
+                  <MenuItem eventKey='en'>ENGLISH</MenuItem>
+                </Dropdown.Menu>
+              </Dropdown>
 
               <span>
                 <span className={styles.settings} onClick={this.toggleDropdown}>

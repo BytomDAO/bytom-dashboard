@@ -55,12 +55,19 @@
   }
 }
 
+.languagesContainer {
+  position: absolute;
+  right: 38px;
+  top: 0px;
+  height: 60px;
+}
+
 .languages {
+  top: 50%;
+  transform: translateY(-50%);
   border: none;
   background-color: transparentize($background-content-color, 0.9);
   color: $background-content-color;
-  margin: 6px 20px 5px 30px !important;
-  padding: 5px;
   height: 27px;
   line-height: 27px !important;
 }
@@ -71,4 +78,8 @@
   background: $highlight-danger-background;
   color: $highlight-danger;
   border-bottom: 1px solid $highlight-danger;
+}
+
+.languagesMenu {
+  right: -26px;
 }
