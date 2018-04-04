@@ -24,23 +24,19 @@ class ListItem extends React.Component {
   render() {
     const item = this.props.item
     const lang = this.props.lang
+    const operation = (item.complete === undefined || item.complete === true || item.percent == 100) ? (
+      <button className='btn btn-link' onClick={this.echo.bind(this, item)}>
+        { lang === 'zh' ? '导出私钥' : 'Export private key' }
+      </button>
+    ) : (
+      <span>{`${item.percent}% imported...`}</span>
+    )
 
     return(
       <tr>
         <td>{item.alias}</td>
         <td><code>{item.xpub}</code></td>
-        <td>
-          {
-            (item.complete === undefined || item.complete === true) &&
-            <button className='btn btn-link' onClick={this.echo.bind(this, item)}>
-              { lang === 'zh' ? '导出私钥' : 'Export private key' }
-            </button>
-          }
-          {
-            item.complete !== undefined && item.complete === false &&
-            <span>{`${34}% imported...`}</span>
-          }
-        </td>
+        <td>{operation}</td>
       </tr>
     )
   }

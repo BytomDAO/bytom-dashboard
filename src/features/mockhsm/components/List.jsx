@@ -16,7 +16,11 @@ class KeyList extends BaseList.ItemList {
         data
       })
 
-      if ((data || []).filter(item => !item.complete).length > 0) {
+      const isImporting = item => {
+        return typeof item.percent === 'number' && item.percent < 100
+      }
+
+      if ((data || []).filter(isImporting).length > 0) {
         window.setTimeout(this.setStat, 5000)
       }
     })

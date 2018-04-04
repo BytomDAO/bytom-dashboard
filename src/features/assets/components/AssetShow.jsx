@@ -37,7 +37,7 @@ class AssetShow extends BaseShow {
             items={[
               {label: 'ID', value: item.id},
               {label: 'Alias', value: item.alias},
-              {label: 'Tags', value: item.tags || {}, editUrl: `/assets/${item.id}/tags`},
+              {label: 'Tags', value: item.tags || {}, editUrl: item.alias === 'BTM' ? null : `/assets/${item.id}/tags`},
               {label: 'Definition', value: item.definition},
               {label: 'xpubs', value: (item.xpubs || []).length},
               {label: 'Quorum', value: item.quorum},

@@ -13,7 +13,6 @@ import { buildTxInputDisplay, buildTxOutputDisplay } from 'utility/buildInOutDis
 
 class Show extends BaseShow {
 
-
   render() {
     const item = this.props.item
     const lang = this.props.lang
@@ -42,7 +41,7 @@ class Show extends BaseShow {
             title={lang === 'zh' ? '详情' : 'Details'}
             items={[
               {label: 'ID', value: item.id},
-              {label: 'Timestamp', value: item.timestamp},
+              {label: 'Timestamp', value: String(new Date(item.timestamp * 1000))},
               {label: 'Block ID', value: item.blockId},
               {label: 'Block Height', value: item.blockHeight},
               {label: 'Position', value: item.position},
