@@ -226,7 +226,6 @@ export function buildUnspentDisplay(output, btmAmountUnit) {
     assetAlias: output.assetAlias,
     controlProgram: output.program,
     programIndex: output.controlProgramIndex,
-    refData: output.refData,
     sourceId: output.sourceId,
     sourcePos: output.sourcePos
   }
