@@ -5,7 +5,7 @@ const defaultIdFunc = (item) => item.id
 
 export const itemsReducer = (type, idFunc = defaultIdFunc) => (state = {}, action) => {
   if (action.type == `RECEIVED_${type.toUpperCase()}_ITEMS`) {
-    const newObjects = {};
+    const newObjects = {}
 
     const data = type.toUpperCase() !== 'TRANSACTION' ? action.param.data : action.param.data.map(data => ({
       ...data,
@@ -19,7 +19,7 @@ export const itemsReducer = (type, idFunc = defaultIdFunc) => (state = {}, actio
       if (!item.id) { item.id = idFunc(item) }
       newObjects[idFunc(item)] = item
     })
-    return {...state, ...newObjects}
+    return newObjects
   } else if (action.type == `DELETE_${type.toUpperCase()}`) {
     delete state[action.id]
     return {...state}
