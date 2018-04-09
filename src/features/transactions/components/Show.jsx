@@ -10,6 +10,7 @@ import {
 
 import { Summary } from './'
 import { buildTxInputDisplay, buildTxOutputDisplay } from 'utility/buildInOutDisplay'
+import moment from 'moment/moment'
 
 class Show extends BaseShow {
 
@@ -41,7 +42,7 @@ class Show extends BaseShow {
             title={lang === 'zh' ? '详情' : 'Details'}
             items={[
               {label: 'ID', value: item.id},
-              {label: 'Timestamp', value: String(new Date(item.timestamp * 1000))},
+              {label: 'Timestamp', value: moment.unix(item.timestamp).format()},
               {label: 'Block ID', value: item.blockId},
               {label: 'Block Height', value: item.blockHeight},
               {label: 'Position', value: item.position},
