@@ -1,8 +1,8 @@
 import React from 'react'
 import styles from './KeyValueTable.scss'
-import { Section } from 'features/shared/components'
-import { Link } from 'react-router'
-import { size, sample, isArray, isObject, toPairs } from 'lodash'
+import {Section} from 'features/shared/components'
+import {Link} from 'react-router'
+import {size, sample, isArray, isObject, toPairs} from 'lodash'
 
 class KeyValueTable extends React.Component {
   shouldUsePre(item) {
@@ -45,22 +45,23 @@ class KeyValueTable extends React.Component {
   }
 
   render() {
-    return(
+    return (
       <Section
         title={this.props.title}
-        actions={this.props.actions} >
+        actions={this.props.actions}>
         <table className={styles.table}>
           <tbody>
-            {this.props.items.map((item) => {
-              return <tr key={item.label}>
-            <td className={styles.label}>{item.label}</td>
+          {this.props.items.map((item) => {
+            return <tr key={item.label}>
+              <td className={styles.label}>{item.label}</td>
               <td className={styles.value}>{this.renderValue(item)}
                 {item.editUrl && <Link to={item.editUrl} className={styles.edit}>
-                  <span className={`${styles.pencil} glyphicon glyphicon-pencil`}></span>{ this.props.lang === 'zh' ? '编辑' : 'Edit' }
+                  <span
+                    className={`${styles.pencil} glyphicon glyphicon-pencil`}></span>{this.props.lang === 'zh' ? '编辑' : 'Edit'}
                 </Link>}
               </td>
             </tr>
-            })}
+          })}
           </tbody>
         </table>
       </Section>
