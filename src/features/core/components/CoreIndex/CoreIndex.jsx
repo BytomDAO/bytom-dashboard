@@ -125,8 +125,8 @@ class CoreIndex extends React.Component {
             <tbody>
             {Object.keys(coreData).map(key => (
               <tr key={key}>
-                <td className={styles.row_label}> {key}: </td>
-                <td className={styles.row_value}>{ String(coreData[key])}</td>
+                <td className={styles.row_label}> {key.replace(/([a-z])([A-Z])/g, '$1 $2')}: </td>
+                <td className={styles.row_value}><code>{ String(coreData[key])}</code></td>
               </tr>))}
             </tbody>
           </table>
