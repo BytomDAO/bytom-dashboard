@@ -422,6 +422,7 @@ export default BaseNew.connect(
       'password'
     ],
     validate,
+    touchOnChange: true,
     initialValues: {
       submitAction: 'submit',
     },
