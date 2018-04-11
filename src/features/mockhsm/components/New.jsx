@@ -82,9 +82,7 @@ class New extends React.Component {
                    onChange={this.handleFileChange.bind(this)}/>
           }
 
-          {false &&
-            <TextField title='Password' placeholder='Password' fieldProps={password} autoFocus={false} type={'password'} />
-          }
+          <TextField title='Password' placeholder='Password' fieldProps={password} autoFocus={false} type={'password'} />
         </FormSection>
       </FormContainer>
     )

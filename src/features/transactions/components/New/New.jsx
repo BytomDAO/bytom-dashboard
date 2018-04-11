@@ -257,6 +257,8 @@ class Form extends React.Component {
               )}
           </table>
 
+          <label className={styles.title}>Password</label>
+          <TextField placeholder='Password' fieldProps={password} autoFocus={false} type={'password'} />
         </FormSection>}
 
         { this.state.showAdvanceTx && <FormSection title='Actions'>
@@ -340,6 +342,13 @@ class Form extends React.Component {
             </table>
           </div>
         </FormSection>}
+
+        {
+          this.state.showAdvanceTx && (actions.length > 0 || this.state.showAdvanced) && <FormSection>
+            <label className={styles.title}>Password</label>
+            <TextField placeholder='Password' fieldProps={password} autoFocus={false} type={'password'} />
+          </FormSection>
+        }
       </FormContainer>
     )
   }

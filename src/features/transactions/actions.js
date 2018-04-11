@@ -98,11 +98,8 @@ form.submitForm = (formParams) => function(dispatch) {
           throw new Error(resp.msg)
         }
 
-        const tpl = resp.data
-        const password = (tpl.signing_instructions || []).map(() => '123456')
-        const client = chainClient()
-        const body = Object.assign({}, {password, 'transaction': tpl})
-        return client.connection.request('/sign-submit-transaction', body, true)
+        const body = Object.assign({}, {password: formParams.password, 'transaction': resp.data})
+        return chainClient().connection.request('/sign-submit-transaction', body, true)
       }).then(resp => {
         if (resp.status === 'fail') {
           throw new Error(resp.msg)
@@ -121,11 +118,8 @@ form.submitForm = (formParams) => function(dispatch) {
       throw new Error(resp.msg)
     }
 
-    const tpl = resp.data
-    const password = (tpl.signing_instructions || []).map(() => '123456')
-    const client = chainClient()
-    const body = Object.assign({}, {password, 'transaction': tpl})
-    return client.connection.request('/sign-transaction', body, true)
+    const body = Object.assign({}, {password: formParams.password, 'transaction': resp.data})
+    return chainClient().connection.request('/sign-transaction', body, true)
   }).then(resp => {
     if (resp.status === 'fail') {
       throw new Error(resp.msg)
@@ -135,7 +129,7 @@ form.submitForm = (formParams) => function(dispatch) {
       type: 'GENERATED_TX_HEX',
       generated: {
         id: id,
-        hex: resp.data.raw_transaction,
+        hex: resp.data.transaction.raw_transaction,
       },
     })
     dispatch(push(`/transactions/generated/${id}`))

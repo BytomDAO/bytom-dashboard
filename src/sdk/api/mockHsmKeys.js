@@ -3,7 +3,7 @@ const shared = require('../shared')
 const mockHsmKeysAPI = (client) => {
   return {
     create: (params, cb) => {
-      let body = Object.assign({}, params, {password: '123456'})
+      let body = Object.assign({}, params)
       const uri = body.xprv ? '/import-private-key' : '/create-key'
 
       return shared.tryCallback(
