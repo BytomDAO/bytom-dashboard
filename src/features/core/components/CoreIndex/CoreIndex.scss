@@ -12,6 +12,7 @@
 
 .row_label {
   padding-right: $grid-gutter-width;
+  text-transform: capitalize;
   font-weight: bold;
   white-space: pre;
 }

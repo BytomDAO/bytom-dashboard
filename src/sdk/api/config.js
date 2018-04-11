@@ -12,6 +12,11 @@ const configAPI = (client) => {
       cb
     ),
 
+    mining: (miningState = false, cb) => shared.tryCallback(
+      client.request('/set-mining', {is_mining: miningState}),
+      cb
+    ),
+
     info: (cb) => shared.tryCallback(
       client.request('/net-info'),
       cb
