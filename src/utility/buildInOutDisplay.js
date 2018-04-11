@@ -14,6 +14,7 @@ const mappings = {
   accountAlias: 'Account Alias',
   accountTags: 'Account Tags',
   controlProgram: 'Control Program',
+  address: 'Address',
   programIndex: 'Program Index',
   spentOutputId: 'Spent Output ID',
   refData: 'Reference Data',
@@ -56,6 +57,7 @@ const txOutputFields = [
   'accountAlias',
   'accountTags',
   'controlProgram',
+  'address',
   'isLocal',
   'referenceData',
 ]
@@ -214,7 +216,7 @@ export function buildTxInputDisplay(input, btmAmountUnit) {
 }
 
 export function buildTxOutputDisplay(output, btmAmountUnit) {
-  return buildDisplay(output, txOutputFields,btmAmountUnit)
+  return buildDisplay(output, txOutputFields, btmAmountUnit)
 }
 
 export function buildUnspentDisplay(output, btmAmountUnit) {
