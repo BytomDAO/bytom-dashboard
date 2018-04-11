@@ -1,7 +1,6 @@
 import React from 'react'
 import { BaseUpdate, FormContainer, FormSection, JsonField, NotFound } from 'features/shared/components'
 import { reduxForm } from 'redux-form'
-import { docsRoot } from 'utility/environment'
 
 class Form extends React.Component {
   constructor(props) {
@@ -81,8 +80,6 @@ class Form extends React.Component {
             'Queries reflect the asset tags that are present when transactions are submitted.' +
             ' Only new transaction activity will reflect the updated tags. '
           )}
-           <a href={`${docsRoot}/core/build-applications/assets#update-tags-on-existing-assets`} target='_blank' style={{whiteSpace: 'nowrap'}}>
-             { lang === 'zh' ? '了解更多' : 'Learn more'} →</a>
         </p>
       </FormSection>
     </FormContainer>
