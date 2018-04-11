@@ -37,6 +37,8 @@ const txInputFields = [
   'accountAlias',
   'accountTags',
   'issuanceProgram',
+  'controlProgram',
+  'address',
   'spentOutputId',
   'isLocal',
   'referenceData',
