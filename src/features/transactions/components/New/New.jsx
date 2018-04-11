@@ -1,4 +1,4 @@
-import { BaseNew, FormContainer, FormSection, FieldLabel, JsonField, TextField, Autocomplete, ObjectSelectorField, AmountUnitField } from 'features/shared/components'
+import { BaseNew, FormContainer, FormSection, FieldLabel, TextField, Autocomplete, ObjectSelectorField, AmountUnitField } from 'features/shared/components'
 import { DropdownButton, MenuItem } from 'react-bootstrap'
 import { reduxForm } from 'redux-form'
 import ActionItem from './FormActionItem'
@@ -279,12 +279,9 @@ class Form extends React.Component {
             >
               <MenuItem eventKey='issue'>Issue</MenuItem>
               <MenuItem eventKey='spend_account'>Spend from account</MenuItem>
-              {/*<MenuItem eventKey='spend_account_unspent_output'>Spend unspent output</MenuItem>*/}
-              <MenuItem eventKey='control_account'>Control with account</MenuItem>
               <MenuItem eventKey='control_receiver'>Control with receiver</MenuItem>
               <MenuItem eventKey='control_address'>Control with address</MenuItem>
               <MenuItem eventKey='retire'>Retire</MenuItem>
-              {/*<MenuItem eventKey='set_transaction_reference_data'>Set transaction reference data</MenuItem>*/}
             </DropdownButton>
           </div>
         </FormSection>}
