@@ -131,7 +131,7 @@ const formatIntNumToPosDecimal = (neu,pos) => {
   return neu
 }
 
-const normalizeGlobalBTMAmount = (assetID, amount, btmAmountUnit) => {
+export const normalizeGlobalBTMAmount = (assetID, amount, btmAmountUnit) => {
   //normalize BTM Amount
   if (assetID === 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff') {
     switch (btmAmountUnit){

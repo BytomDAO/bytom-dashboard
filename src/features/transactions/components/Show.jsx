@@ -7,6 +7,7 @@ import {
   Section,
   RawJsonButton,
 } from 'features/shared/components'
+import { normalizeGlobalBTMAmount } from 'utility/buildInOutDisplay'
 
 import { Summary } from './'
 import { buildTxInputDisplay, buildTxOutputDisplay } from 'utility/buildInOutDisplay'
@@ -21,6 +22,24 @@ class Show extends BaseShow {
 
     let view
     if (item) {
+      const btmInput = item.inputs.reduce((sum, input) => {
+        if (input.type === 'spend' && input.assetAlias === 'BTM') {
+          sum += input.amount
+        }
+        return sum
+      }, 0)
+
+      const btmOutput = item.outputs.reduce((sum, output) => {
+        if (output.type === 'control' && output.assetAlias === 'BTM') {
+          sum += output.amount
+        }
+        return sum
+      }, 0)
+
+      const gasAmount = btmInput > 0 ? btmInput - btmOutput : 0
+
+      const gas = normalizeGlobalBTMAmount('ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff', gasAmount, btmAmountUnit)
+
       const title = <span>
         {lang === 'zh' ? '交易' : 'Transaction '}
         &nbsp;<code>{item.id}</code>
@@ -44,8 +63,9 @@ class Show extends BaseShow {
               {label: 'ID', value: item.id},
               {label: 'Timestamp', value: moment.unix(item.timestamp).format()},
               {label: 'Block ID', value: item.blockId},
-              {label: 'Block Height', value: item.blockHeight},
+              {label: 'Block Height', value: (item.blockHeight + `(${this.props.highestBlock - item.blockHeight + 1} confirmations)`)},
               {label: 'Position', value: item.position},
+              {label: 'Gas', value: gas},
             ]}
           />
 
@@ -80,7 +100,8 @@ import { connect } from 'react-redux'
 const mapStateToProps = (state, ownProps) => ({
   item: state.transaction.items[ownProps.params.id],
   lang: state.core.lang,
-  btmAmountUnit: state.core.btmAmountUnit
+  btmAmountUnit: state.core.btmAmountUnit,
+  highestBlock: state.core.coreData && state.core.coreData.highestBlock
 })
 
 const mapDispatchToProps = ( dispatch ) => ({
