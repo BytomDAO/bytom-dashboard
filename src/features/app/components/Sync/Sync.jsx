@@ -1,27 +1,17 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import navStyles from '../Navigation/Navigation.scss'
 import styles from './Sync.scss'
-import { chainClient } from 'utility/environment'
 
 class Sync extends React.Component {
-  constructor(props) {
-    super(props)
-
-    const fetchInfo = () => {
-      chainClient().config.info().then(resp => {
-        this.setState(resp.data)
-      })
-    }
-    setInterval(fetchInfo.bind(this), 2 * 1000)
-  }
-
   render() {
-    if (!this.state) {
+    const coreData = this.props.coreData
+    if (!coreData) {
       return <ul></ul>
     }
 
-    const arr = Object.keys(this.state).map(key => {
-      return <li key={key}>{key + ': ' + String(this.state[key])}</li>
+    const arr = Object.keys(coreData).map(key => {
+      return <li key={key}>{key + ': ' + String(coreData[key])}</li>
     })
     arr.unshift(<li key='sync-title' className={navStyles.navigationTitle}>Network status</li>)
 
@@ -29,4 +19,8 @@ class Sync extends React.Component {
   }
 }
 
-export default Sync
+export default connect(
+  (state) => ({
+    coreData: state.core.coreData,
+  })
+)(Sync)

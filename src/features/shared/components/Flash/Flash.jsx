@@ -37,7 +37,7 @@ class Flash extends React.Component {
     })
 
     return (
-      <div>
+      <div className={this.props.className}>
         {messages}
       </div>
     )
@@ -47,7 +47,8 @@ class Flash extends React.Component {
 import { connect } from 'react-redux'
 
 const mapStateToProps = (state) => ({
-  hideFlash: state.tutorial.isShowing && state.routing.locationBeforeTransitions.pathname.includes(state.tutorial.route)
+  // hideFlash: state.tutorial.isShowing && state.routing.locationBeforeTransitions.pathname.includes(state.tutorial.route)
+  hideFlash: false
 })
 
 export default connect(

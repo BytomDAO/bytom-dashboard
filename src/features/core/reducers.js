@@ -212,6 +212,20 @@ const lang = (state = defaultLang, action) => {
   return state
 }
 
+const mingStatus = (state = false, action) => {
+  if (action.type == 'UPDATE_CORE_INFO') {
+    return action.param.data.mining
+  }
+  return state
+}
+
+const coreData = (state = null, action) => {
+  if (action.type == 'UPDATE_CORE_INFO') {
+    return action.param.data || null
+  }
+  return state
+}
+
 const snapshot = (state = null, action) => {
   if (action.type == 'UPDATE_CORE_INFO') {
     return action.param.snapshot || null // snapshot may be undefined, which Redux doesn't like.
@@ -231,12 +245,14 @@ export default combineReducers({
   configured,
   configuredAt,
   coreType,
+  coreData,
   generator,
   generatorAccessToken,
   generatorBlockHeight,
   generatorUrl,
   localhostAuth,
   mockhsm,
+  mingStatus,
   crosscoreRpcVersion,
   onTestnet,
   httpOk,
