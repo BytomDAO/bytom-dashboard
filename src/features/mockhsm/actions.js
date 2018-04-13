@@ -1,5 +1,6 @@
 import { baseListActions, baseCreateActions } from 'features/shared/actions'
 import { chainClient } from 'utility/environment'
+import {push} from 'react-router-redux'
 
 const type = 'key'
 const clientApi = () => chainClient().mockHsm.keys
@@ -13,9 +14,31 @@ const create = baseCreateActions(type, {
   clientApi,
 })
 
+const reset = {
+  submitResetForm: (params) => {
+    return (dispatch)  => {
+      return clientApi().resetPassword(params).then((resp) => {
+        if(resp.data.changed){
+          dispatch({ type: `RESET_PASSWORD_${type.toUpperCase()}`, resp })
+        }else{
+          dispatch({ type: 'ERROR', payload: {message: 'Unable to reset the key password.'} })
+        }
+
+        dispatch(push({
+          pathname: `/${type}s/${id}`,
+          state: {
+            preserveFlash: true
+          }
+        }))
+      })
+    }
+  }
+}
+
 export default {
   ...create,
   ...list,
+  ...reset,
   createExport: (item) => () => {
     clientApi().export(item.xpub).then(resp => {
       const privateKey = resp.data.privateKey
