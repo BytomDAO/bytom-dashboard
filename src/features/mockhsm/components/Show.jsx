@@ -14,10 +14,21 @@ class Show extends BaseShow {
     this.submitWithErrors = this.submitWithErrors.bind(this)
   }
 
-  submitWithErrors(data) {
+  submitExportFileWithErrors(data, item) {
     return new Promise((resolve, reject) => {
       const arg = {
-        'xpub': this.props.item.xpub,
+        'xpub': item.xpub,
+        'password': data.exportsPassword
+      }
+      this.props.exportKey(arg, item.alias)
+        .catch((err) => reject({_error: err.message}))
+    })
+  }
+
+  submitWithErrors(data, xpub) {
+    return new Promise((resolve, reject) => {
+      const arg = {
+        'xpub': xpub,
         'old_password': data.oldPassword,
         'new_password': data.newPassword
       }
@@ -30,12 +41,10 @@ class Show extends BaseShow {
     const item = this.props.item
     const lang = this.props.lang
     const {
-      fields: { oldPassword, newPassword, repeatPassword },
+      fields: { exportsPassword, oldPassword, newPassword, repeatPassword },
       handleSubmit,
       submitting
     } = this.props
-
-    // let exportPassword
 
     let view
     if (item) {
@@ -54,10 +63,6 @@ class Show extends BaseShow {
             id={item.id}
             object='key'
             title={lang === 'zh' ? '详情' : 'Details'}
-            actions={[
-              <button key='export-key' className='btn btn-link' onClick={this.props.exportKey.bind(this, item)}>
-                { lang === 'zh' ? '导出私钥' : 'Export private key' }</button>,
-            ]}
             items={[
               {label: 'Alias', value: item.alias},
               {label: 'xpubs', value: item.xpub},
@@ -65,8 +70,19 @@ class Show extends BaseShow {
             lang={lang}
           />
 
+          <h5>Export private key</h5>
+          <form onSubmit={handleSubmit(value => this.submitExportFileWithErrors(value, item))}>
+            <TextField
+              title = 'Password'
+              placeholder='Please entered the password.'
+              fieldProps={exportsPassword}
+              autoFocus={true} />
+            <button type='submit' className='btn btn-primary' disabled={submitting}>
+              { lang === 'zh' ? '导出私钥' : 'Export private key' }</button>
+          </form>
+
           <h5>Reset password</h5>
-          <form onSubmit={handleSubmit(this.submitWithErrors)}>
+          <form onSubmit={handleSubmit(value => this.submitWithErrors(value, item.xpub))}>
             <TextField
               title = 'Old Password'
               placeholder='Please entered the old password.'
@@ -87,34 +103,6 @@ class Show extends BaseShow {
               Reset the password
             </button>
           </form>
-
-          {/*<form onSubmit={handleSubmit(this.submitWithErrors)}>*/}
-            {/*<TextField*/}
-              {/*placeholder='Enter the password.'*/}
-              {/*fieldProps={token}*/}
-              {/*autoFocus={true} />*/}
-
-            {/*<button type='submit' className='btn btn-primary' disabled={submitting}>*/}
-              {/*Log In*/}
-            {/*</button>*/}
-          {/*</form>*/}
-          {/*<Section*/}
-            {/*title={ lang === 'zh' ? '导出私钥' : 'Export private key' }*/}
-            {/*>*/}
-            {/*/!*<TextField*!/*/}
-              {/*/!*placeholder='Enter the password'*!/*/}
-              {/*/!*fieldProps={exportPassword}*!/*/}
-              {/*/!*autoFocus={true} />*!/*/}
-            {/*<input type="text"/>*/}
-
-
-          {/*</Section>*/}
-
-          {/*<Section*/}
-            {/*title={ lang === 'zh' ? '重置密码' : 'Reset password' }*/}
-            {/*>*/}
-
-          {/*</Section>*/}
         </PageContent>
       </div>
     }
@@ -135,7 +123,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = ( dispatch ) => ({
   fetchItem: (id) => dispatch(actions.key.fetchItems({id: `${id}`})),
-  exportKey: (item) => dispatch(actions.key.createExport(item)),
+  exportKey: (item, fileName) => dispatch(actions.key.createExport(item, fileName)),
   submitForm: (params) => dispatch(actions.key.submitResetForm(params))
 })
 
@@ -145,5 +133,5 @@ export default connect(
   mapDispatchToProps
 )(reduxForm({
   form: 'ResetPassword',
-  fields: ['oldPassword', 'newPassword', 'repeatPassword' ],
+  fields: ['exportsPassword', 'oldPassword', 'newPassword', 'repeatPassword' ],
 })(Show))

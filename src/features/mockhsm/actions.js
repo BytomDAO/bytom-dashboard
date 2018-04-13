@@ -39,18 +39,22 @@ export default {
   ...create,
   ...list,
   ...reset,
-  createExport: (item) => () => {
-    clientApi().export(item.xpub).then(resp => {
-      const privateKey = resp.data.privateKey
+  createExport: (arg, fileName) => (dispatch) => {
+    clientApi().export(arg).then(resp => {
+      if(resp.status == 'success'){
+        const privateKey = resp.data.privateKey
 
-      var element = document.createElement('a')
-      element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(privateKey))
-      element.setAttribute('download', item.alias)
-      element.style.display = 'none'
-      document.body.appendChild(element)
-      element.click()
+        var element = document.createElement('a')
+        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(privateKey))
+        element.setAttribute('download', fileName)
+        element.style.display = 'none'
+        document.body.appendChild(element)
+        element.click()
 
-      document.body.removeChild(element)
+        document.body.removeChild(element)
+      }else if(resp.status == 'fail'){
+        dispatch({ type: 'ERROR', payload: {message: resp.msg} })
+      }
     })
   }
 }
