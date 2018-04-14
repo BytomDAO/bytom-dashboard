@@ -18,7 +18,7 @@ class Form extends React.Component {
 
   render() {
     const {
-      fields: { alias, tags, xpubs, quorum },
+      fields: { alias, xpubs, quorum },
       error,
       handleSubmit,
       submitting
@@ -36,7 +36,6 @@ class Form extends React.Component {
 
         <FormSection title={ lang === 'zh' ? '账户信息' : 'Account Information' }>
           <TextField title='Alias' placeholder='Alias' fieldProps={alias} autoFocus={true} />
-          <JsonField title='Tags' fieldProps={tags} lang={ lang } />
         </FormSection>
 
         <FormSection title={ lang === 'zh' ? '密钥和签名' : 'Keys and Signing' }>
@@ -65,7 +64,6 @@ const validate = values => {
 
 const fields = [
   'alias',
-  'tags',
   'xpubs[].value',
   'xpubs[].type',
   'quorum'
@@ -79,7 +77,6 @@ export default BaseNew.connect(
     fields,
     validate,
     initialValues: {
-      tags: '{\n\t\n}',
       quorum: 1,
     }
   })(Form)

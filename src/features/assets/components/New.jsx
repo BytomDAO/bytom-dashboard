@@ -35,7 +35,6 @@ class Form extends React.Component {
 
         <FormSection title={ lang === 'zh' ? '资产信息' : 'Asset Information'}>
           <TextField title='Alias' placeholder='Alias' fieldProps={alias} autoFocus={true} />
-          <JsonField title='Tags' fieldProps={tags} lang={lang}/>
           <JsonField title={ lang === 'zh' ? '定义' : 'Definition' } fieldProps={definition} lang={lang}/>
         </FormSection>
 
@@ -54,7 +53,7 @@ class Form extends React.Component {
 const validate = values => {
   const errors = {}
 
-  const jsonFields = ['tags', 'definition']
+  const jsonFields = ['definition']
   jsonFields.forEach(key => {
     const fieldError = JsonField.validator(values[key])
     if (fieldError) { errors[key] = fieldError }
@@ -67,7 +66,6 @@ const validate = values => {
 
 const fields = [
   'alias',
-  'tags',
   'definition',
   'xpubs[].value',
   'xpubs[].type',
@@ -81,7 +79,6 @@ export default BaseNew.connect(
     fields,
     validate,
     initialValues: {
-      tags: '{\n\t\n}',
       definition: '{\n\t\n}',
       quorum: 1,
     }
