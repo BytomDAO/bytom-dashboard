@@ -66,6 +66,12 @@ export const flashMessages = (state = {}, action) => {
       </p>)
     }
 
+    case 'RESET_PASSWORD_KEY': {
+      return newSuccess(state, <p>
+        Key password has been reset successfully.
+      </p>)
+    }
+
     case 'DELETE_ACCESS_TOKEN':
     case 'DELETE_TRANSACTIONFEED': {
       return newFlash(state, flash(action.message, null, 'info'))
