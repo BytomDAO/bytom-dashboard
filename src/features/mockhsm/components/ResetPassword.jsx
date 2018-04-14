@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import { reduxForm } from 'redux-form'
 import { TextField } from 'features/shared/components'
-import styles from './title.scss'
+import styles from './ResetPassword.scss'
 
 class ResetPassword extends Component {
   constructor(props) {
@@ -31,10 +31,7 @@ class ResetPassword extends Component {
     } = this.props
 
     return (
-      <div>
-        <h5 className={styles.title}>
-          { lang === 'zh' ? '重置密码' : 'Reset password' }
-          </h5>
+      <div className={styles.main}>
         <form onSubmit={handleSubmit(value => this.submitWithErrors(value, item.xpub))}>
           <TextField
             title = { lang === 'zh' ? '原始密码' : 'Old Password' }
@@ -55,7 +52,7 @@ class ResetPassword extends Component {
             type= 'password'
             />
 
-          <button type='submit' className='btn btn-primary' disabled={submitting}>
+          <button type='submit' className='btn btn-default btn-sm' disabled={submitting}>
             { lang === 'zh' ? '重置密码' : 'Reset the password' }
           </button>
         </form>

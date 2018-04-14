@@ -12,26 +12,34 @@ import componentClassNames from 'utility/componentClassNames'
 class Show extends BaseShow {
   constructor(props) {
     super(props)
-    this.showExportKey = this.showExportKey.bind(this)
-    this.showResetPassword = this.showResetPassword.bind(this)
-    this.state = {
-      showExportKey: false,
-      showResetPassword: false
-    }
   }
 
-  showExportKey(){
-    this.setState({
-      showExportKey: true,
-      showResetPassword: false
-    })
+  showExportKey(item, lang){
+    this.props.showModal(
+      <div>
+        <p>{lang === 'zh' ?  `请输入密码然后导出${item.alias}的私钥：` : `Please enter the password and export ${item.alias}'s private key:`}</p>
+        <ExportKey
+          key='export-key-form' // required by React
+          item={item}
+          lang={lang}
+          exportKey={this.props.exportKey}
+        />
+      </div>
+      )
   }
 
-  showResetPassword(){
-    this.setState({
-      showExportKey: false,
-      showResetPassword: true
-    })
+  showResetPassword(item, lang){
+    this.props.showModal(
+      <div>
+        <p>{lang === 'zh' ?  '重置你的密钥密码，' : 'Reset your password, '}</p>
+        <ResetPassword
+          key='reset-password-form' // required by React
+          item={item}
+          lang={lang}
+          submitForm={this.props.resetForm}
+        />
+      </div>
+      )
   }
 
   render() {
@@ -56,8 +64,8 @@ class Show extends BaseShow {
             object='key'
             title={lang === 'zh' ? '详情' : 'Details'}
             actions={[
-              <button key='show-exportkey' className='btn btn-link' onClick={this.showExportKey}> {lang === 'zh' ? '导出密钥' : 'Export Key' }</button>,
-              <button key='show-resetpassword' className='btn btn-link' onClick={this.showResetPassword}> {lang === 'zh' ? '重置密码' : 'Reset Password' }</button>,
+              <button key='show-exportkey' className='btn btn-link' onClick={this.showExportKey.bind(this, item, lang)}> {lang === 'zh' ? '导出私钥' : 'Export Private Key' }</button>,
+              <button key='show-resetpassword' className='btn btn-link' onClick={this.showResetPassword.bind(this, item, lang)}> {lang === 'zh' ? '重置密码' : 'Reset Password' }</button>,
             ]}
             items={[
               {label: 'Alias', value: item.alias},
@@ -65,21 +73,6 @@ class Show extends BaseShow {
             ]}
             lang={lang}
           />
-
-          { this.state.showExportKey && <ExportKey
-            key='export-key-form' // required by React
-            item={item}
-            lang={lang}
-            exportKey={this.props.exportKey}
-          /> }
-
-          { this.state.showResetPassword && <ResetPassword
-            key='reset-password-form' // required by React
-            item={item}
-            lang={lang}
-            submitForm={this.props.submitForm}
-          /> }
-
         </PageContent>
       </div>
     }
@@ -100,7 +93,11 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = ( dispatch ) => ({
   fetchItem: (id) => dispatch(actions.key.fetchItems({id: `${id}`})),
   exportKey: (item, fileName) => dispatch(actions.key.createExport(item, fileName)),
-  submitForm: (params) => dispatch(actions.key.submitResetForm(params))
+  resetForm: (params) => dispatch(actions.key.submitResetForm(params)),
+  showModal: (body) => dispatch(actions.app.showModal(
+    body,
+    actions.app.hideModal
+  )),
 })
 
 
