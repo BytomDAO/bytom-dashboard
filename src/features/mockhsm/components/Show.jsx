@@ -12,6 +12,26 @@ import componentClassNames from 'utility/componentClassNames'
 class Show extends BaseShow {
   constructor(props) {
     super(props)
+    this.showExportKey = this.showExportKey.bind(this)
+    this.showResetPassword = this.showResetPassword.bind(this)
+    this.state = {
+      showExportKey: false,
+      showResetPassword: false
+    }
+  }
+
+  showExportKey(){
+    this.setState({
+      showExportKey: true,
+      showResetPassword: false
+    })
+  }
+
+  showResetPassword(){
+    this.setState({
+      showExportKey: false,
+      showResetPassword: true
+    })
   }
 
   render() {
@@ -35,6 +55,10 @@ class Show extends BaseShow {
             id={item.id}
             object='key'
             title={lang === 'zh' ? '详情' : 'Details'}
+            actions={[
+              <button key='show-exportkey' className='btn btn-link' onClick={this.showExportKey}> {lang === 'zh' ? '导出密钥' : 'Export Key' }</button>,
+              <button key='show-resetpassword' className='btn btn-link' onClick={this.showResetPassword}> {lang === 'zh' ? '重置密码' : 'Reset Password' }</button>,
+            ]}
             items={[
               {label: 'Alias', value: item.alias},
               {label: 'xpubs', value: item.xpub},
@@ -42,18 +66,19 @@ class Show extends BaseShow {
             lang={lang}
           />
 
-          <ExportKey
+          { this.state.showExportKey && <ExportKey
             key='export-key-form' // required by React
             item={item}
             lang={lang}
             exportKey={this.props.exportKey}
-          />
-          <ResetPassword
+          /> }
+
+          { this.state.showResetPassword && <ResetPassword
             key='reset-password-form' // required by React
             item={item}
             lang={lang}
             submitForm={this.props.submitForm}
-          />
+          /> }
 
         </PageContent>
       </div>

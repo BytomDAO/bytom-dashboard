@@ -1,8 +1,7 @@
 import React, {Component} from 'react'
-import {reduxForm} from 'redux-form'
-import {
-  TextField
-} from 'features/shared/components'
+import { reduxForm } from 'redux-form'
+import { TextField } from 'features/shared/components'
+import styles from './title.scss'
 
 class ResetPassword extends Component {
   constructor(props) {
@@ -33,23 +32,25 @@ class ResetPassword extends Component {
 
     return (
       <div>
-        <h5>{ lang === 'zh' ? '重置密码' : 'Reset password' }</h5>
+        <h5 className={styles.title}>
+          { lang === 'zh' ? '重置密码' : 'Reset password' }
+          </h5>
         <form onSubmit={handleSubmit(value => this.submitWithErrors(value, item.xpub))}>
           <TextField
             title = { lang === 'zh' ? '原始密码' : 'Old Password' }
-            placeholder={ lang === 'zh' ? '请输入原始密码。' : 'Please entered the old password.' }
+            placeholder={ lang === 'zh' ? '请输入原始密码' : 'Please entered the old password.' }
             fieldProps={oldPassword}
             type= 'password'
             />
           <TextField
             title = { lang === 'zh' ? '新密码' : 'New Password' }
-            placeholder={ lang === 'zh' ? '请输入新密码。' : 'Please entered the new password.' }
+            placeholder={ lang === 'zh' ? '请输入新密码' : 'Please entered the new password.' }
             fieldProps={newPassword}
             type= 'password'
             />
           <TextField
             title = { lang === 'zh' ? '重复新密码' : 'Repeat Password' }
-            placeholder={ lang === 'zh' ? '请重复输入新密码。' : 'Please repeated the new password.' }
+            placeholder={ lang === 'zh' ? '请重复输入新密码' : 'Please repeated the new password.' }
             fieldProps={repeatPassword}
             type= 'password'
             />
