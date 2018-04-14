@@ -1,12 +1,12 @@
 import React from 'react'
+import { Link } from 'react-router'
 import {
   BaseShow,
   KeyValueTable,
   PageContent,
   PageTitle,
 } from 'features/shared/components'
-import  ExportKey  from './ExportKey'
-import  ResetPassword  from './ResetPassword'
+import  ExportKey  from './ExportKey/ExportKey'
 import componentClassNames from 'utility/componentClassNames'
 
 class Show extends BaseShow {
@@ -23,20 +23,6 @@ class Show extends BaseShow {
           item={item}
           lang={lang}
           exportKey={this.props.exportKey}
-        />
-      </div>
-      )
-  }
-
-  showResetPassword(item, lang){
-    this.props.showModal(
-      <div>
-        <p>{lang === 'zh' ?  '重置你的密钥密码，' : 'Reset your password, '}</p>
-        <ResetPassword
-          key='reset-password-form' // required by React
-          item={item}
-          lang={lang}
-          submitForm={this.props.resetForm}
         />
       </div>
       )
@@ -65,7 +51,7 @@ class Show extends BaseShow {
             title={lang === 'zh' ? '详情' : 'Details'}
             actions={[
               <button key='show-exportkey' className='btn btn-link' onClick={this.showExportKey.bind(this, item, lang)}> {lang === 'zh' ? '导出私钥' : 'Export Private Key' }</button>,
-              <button key='show-resetpassword' className='btn btn-link' onClick={this.showResetPassword.bind(this, item, lang)}> {lang === 'zh' ? '重置密码' : 'Reset Password' }</button>,
+              <Link className='btn btn-link' to={`/keys/${item.id}/reset-password`}>{lang === 'zh' ? '重置密码' : 'Reset Password' }</Link>
             ]}
             items={[
               {label: 'Alias', value: item.alias},
@@ -93,7 +79,6 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = ( dispatch ) => ({
   fetchItem: (id) => dispatch(actions.key.fetchItems({id: `${id}`})),
   exportKey: (item, fileName) => dispatch(actions.key.createExport(item, fileName)),
-  resetForm: (params) => dispatch(actions.key.submitResetForm(params)),
   showModal: (body) => dispatch(actions.app.showModal(
     body,
     actions.app.hideModal
