@@ -14,7 +14,7 @@ class Generated extends React.Component {
 
         <PageContent>
           <div className={styles.main}>
-            <p>Use the following hex string as the base transaction for a future transaction:</p>
+            <p>Use the following JSON string as the transaction to sign by another account:</p>
 
             <button
               className='btn btn-primary'
