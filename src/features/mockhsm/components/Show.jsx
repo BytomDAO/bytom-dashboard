@@ -51,7 +51,7 @@ class Show extends BaseShow {
             title={lang === 'zh' ? '详情' : 'Details'}
             actions={[
               <button key='show-exportkey' className='btn btn-link' onClick={this.showExportKey.bind(this, item, lang)}> {lang === 'zh' ? '导出私钥' : 'Export Private Key' }</button>,
-              <Link className='btn btn-link' to={`/keys/${item.id}/reset-password`}>{lang === 'zh' ? '重置密码' : 'Reset Password' }</Link>
+              <Link key='reset-password-btn' className='btn btn-link' to={`/keys/${item.id}/reset-password`}>{lang === 'zh' ? '重置密码' : 'Reset Password' }</Link>
             ]}
             items={[
               {label: 'Alias', value: item.alias},
@@ -77,7 +77,7 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = ( dispatch ) => ({
-  fetchItem: (id) => dispatch(actions.key.fetchItems({id: `${id}`})),
+  fetchItem: () => dispatch(actions.key.fetchItems()),
   exportKey: (item, fileName) => dispatch(actions.key.createExport(item, fileName)),
   showModal: (body) => dispatch(actions.app.showModal(
     body,

@@ -23,7 +23,7 @@ class ResetPassword extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchItem(this.props.params.id).then(resp => {
+    this.props.fetchItem().then(resp => {
       if (resp.data.length == 0) {
         this.setState({notFound: true})
       }
@@ -114,7 +114,7 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = ( dispatch ) => ({
-  fetchItem: (id) => dispatch(actions.key.fetchItems({id: `${id}`})),
+  fetchItem: () => dispatch(actions.key.fetchItems()),
   submitReset: (params) => dispatch(actions.key.submitResetForm(params))
 })
 
