@@ -14,7 +14,7 @@
 }
 
 .success {
-  background-color: $success-background;
+  background-color: transparentize($success-background, 0.5);
   border-color: $success-border;
   color: $success;
 }

@@ -1,7 +1,7 @@
 import React,  { Component }  from 'react'
 import { TextField } from 'features/shared/components'
 import { reduxForm } from 'redux-form'
-import styles from './title.scss'
+import styles from './ExportKey.scss'
 
 class ExportKey extends Component {
   constructor(props) {
@@ -30,10 +30,7 @@ class ExportKey extends Component {
     } = this.props
 
     return (
-      <div>
-        <h5 className={styles.title}>
-          { lang === 'zh' ? '导出私钥' : 'Export private key' }
-          </h5>
+      <div className={styles.main}>
         <form
           onSubmit={handleSubmit(value => this.submitWithErrors(value, item))}
         >
@@ -43,7 +40,7 @@ class ExportKey extends Component {
             fieldProps={password}
             type= 'password'
             />
-          <button type='submit' className='btn btn-primary' disabled={submitting}>
+          <button type='submit' className='btn btn-default btn-sm' disabled={submitting}>
             { lang === 'zh' ? '导出私钥' : 'Export private key' }</button>
         </form>
       </div>

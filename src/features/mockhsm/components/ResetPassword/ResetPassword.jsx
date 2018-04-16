@@ -1,12 +1,13 @@
 import React, {Component} from 'react'
 import { reduxForm } from 'redux-form'
-import { TextField } from 'features/shared/components'
-import styles from './title.scss'
+
+import { TextField, FormContainer, FormSection} from 'features/shared/components'
 
 class ResetPassword extends Component {
   constructor(props) {
     super(props)
     this.submitWithErrors = this.submitWithErrors.bind(this)
+    this.state = {}
   }
 
   submitWithErrors(data, xpub) {
@@ -16,26 +17,52 @@ class ResetPassword extends Component {
         'old_password': data.oldPassword,
         'new_password': data.newPassword
       }
-      this.props.submitForm(arg)
+      this.props.submitReset(arg)
         .catch((err) => reject({_error: err.message}))
     })
   }
 
+  componentDidMount() {
+    this.props.fetchItem().then(resp => {
+      if (resp.data.length == 0) {
+        this.setState({notFound: true})
+      }
+    })
+  }
+
   render() {
+    if (this.state.notFound) {
+      return <NotFound />
+    }
     const item = this.props.item
     const lang = this.props.lang
+
+    if (!item) {
+      return <div>Loading...</div>
+    }
+
     const {
       fields: { oldPassword, newPassword, repeatPassword },
+      error,
       handleSubmit,
       submitting
     } = this.props
 
+    const title = <span>
+      {lang === 'zh' ? '重置密钥密码 ' : 'Reset key password '}
+      <code>{item.alias}</code>
+    </span>
+
     return (
-      <div>
-        <h5 className={styles.title}>
-          { lang === 'zh' ? '重置密码' : 'Reset password' }
-          </h5>
-        <form onSubmit={handleSubmit(value => this.submitWithErrors(value, item.xpub))}>
+      <FormContainer
+        error={error}
+        label={title}
+        onSubmit={handleSubmit(value => this.submitWithErrors(value, item.xpub))}
+        submitting={submitting}
+        submitLabel= { lang === 'zh' ? '重置密码' : 'Reset the password' }
+        lang={lang}>
+
+        <FormSection title= {lang === 'zh' ? '重置密码' : 'Reset password' }>
           <TextField
             title = { lang === 'zh' ? '原始密码' : 'Old Password' }
             placeholder={ lang === 'zh' ? '请输入原始密码' : 'Please entered the old password.' }
@@ -54,12 +81,8 @@ class ResetPassword extends Component {
             fieldProps={repeatPassword}
             type= 'password'
             />
-
-          <button type='submit' className='btn btn-primary' disabled={submitting}>
-            { lang === 'zh' ? '重置密码' : 'Reset the password' }
-          </button>
-        </form>
-      </div>
+        </FormSection>
+      </FormContainer>
     )
   }
 }
@@ -82,7 +105,23 @@ const validate = values => {
   return errors
 }
 
-export default (reduxForm({
+import {connect} from 'react-redux'
+import actions from 'actions'
+
+const mapStateToProps = (state, ownProps) => ({
+  item: state.key.items[ownProps.params.id],
+  lang: state.core.lang
+})
+
+const mapDispatchToProps = ( dispatch ) => ({
+  fetchItem: () => dispatch(actions.key.fetchItems()),
+  submitReset: (params) => dispatch(actions.key.submitResetForm(params))
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(reduxForm({
   form: 'ResetPassword',
   fields: ['oldPassword', 'newPassword', 'repeatPassword' ],
   validate

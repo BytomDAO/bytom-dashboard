@@ -62,7 +62,7 @@
 
 .flash {
   position: fixed;
-  bottom: 0;
+  top: $title-height;
   z-index: 10;
   width: calc(100% - 220px);
 }
