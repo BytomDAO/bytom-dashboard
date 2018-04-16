@@ -26,43 +26,43 @@ export const flashMessages = (state = {}, action) => {
 
     case 'CREATED_ACCOUNT': {
       return newSuccess(state, <p>
-          Created account. <Link to='accounts/create'>Create another?</Link>
+          Account has been created successfully.
         </p>)
     }
 
     case 'CREATED_ASSET': {
       return newSuccess(state, <p>
-        Created asset. <Link to='assets/create'>Create another?</Link>
+        Asset has been created successfully.
       </p>)
     }
 
     case 'CREATED_TRANSACTION': {
       return newSuccess(state, <p>
-        Submitted transaction. <Link to='transactions/create'>Create another?</Link>
+        Transaction has been submitted successfully.
       </p>)
     }
 
     case 'CREATED_KEY': {
       return newSuccess(state, <p>
-        Created key. <Link to='keys/create'>Create another?</Link>
+        Key has been created successfully.
       </p>)
     }
 
     case 'CREATED_TRANSACTIONFEED': {
       return newSuccess(state, <p>
-        Created transaction feed. <Link to='transaction-feeds/create'>Create another?</Link>
+        Created transaction feed.
       </p>)
     }
 
     case 'CREATED_TOKEN_WITH_GRANT': {
       return newSuccess(state, <p>
-        Created access token. <Link to='access-control/create-token'>Create another?</Link>
+        Access token has been created successfully.
       </p>)
     }
 
     case 'CREATED_X509_GRANT': {
       return newSuccess(state, <p>
-        Granted policy to X509 certificate. <Link to='access-control/add-certificate'>Create another?</Link>
+        Granted policy to X509 certificate.
       </p>)
     }
 
