@@ -1,7 +1,7 @@
 import { List, New, Show, ResetPassword } from './components'
 import { makeRoutes } from 'features/shared'
 
-export default (store) => makeRoutes(store, 'key', List, New, Show, null,
+export default (store) => makeRoutes(store, 'key', List, New, Show,
   {
     childRoutes: [
       {

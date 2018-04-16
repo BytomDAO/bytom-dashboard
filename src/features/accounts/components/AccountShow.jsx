@@ -25,19 +25,21 @@ class AccountShow extends BaseShow {
       if (data.status !== 'success') {
         return
       }
-      this.setState({addresses: data.data})
+      const normalAddresses = data.data.filter(address => !address.change).map(address => address.address)
+      const changeAddresses = data.data.filter(address => address.change).map(address => address.address)
+      this.setState({addresses: normalAddresses, changeAddresses})
     })
   }
 
   createReceiver() {
     this.props.createReceiver({
-      account_alias:this.props.item.alias
+      account_alias: this.props.item.alias
     }).then(({data: receiver}) => this.props.showModal(<div>
       <p>Copy this one-time use address to use in a transaction:</p>
       <CopyableBlock value={JSON.stringify({
         controlProgram: receiver.controlProgram,
         expiresAt: receiver.expiresAt
-      }, null, 1)} />
+      }, null, 1)}/>
     </div>))
   }
 
@@ -89,7 +91,6 @@ class AccountShow extends BaseShow {
             items={[
               {label: 'ID', value: item.id},
               {label: 'Alias', value: item.alias},
-              {label: 'Tags', value: item.tags || {}, editUrl: `/accounts/${item.id}/tags`},
               {label: 'xpubs', value: (item.xpubs || []).length},
               {label: 'Quorum', value: item.quorum},
             ]}
@@ -109,10 +110,19 @@ class AccountShow extends BaseShow {
           )}
 
           {(this.state.addresses || []).length > 0 &&
-          <KeyValueTable title={'addresses'} items={(this.state.addresses || []).map((address, index) => ({
-            label: index,
-            value: address.address
-          }))}/>
+          <KeyValueTable title={lang === 'zh' ? '地址' : 'ADDRESSES'}
+                         items={this.state.addresses.map((address, index) => ({
+                           label: index,
+                           value: address
+                         }))}/>
+          }
+
+          {(this.state.changeAddresses || []).length > 0 &&
+          <KeyValueTable title={lang === 'zh' ? '找零地址' : 'ADDRESSES FOR CHANGE'}
+                         items={this.state.changeAddresses.map((address, index) => ({
+                           label: index,
+                           value: address
+                         }))}/>
           }
         </PageContent>
       </div>

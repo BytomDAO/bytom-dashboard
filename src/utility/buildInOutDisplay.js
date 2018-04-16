@@ -23,6 +23,7 @@ const mappings = {
   issuanceProgram: 'Issuance Program',
   isLocal: 'Local?',
   referenceData: 'Reference Data',
+  change: 'Change'
 }
 
 const txInputFields = [
@@ -85,6 +86,7 @@ const unspentFields = [
   'sourcePos',
   'isLocal',
   'referenceData',
+  'change',
 ]
 
 const balanceFields = Object.keys(mappings)
@@ -231,7 +233,8 @@ export function buildUnspentDisplay(output, btmAmountUnit) {
     controlProgram: output.program,
     programIndex: output.controlProgramIndex,
     sourceId: output.sourceId,
-    sourcePos: output.sourcePos
+    sourcePos: output.sourcePos,
+    change: output.change + ''
   }
   return buildDisplay(normalized, unspentFields, btmAmountUnit)
 }
