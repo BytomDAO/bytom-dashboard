@@ -214,7 +214,7 @@ class Form extends React.Component {
               }}
             />
             {showAvailableBalance && availableBalance &&
-            <small className={styles.balanceHint}>{availableBalance} available</small>}
+            <small className={styles.balanceHint}>{availableBalance} { lang === 'zh' ? '可用' : 'available'} </small>}
           </div>
 
           <label className={styles.title}>{ lang === 'zh' ? '至' : 'To' }</label>
