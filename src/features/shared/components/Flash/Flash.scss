@@ -14,13 +14,13 @@
 }
 
 .success {
-  background-color: transparentize($success-background, 0.5);
+  background-color: transparentize($success-background, 0.25);
   border-color: $success-border;
   color: $success;
 }
 
 .danger {
-  background-color: $highlight-danger-background;
+  background-color: transparentize($highlight-danger-background, 0.25);
   border-color: $highlight-danger-border;
   color: $highlight-danger;
 }
