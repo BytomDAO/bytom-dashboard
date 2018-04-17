@@ -5,6 +5,9 @@
 }
 
 .main {
+  position: relative;
+  min-height: 580px;
+  height: calc(100% - 75px);
   a {
     display: block;
     padding: 1px 0;
@@ -70,4 +73,13 @@
     height: 28px;
     margin-top: -2px;
   }
+}
+
+.networkStatus{
+  position: absolute;
+  bottom: 0px;
+}
+
+.networkWord{
+  color: $brand-warning;
 }
