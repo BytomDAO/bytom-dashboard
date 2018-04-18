@@ -9,17 +9,16 @@ class Sync extends React.Component {
     if(!coreData){
       return <ul></ul>
     }
+    const networkID = coreData.networkId
     const syncing = coreData.syncing
-    // const syncing = true
     const peerCount = coreData.peerCount
     const currentBlock = coreData.currentBlock
-    // const currentBlock = 1
     const highestBlock = coreData.highestBlock
-    // const highestBlock = currentBlock
     const lang = this.props.lang
 
     if (syncing) {
       return <ul className={`${navStyles.navigation} ${styles.main}`}>
+        <li key='sync-networkID' className={navStyles.navigationTitle}>{ networkID }</li>
         <li key='sync-title' className={navStyles.navigationTitle}>{ lang === 'zh' ? '网络同步状态' : 'Network Sync Status'}</li>
         <li key='sync-status'>{lang === 'zh' ? '同步中: ' : 'Synchronizing: '}  {currentBlock}/{highestBlock}</li>
         <li key='sync-peer-count'>{lang === 'zh' ? '节点数' : 'Peer Count'}: {peerCount}</li>
@@ -28,6 +27,7 @@ class Sync extends React.Component {
 
     const elems = []
 
+    elems.push(<li key='sync-networkID' className={navStyles.navigationTitle}>{ networkID }</li>)
     elems.push(<li key='sync-title' className={navStyles.navigationTitle}>{ lang === 'zh' ? '网络同步状态' : 'Network Sync Status' }</li>)
 
     if(!syncing && currentBlock == highestBlock){

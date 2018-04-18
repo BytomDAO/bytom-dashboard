@@ -88,11 +88,6 @@ class Navigation extends React.Component {
           lang={lang}
         />
 
-
-        <ul className={`${styles.navigation} ${styles.networkStatus}`}>
-          <li className={`${styles.navigationTitle} ${styles.networkWord}`}>{coreData? coreData['networkId']: ''}</li>
-        </ul>
-
       </div>
     )
   }
