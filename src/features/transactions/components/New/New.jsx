@@ -362,7 +362,7 @@ const validate = values => {
     JSON.parse(baseTx)
   } catch (e) {
     if (baseTx && e) {
-      errors.baseTransaction =  (lang === 'zh' ? '请输入密码' : 'To sign transaction must be a JSON string.' )
+      errors.baseTransaction = 'To sign transaction must be a JSON string.'
     }
   }
 
