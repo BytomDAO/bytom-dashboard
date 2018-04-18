@@ -12,10 +12,10 @@ class AccessControlList extends React.Component {
       beginEditing: this.props.beginEditing,
       delete: this.props.delete,
     }
-    const tokenList = <TableList titles={['Token Name', 'Token']}>
-      {(this.props.tokens).map(item => <GrantListItem key={item.id} item={item} {...itemProps} />)}
-    </TableList>
     const lang = this.props.lang
+    const tokenList = <TableList titles={ lang==='zh'? ['令牌名称', '令牌']: ['Token Name', 'Token']}>
+      {(this.props.tokens).map(item => <GrantListItem key={item.id} item={item} lang={lang} {...itemProps} />)}
+    </TableList>
 
     // const certList = <TableList titles={['Certificate', 'Policies']}>
     //   {this.props.certs.map(item => <GrantListItem key={item.id} item={item} {...itemProps} />)}
