@@ -34,15 +34,16 @@ class Form extends React.Component {
         lang={lang}>
 
         <FormSection title={ lang === 'zh' ? '资产信息' : 'Asset Information'}>
-          <TextField title='Alias' placeholder='Alias' fieldProps={alias} autoFocus={true} />
+          <TextField title={ lang === 'zh' ? '别名' : 'Alias'} placeholder={ lang === 'zh' ? '别名' : 'Alias'} fieldProps={alias} autoFocus={true} />
           <JsonField title={ lang === 'zh' ? '定义' : 'Definition' } fieldProps={definition} lang={lang}/>
         </FormSection>
 
         <FormSection title={ lang === 'zh' ? '密钥和签名' :'Keys and Signing' }>
           <KeyConfiguration
+            lang={lang}
             xpubs={xpubs}
             quorum={quorum}
-            quorumHint='Number of signatures required to issue' />
+            quorumHint={ lang === 'zh' ? '所需的签名数' : 'Number of signatures required to issue' } />
         </FormSection>
 
       </FormContainer>

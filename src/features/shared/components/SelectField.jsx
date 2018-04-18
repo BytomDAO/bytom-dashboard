@@ -12,8 +12,9 @@ const SELECT_FIELD_PROPS = [
 
 class SelectField extends React.Component {
   render() {
+    const lang = this.props.lang
     const options = this.props.options
-    const emptyLabel = this.props.emptyLabel || 'Select one...'
+    const emptyLabel = this.props.emptyLabel || ((lang === 'zh') ? '请选择...' : 'Select one...')
     const valueKey = this.props.valueKey || 'value'
     const labelKey = this.props.labelKey || 'label'
 

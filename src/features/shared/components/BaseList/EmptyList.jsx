@@ -5,6 +5,7 @@ import { docsRoot } from 'utility/environment'
 
 class EmptyList extends React.Component {
   render() {
+    const lang =this.props.lang
     let emptyImage
 
     try {

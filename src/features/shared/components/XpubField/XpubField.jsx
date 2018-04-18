@@ -62,6 +62,7 @@ class XpubField extends React.Component {
         autoFocus={this.state.autofocusInput}
         valueKey='xpub'
         labelKey='label'
+        lang={lang}
         fieldProps={{...valueProps, onChange: valueOnChange}} />,
       'provide': <TextField
         autoFocus={this.state.autofocusInput}
@@ -75,7 +76,7 @@ class XpubField extends React.Component {
 
     return (
       <div className={styles.main}>
-        <FieldLabel>Key {this.props.index + 1}</FieldLabel>
+        <FieldLabel>{ lang === 'zh' ? '密钥' :'Key '}{this.props.index + 1}</FieldLabel>
 
         <table className={styles.options}>
           <tbody>

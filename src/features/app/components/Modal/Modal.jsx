@@ -30,7 +30,7 @@ class Modal extends React.Component {
           {body}
 
           <button className={`btn btn-${this.props.options.danger ? 'danger' : 'primary'} ${styles.accept}`} onClick={accept}>
-            { lang === 'zh' ?  '确定' : 'OK' }</button>
+            { lang === 'zh' ?  '关闭' : 'OK' }</button>
           {cancel && <button className={`btn btn-link ${styles.cancel}`} onClick={cancel}>Cancel</button>}
         </div>
       </div>

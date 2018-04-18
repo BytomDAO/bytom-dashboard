@@ -44,6 +44,9 @@ class ObjectSelectorField extends React.Component {
       this.props.fieldProps.id.onChange('')
     }
 
+    const lang = this.props.lang
+    const alias_title = ( lang === 'zh' ? '别名' : ALIAS_SELECTED )
+
     const idProps = Object.assign({...this.props.fieldProps.id}, {onChange: idOnChange})
     const aliasProps = Object.assign({...this.props.fieldProps.alias}, {onChange: aliasOnChange})
 
@@ -55,10 +58,10 @@ class ObjectSelectorField extends React.Component {
             <DropdownButton
               className={styles.dropdownButton}
               id='input-dropdown-addon'
-              title={this.state.selected}
+              title={(this.state.selected === ALIAS_SELECTED)? alias_title: this.state.selected}
               onSelect={this.select}
             >
-              <MenuItem eventKey={ALIAS_SELECTED}>Alias</MenuItem>
+              <MenuItem eventKey={ALIAS_SELECTED}>{ lang === 'zh' ? '别名' : 'Alias'}</MenuItem>
               <MenuItem eventKey={ID_SELECTED}>ID</MenuItem>
             </DropdownButton>
           </div>
@@ -72,7 +75,7 @@ class ObjectSelectorField extends React.Component {
           {this.state.selected == ALIAS_SELECTED &&
             <this.props.aliasField
               className={styles.aliasFieldGroupItem}
-              placeholder={`Start typing ${this.props.title.toLowerCase()} alias...`}
+              placeholder={ lang === 'zh' ? `输入${this.props.title.toLowerCase()}别名.` : `Start typing ${this.props.title.toLowerCase()} alias...`}
               fieldProps={aliasProps} />}
 
         </div>

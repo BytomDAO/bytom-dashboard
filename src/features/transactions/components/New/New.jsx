@@ -198,6 +198,8 @@ class Form extends React.Component {
           <label className={styles.title}>{ lang === 'zh' ? '从' : 'From' }</label>
           <div className={styles.main}>
             <ObjectSelectorField
+              key='account-selector-field'
+              lang={lang}
               title={ lang === 'zh' ? '账户' :'Account' }
               aliasField={Autocomplete.AccountAlias}
               fieldProps={{
@@ -206,6 +208,8 @@ class Form extends React.Component {
               }}
             />
             <ObjectSelectorField
+              key='asset-selector-field'
+              lang={lang}
               title={ lang === 'zh' ? '资产' : 'Asset' }
               aliasField={Autocomplete.AssetAlias}
               fieldProps={{
@@ -271,6 +275,7 @@ class Form extends React.Component {
               accounts={this.props.accounts}
               assets={this.props.assets}
               remove={this.removeActionItem}
+              lang={lang}
             />)}
 
           <div className={`btn-group ${styles.addActionContainer} ${this.state.showDropdown && 'open'}`}>
@@ -282,7 +287,6 @@ class Form extends React.Component {
             >
               <MenuItem eventKey='issue'>Issue</MenuItem>
               <MenuItem eventKey='spend_account'>Spend from account</MenuItem>
-              <MenuItem eventKey='control_receiver'>Control with receiver</MenuItem>
               <MenuItem eventKey='control_address'>Control with address</MenuItem>
               <MenuItem eventKey='retire'>Retire</MenuItem>
             </DropdownButton>
