@@ -1,14 +1,10 @@
-import { chainClient } from 'utility/environment'
 import { connect } from 'react-redux'
 import {DropdownButton, MenuItem} from 'react-bootstrap'
 import componentClassNames from 'utility/componentClassNames'
-import { PageContent, ErrorBanner, PageTitle } from 'features/shared/components'
+import { PageContent, PageTitle } from 'features/shared/components'
 import React from 'react'
 import styles from './CoreIndex.scss'
-import testnetUtils from 'features/testnet/utils'
-import { docsRoot } from 'utility/environment'
 import actions from 'actions'
-import {navAdvancedState} from '../../../app/reducers'
 
 
 class CoreIndex extends React.Component {
@@ -60,18 +56,18 @@ class CoreIndex extends React.Component {
     let configBlock = (
       <div className={[styles.left, styles.col].join(' ')}>
         <div>
-          <h4>Configuration</h4>
+          <h4>{this.props.core.lang === 'zh' ? '配置' : 'Configuration'}</h4>
           <table className={styles.table}>
             <tbody>
             <tr>
-              <td className={styles.row_label}>Language:</td>
+              <td className={styles.row_label}>{this.props.core.lang === 'zh' ? '语言' : 'Language'}:</td>
               <td>{this.props.core.lang === 'zh' ? '中文' : 'English'}</td>
             </tr>
             <tr>
               <td colSpan={2}><hr /></td>
             </tr>
             <tr>
-              <td className={styles.row_label}>Advanced: </td>
+              <td className={styles.row_label}>{this.props.core.lang === 'zh' ? '高级导航选项' : 'Advanced'}: </td>
               <td>
                 <label className={styles.switch}>
                   <input
@@ -84,7 +80,7 @@ class CoreIndex extends React.Component {
               </td>
             </tr>
             <tr>
-              <td className={styles.row_label}>Mining: </td>
+              <td className={styles.row_label}>{this.props.core.lang === 'zh' ? '挖矿' : 'Mining'}: </td>
               <td>
                 <label className={styles.switch}>
                   <input
@@ -97,7 +93,7 @@ class CoreIndex extends React.Component {
               </td>
             </tr>
             <tr>
-              <td className={styles.row_label} >Unit to show amount in </td>
+              <td className={styles.row_label} >{this.props.core.lang === 'zh' ? '比原数量单位显示' : 'Unit to show amount in'} </td>
               <td>
                 <DropdownButton
                   bsSize='xsmall'
@@ -118,20 +114,50 @@ class CoreIndex extends React.Component {
     )
 
     let coreData = this.props.core.coreData
-    let requestStatusBlock =(
-      <div className={styles['sub-row']}>
-          <h4>Network status</h4>
+    let requestStatusBlock
+
+
+    if(!coreData){
+      requestStatusBlock = (<div>loading...</div>)
+    }else {
+      requestStatusBlock = (
+        <div className={styles['sub-row']}>
+          <h4>{this.props.core.lang === 'zh' ? '网络状态' : 'Network status'}</h4>
           <table className={styles.table}>
             <tbody>
-            {Object.keys(coreData).map(key => (
-              <tr key={key}>
-                <td className={styles.row_label}> {key.replace(/([a-z])([A-Z])/g, '$1 $2')}: </td>
-                <td className={styles.row_value}><code>{ String(coreData[key])}</code></td>
-              </tr>))}
+            <tr key={'core-listening'}>
+              <td className={styles.row_label}> {this.props.core.lang === 'zh' ? '节点监听' : 'Listening'}:</td>
+              <td className={styles.row_value}><code>{String(coreData['listening'])}</code></td>
+            </tr>
+            <tr key={'core-syncing'}>
+              <td className={styles.row_label}> {this.props.core.lang === 'zh' ? '网络同步' : 'Syncing'}:</td>
+              <td className={styles.row_value}><code>{String(coreData['syncing'])}</code></td>
+            </tr>
+            <tr key={'core-mining'}>
+              <td className={styles.row_label}> {this.props.core.lang === 'zh' ? '挖矿状态' : 'Mining'}:</td>
+              <td className={styles.row_value}><code>{String(coreData['mining'])}</code></td>
+            </tr>
+            <tr key={'core-peerCount'}>
+              <td className={styles.row_label}> {this.props.core.lang === 'zh' ? '节点数' : 'Peer Count'}:</td>
+              <td className={styles.row_value}><code>{String(coreData['peerCount'])}</code></td>
+            </tr>
+            <tr key={'core-currentBlock'}>
+              <td className={styles.row_label}> {this.props.core.lang === 'zh' ? '当前高度' : 'Current Block'}:</td>
+              <td className={styles.row_value}><code>{String(coreData['currentBlock'])}</code></td>
+            </tr>
+            <tr key={'core-highestBlock'}>
+              <td className={styles.row_label}> {this.props.core.lang === 'zh' ? '最高高度' : 'Highest Block'}:</td>
+              <td className={styles.row_value}><code>{String(coreData['highestBlock'])}</code></td>
+            </tr>
+            <tr key={'core-networkID'}>
+              <td className={styles.row_label}> {this.props.core.lang === 'zh' ? '网络ID' : 'Network Id'}:</td>
+              <td className={styles.row_value}><code>{String(coreData['networkId'])}</code></td>
+            </tr>
             </tbody>
           </table>
         </div>
       )
+    }
 
     let networkStatusBlock = (
       <div className={styles.right}>

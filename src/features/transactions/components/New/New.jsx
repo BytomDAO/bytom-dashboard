@@ -219,10 +219,10 @@ class Form extends React.Component {
 
           <label className={styles.title}>{ lang === 'zh' ? '至' : 'To' }</label>
           <div className={styles.main}>
-            <TextField title='Address' fieldProps={normalTransaction.address}/>
-            {!showBtmAmountUnit && <TextField title='Amount' fieldProps={normalTransaction.amount}
+            <TextField title={ lang === 'zh' ? '地址' : 'Address'} fieldProps={normalTransaction.address}/>
+            {!showBtmAmountUnit && <TextField title={ lang === 'zh' ? '数量' : 'Amount' }  fieldProps={normalTransaction.amount}
             />}
-            {showBtmAmountUnit && <AmountUnitField title='Amount' fieldProps={normalTransaction.amount}
+            {showBtmAmountUnit && <AmountUnitField title={ lang === 'zh' ? '数量' : 'Amount' } fieldProps={normalTransaction.amount}
             />}
           </div>
 
@@ -258,8 +258,8 @@ class Form extends React.Component {
               )}
           </table>
 
-          <label className={styles.title}>Password</label>
-          <TextField placeholder='Password' fieldProps={password} autoFocus={false} type={'password'} />
+          <label className={styles.title}>{ lang === 'zh' ? '密码' : 'Password' }</label>
+          <TextField placeholder={ lang === 'zh' ? '请输入密码' : 'Please enter the assword' } fieldProps={password} autoFocus={false} type={'password'} />
         </FormSection>}
 
         { this.state.showAdvanceTx && <FormSection title='Actions'>
@@ -344,8 +344,8 @@ class Form extends React.Component {
 
         {
           this.state.showAdvanceTx && (actions.length > 0 || this.state.showAdvanced) && <FormSection>
-            <label className={styles.title}>Password</label>
-            <TextField placeholder='Password' fieldProps={password} autoFocus={false} type={'password'} />
+            <label className={styles.title}>{ lang === 'zh' ? '密码' : 'Password' }</label>
+            <TextField placeholder={ lang === 'zh' ? '请输入密码' : 'Please enter the assword' } fieldProps={password} autoFocus={false} type={'password'} />
           </FormSection>
         }
       </FormContainer>
@@ -362,7 +362,7 @@ const validate = values => {
     JSON.parse(baseTx)
   } catch (e) {
     if (baseTx && e) {
-      errors.baseTransaction = 'To sign transaction must be a JSON string.'
+      errors.baseTransaction =  (lang === 'zh' ? '请输入密码' : 'To sign transaction must be a JSON string.' )
     }
   }
 

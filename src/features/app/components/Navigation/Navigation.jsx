@@ -4,6 +4,7 @@ import {Link} from 'react-router'
 import styles from './Navigation.scss'
 import {navIcon} from '../../utils'
 import Sync from '../Sync/Sync'
+import {docsRoot} from '../../../../utility/environment'
 
 class Navigation extends React.Component {
   constructor(props) {
@@ -19,6 +20,7 @@ class Navigation extends React.Component {
 
   render() {
     const lang = this.props.lang
+    const coreData = this.props.coreData
     return (
       <div className={styles.main}>
         <ul className={styles.navigation}>
@@ -26,6 +28,7 @@ class Navigation extends React.Component {
           <li>
             <Link to='/transactions' activeClassName={styles.active}>
               {navIcon('transaction', styles)}
+              {}
               {lang === 'zh' ? '交易' : 'Transactions'}
             </Link>
           </li>
@@ -71,7 +74,20 @@ class Navigation extends React.Component {
           </li>
         </ul>}
 
-        <Sync/>
+        <ul className={styles.navigation}>
+          <li className={styles.navigationTitle}>developers</li>
+          <li>
+            <a href={docsRoot} target='_blank'>
+              {navIcon('docs', styles)}
+              {lang === 'zh' ? '文档' : 'Documentation'}
+            </a>
+          </li>
+        </ul>
+
+        <Sync
+          lang={lang}
+        />
+
       </div>
     )
   }
@@ -87,6 +103,7 @@ export default connect(
     }
 
     return {
+      coreData: state.core.coreData,
       routing: state.routing, // required for <Link>s to update active state on navigation
       showSync: state.core.configured && !state.core.generator,
       lang: state.core.lang,

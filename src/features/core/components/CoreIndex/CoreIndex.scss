@@ -13,7 +13,7 @@
 .row_label {
   padding-right: $grid-gutter-width;
   text-transform: capitalize;
-  font-weight: bold;
+  font-weight: 500;
   white-space: pre;
 }
 
@@ -44,10 +44,6 @@
 
 .sub-row {
   padding: $grid-gutter-width $grid-gutter-width 0;
-}
-
-h4 {
-  font-weight: bold;
 }
 
 .top {
@@ -93,6 +89,7 @@ h4 {
 
 code {
   padding-left: 0;
+  font-size: $font-size-code;
 }
 
 .switch {
