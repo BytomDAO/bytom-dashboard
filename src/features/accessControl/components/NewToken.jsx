@@ -17,13 +17,13 @@ class NewToken extends React.Component {
     return(
       <FormContainer
         error={error}
-        label={ lang === 'zh' ? '新建 access token' : 'New access token' }
+        label={ lang === 'zh' ? '新建访问令牌' : 'New access token' }
         onSubmit={handleSubmit(this.props.submitForm)}
         submitting={submitting}
         lang={lang}>
 
-        <FormSection title={ lang === 'zh' ? 'Token 信息' : 'Token information' }>
-          <TextField title='Token Name' fieldProps={guardData.id} autoFocus={true} />
+        <FormSection title={ lang === 'zh' ? '令牌信息' : 'Token information' }>
+          <TextField title={ lang === 'zh' ? '令牌名称' : 'Token Name'} fieldProps={guardData.id} autoFocus={true} />
         </FormSection>
         {/*<FormSection title='Policy'>*/}
           {/*{policyOptions.map(option => {*/}

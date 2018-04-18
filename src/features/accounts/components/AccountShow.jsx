@@ -90,9 +90,9 @@ class AccountShow extends BaseShow {
             ]}
             items={[
               {label: 'ID', value: item.id},
-              {label: 'Alias', value: item.alias},
-              {label: 'xpubs', value: (item.xpubs || []).length},
-              {label: 'Quorum', value: item.quorum},
+              {label: (lang === 'zh' ? '别名' : 'Alias'), value: item.alias},
+              {label: (lang === 'zh' ? '扩展公钥数' : 'xpubs'), value: (item.xpubs || []).length},
+              {label: (lang === 'zh' ? '签名数' : 'Quorum') , value: item.quorum},
             ]}
             lang={lang}
           />
@@ -100,10 +100,10 @@ class AccountShow extends BaseShow {
           {(item.xpubs || []).map((key, index) =>
             <KeyValueTable
               key={index}
-              title={`XPUB ${index + 1}`}
+              title={lang === 'zh' ? `扩展公钥 ${index + 1}` :`XPUB ${index + 1}`}
               items={[
-                {label: 'Account Xpub', value: key},
-                {label: 'Key Index', value: item.keyIndex},
+                {label: (lang === 'zh' ? '账户公钥' :'Account Xpub'), value: key},
+                {label: (lang === 'zh' ? '密钥索引' : 'Key Index'), value: item.keyIndex},
               ]}
               lang={lang}
             />

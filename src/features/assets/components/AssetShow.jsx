@@ -36,10 +36,10 @@ class AssetShow extends BaseShow {
             ]}
             items={[
               {label: 'ID', value: item.id},
-              {label: 'Alias', value: item.alias},
-              {label: 'Definition', value: item.definition},
-              {label: 'xpubs', value: (item.xpubs || []).length},
-              {label: 'Quorum', value: item.quorum},
+              {label: ( lang === 'zh' ? '别名' : 'Alias' ), value: item.alias},
+              {label: ( lang === 'zh' ? '定义' : 'Definition'), value: item.definition},
+              {label: ( lang === 'zh' ? '扩展公钥数' : 'xpubs' ), value: (item.xpubs || []).length},
+              {label: ( lang === 'zh' ? '签名数' : 'Quorum' ), value: item.quorum},
             ]}
             lang={lang}
           />
@@ -47,10 +47,10 @@ class AssetShow extends BaseShow {
           {(item.xpubs || []).map((key, index) =>
             <KeyValueTable
               key={index}
-              title={`xpub ${index + 1}`}
+              title={lang === 'zh' ? `扩展公钥 ${index + 1}` :`xpub ${index + 1}`}
               items={[
-                {label: 'Index', value: index},
-                {label: 'Asset Pubkey', value: key},
+                {label: ( lang === 'zh' ? '索引' : 'Index' ), value: index},
+                {label: ( lang === 'zh' ? '资产公钥' : 'Asset Pubkey') , value: key},
               ]}
               lang={lang}
             />

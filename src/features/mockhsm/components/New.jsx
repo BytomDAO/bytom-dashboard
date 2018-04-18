@@ -62,7 +62,7 @@ class New extends React.Component {
         lang={lang}>
 
         <FormSection title={ lang === 'zh' ? '密钥信息' : 'Key Information' }>
-          <TextField title='Alias' placeholder='Alias' fieldProps={alias} autoFocus={true} />
+          <TextField title={ lang === 'zh' ? '别名' : 'Alias'} placeholder={ lang === 'zh' ? '请输入密钥别名...' :'Please enter key alias...'} fieldProps={alias} autoFocus={true} />
           <div>
             <input type='checkbox' id='private_key_file_input'
                    checked={this.state.import}
@@ -74,7 +74,7 @@ class New extends React.Component {
           </div>
           {
             this.state.checked &&
-              <TextField title='Account alias' placeholder='Account alias' fieldProps={accountAlias}></TextField>
+              <TextField title={ lang === 'zh' ? '账户别名' : 'Account alias'} placeholder={ lang === 'zh' ? '请输入账户别名...' : 'Please enter account alias...'} fieldProps={accountAlias}></TextField>
           }
           {
             this.state.checked &&
@@ -82,8 +82,8 @@ class New extends React.Component {
                    onChange={this.handleFileChange.bind(this)}/>
           }
 
-          <TextField title='Password' placeholder='Password' fieldProps={password} autoFocus={false} type={'password'} />
-          <TextField title='Repeat Password' placeholder='Repeat Password' fieldProps={confirmPassword} autoFocus={false} type={'password'} />
+          <TextField title={ lang === 'zh' ? '密码' : 'Password'}  placeholder={ lang === 'zh' ? '请输入密码...' : 'Please enter your password...'} fieldProps={password} autoFocus={false} type={'password'} />
+          <TextField title={ lang === 'zh' ? '重复密码' : 'Repeat Password'} placeholder={ lang === 'zh' ? '请重复输入密码...' : 'Please repeat your password'} fieldProps={confirmPassword} autoFocus={false} type={'password'} />
         </FormSection>
       </FormContainer>
     )

@@ -54,8 +54,8 @@ class Show extends BaseShow {
               <Link key='reset-password-btn' className='btn btn-link' to={`/keys/${item.id}/reset-password`}>{lang === 'zh' ? '重置密码' : 'Reset Password' }</Link>
             ]}
             items={[
-              {label: 'Alias', value: item.alias},
-              {label: 'xpubs', value: item.xpub},
+              {label: (lang === 'zh' ? '别名' : 'Alias' ), value: item.alias},
+              {label: (lang === 'zh' ? '扩展公钥' : 'xpub'), value: item.xpub},
             ]}
             lang={lang}
           />

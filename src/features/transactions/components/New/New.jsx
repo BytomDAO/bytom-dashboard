@@ -310,12 +310,12 @@ class Form extends React.Component {
         {this.state.showAdvanceTx && this.state.showAdvanced && <FormSection title={ lang === 'zh' ? '高级选项' :'Advanced Options' }>
           <div>
             <TextField
-              title='To sign transaction'
-              placeholder='Paste transaction hex here...'
+              title={ lang === 'zh' ? '带签名交易' : 'To sign transaction' }
+              placeholder={ lang === 'zh' ? '在这里复制交易 HEX ...' : 'Paste transaction hex here...' }
               fieldProps={baseTransaction}
               autoFocus={true} />
 
-            <FieldLabel>Transaction Build Type</FieldLabel>
+            <FieldLabel>{ lang === 'zh' ? '交易构建类型' : 'Transaction Build Type' }</FieldLabel>
             <table className={styles.submitTable}>
               <tbody>
               <tr>
@@ -335,9 +335,9 @@ class Form extends React.Component {
                   <label htmlFor='submit_action_generate'>{ lang === 'zh' ? '需要更多签名' : 'Need more signature' }</label>
                   <br />
                   <label htmlFor='submit_action_generate' className={styles.submitDescription}>
-                    {lang === 'zh' ? '这些actions将通过密钥签名然后作为一个交易 JSON 字符串返回， 字符串可以用做To sign transaction于 multi-sign spend。' :
+                    {lang === 'zh' ? '这些actions将通过密钥签名然后作为一个交易 JSON 字符串返回。 作为多签交易的输入，这个JSON字符串需要更多的签名数据。' :
                       'These actions will be signed by the Key and returned as a transaction JSON string, ' +
-                      'which should be used as the to sign transaction in a multi-sign spend.'}
+                      'which should be used to sign transaction in a multi-sign spend.'}
                   </label>
                 </td>
               </tr>

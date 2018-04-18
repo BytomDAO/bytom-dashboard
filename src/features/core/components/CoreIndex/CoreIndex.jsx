@@ -52,22 +52,23 @@ class CoreIndex extends React.Component {
   render() {
     let navState = this.props.navAdvancedState === 'advance'
     let miningState = this.props.core.mingStatus
+    const lang = this.props.core.lang
 
     let configBlock = (
       <div className={[styles.left, styles.col].join(' ')}>
         <div>
-          <h4>{this.props.core.lang === 'zh' ? '配置' : 'Configuration'}</h4>
+          <h4>{lang === 'zh' ? '配置' : 'Configuration'}</h4>
           <table className={styles.table}>
             <tbody>
             <tr>
-              <td className={styles.row_label}>{this.props.core.lang === 'zh' ? '语言' : 'Language'}:</td>
-              <td>{this.props.core.lang === 'zh' ? '中文' : 'English'}</td>
+              <td className={styles.row_label}>{lang === 'zh' ? '语言' : 'Language'}:</td>
+              <td>{lang === 'zh' ? '中文' : 'English'}</td>
             </tr>
             <tr>
               <td colSpan={2}><hr /></td>
             </tr>
             <tr>
-              <td className={styles.row_label}>{this.props.core.lang === 'zh' ? '高级导航选项' : 'Advanced'}: </td>
+              <td className={styles.row_label}>{lang === 'zh' ? '高级导航选项' : 'Advanced'}: </td>
               <td>
                 <label className={styles.switch}>
                   <input
@@ -80,7 +81,7 @@ class CoreIndex extends React.Component {
               </td>
             </tr>
             <tr>
-              <td className={styles.row_label}>{this.props.core.lang === 'zh' ? '挖矿' : 'Mining'}: </td>
+              <td className={styles.row_label}>{lang === 'zh' ? '挖矿' : 'Mining'}: </td>
               <td>
                 <label className={styles.switch}>
                   <input
@@ -93,7 +94,7 @@ class CoreIndex extends React.Component {
               </td>
             </tr>
             <tr>
-              <td className={styles.row_label} >{this.props.core.lang === 'zh' ? '比原数量单位显示' : 'Unit to show amount in'} </td>
+              <td className={styles.row_label} >{lang === 'zh' ? '比原数量单位显示' : 'Unit to show amount in'} </td>
               <td>
                 <DropdownButton
                   bsSize='xsmall'
@@ -122,35 +123,35 @@ class CoreIndex extends React.Component {
     }else {
       requestStatusBlock = (
         <div className={styles['sub-row']}>
-          <h4>{this.props.core.lang === 'zh' ? '网络状态' : 'Network status'}</h4>
+          <h4>{lang === 'zh' ? '网络状态' : 'Network status'}</h4>
           <table className={styles.table}>
             <tbody>
             <tr key={'core-listening'}>
-              <td className={styles.row_label}> {this.props.core.lang === 'zh' ? '节点监听' : 'Listening'}:</td>
+              <td className={styles.row_label}> {lang === 'zh' ? '节点监听' : 'Listening'}:</td>
               <td className={styles.row_value}><code>{String(coreData['listening'])}</code></td>
             </tr>
             <tr key={'core-syncing'}>
-              <td className={styles.row_label}> {this.props.core.lang === 'zh' ? '网络同步' : 'Syncing'}:</td>
+              <td className={styles.row_label}> {lang === 'zh' ? '网络同步' : 'Syncing'}:</td>
               <td className={styles.row_value}><code>{String(coreData['syncing'])}</code></td>
             </tr>
             <tr key={'core-mining'}>
-              <td className={styles.row_label}> {this.props.core.lang === 'zh' ? '挖矿状态' : 'Mining'}:</td>
+              <td className={styles.row_label}> {lang === 'zh' ? '挖矿状态' : 'Mining'}:</td>
               <td className={styles.row_value}><code>{String(coreData['mining'])}</code></td>
             </tr>
             <tr key={'core-peerCount'}>
-              <td className={styles.row_label}> {this.props.core.lang === 'zh' ? '节点数' : 'Peer Count'}:</td>
+              <td className={styles.row_label}> {lang === 'zh' ? '节点数' : 'Peer Count'}:</td>
               <td className={styles.row_value}><code>{String(coreData['peerCount'])}</code></td>
             </tr>
             <tr key={'core-currentBlock'}>
-              <td className={styles.row_label}> {this.props.core.lang === 'zh' ? '当前高度' : 'Current Block'}:</td>
+              <td className={styles.row_label}> {lang === 'zh' ? '当前高度' : 'Current Block'}:</td>
               <td className={styles.row_value}><code>{String(coreData['currentBlock'])}</code></td>
             </tr>
             <tr key={'core-highestBlock'}>
-              <td className={styles.row_label}> {this.props.core.lang === 'zh' ? '最高高度' : 'Highest Block'}:</td>
+              <td className={styles.row_label}> {lang === 'zh' ? '最高高度' : 'Highest Block'}:</td>
               <td className={styles.row_value}><code>{String(coreData['highestBlock'])}</code></td>
             </tr>
             <tr key={'core-networkID'}>
-              <td className={styles.row_label}> {this.props.core.lang === 'zh' ? '网络ID' : 'Network Id'}:</td>
+              <td className={styles.row_label}> {lang === 'zh' ? '网络ID' : 'Network Id'}:</td>
               <td className={styles.row_value}><code>{String(coreData['networkId'])}</code></td>
             </tr>
             </tbody>
@@ -169,7 +170,7 @@ class CoreIndex extends React.Component {
 
     return (
       <div className={componentClassNames(this, 'flex-container', styles.mainContainer)}>
-        <PageTitle title='Core' />
+        <PageTitle title={lang === 'zh' ? '核心' :'Core'} />
 
         <PageContent>
           <div className={`${styles.flex}`}>

@@ -51,6 +51,7 @@ class Summary extends React.Component {
     const inouts = this.props.transaction.inputs.concat(this.props.transaction.outputs)
     const summary = this.normalizeInouts(inouts)
     const items = []
+    const lang = this.props.lang
 
     const normalizeBtmAmountUnit = (assetID, amount, btmAmountUnit) => {
       //normalize BTM Amount
@@ -121,17 +122,17 @@ class Summary extends React.Component {
         {items.map((item, index) =>
           <tr key={index}>
             <td className={styles.colAction}>{item.type}</td>
-            <td className={styles.colLabel}>amount</td>
+            <td className={styles.colLabel}>{ lang === 'zh' ? '数量' : 'amount' }</td>
             <td className={styles.colAmount}>
               <code className={styles.amount}>{item.amount}</code>
             </td>
-            <td className={styles.colLabel}>asset</td>
+            <td className={styles.colLabel}>{ lang === 'zh' ? '资产' : 'asset' }</td>
             <td className={styles.colAccount}>
               <Link to={`/assets/${item.assetId}`}>
                 {item.asset}
               </Link>
             </td>
-            <td className={styles.colLabel}>{item.account && 'account'}</td>
+            <td className={styles.colLabel}>{item.account && ( lang === 'zh' ? '账户' : 'account')}</td>
             <td className={styles.colAccount}>
               {item.accountId && <Link to={`/accounts/${item.accountId}`}>
                 {item.account}

@@ -102,7 +102,7 @@ export default class ActionItem extends React.Component {
         {visible.receiver &&
           <JsonField title='Receiver' fieldProps={receiver} />}
 
-        {visible.address && <TextField title='Address' fieldProps={address} />}
+        {visible.address && <TextField title={ lang === 'zh' ? '地址' :'Address'} fieldProps={address} />}
 
         {visible.outputId &&
           <TextField title='Output ID' fieldProps={outputId} />}

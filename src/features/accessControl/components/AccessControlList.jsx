@@ -43,7 +43,7 @@ class AccessControlList extends React.Component {
           <button
             className={`btn btn-primary ${styles.newBtn}`}
             onClick={this.props.showTokenCreate}>
-            + {lang === 'zh' ? '新建 token' : 'New token'}
+            + {lang === 'zh' ? '新建令牌' : 'New token'}
           </button>
 
           {tokenList}
