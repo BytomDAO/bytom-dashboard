@@ -50,7 +50,6 @@ class Show extends BaseShow {
             object='key'
             title={lang === 'zh' ? '详情' : 'Details'}
             actions={[
-              <button key='show-exportkey' className='btn btn-link' onClick={this.showExportKey.bind(this, item, lang)}> {lang === 'zh' ? '导出私钥' : 'Export Private Key' }</button>,
               <Link key='reset-password-btn' className='btn btn-link' to={`/keys/${item.id}/reset-password`}>{lang === 'zh' ? '重置密码' : 'Reset Password' }</Link>
             ]}
             items={[
