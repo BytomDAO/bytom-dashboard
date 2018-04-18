@@ -1,5 +1,5 @@
 import React from 'react'
-import { BaseUpdate, FormContainer, FormSection, JsonField, NotFound } from 'features/shared/components'
+import { BaseUpdate, FormContainer, FormSection, NotFound, TextField } from 'features/shared/components'
 import { reduxForm } from 'redux-form'
 
 class Form extends React.Component {
@@ -37,28 +37,16 @@ class Form extends React.Component {
     }
 
     const {
-      fields: { tags },
+      fields: { alias },
       error,
       handleSubmit,
       submitting
     } = this.props
 
     const title = <span>
-      {lang === 'zh' ? '编辑资产tags' : 'Edit asset tags '}
+      {lang === 'zh' ? '编辑资产alias' : 'Edit asset alias '}
       <code>{item.alias ? item.alias :item.id}</code>
     </span>
-
-    const tagsString = Object.keys(item.tags || {}).length === 0 ? '{\n\t\n}' : JSON.stringify(item.tags || {}, null, 1)
-    const tagLines = tagsString.split(/\r\n|\r|\n/).length
-    let JsonFieldHeight
-
-    if (tagLines < 5) {
-      JsonFieldHeight = '80px'
-    } else if (tagLines < 20) {
-      JsonFieldHeight = `${tagLines * 17}px`
-    } else {
-      JsonFieldHeight = '340px'
-    }
 
     return <FormContainer
       error={error}
@@ -67,20 +55,12 @@ class Form extends React.Component {
       submitting={submitting}
       lang={lang}>
 
-    <FormSection title='Asset Tags'>
-        <JsonField
-          height={JsonFieldHeight}
-          fieldProps={tags}
-          lang={lang} />
-
-        <p>
-          { lang === 'zh' ? ('注意：资产标签可用于查询交易，unspent outputs和余额。查询反映了提交交易时出现的资产标签。只有新的交易活动才会反映更新后的标签。 '
-          ) :(
-            'Note: Asset tags can be used for querying transactions, unspent outputs, and balances. ' +
-            'Queries reflect the asset tags that are present when transactions are submitted.' +
-            ' Only new transaction activity will reflect the updated tags. '
-          )}
-        </p>
+      <FormSection title='Asset Alias'>
+        <TextField
+          placeholder={ lang === 'zh' ? '请输入资产Alias' : 'Please entered asset alias' }
+          fieldProps={alias}
+          type= 'text'
+        />
       </FormSection>
     </FormContainer>
   }
@@ -94,10 +74,9 @@ const mapStateToProps = (state, ownProps) => ({
 const initialValues = (state, ownProps) => {
   const item = state.asset.items[ownProps.params.id]
   if (item) {
-    const tags = Object.keys(item.tags || {}).length === 0 ? '{\n\t\n}' : JSON.stringify(item.tags || {}, null, 1)
     return {
       initialValues: {
-        tags: tags
+        alias: item.alias
       }
     }
   }
@@ -106,18 +85,7 @@ const initialValues = (state, ownProps) => {
 
 const updateForm = reduxForm({
   form: 'updateAssetForm',
-  fields: ['tags'],
-  validate: values => {
-    const errors = {}
-
-    const jsonFields = ['tags']
-    jsonFields.forEach(key => {
-      const fieldError = JsonField.validator(values[key])
-      if (fieldError) { errors[key] = fieldError }
-    })
-
-    return errors
-  }
+  fields: ['alias'],
 }, initialValues)(Form)
 
 export default BaseUpdate.connect(

@@ -15,6 +15,14 @@ const assetsAPI = (client) => {
       return shared.singletonBatchRequest(client, '/update-asset-tags', finalParams, cb)
     },
 
+    updateAlias: (params, cb) => {
+      const finalParams = {
+        id: params.id,
+        alias: params.alias
+      }
+      return shared.singletonBatchRequest(client, '/update-asset-alias', finalParams, cb)
+    },
+
     updateTagsBatch: (params, cb) => shared.batchRequest(client, '/update-asset-tags', params, cb),
 
     query: (params, cb) => shared.query(client, 'assets', '/list-assets', params, {cb}),
