@@ -22,6 +22,7 @@ class Show extends BaseShow {
 
     let view
     if (item) {
+      const confirmation = this.props.highestBlock - item.blockHeight + 1
       const btmInput = item.inputs.reduce((sum, input) => {
         if (input.type === 'spend' && input.assetAlias === 'BTM') {
           sum += input.amount
@@ -63,7 +64,7 @@ class Show extends BaseShow {
               {label: 'ID', value: item.id},
               {label: 'Timestamp', value: moment.unix(item.timestamp).format()},
               {label: 'Block ID', value: item.blockId},
-              {label: 'Block Height', value: (item.blockHeight + `(${this.props.highestBlock - item.blockHeight + 1} confirmations)`)},
+              {label: 'Block Height', value: (item.blockHeight + `(${confirmation} block confirmation${confirmation > 1 ? 's' : ''})`)},
               {label: 'Position', value: item.position},
               {label: 'Gas', value: gas},
             ]}

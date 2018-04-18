@@ -8,6 +8,7 @@ class ListItem extends React.Component {
   render() {
     const item = this.props.item
     const lang = this.props.lang
+    const confirmation = item.highest - item.blockHeight + 1
 
     return(
       <div className={styles.main}>
@@ -15,9 +16,12 @@ class ListItem extends React.Component {
           <div className={styles.title}>
             <label>{lang === 'zh' ? '交易ID:' : 'Transaction ID:'}</label>
             &nbsp;<code>{item.id}</code>&nbsp;
-
             <span className={styles.timestamp}>
               <RelativeTime timestamp={item.timestamp} />
+            </span>
+
+            <span className={styles.timestamp}>
+              { `${confirmation} block confirmation${confirmation > 1 ? 's' : ''}` }
             </span>
           </div>
           <Link className={styles.viewLink} to={`/transactions/${item.id}`}>

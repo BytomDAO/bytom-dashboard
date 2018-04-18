@@ -45,9 +45,11 @@ const mapStateToProps = (type, itemComponent, additionalProps = {}) => {
     const keysArray = Object.keys(totalItems)
     const totalNumberPage = Math.ceil(keysArray.length/pageSize)
     const startIndex = (currentPage - 1) * pageSize
+    const highestBlock = state.core.coreData && state.core.coreData.highestBlock
     const currentItems = keysArray.slice(startIndex, startIndex + pageSize).map(
       id => totalItems[id]
     ).filter(item => item != undefined)
+    currentItems.forEach(item => item.highest = highestBlock)
 
     return {
       currentPage: currentPage,
