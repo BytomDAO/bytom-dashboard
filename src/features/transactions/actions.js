@@ -110,6 +110,21 @@ form.submitForm = (formParams) => function (dispatch) {
     }
   })
 
+  const signAndSubmitTransaction = (transaction, password) => {
+    const connection = chainClient().connection
+    return connection.request('/sign-transaction', {
+      password,
+      transaction
+    }, true).then(resp => {
+      if (resp.status === 'fail') {
+        throw new Error(resp.msg)
+      }
+
+      const raw_transaction = resp.data.transaction.raw_transaction
+      return connection.request('/submit-transaction', {raw_transaction})
+    }).then(dealSignSubmitResp)
+  }
+
   const dealSignSubmitResp = resp => {
     if (resp.status === 'fail') {
       throw new Error(resp.msg)
@@ -126,10 +141,7 @@ form.submitForm = (formParams) => function (dispatch) {
 
   if (formParams.state.showAdvanceTx && formParams.state.showAdvanced && formParams.baseTransaction) {
     const transaction = JSON.parse(formParams.baseTransaction)
-    return chainClient().connection.request('/sign-submit-transaction', {
-      password: formParams.password,
-      transaction
-    }, true).then(dealSignSubmitResp)
+    return signAndSubmitTransaction(transaction, formParams.password)
   }
 
   if (formParams.submitAction == 'submit') {
@@ -139,9 +151,8 @@ form.submitForm = (formParams) => function (dispatch) {
           throw new Error(resp.msg)
         }
 
-        const body = Object.assign({}, {password: formParams.password, 'transaction': resp.data})
-        return chainClient().connection.request('/sign-submit-transaction', body, true)
-      }).then(dealSignSubmitResp)
+        return signAndSubmitTransaction(resp.data, formParams.password)
+      })
   }
 
   // submitAction == 'generate'
