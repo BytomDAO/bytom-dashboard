@@ -79,7 +79,7 @@ export default BaseNew.connect(
     fields,
     validate,
     initialValues: {
-      definition: '{\n\t\n}',
+      definition: '{\n  "name": "", \n  "symobol": "",\n  "decimals": 8,\n  "description": {}\n}',
       quorum: 1,
     }
   })(Form)
