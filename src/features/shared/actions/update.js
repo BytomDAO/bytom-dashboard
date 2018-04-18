@@ -15,6 +15,9 @@ export default function(type, options = {}) {
           id: id,
           alias: data.alias,
         }).then((resp) => {
+          if (resp.status === 'fail') {
+            throw new Error(resp.msg)
+          }
           dispatch(updated(resp))
 
           dispatch(push({
