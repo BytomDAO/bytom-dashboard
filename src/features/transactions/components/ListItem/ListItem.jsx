@@ -21,8 +21,9 @@ class ListItem extends React.Component {
             </span>
 
             <span className={styles.timestamp}>
-              { `${confirmation} block confirmation${confirmation > 1 ? 's' : ''}` }
+              { `${confirmation} confirmation${confirmation > 1 ? 's' : ''}` }
             </span>
+
           </div>
           <Link className={styles.viewLink} to={`/transactions/${item.id}`}>
             {lang === 'zh' ? '查看详情' : 'View details'}

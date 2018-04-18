@@ -64,7 +64,7 @@ class Show extends BaseShow {
               {label: 'ID', value: item.id},
               {label: 'Timestamp', value: moment.unix(item.timestamp).format()},
               {label: 'Block ID', value: item.blockId},
-              {label: 'Block Height', value: (item.blockHeight + `(${confirmation} block confirmation${confirmation > 1 ? 's' : ''})`)},
+              {label: 'Block Height', value: (item.blockHeight + `(${confirmation} confirmation${confirmation > 1 ? 's' : ''})`)},
               {label: 'Position', value: item.position},
               {label: 'Gas', value: gas},
             ]}
