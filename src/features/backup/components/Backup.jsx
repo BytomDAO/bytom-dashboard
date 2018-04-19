@@ -28,10 +28,33 @@ class Backup extends React.Component {
     })
   }
 
+  handleFileChange(event) {
+    const files = event.target.files
+    if (files.length <= 0) {
+      this.setState({key: null})
+      return
+    }
+
+    const fileReader = new FileReader()
+    fileReader.onload = fileLoadedEvent => {
+      const backupData = JSON.parse(fileLoadedEvent.target.result)
+      window.console.log(backupData)
+    }
+    fileReader.readAsText(files[0], 'UTF-8')
+  }
+
+  restore() {
+    const element = document.getElementById('bytom-restore-file-upload')
+    element.click()
+  }
+
   render() {
     const lang = this.props.core.lang
-    const newButton = <button key='showCreate' className='btn btn-primary' onClick={this.backup.bind(this)}>
+    const newButton = <button className='btn btn-primary' onClick={this.backup.bind(this)}>
       {lang === 'zh' ? '备份' : 'Backup'}
+    </button>
+    const restoreButton = <button className='btn btn-primary' onClick={this.restore.bind(this)}>
+      {lang === 'zh' ? '恢复' : 'Restore'}
     </button>
 
     return (
@@ -39,6 +62,10 @@ class Backup extends React.Component {
         <PageTitle title={lang === 'zh' ? '备份与恢复' : 'Backup and restore'}/>
         <PageContent>
           {newButton}
+          <hr/>
+          {restoreButton}
+          <input id='bytom-restore-file-upload' type='file' style={{'display': 'flex', 'alignItems': 'center', 'fontSize': '12px'}}
+                 onChange={this.handleFileChange.bind(this)}/>
         </PageContent>
       </div>
     )
