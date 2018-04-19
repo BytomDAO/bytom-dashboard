@@ -11,10 +11,13 @@ export default function(type, options = {}) {
       let promise = Promise.resolve()
 
       return function(dispatch) {
-        return promise.then(() => clientApi.updateTags({
+        return promise.then(() => clientApi.updateAlias({
           id: id,
-          tags: JSON.parse(data.tags),
+          alias: data.alias,
         }).then((resp) => {
+          if (resp.status === 'fail') {
+            throw new Error(resp.msg)
+          }
           dispatch(updated(resp))
 
           dispatch(push({

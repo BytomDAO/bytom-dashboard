@@ -36,7 +36,7 @@ class AssetShow extends BaseShow {
             ]}
             items={[
               {label: 'ID', value: item.id},
-              {label: ( lang === 'zh' ? '别名' : 'Alias' ), value: item.alias},
+              {label: ( lang === 'zh' ? '别名' : 'Alias' ), value: item.alias, editUrl: item.alias === 'BTM' ? null : `/assets/${item.id}/alias`},
               {label: ( lang === 'zh' ? '定义' : 'Definition'), value: item.definition},
               {label: ( lang === 'zh' ? '扩展公钥数' : 'xpubs' ), value: (item.xpubs || []).length},
               {label: ( lang === 'zh' ? '签名数' : 'Quorum' ), value: item.quorum},

@@ -3,7 +3,6 @@ import { Link } from 'react-router'
 import { converIntToDec } from 'utility/buildInOutDisplay'
 import styles from './Summary.scss'
 
-
 const INOUT_TYPES = {
   issue: 'Issue',
   spend: 'Spend',
@@ -48,6 +47,11 @@ class Summary extends React.Component {
   }
 
   render() {
+    const item = this.props.transaction
+    const confirmation = item.highest - item.blockHeight + 1
+    const isCoinbase = item.inputs.length > 0 && item.inputs[0].type === 'coinbase'
+    const mature = isCoinbase && confirmation >= 100
+
     const inouts = this.props.transaction.inputs.concat(this.props.transaction.outputs)
     const summary = this.normalizeInouts(inouts)
     const items = []
@@ -69,7 +73,6 @@ class Summary extends React.Component {
     Object.keys(summary).forEach((assetId) => {
       const asset = summary[assetId]
       const nonAccountTypes = ['issue','retire']
-
 
       nonAccountTypes.forEach((type) => {
         if (asset[type] > 0) {
@@ -121,8 +124,16 @@ class Summary extends React.Component {
       <tbody>
         {items.map((item, index) =>
           <tr key={index}>
-            <td className={styles.colAction}>{item.type}</td>
-            <td className={styles.colLabel}>{ lang === 'zh' ? '数量' : 'amount' }</td>
+            {
+              !isCoinbase && <td className={styles.colAction}>{item.type}</td>
+            }
+            {
+              isCoinbase && <td className={styles.colAction}>
+                Coinbase
+                {!mature && <small className={styles.immature}>immature</small>}
+              </td>
+            }
+            <td className={styles.colLabel}>{ lang === 'zh' ? '数量' : 'amount' }t</td>
             <td className={styles.colAmount}>
               <code className={styles.amount}>{item.amount}</code>
             </td>
