@@ -1,0 +1,36 @@
+.main {
+  background: $background-inverse-color;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: block;
+  overflow: auto;
+}
+
+.image {
+  width: 150px;
+  position: absolute;
+  top: calc(50px);
+  left: calc(50% - 75px);
+}
+
+.title{
+  //width: 150px;
+  position: relative;
+  top: 50px;
+  //left: calc(50% - 75px);
+  text-align: center;
+  color: white;
+}
+
+.form {
+  background: $background-color;
+  border-radius: $border-radius-standard;
+  position: absolute;
+  left: calc(50% - 250px);
+  top: calc(150px);
+  width: 500px;
+  padding: 30px;
+}
