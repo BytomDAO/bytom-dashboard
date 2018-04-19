@@ -21,7 +21,7 @@ class ListItem extends React.Component {
             </span>
 
             <span className={styles.timestamp}>
-              { `${confirmation} confirmation${confirmation > 1 ? 's' : ''}` }
+              {confirmation} {lang === 'zh' ? '确认数' :`confirmation${confirmation > 1 ? 's' : ''}`}
             </span>
 
           </div>

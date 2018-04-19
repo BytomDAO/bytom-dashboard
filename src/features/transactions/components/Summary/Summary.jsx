@@ -130,7 +130,7 @@ class Summary extends React.Component {
             {
               isCoinbase && <td className={styles.colAction}>
                 Coinbase
-                {!mature && <small className={styles.immature}>immature</small>}
+                {!mature && <small className={styles.immature}>{ lang === 'zh' ? '未成熟' : 'immature' }</small>}
               </td>
             }
             <td className={styles.colLabel}>{ lang === 'zh' ? '数量' : 'amount' }</td>

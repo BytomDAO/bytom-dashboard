@@ -9,7 +9,7 @@ class KeyList extends BaseList.ItemList {
 const mapStateToProps = (state) => {
   let titles
   if(state.core.lang === 'zh'){
-    titles = ['别名','扩展公钥']
+    titles = ['别名','主公钥']
   }else{
     titles = ['Alias', 'xpub']
   }

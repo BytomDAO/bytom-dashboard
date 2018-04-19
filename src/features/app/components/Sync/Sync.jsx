@@ -18,8 +18,7 @@ class Sync extends React.Component {
 
     if (syncing) {
       return <ul className={`${navStyles.navigation} ${styles.main}`}>
-        <li key='sync-networkID' className={navStyles.navigationTitle}>{ networkID }</li>
-        <li key='sync-title' className={navStyles.navigationTitle}>{ lang === 'zh' ? '网络同步状态' : 'Network Sync Status'}</li>
+        <li key='sync-title' className={navStyles.navigationTitle}>{ networkID } { lang === 'zh' ? '同步状态' : 'Sync Status'}</li>
         <li key='sync-status'>{lang === 'zh' ? '同步中: ' : 'Synchronizing: '}  {currentBlock}/{highestBlock}</li>
         <li key='sync-peer-count'>{lang === 'zh' ? '节点数' : 'Peer Count'}: {peerCount}</li>
       </ul>
@@ -27,8 +26,8 @@ class Sync extends React.Component {
 
     const elems = []
 
-    elems.push(<li key='sync-networkID' className={navStyles.navigationTitle}>{ networkID }</li>)
-    elems.push(<li key='sync-title' className={navStyles.navigationTitle}>{ lang === 'zh' ? '网络同步状态' : 'Network Sync Status' }</li>)
+    // elems.push(<li key='sync-networkID' className={navStyles.navigationTitle}>{ networkID }</li>)
+    elems.push(<li key='sync-title' className={navStyles.navigationTitle}>{ networkID } { lang === 'zh' ? '同步状态' : 'Sync Status' }</li>)
 
     if(!syncing && currentBlock == highestBlock){
       elems.push(<li key='sync-done'>{lang === 'zh' ? '同步完成: ' : 'Fully synced: ' } <span className={styles.blockHightlight}>{currentBlock}/{highestBlock}</span></li>)

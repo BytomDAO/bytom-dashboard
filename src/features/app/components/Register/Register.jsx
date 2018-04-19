@@ -20,7 +20,6 @@ class Register extends React.Component {
   }
 
   render() {
-    let logo = require('images/logo-bytom-white.svg')
     const lang =this.props.lang
 
     const {
@@ -32,15 +31,18 @@ class Register extends React.Component {
 
     return (
       <div className={styles.main}>
-        {/*<img className={styles.image} src={logo} />*/}
         <h2 className={styles.title}>{lang==='zh'? '初始账户和密钥':'Init your account and key'}</h2>
         <div className={styles.form}>
           <form onSubmit={handleSubmit(this.submitWithErrors)}>
             <TextField
+              title={lang==='zh'? '账户别名':'Account Alias'}
+              placeholder={lang==='zh'? '请输入账户别名...':'Please enter the account alias...'}
+              fieldProps={accountAlias}
+              autoFocus={true} />
+            <TextField
               title={lang==='zh'? '密钥别名':'Key Alias'}
               placeholder={lang==='zh'? '请输入密钥别名...':'Please enter the key alias...'}
-              fieldProps={keyAlias}
-              autoFocus={true} />
+              fieldProps={keyAlias} />
             <TextField
               title={lang==='zh'? '密码':'Password'}
               placeholder={lang==='zh'? '请输入密钥密码...':'Please enter the key password...'}
@@ -51,10 +53,6 @@ class Register extends React.Component {
               placeholder={lang==='zh'? '请重复输入密钥密码...':'Please repeat the key password...'}
               fieldProps={repeatPassword}
               type='password' />
-            <TextField
-              title={lang==='zh'? '账户别名':'Account Alias'}
-              placeholder={lang==='zh'? '请输入账户别名...':'Please enter the account alias...'}
-              fieldProps={accountAlias} />
 
             {error &&
               <ErrorBanner

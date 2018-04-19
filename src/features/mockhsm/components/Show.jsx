@@ -54,7 +54,7 @@ class Show extends BaseShow {
             ]}
             items={[
               {label: (lang === 'zh' ? '别名' : 'Alias' ), value: item.alias},
-              {label: (lang === 'zh' ? '扩展公钥' : 'xpub'), value: item.xpub},
+              {label: (lang === 'zh' ? '主公钥' : 'xpub'), value: item.xpub},
             ]}
             lang={lang}
           />
