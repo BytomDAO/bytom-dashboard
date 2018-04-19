@@ -1,13 +1,16 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import actions from 'actions'
-import { Main, Config, Login, Loading, Modal } from './'
+import { Main, Config, Login, Loading, Register ,Modal } from './'
 
 const CORE_POLLING_TIME = 2 * 1000
 
 class Container extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {
+      noAccountItem: false
+    }
     this.redirectRoot = this.redirectRoot.bind(this)
   }
 
@@ -31,6 +34,14 @@ class Container extends React.Component {
     } else {
       this.props.showConfiguration()
     }
+  }
+
+  componentDidMount() {
+    this.props.fetchAccountItem().then(resp => {
+      if (resp.data.length == 0) {
+        this.setState({noAccountItem: true})
+      }
+    })
   }
 
   componentWillMount() {
@@ -59,7 +70,9 @@ class Container extends React.Component {
       return <Loading>Connecting to Chain Core...</Loading>
     } else if (!this.props.configured) {
       layout = <Config>{this.props.children}</Config>
-    } else {
+    } else if (!this.props.accountInit && this.state.noAccountItem){
+      layout = <Register>{this.props.children}</Register>
+    } else{
       layout = <Main>{this.props.children}</Main>
     }
 
@@ -84,10 +97,12 @@ export default connect(
     configKnown: true,
     configured: true,
     onTestnet: state.core.onTestnet,
+    accountInit: state.core.accountInit
   }),
   (dispatch) => ({
     fetchInfo: options => dispatch(actions.core.fetchCoreInfo(options)),
     showRoot: () => dispatch(actions.app.showRoot),
     showConfiguration: () => dispatch(actions.app.showConfiguration()),
+    fetchAccountItem: () => dispatch(actions.account.fetchItems())
   })
 )(Container)

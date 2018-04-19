@@ -40,6 +40,49 @@ const fetchCoreInfo = (options = {}) => {
   }
 }
 
+//todo: change the function later
+const registerKey = (data) => {
+  return (dispatch) => {
+    const keyData = {
+      'alias': data.keyAlias,
+      'password': data.password
+    }
+    return chainClient().mockHsm.keys.create(keyData)
+      .then((resp) => {
+        if (resp.status === 'fail') {
+          throw new Error(resp.msg)
+        }
+
+        const accountData = {
+          'root_xpubs':[resp.data.xpub],
+          'quorum':1,
+          'alias': data.accountAlias}
+
+        dispatch({type: 'CREATE_REGISTER_KEY', data})
+        chainClient().accounts.create(accountData)
+          .then((resp) => {
+            if (resp.status === 'fail') {
+              throw new Error(resp.msg)
+            }
+
+            if(resp.status === 'success') {
+              dispatch({type: 'CREATE_REGISTER_ACCOUNT', resp})
+            }
+          })
+          .catch((err) => {
+            if (!err.status) {
+              throw err
+            }
+          })
+      })
+      .catch((err) => {
+        if (!err.status) {
+          throw err
+        }
+      })
+  }
+}
+
 let actions = {
   setClientToken,
   updateInfo,
@@ -48,6 +91,7 @@ let actions = {
   updateMiningState,
   fetchCoreInfo,
   clearSession,
+  registerKey,
   logIn: (token) => (dispatch) => {
     dispatch(setClientToken(token))
     return dispatch(fetchCoreInfo({throw: true}))

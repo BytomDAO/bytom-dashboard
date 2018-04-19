@@ -226,6 +226,13 @@ const coreData = (state = null, action) => {
   return state
 }
 
+const accountInit = (state = false, action) => {
+  if (action.type == 'CREATE_REGISTER_ACCOUNT') {
+    return true
+  }
+  return state
+}
+
 const snapshot = (state = null, action) => {
   if (action.type == 'UPDATE_CORE_INFO') {
     return action.param.snapshot || null // snapshot may be undefined, which Redux doesn't like.
@@ -237,6 +244,7 @@ const version = (state, action) => coreConfigReducer('version', state, 'N/A', ac
 
 
 export default combineReducers({
+  accountInit,
   blockchainId,
   blockHeight,
   connected,
