@@ -35,7 +35,7 @@ class Form extends React.Component {
       >
 
         <FormSection title={ lang === 'zh' ? '账户信息' : 'Account Information' }>
-          <TextField title='Alias' placeholder='Alias' fieldProps={alias} autoFocus={true} />
+          <TextField title={ lang === 'zh' ? '别名':'Alias'} placeholder={ lang === 'zh' ? '别名':'Alias'} fieldProps={alias} autoFocus={true} />
         </FormSection>
 
         <FormSection title={ lang === 'zh' ? '密钥和签名' : 'Keys and Signing' }>

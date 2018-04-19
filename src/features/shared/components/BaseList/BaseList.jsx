@@ -9,7 +9,6 @@ import EmptyList from './EmptyList'
 class ItemList extends React.Component {
   render() {
     const label = this.props.label || pluralize(humanize(this.props.type))
-    const objectName = label.slice(0,-1)
     const actions = [...(this.props.actions || [])]
     const lang = this.props.lang
 
@@ -21,6 +20,15 @@ class ItemList extends React.Component {
       'unspent outputs': 'UTXO',
       Keys: lang === 'zh' ? '密钥' : 'Keys'
     }
+    const objectNameZh = {
+      transactions: '交易' ,
+      accounts: '账户',
+      assets: '资产',
+      balances: '余额' ,
+      'unspent outputs': '未完成输出',
+      Keys: '密钥'
+    }
+    const objectName = lang === 'zh' ? objectNameZh[label] :label.slice(0,-1)
     const title = labelTitleMap[label] || capitalize(label)
 
     const newButton = <button key='showCreate' className='btn btn-primary' onClick={this.props.showCreate}>
@@ -51,7 +59,8 @@ class ItemList extends React.Component {
             newButton={newButton}
             showFirstTimeFlow={this.props.showFirstTimeFlow}
             skipCreate={this.props.skipCreate}
-            loadedOnce={this.props.loadedOnce} />
+            loadedOnce={this.props.loadedOnce}
+            lang={lang} />
 
         </div>
       )

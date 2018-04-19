@@ -6,15 +6,28 @@ const type = 'key'
 class KeyList extends BaseList.ItemList {
 }
 
+const mapStateToProps = (state) => {
+  let titles
+  if(state.core.lang === 'zh'){
+    titles = ['别名','扩展公钥']
+  }else{
+    titles = ['Alias', 'xpub']
+  }
+
+  return {
+    ...BaseList.mapStateToProps(type, ListItem, {
+      skipQuery: true,
+      label: 'Keys',
+      wrapperComponent: TableList,
+      wrapperProps: {
+        titles: titles
+      }
+    })(state)
+  }
+}
+
 export default BaseList.connect(
-  BaseList.mapStateToProps(type, ListItem, {
-    skipQuery: true,
-    label: 'Keys',
-    wrapperComponent: TableList,
-    wrapperProps: {
-      titles: ['Alias', 'xpub']
-    }
-  }),
+  mapStateToProps,
   BaseList.mapDispatchToProps(type),
   KeyList
 )

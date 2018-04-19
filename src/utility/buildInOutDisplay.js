@@ -26,6 +26,34 @@ const mappings = {
   change: 'Change'
 }
 
+const mappings_ZH = {
+  id: 'ID',
+  type: '类型',
+  purpose: 'Purpose',
+  transactionId: '交易ID',
+  position: '位置',
+  assetId: '资产ID',
+  assetAlias: '资产别名',
+  assetDefinition: '资产定义',
+  assetTags: 'Asset Tags',
+  assetIsLocal: 'Asset Is Local?',
+  amount: '数量',
+  accountId: '账户ID',
+  accountAlias: '账户别名',
+  accountTags: 'Account Tags',
+  controlProgram: '合约程序',
+  address: '地址',
+  programIndex: '程序索引',
+  spentOutputId: '花费输出ID',
+  refData: 'Reference Data',
+  sourceId: '源ID',
+  sourcePos: '源位置',
+  issuanceProgram: '资产发布程序',
+  isLocal: 'Local?',
+  referenceData: 'Reference Data',
+  change: '找零'
+}
+
 const txInputFields = [
   'type',
   'assetId',
@@ -91,14 +119,14 @@ const unspentFields = [
 
 const balanceFields = Object.keys(mappings)
 
-const buildDisplay = (item, fields, btmAmountUnit) => {
+const buildDisplay = (item, fields, btmAmountUnit, lang) => {
   const details = []
   fields.forEach(key => {
     if (item.hasOwnProperty(key)) {
       if(key === 'amount'){
-        details.push({label: mappings[key], value: normalizeGlobalBTMAmount(item['assetId'], item[key], btmAmountUnit)})
+        details.push({label: ( lang === 'zh'? mappings_ZH[key]: mappings[key] ), value: normalizeGlobalBTMAmount(item['assetId'], item[key], btmAmountUnit)})
       }else{
-        details.push({label: mappings[key], value: item[key]})
+        details.push({label: ( lang === 'zh'? mappings_ZH[key]: mappings[key] ), value: item[key]})
       }
     }
   })
@@ -215,15 +243,15 @@ export function converIntToDec(int, deciPoint){
   return formatIntNumToPosDecimal(int, deciPoint)
 }
 
-export function buildTxInputDisplay(input, btmAmountUnit) {
-  return buildDisplay(input, txInputFields, btmAmountUnit)
+export function buildTxInputDisplay(input, btmAmountUnit, lang) {
+  return buildDisplay(input, txInputFields, btmAmountUnit, lang)
 }
 
-export function buildTxOutputDisplay(output, btmAmountUnit) {
-  return buildDisplay(output, txOutputFields, btmAmountUnit)
+export function buildTxOutputDisplay(output, btmAmountUnit, lang) {
+  return buildDisplay(output, txOutputFields, btmAmountUnit, lang)
 }
 
-export function buildUnspentDisplay(output, btmAmountUnit) {
+export function buildUnspentDisplay(output, btmAmountUnit, lang) {
   const normalized = {
     amount: output.amount,
     accountId: output.accountId,
@@ -236,14 +264,14 @@ export function buildUnspentDisplay(output, btmAmountUnit) {
     sourcePos: output.sourcePos,
     change: output.change + ''
   }
-  return buildDisplay(normalized, unspentFields, btmAmountUnit)
+  return buildDisplay(normalized, unspentFields, btmAmountUnit, lang)
 }
 
-export function buildBalanceDisplay(balance, btmAmountUnit) {
+export function buildBalanceDisplay(balance, btmAmountUnit, lang) {
   return buildDisplay({
     amount: balance.amount,
     assetId: balance.assetId,
     assetAlias: balance.assetAlias,
     accountAlias: balance.accountAlias
-  }, balanceFields, btmAmountUnit)
+  }, balanceFields, btmAmountUnit, lang)
 }

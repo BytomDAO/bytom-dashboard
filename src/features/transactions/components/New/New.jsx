@@ -198,6 +198,8 @@ class Form extends React.Component {
           <label className={styles.title}>{ lang === 'zh' ? '从' : 'From' }</label>
           <div className={styles.main}>
             <ObjectSelectorField
+              key='account-selector-field'
+              lang={lang}
               title={ lang === 'zh' ? '账户' :'Account' }
               aliasField={Autocomplete.AccountAlias}
               fieldProps={{
@@ -206,6 +208,8 @@ class Form extends React.Component {
               }}
             />
             <ObjectSelectorField
+              key='asset-selector-field'
+              lang={lang}
               title={ lang === 'zh' ? '资产' : 'Asset' }
               aliasField={Autocomplete.AssetAlias}
               fieldProps={{
@@ -271,6 +275,7 @@ class Form extends React.Component {
               accounts={this.props.accounts}
               assets={this.props.assets}
               remove={this.removeActionItem}
+              lang={lang}
             />)}
 
           <div className={`btn-group ${styles.addActionContainer} ${this.state.showDropdown && 'open'}`}>
@@ -282,7 +287,6 @@ class Form extends React.Component {
             >
               <MenuItem eventKey='issue'>Issue</MenuItem>
               <MenuItem eventKey='spend_account'>Spend from account</MenuItem>
-              <MenuItem eventKey='control_receiver'>Control with receiver</MenuItem>
               <MenuItem eventKey='control_address'>Control with address</MenuItem>
               <MenuItem eventKey='retire'>Retire</MenuItem>
             </DropdownButton>
@@ -306,12 +310,12 @@ class Form extends React.Component {
         {this.state.showAdvanceTx && this.state.showAdvanced && <FormSection title={ lang === 'zh' ? '高级选项' :'Advanced Options' }>
           <div>
             <TextField
-              title='To sign transaction'
-              placeholder='Paste transaction hex here...'
+              title={ lang === 'zh' ? '带签名交易' : 'To sign transaction' }
+              placeholder={ lang === 'zh' ? '在这里复制交易 HEX ...' : 'Paste transaction hex here...' }
               fieldProps={baseTransaction}
               autoFocus={true} />
 
-            <FieldLabel>Transaction Build Type</FieldLabel>
+            <FieldLabel>{ lang === 'zh' ? '交易构建类型' : 'Transaction Build Type' }</FieldLabel>
             <table className={styles.submitTable}>
               <tbody>
               <tr>
@@ -331,9 +335,9 @@ class Form extends React.Component {
                   <label htmlFor='submit_action_generate'>{ lang === 'zh' ? '需要更多签名' : 'Need more signature' }</label>
                   <br />
                   <label htmlFor='submit_action_generate' className={styles.submitDescription}>
-                    {lang === 'zh' ? '这些actions将通过密钥签名然后作为一个交易 JSON 字符串返回， 字符串可以用做To sign transaction于 multi-sign spend。' :
+                    {lang === 'zh' ? '这些actions将通过密钥签名然后作为一个交易 JSON 字符串返回。 作为多签交易的输入，这个JSON字符串需要更多的签名数据。' :
                       'These actions will be signed by the Key and returned as a transaction JSON string, ' +
-                      'which should be used as the to sign transaction in a multi-sign spend.'}
+                      'which should be used to sign transaction in a multi-sign spend.'}
                   </label>
                 </td>
               </tr>

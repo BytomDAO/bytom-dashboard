@@ -22,9 +22,10 @@
 
   th {
     color: $text-strong-color;
-    font-size: $font-size-caps;
+    //font-size: $font-size-caps;
     text-transform: uppercase;
     font-weight: 500;
+    font-size: $font-size-chrome;
   }
 
   td, th  {

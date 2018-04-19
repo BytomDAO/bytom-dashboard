@@ -62,10 +62,10 @@ class Show extends BaseShow {
             title={lang === 'zh' ? '详情' : 'Details'}
             items={[
               {label: 'ID', value: item.id},
-              {label: 'Timestamp', value: moment.unix(item.timestamp).format()},
-              {label: 'Block ID', value: item.blockId},
-              {label: 'Block Height', value: (item.blockHeight + `(${confirmation} confirmation${confirmation > 1 ? 's' : ''})`)},
-              {label: 'Position', value: item.position},
+              {label: (lang === 'zh' ? '时间戳' : 'Timestamp'), value: moment.unix(item.timestamp).format()},
+              {label: (lang === 'zh' ? '区块ID' : 'Block ID'), value: item.blockId},
+              {label: (lang === 'zh' ? '区块高度': 'Block Height'), value: (item.blockHeight + `(${confirmation} confirmation${confirmation > 1 ? 's' : ''})`)},
+              {label: (lang === 'zh' ? '位置' : 'Position'), value: item.position},
               {label: 'Gas', value: gas},
             ]}
           />
@@ -74,7 +74,7 @@ class Show extends BaseShow {
             <KeyValueTable
               key={index}
               title={index == 0 ? lang === 'zh' ? '输入' : 'Inputs' : ''}
-              items={buildTxInputDisplay(input, btmAmountUnit)}
+              items={buildTxInputDisplay(input, btmAmountUnit, lang)}
             />
           )}
 
@@ -82,7 +82,7 @@ class Show extends BaseShow {
             <KeyValueTable
               key={index}
               title={index == 0 ? lang === 'zh' ? '输出' : 'Outputs' : ''}
-              items={buildTxOutputDisplay(output, btmAmountUnit)}
+              items={buildTxOutputDisplay(output, btmAmountUnit, lang)}
             />
           )}
         </PageContent>

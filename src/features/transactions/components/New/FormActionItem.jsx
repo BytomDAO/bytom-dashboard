@@ -70,6 +70,7 @@ export default class ActionItem extends React.Component {
       this.props.remove(this.props.index)
     }
 
+    const lang = this.props.lang
     const btmAmounUnitVisible = (assetAlias.value === 'BTM' ||
       assetId.value === 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff' )
 
@@ -82,14 +83,15 @@ export default class ActionItem extends React.Component {
 
         <div className={styles.header}>
           <label className={styles.title}>{actionLabels[type.value]}</label>
-          <a href='#' className='btn btn-sm btn-danger' onClick={remove}>Remove</a>
+          <a href='#' className='btn btn-sm btn-danger' onClick={remove}>{ lang === 'zh' ? '删除' : 'Remove' }</a>
         </div>
 
         {type.error && <ErrorBanner message={type.error} />}
 
         {visible.account &&
           <ObjectSelectorField
-            title='Account'
+            lang={lang}
+            title={ lang === 'zh' ? '账户' : 'Account' }
             aliasField={Autocomplete.AccountAlias}
             fieldProps={{
               id: accountId,
@@ -100,14 +102,15 @@ export default class ActionItem extends React.Component {
         {visible.receiver &&
           <JsonField title='Receiver' fieldProps={receiver} />}
 
-        {visible.address && <TextField title='Address' fieldProps={address} />}
+        {visible.address && <TextField title={ lang === 'zh' ? '地址' :'Address'} fieldProps={address} />}
 
         {visible.outputId &&
           <TextField title='Output ID' fieldProps={outputId} />}
 
         {visible.asset &&
           <ObjectSelectorField
-            title='Asset'
+            title={ lang === 'zh' ? '资产' :'Asset'}
+            lang={lang}
             aliasField={Autocomplete.AssetAlias}
             fieldProps={{
               id: assetId,
@@ -116,13 +119,13 @@ export default class ActionItem extends React.Component {
           />}
 
         {visible.amount && !btmAmounUnitVisible &&
-          <TextField title='Amount' fieldProps={amount} />}
+          <TextField title={ lang === 'zh' ? '数量' :'Amount' } fieldProps={amount} />}
 
         {visible.amount && btmAmounUnitVisible &&
-          <AmountUnitField title='Amount' fieldProps={amount} />}
+          <AmountUnitField title={ lang === 'zh' ? '数量' :'Amount' } fieldProps={amount} />}
 
         {visible.password && false &&
-          <TextField title='Password' placeholder='Password' fieldProps={password} autoFocus={false} type={'password'} />
+          <TextField title={lang === 'zh' ? '密码' :'Password'} placeholder={lang === 'zh' ? '密码' :'Password'} fieldProps={password} autoFocus={false} type={'password'} />
         }
 
         {false && this.state.referenceDataOpen &&

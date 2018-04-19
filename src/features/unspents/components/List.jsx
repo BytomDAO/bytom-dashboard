@@ -51,6 +51,7 @@ const mapStateToProps = (type, itemComponent, additionalProps = {}) => {
       noResults: currentItems.length == 0,
       showFirstTimeFlow: currentItems.length == 0,
       btmAmountUnit : state.core.btmAmountUnit,
+      lang: state.core.lang,
       ...additionalProps
     }
   }

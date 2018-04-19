@@ -75,6 +75,10 @@ b, strong{
   flex: 1;
 }
 
+pre{
+ font-size: $font-size-nav;
+}
+
 .btn-primary,
 .btn-default {
   height: 36px;

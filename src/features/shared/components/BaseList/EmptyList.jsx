@@ -5,6 +5,7 @@ import { docsRoot } from 'utility/environment'
 
 class EmptyList extends React.Component {
   render() {
+    const lang =this.props.lang
     let emptyImage
 
     try {
@@ -13,11 +14,11 @@ class EmptyList extends React.Component {
 
     let emptyBlock
     if (!this.props.loadedOnce) {
-      emptyBlock = <span>LOADING…</span>
+      emptyBlock = <span>{lang === 'zh' ? '加载中': 'LOADING'}…</span>
     } else if (this.props.showFirstTimeFlow) {
       emptyBlock = <div>
         <span className={`${styles.emptyLabel} ${styles.noResultsLabel}`}>
-          There are no {this.props.objectName}s
+          {lang === 'zh' ? `没有${this.props.objectName}记录`: `There are no ${this.props.objectName}s`}
         </span>
       </div>
     }

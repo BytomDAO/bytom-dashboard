@@ -13,7 +13,7 @@ const methodOptions = {
 const methodOptionsZh = {
   mockhsm: '使用已有的密钥',
   // generate: 'Generate new MockHSM key',
-  provide: '提供已有的xpub',
+  provide: '提供已有的扩展公钥',
 }
 
 class XpubField extends React.Component {
@@ -62,11 +62,12 @@ class XpubField extends React.Component {
         autoFocus={this.state.autofocusInput}
         valueKey='xpub'
         labelKey='label'
+        lang={lang}
         fieldProps={{...valueProps, onChange: valueOnChange}} />,
       'provide': <TextField
         autoFocus={this.state.autofocusInput}
         fieldProps={{...valueProps, onChange: valueOnChange}}
-        placeholder='Enter xpub' />,
+        placeholder={ lang === 'zh' ? '输入扩展公钥' : 'Enter xpub' } />,
       'generate': <TextField
         autoFocus={this.state.autofocusInput}
         fieldProps={{...valueProps, onChange: valueOnChange}}
@@ -75,7 +76,7 @@ class XpubField extends React.Component {
 
     return (
       <div className={styles.main}>
-        <FieldLabel>Key {this.props.index + 1}</FieldLabel>
+        <FieldLabel>{ lang === 'zh' ? '密钥' :'Key '}{this.props.index + 1}</FieldLabel>
 
         <table className={styles.options}>
           <tbody>
