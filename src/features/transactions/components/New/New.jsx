@@ -9,6 +9,7 @@ import {
   AmountUnitField
 } from 'features/shared/components'
 import {DropdownButton, MenuItem} from 'react-bootstrap'
+import {chainClient} from 'utility/environment'
 import {reduxForm} from 'redux-form'
 import ActionItem from './FormActionItem'
 import React from 'react'
@@ -39,6 +40,7 @@ const btmID = 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
 class Form extends React.Component {
   constructor(props) {
     super(props)
+    this.connection = chainClient().connection
     this.state = {
       showDropdown: false,
       showAdvanced: false
@@ -142,6 +144,59 @@ class Form extends React.Component {
     })
   }
 
+  estimateNormalTransactionGas() {
+    const transaction = this.props.fields.normalTransaction
+    const address = transaction.address.value
+    const amount = transaction.amount.value
+    const accountAlias = transaction.accountAlias.value
+    const accountId = transaction.accountId.value
+    const assetAlias = transaction.assetAlias.value
+    const assetId = transaction.assetId.value
+
+    const noAccount = !accountAlias && !accountId
+    const noAsset = !assetAlias && !assetId
+
+    if (!address || !amount || noAccount || noAsset) {
+      return
+    }
+
+    const spendAction = {
+      accountAlias,
+      accountId,
+      assetAlias,
+      assetId,
+      amount: Number(amount),
+      type: 'spend_account'
+    }
+    const receiveAction = {
+      address,
+      assetAlias,
+      assetId,
+      amount: Number(amount),
+      type: 'control_address'
+    }
+    const gasAction = {
+      accountAlias,
+      accountId,
+      assetAlias: 'BTM',
+      amount: Math.pow(10, 12),
+      type: 'spend_account'
+    }
+
+    const actions = [spendAction, receiveAction, gasAction]
+    const body = {actions, ttl: 1}
+    this.connection.request('/build-transaction', body).then(resp => {
+      if (resp.status === 'fail') {
+        return
+      }
+
+      return this.connection.request('/estimate-transaction-gas', {
+        rawTransaction: resp.data.rawTransaction
+      }).then(resp => {
+        window.console.log(resp)
+      })
+    })
+  }
 
   render() {
     const {
@@ -151,6 +206,7 @@ class Form extends React.Component {
       submitting
     } = this.props
     const lang = this.props.lang
+    normalTransaction.amount.onBlur = this.estimateNormalTransactionGas.bind(this)
 
     let submitLabel = lang === 'zh' ? '提交交易' : 'Submit transaction'
     const hasBaseTransaction = ((baseTransaction.value || '').trim()).length > 0
