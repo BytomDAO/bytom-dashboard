@@ -13,8 +13,8 @@ import {reduxForm} from 'redux-form'
 import ActionItem from './FormActionItem'
 import React from 'react'
 import styles from './New.scss'
-import balanceActions from 'features/balances/actions'
-import {normalizeBTMAmountUnit} from 'utility/buildInOutDisplay'
+import actions from 'actions'
+import { normalizeBTMAmountUnit } from 'utility/buildInOutDisplay'
 
 const rangeOptions = [
   {
@@ -58,6 +58,11 @@ class Form extends React.Component {
         this.props.didLoadAutocomplete()
       })
     }
+    if (!this.props.autocompleteIsAssetLoaded) {
+      this.props.fetchAssetAll().then(() => {
+        this.props.didLoadAssetAutocomplete()
+      })
+    }
 
     this.props.fields.normalTransaction.gas.type.onChange(rangeOptions[0].label)
     this.props.fields.normalTransaction.gas.price.onChange(rangeOptions[0].value)
@@ -80,6 +85,19 @@ class Form extends React.Component {
     }
 
     return filteredBalances.length === 1 ? normalizeBTMAmountUnit(filteredBalances[0].assetId, filteredBalances[0].amount, this.props.btmAmountUnit) : null
+  }
+
+  assetDecimal(normalTransaction) {
+    let asset = this.props.asset
+    let filteredAsset = asset
+    if (normalTransaction.assetAlias.value) {
+      filteredAsset = filteredAsset.filter(asset => asset.alias === normalTransaction.assetAlias.value)
+    }
+    if (normalTransaction.assetId.value) {
+      filteredAsset = filteredAsset.filter(asset => asset.id === normalTransaction.assetId.value)
+    }
+
+    return (filteredAsset.length === 1 && filteredAsset[0].definition && filteredAsset[0].id !== btmID ) ? filteredAsset[0].definition.decimals : null
   }
 
   toggleDropwdown() {
@@ -411,16 +429,20 @@ export default BaseNew.connect(
     }
 
     return {
-      autocompleteIsLoaded: state.key.autocompleteIsLoaded,
+      autocompleteIsLoaded: state.balance.autocompleteIsLoaded,
+      autocompleteIsAssetLoaded: state.balance.autocompleteIsLoaded,
       lang: state.core.lang,
       btmAmountUnit: state.core.btmAmountUnit,
       balances,
+      asset: Object.keys(state.asset.items).map(k => state.asset.items[k]),
       ...BaseNew.mapStateToProps('transaction')(state)
     }
   },
   (dispatch) => ({
-    didLoadAutocomplete: () => dispatch(balanceActions.didLoadAutocomplete),
-    fetchAll: (cb) => dispatch(balanceActions.fetchAll(cb)),
+    didLoadAutocomplete: () => dispatch(actions.balance.didLoadAutocomplete),
+    fetchAll: (cb) => dispatch(actions.balance.fetchAll(cb)),
+    didLoadAssetAutocomplete: () => dispatch(actions.asset.didLoadAutocomplete),
+    fetchAssetAll: (cb) => dispatch(actions.asset.fetchAll(cb)),
     ...BaseNew.mapDispatchToProps('transaction')(dispatch)
   }),
   reduxForm({
