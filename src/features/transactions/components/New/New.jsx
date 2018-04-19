@@ -1,11 +1,20 @@
-import { BaseNew, FormContainer, FormSection, FieldLabel, TextField, Autocomplete, ObjectSelectorField, AmountUnitField } from 'features/shared/components'
-import { DropdownButton, MenuItem } from 'react-bootstrap'
-import { reduxForm } from 'redux-form'
+import {
+  BaseNew,
+  FormContainer,
+  FormSection,
+  FieldLabel,
+  TextField,
+  Autocomplete,
+  ObjectSelectorField,
+  AmountUnitField
+} from 'features/shared/components'
+import {DropdownButton, MenuItem} from 'react-bootstrap'
+import {reduxForm} from 'redux-form'
 import ActionItem from './FormActionItem'
 import React from 'react'
 import styles from './New.scss'
 import balanceActions from 'features/balances/actions'
-import { normalizeBTMAmountUnit } from 'utility/buildInOutDisplay'
+import {normalizeBTMAmountUnit} from 'utility/buildInOutDisplay'
 
 const rangeOptions = [
   {
@@ -74,11 +83,11 @@ class Form extends React.Component {
   }
 
   toggleDropwdown() {
-    this.setState({ showDropdown: !this.state.showDropdown })
+    this.setState({showDropdown: !this.state.showDropdown})
   }
 
   closeDropdown() {
-    this.setState({ showDropdown: false })
+    this.setState({showDropdown: false})
   }
 
   addActionItem(type) {
@@ -99,7 +108,7 @@ class Form extends React.Component {
     }
 
     return !((hasValue(normalTransaction.accountId) || hasValue(normalTransaction.accountAlias)) &&
-      (hasValue(normalTransaction.assetId)|| hasValue(normalTransaction.assetAlias)) &&
+      (hasValue(normalTransaction.assetId) || hasValue(normalTransaction.assetAlias)) &&
       hasValue(normalTransaction.address) && (hasValue(normalTransaction.amount)))
   }
 
@@ -107,9 +116,9 @@ class Form extends React.Component {
     this.props.fields.actions.removeField(index)
   }
 
-  emptyActions(actions){
-    if(actions.length != 0){
-      actions.map(()=> this.removeActionItem(0))
+  emptyActions(actions) {
+    if (actions.length != 0) {
+      actions.map(() => this.removeActionItem(0))
     }
   }
 
@@ -136,7 +145,7 @@ class Form extends React.Component {
 
   render() {
     const {
-      fields: { baseTransaction, actions, submitAction, password, normalTransaction },
+      fields: {baseTransaction, actions, submitAction, password, normalTransaction},
       error,
       handleSubmit,
       submitting
@@ -163,44 +172,43 @@ class Form extends React.Component {
     const showBtmAmountUnit = (normalTransaction.assetAlias.value === 'BTM' ||
       normalTransaction.assetId.value === 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff')
 
-    return(
+    return (
       <FormContainer
         error={error}
-        label={ lang === 'zh' ? '新建交易' :'New transaction' }
+        label={lang === 'zh' ? '新建交易' : 'New transaction'}
         submitLabel={submitLabel}
         onSubmit={handleSubmit(this.submitWithValidation)}
         showSubmitIndicator={true}
         submitting={submitting}
-        disabled={this.disableSubmit(actions, normalTransaction)} >
-
+        disabled={this.disableSubmit(actions, normalTransaction)}>
 
         <div className={`btn-group ${styles.btnGroup}`} role='group'>
           <button
-            className={`btn btn-default ${this.state.showAdvanceTx ? null: 'active'}`}
+            className={`btn btn-default ${this.state.showAdvanceTx ? null : 'active'}`}
             onClick={(e) => {
               e.preventDefault()
               this.emptyActions(actions)
               this.setState({showAdvanceTx: false})
-            }} >
-            { lang === 'zh' ? '简单交易' : 'Normal' }
+            }}>
+            {lang === 'zh' ? '简单交易' : 'Normal'}
           </button>
           <button
-            className={`btn btn-default ${this.state.showAdvanceTx ? 'active': null}`}
+            className={`btn btn-default ${this.state.showAdvanceTx ? 'active' : null}`}
             onClick={(e) => {
               e.preventDefault()
               this.setState({showAdvanceTx: true})
-            }} >
-            { lang === 'zh' ? '高级交易' : 'Advanced' }
+            }}>
+            {lang === 'zh' ? '高级交易' : 'Advanced'}
           </button>
         </div>
 
-        { !this.state.showAdvanceTx && <FormSection title={ lang === 'zh' ? '简单交易' : 'Normal Trasaction' }>
-          <label className={styles.title}>{ lang === 'zh' ? '从' : 'From' }</label>
+        {!this.state.showAdvanceTx && <FormSection title={lang === 'zh' ? '简单交易' : 'Normal Trasaction'}>
+          <label className={styles.title}>{lang === 'zh' ? '从' : 'From'}</label>
           <div className={styles.main}>
             <ObjectSelectorField
               key='account-selector-field'
               lang={lang}
-              title={ lang === 'zh' ? '账户' :'Account' }
+              title={lang === 'zh' ? '账户' : 'Account'}
               aliasField={Autocomplete.AccountAlias}
               fieldProps={{
                 id: normalTransaction.accountId,
@@ -210,7 +218,7 @@ class Form extends React.Component {
             <ObjectSelectorField
               key='asset-selector-field'
               lang={lang}
-              title={ lang === 'zh' ? '资产' : 'Asset' }
+              title={lang === 'zh' ? '资产' : 'Asset'}
               aliasField={Autocomplete.AssetAlias}
               fieldProps={{
                 id: normalTransaction.assetId,
@@ -218,55 +226,58 @@ class Form extends React.Component {
               }}
             />
             {showAvailableBalance && availableBalance &&
-            <small className={styles.balanceHint}>{availableBalance} { lang === 'zh' ? '可用' : 'available'} </small>}
+            <small className={styles.balanceHint}>{availableBalance} {lang === 'zh' ? '可用' : 'available'} </small>}
           </div>
 
-          <label className={styles.title}>{ lang === 'zh' ? '至' : 'To' }</label>
+          <label className={styles.title}>{lang === 'zh' ? '至' : 'To'}</label>
           <div className={styles.main}>
-            <TextField title={ lang === 'zh' ? '地址' : 'Address'} fieldProps={normalTransaction.address}/>
-            {!showBtmAmountUnit && <TextField title={ lang === 'zh' ? '数量' : 'Amount' }  fieldProps={normalTransaction.amount}
+            <TextField title={lang === 'zh' ? '地址' : 'Address'} fieldProps={normalTransaction.address}/>
+            {!showBtmAmountUnit &&
+            <TextField title={lang === 'zh' ? '数量' : 'Amount'} fieldProps={normalTransaction.amount}
             />}
-            {showBtmAmountUnit && <AmountUnitField title={ lang === 'zh' ? '数量' : 'Amount' } fieldProps={normalTransaction.amount}
-            />}
+            {showBtmAmountUnit &&
+            <AmountUnitField title={lang === 'zh' ? '数量' : 'Amount'} fieldProps={normalTransaction.amount}/>
+            }
           </div>
 
           <label className={styles.title}>Gas</label>
           <table className={styles.optionsBtnContianer}>
-              {rangeOptions.map((option) =>
-                <tr className={styles.optionsBtn}>
-                  <td className={styles.optionsLabel}>
-                    <label >
-                      <input type='radio'
-                             {...normalTransaction.gas.type}
-                             onChange={gasOnChange}
-                             value={option.label}
-                             checked={option.label == normalTransaction.gas.type.value}
-                      />
-                      { lang === 'zh' ? option.label_zh :  option.label }
-                    </label>
-                  </td>
-                  <td>
-                    { option.label == normalTransaction.gas.type.value&& option.label !== 'Customize'
-                    && normalizeBTMAmountUnit(btmID, option.value, this.props.btmAmountUnit) }
-                    {
-                      option.label === 'Customize' && normalTransaction.gas.type.value === 'Customize' &&
-                      <div>
-                        <AmountUnitField
-                          autoFocus={true}
-                          fieldProps={normalTransaction.gas.price}
-                          placeholder='Enter gas' />
-                      </div>
-                    }
-                  </td>
-                </tr>
-              )}
+            {rangeOptions.map((option) =>
+              <tr className={styles.optionsBtn}>
+                <td className={styles.optionsLabel}>
+                  <label>
+                    <input type='radio'
+                           {...normalTransaction.gas.type}
+                           onChange={gasOnChange}
+                           value={option.label}
+                           checked={option.label == normalTransaction.gas.type.value}
+                    />
+                    {lang === 'zh' ? option.label_zh : option.label}
+                  </label>
+                </td>
+                <td>
+                  {option.label == normalTransaction.gas.type.value && option.label !== 'Customize'
+                  && normalizeBTMAmountUnit(btmID, option.value, this.props.btmAmountUnit)}
+                  {
+                    option.label === 'Customize' && normalTransaction.gas.type.value === 'Customize' &&
+                    <div>
+                      <AmountUnitField
+                        autoFocus={true}
+                        fieldProps={normalTransaction.gas.price}
+                        placeholder='Enter gas'/>
+                    </div>
+                  }
+                </td>
+              </tr>
+            )}
           </table>
 
-          <label className={styles.title}>{ lang === 'zh' ? '密码' : 'Password' }</label>
-          <TextField placeholder={ lang === 'zh' ? '请输入密码' : 'Please enter the assword' } fieldProps={password} autoFocus={false} type={'password'} />
+          <label className={styles.title}>{lang === 'zh' ? '密码' : 'Password'}</label>
+          <TextField placeholder={lang === 'zh' ? '请输入密码' : 'Please enter the assword'} fieldProps={password}
+                     autoFocus={false} type={'password'}/>
         </FormSection>}
 
-        { this.state.showAdvanceTx && <FormSection title='Actions'>
+        {this.state.showAdvanceTx && <FormSection title='Actions'>
           {actions.map((action, index) =>
             <ActionItem
               key={index}
@@ -294,46 +305,50 @@ class Form extends React.Component {
         </FormSection>}
 
         {this.state.showAdvanceTx && !this.state.showAdvanced &&
-          <FormSection>
-            <a href='#'
-              className={styles.showAdvanced}
-              onClick={(e) => {
-                e.preventDefault()
-                this.setState({showAdvanced: true})
-              }}
-            >
-              { lang === 'zh' ? '显示高级选项' : 'Show advanced options'}
-            </a>
-          </FormSection>
+        <FormSection>
+          <a href='#'
+             className={styles.showAdvanced}
+             onClick={(e) => {
+               e.preventDefault()
+               this.setState({showAdvanced: true})
+             }}
+          >
+            {lang === 'zh' ? '显示高级选项' : 'Show advanced options'}
+          </a>
+        </FormSection>
         }
 
-        {this.state.showAdvanceTx && this.state.showAdvanced && <FormSection title={ lang === 'zh' ? '高级选项' :'Advanced Options' }>
+        {this.state.showAdvanceTx && this.state.showAdvanced &&
+        <FormSection title={lang === 'zh' ? '高级选项' : 'Advanced Options'}>
           <div>
             <TextField
-              title={ lang === 'zh' ? '带签名交易' : 'To sign transaction' }
-              placeholder={ lang === 'zh' ? '在这里复制交易 HEX ...' : 'Paste transaction hex here...' }
+              title={lang === 'zh' ? '带签名交易' : 'To sign transaction'}
+              placeholder={lang === 'zh' ? '在这里复制交易 HEX ...' : 'Paste transaction hex here...'}
               fieldProps={baseTransaction}
-              autoFocus={true} />
+              autoFocus={true}/>
 
-            <FieldLabel>{ lang === 'zh' ? '交易构建类型' : 'Transaction Build Type' }</FieldLabel>
+            <FieldLabel>{lang === 'zh' ? '交易构建类型' : 'Transaction Build Type'}</FieldLabel>
             <table className={styles.submitTable}>
               <tbody>
               <tr>
-                <td><input id='submit_action_submit' type='radio' {...submitAction} value='submit' checked={submitAction.value == 'submit'} /></td>
+                <td><input id='submit_action_submit' type='radio' {...submitAction} value='submit'
+                           checked={submitAction.value == 'submit'}/></td>
                 <td>
-                  <label htmlFor='submit_action_submit'>{ lang === 'zh' ? '向区块链提交交易' :'Submit transaction to blockchain' }</label>
-                  <br />
+                  <label
+                    htmlFor='submit_action_submit'>{lang === 'zh' ? '向区块链提交交易' : 'Submit transaction to blockchain'}</label>
+                  <br/>
                   <label htmlFor='submit_action_submit' className={styles.submitDescription}>
-                    { lang === 'zh' ? '此次交易将通过密钥签名然后提交到区块链。' :
-                      'This transaction will be signed by the MockHSM and submitted to the blockchain.' }
+                    {lang === 'zh' ? '此次交易将通过密钥签名然后提交到区块链。' :
+                      'This transaction will be signed by the MockHSM and submitted to the blockchain.'}
                   </label>
                 </td>
               </tr>
               <tr>
-                <td><input id='submit_action_generate' type='radio' {...submitAction} value='generate' checked={submitAction.value == 'generate'} /></td>
+                <td><input id='submit_action_generate' type='radio' {...submitAction} value='generate'
+                           checked={submitAction.value == 'generate'}/></td>
                 <td>
-                  <label htmlFor='submit_action_generate'>{ lang === 'zh' ? '需要更多签名' : 'Need more signature' }</label>
-                  <br />
+                  <label htmlFor='submit_action_generate'>{lang === 'zh' ? '需要更多签名' : 'Need more signature'}</label>
+                  <br/>
                   <label htmlFor='submit_action_generate' className={styles.submitDescription}>
                     {lang === 'zh' ? '这些actions将通过密钥签名然后作为一个交易 JSON 字符串返回。 作为多签交易的输入，这个JSON字符串需要更多的签名数据。' :
                       'These actions will be signed by the Key and returned as a transaction JSON string, ' +
@@ -348,8 +363,9 @@ class Form extends React.Component {
 
         {
           this.state.showAdvanceTx && (actions.length > 0 || this.state.showAdvanced) && <FormSection>
-            <label className={styles.title}>{ lang === 'zh' ? '密码' : 'Password' }</label>
-            <TextField placeholder={ lang === 'zh' ? '请输入密码' : 'Please enter the assword' } fieldProps={password} autoFocus={false} type={'password'} />
+            <label className={styles.title}>{lang === 'zh' ? '密码' : 'Password'}</label>
+            <TextField placeholder={lang === 'zh' ? '请输入密码' : 'Please enter the assword'} fieldProps={password}
+                       autoFocus={false} type={'password'}/>
           </FormSection>
         }
       </FormContainer>
@@ -358,7 +374,7 @@ class Form extends React.Component {
 }
 
 const validate = values => {
-  const errors = {actions: {}, normalTransaction:{gas:{}}}
+  const errors = {actions: {}, normalTransaction: {gas: {}}}
 
   // Base transaction
   let baseTx = (values.baseTransaction || '').trim()
@@ -374,7 +390,7 @@ const validate = values => {
   let numError
   values.actions.forEach((action, index) => {
     numError = (!/^\d+(\.\d+)?$/i.test(values.actions[index].amount))
-    if ( numError) {
+    if (numError) {
       errors.actions[index] = {...errors.actions[index], amount: 'Invalid amount type'}
     }
   })
