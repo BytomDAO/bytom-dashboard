@@ -236,8 +236,8 @@ class Form extends React.Component {
             <TextField title={lang === 'zh' ? '数量' : 'Amount'} fieldProps={normalTransaction.amount}
             />}
             {showBtmAmountUnit &&
-            <AmountUnitField title={lang === 'zh' ? '数量' : 'Amount'} fieldProps={normalTransaction.amount}
-            />}
+            <AmountUnitField title={lang === 'zh' ? '数量' : 'Amount'} fieldProps={normalTransaction.amount}/>
+            }
           </div>
 
           <label className={styles.title}>Gas</label>
@@ -424,38 +424,38 @@ export default BaseNew.connect(
     ...BaseNew.mapDispatchToProps('transaction')(dispatch)
   }),
   reduxForm({
-      form: 'NewTransactionForm',
-      fields: [
-        'baseTransaction',
-        'actions[].accountId',
-        'actions[].accountAlias',
-        'actions[].assetId',
-        'actions[].assetAlias',
-        'actions[].amount',
-        'actions[].receiver',
-        'actions[].outputId',
-        'actions[].referenceData',
-        'actions[].type',
-        'actions[].address',
-        'actions[].password',
-        'normalTransaction.accountAlias',
-        'normalTransaction.accountId',
-        'normalTransaction.amount',
-        'normalTransaction.assetAlias',
-        'normalTransaction.assetId',
-        'normalTransaction.gas',
-        'normalTransaction.gas.type',
-        'normalTransaction.gas.price',
-        'normalTransaction.address',
-        'submitAction',
-        'password'
-      ],
-      validate,
-      touchOnChange: true,
-      initialValues: {
-        submitAction: 'submit',
-      },
-    }
+    form: 'NewTransactionForm',
+    fields: [
+      'baseTransaction',
+      'actions[].accountId',
+      'actions[].accountAlias',
+      'actions[].assetId',
+      'actions[].assetAlias',
+      'actions[].amount',
+      'actions[].receiver',
+      'actions[].outputId',
+      'actions[].referenceData',
+      'actions[].type',
+      'actions[].address',
+      'actions[].password',
+      'normalTransaction.accountAlias',
+      'normalTransaction.accountId',
+      'normalTransaction.amount',
+      'normalTransaction.assetAlias',
+      'normalTransaction.assetId',
+      'normalTransaction.gas',
+      'normalTransaction.gas.type',
+      'normalTransaction.gas.price',
+      'normalTransaction.address',
+      'submitAction',
+      'password'
+    ],
+    validate,
+    touchOnChange: true,
+    initialValues: {
+      submitAction: 'submit',
+    },
+  }
   )(Form)
 )
 
