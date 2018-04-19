@@ -44,12 +44,12 @@ class Register extends React.Component {
               placeholder={lang==='zh'? '请输入密钥别名...':'Please enter the key alias...'}
               fieldProps={keyAlias} />
             <TextField
-              title={lang==='zh'? '密码':'Password'}
+              title={lang==='zh'? '密钥密码':'Key Password'}
               placeholder={lang==='zh'? '请输入密钥密码...':'Please enter the key password...'}
               fieldProps={password}
               type='password' />
             <TextField
-              title={lang==='zh'? '重复输入密码':'Repeat your password'}
+              title={lang==='zh'? '重复输入密钥密码':'Repeat your key password'}
               placeholder={lang==='zh'? '请重复输入密钥密码...':'Please repeat the key password...'}
               fieldProps={repeatPassword}
               type='password' />
