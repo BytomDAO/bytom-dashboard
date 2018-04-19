@@ -84,44 +84,22 @@ function preprocessTransaction(formParams) {
 }
 
 form.submitForm = (formParams) => function (dispatch) {
-  const buildPromise = chainClient().transactions.build(builder => {
-    const processed = preprocessTransaction(formParams)
+  const connection = chainClient().connection
 
-    builder.actions = processed.actions.map(action => {
-      let result = {
-        address: action.address,
-        amount: action.amount,
-        account_id: action.accountId,
-        account_alias: action.accountAlias,
-        asset_id: action.assetId,
-        asset_alias: action.assetAlias,
-        type: action.type,
-      }
-      if (action.receiver) {
-        result.receiver = {
-          control_program: action.receiver.controlProgram,
-          expires_at: action.receiver.expiresAt
-        }
-      }
-      return result
-    })
-    if (processed.baseTransaction) {
-      builder.baseTransaction = processed.baseTransaction
-    }
-  })
+  const processed = preprocessTransaction(formParams)
+  const buildPromise = connection.request('/build-transaction', {actions: processed.actions})
 
   const signAndSubmitTransaction = (transaction, password) => {
-    const connection = chainClient().connection
     return connection.request('/sign-transaction', {
       password,
       transaction
-    }, true).then(resp => {
+    }).then(resp => {
       if (resp.status === 'fail') {
         throw new Error(resp.msg)
       }
 
-      const raw_transaction = resp.data.transaction.raw_transaction
-      return connection.request('/submit-transaction', {raw_transaction})
+      const rawTransaction = resp.data.transaction.rawTransaction
+      return connection.request('/submit-transaction', {rawTransaction})
     }).then(dealSignSubmitResp)
   }
 
@@ -162,7 +140,7 @@ form.submitForm = (formParams) => function (dispatch) {
     }
 
     const body = Object.assign({}, {password: formParams.password, 'transaction': resp.data})
-    return chainClient().connection.request('/sign-transaction', body, true)
+    return connection.request('/sign-transaction', body)
   }).then(resp => {
     if (resp.status === 'fail') {
       throw new Error(resp.msg)
