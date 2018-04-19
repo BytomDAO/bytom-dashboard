@@ -75,7 +75,7 @@ class ObjectSelectorField extends React.Component {
           {this.state.selected == ALIAS_SELECTED &&
             <this.props.aliasField
               className={styles.aliasFieldGroupItem}
-              placeholder={ lang === 'zh' ? `输入${this.props.title.toLowerCase()}别名.` : `Start typing ${this.props.title.toLowerCase()} alias...`}
+              placeholder={ lang === 'zh' ? `输入${this.props.title.toLowerCase()}别名...` : `Start typing ${this.props.title.toLowerCase()} alias...`}
               fieldProps={aliasProps} />}
 
         </div>
