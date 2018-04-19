@@ -133,7 +133,7 @@ class Summary extends React.Component {
                 {!mature && <small className={styles.immature}>immature</small>}
               </td>
             }
-            <td className={styles.colLabel}>{ lang === 'zh' ? '数量' : 'amount' }t</td>
+            <td className={styles.colLabel}>{ lang === 'zh' ? '数量' : 'amount' }</td>
             <td className={styles.colAmount}>
               <code className={styles.amount}>{item.amount}</code>
             </td>
