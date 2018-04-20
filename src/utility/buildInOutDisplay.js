@@ -117,6 +117,8 @@ const unspentFields = [
   'change',
 ]
 
+const btmID = 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
+
 const balanceFields = Object.keys(mappings)
 
 const buildDisplay = (item, fields, btmAmountUnit, lang) => {
@@ -168,7 +170,7 @@ const formatIntNumToPosDecimal = (neu,pos) => {
 
 export const normalizeGlobalBTMAmount = (assetID, amount, btmAmountUnit) => {
   //normalize BTM Amount
-  if (assetID === 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff') {
+  if (assetID === btmID) {
     switch (btmAmountUnit){
       case 'BTM':
         return formatIntNumToPosDecimal(amount, 8)+' BTM'
@@ -273,8 +275,10 @@ export function buildUnspentDisplay(output, btmAmountUnit, lang) {
 }
 
 export function buildBalanceDisplay(balance, btmAmountUnit, lang) {
+  let amount = (balance.assetDefinition && balance.assetDefinition.decimals && balance.assetId !== btmID)?
+    formatIntNumToPosDecimal(balance.amount, balance.assetDefinition.decimals): balance.amount
   return buildDisplay({
-    amount: balance.amount,
+    amount: amount,
     assetId: balance.assetId,
     assetAlias: balance.assetAlias,
     accountAlias: balance.accountAlias
