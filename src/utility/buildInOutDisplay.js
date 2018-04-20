@@ -123,10 +123,15 @@ const balanceFields = Object.keys(mappings)
 
 const buildDisplay = (item, fields, btmAmountUnit, lang) => {
   const details = []
+  const decimals = (item.assetDefinition && item.assetDefinition.decimals && item.assetId !== btmID)?
+    item.assetDefinition.decimals: null
   fields.forEach(key => {
     if (item.hasOwnProperty(key)) {
       if(key === 'amount'){
-        details.push({label: ( lang === 'zh'? mappings_ZH[key]: mappings[key] ), value: normalizeGlobalBTMAmount(item['assetId'], item[key], btmAmountUnit)})
+        details.push({
+          label: ( lang === 'zh'? mappings_ZH[key]: mappings[key] ),
+          value: decimals? formatIntNumToPosDecimal(item[key], decimals) :normalizeGlobalBTMAmount(item['assetId'], item[key], btmAmountUnit)
+        })
       }else{
         details.push({label: ( lang === 'zh'? mappings_ZH[key]: mappings[key] ), value: item[key]})
       }
