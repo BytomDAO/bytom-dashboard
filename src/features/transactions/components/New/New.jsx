@@ -176,11 +176,12 @@ class Form extends React.Component {
       amount: Number(amount),
       type: 'control_address'
     }
+
     const gasAction = {
       accountAlias,
       accountId,
       assetAlias: 'BTM',
-      amount: Math.pow(10, 12),
+      amount: Math.pow(10, 7),
       type: 'spend_account'
     }
 
@@ -318,8 +319,8 @@ class Form extends React.Component {
                 <td>
                   {
                     option.label == normalTransaction.gas.type.value && option.label !== 'Customize'
-                    && ((lang === 'zh' ? '估算' : 'estimated') + '   ' + normalizeBTMAmountUnit(btmID,
-                      option.ratio * (this.state.estimateGas || Math.pow(10, 5)),
+                    && this.state.estimateGas && ((lang === 'zh' ? '估算' : 'estimated') + '   ' + normalizeBTMAmountUnit(btmID,
+                      option.ratio * this.state.estimateGas,
                       this.props.btmAmountUnit))
                   }
                   {
