@@ -15,7 +15,7 @@ import ActionItem from './FormActionItem'
 import React from 'react'
 import styles from './New.scss'
 import balanceActions from 'features/balances/actions'
-import {normalizeBTMAmountUnit, normalizeBTM} from 'utility/buildInOutDisplay'
+import {normalizeBTMAmountUnit} from 'utility/buildInOutDisplay'
 
 const rangeOptions = [
   {
