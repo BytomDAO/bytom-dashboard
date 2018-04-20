@@ -202,7 +202,6 @@ class Form extends React.Component {
     const showBtmAmountUnit = (normalTransaction.assetAlias.value === 'BTM' ||
       normalTransaction.assetId.value === 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff')
 
-
     return (
       <FormContainer
         error={error}
@@ -321,6 +320,7 @@ class Form extends React.Component {
               assets={this.props.assets}
               remove={this.removeActionItem}
               lang={lang}
+              decimal={this.assetDecimal(action)}
             />)}
 
           <div className={`btn-group ${styles.addActionContainer} ${this.state.showDropdown && 'open'}`}>
