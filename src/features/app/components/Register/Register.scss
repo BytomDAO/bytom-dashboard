@@ -9,6 +9,20 @@
   overflow: auto;
 }
 
+.choice {
+  &:hover {
+    color: white;
+  }
+}
+
+.restore {
+  margin-left: 10px;
+}
+
+.active {
+  color: white;
+}
+
 .image {
   width: 150px;
   position: absolute;
