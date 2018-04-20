@@ -34,9 +34,15 @@
   margin-top: $gutter-size;
 }
 
-.title{
-  color:  $text-strong-color;
+.title {
+  color: $text-strong-color;
   font-size: $font-size-btn-lg;
+}
+
+.estimateGas {
+  margin-left: 10px;
+  font-size: 8px;
+  color: #747c89;
 }
 
 .main {
@@ -55,7 +61,7 @@
   flex-direction: column;
   border-radius: 3px;
   height: 150px;
-  input{
+  input {
     margin: 0 5px;
   }
   & > label {

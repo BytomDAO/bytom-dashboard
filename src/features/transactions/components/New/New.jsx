@@ -15,18 +15,18 @@ import ActionItem from './FormActionItem'
 import React from 'react'
 import styles from './New.scss'
 import balanceActions from 'features/balances/actions'
-import {normalizeBTMAmountUnit} from 'utility/buildInOutDisplay'
+import {normalizeBTMAmountUnit, normalizeBTM} from 'utility/buildInOutDisplay'
 
 const rangeOptions = [
   {
     label: 'Standard',
     label_zh: '标准',
-    value: '20000000'
+    ratio: 1
   },
   {
     label: 'Fast',
     label_zh: '快速',
-    value: '25000000'
+    ratio: 2
   },
   {
     label: 'Customize',
@@ -157,6 +157,7 @@ class Form extends React.Component {
     const noAsset = !assetAlias && !assetId
 
     if (!address || !amount || noAccount || noAsset) {
+      this.setState({estimateGas: null})
       return
     }
 
@@ -191,9 +192,12 @@ class Form extends React.Component {
       }
 
       return this.connection.request('/estimate-transaction-gas', {
-        rawTransaction: resp.data.rawTransaction
+        transactionTemplate: resp.data
       }).then(resp => {
-        window.console.log(resp)
+        if (resp.status === 'fail') {
+          return
+        }
+        this.setState({estimateGas: resp.data.totalNeu})
       })
     })
   }
@@ -312,8 +316,12 @@ class Form extends React.Component {
                   </label>
                 </td>
                 <td>
-                  {option.label == normalTransaction.gas.type.value && option.label !== 'Customize'
-                  && normalizeBTMAmountUnit(btmID, option.value, this.props.btmAmountUnit)}
+                  {
+                    option.label == normalTransaction.gas.type.value && option.label !== 'Customize'
+                    && ((lang === 'zh' ? '估算' : 'estimated') + '   ' + normalizeBTMAmountUnit(btmID,
+                      option.ratio * (this.state.estimateGas || Math.pow(10, 5)),
+                      this.props.btmAmountUnit))
+                  }
                   {
                     option.label === 'Customize' && normalTransaction.gas.type.value === 'Customize' &&
                     <div>
@@ -477,41 +485,42 @@ export default BaseNew.connect(
   (dispatch) => ({
     didLoadAutocomplete: () => dispatch(balanceActions.didLoadAutocomplete),
     fetchAll: (cb) => dispatch(balanceActions.fetchAll(cb)),
+    showError: err => dispatch({type: 'ERROR', payload: err}),
     ...BaseNew.mapDispatchToProps('transaction')(dispatch)
   }),
   reduxForm({
-    form: 'NewTransactionForm',
-    fields: [
-      'baseTransaction',
-      'actions[].accountId',
-      'actions[].accountAlias',
-      'actions[].assetId',
-      'actions[].assetAlias',
-      'actions[].amount',
-      'actions[].receiver',
-      'actions[].outputId',
-      'actions[].referenceData',
-      'actions[].type',
-      'actions[].address',
-      'actions[].password',
-      'normalTransaction.accountAlias',
-      'normalTransaction.accountId',
-      'normalTransaction.amount',
-      'normalTransaction.assetAlias',
-      'normalTransaction.assetId',
-      'normalTransaction.gas',
-      'normalTransaction.gas.type',
-      'normalTransaction.gas.price',
-      'normalTransaction.address',
-      'submitAction',
-      'password'
-    ],
-    validate,
-    touchOnChange: true,
-    initialValues: {
-      submitAction: 'submit',
-    },
-  }
+      form: 'NewTransactionForm',
+      fields: [
+        'baseTransaction',
+        'actions[].accountId',
+        'actions[].accountAlias',
+        'actions[].assetId',
+        'actions[].assetAlias',
+        'actions[].amount',
+        'actions[].receiver',
+        'actions[].outputId',
+        'actions[].referenceData',
+        'actions[].type',
+        'actions[].address',
+        'actions[].password',
+        'normalTransaction.accountAlias',
+        'normalTransaction.accountId',
+        'normalTransaction.amount',
+        'normalTransaction.assetAlias',
+        'normalTransaction.assetId',
+        'normalTransaction.gas',
+        'normalTransaction.gas.type',
+        'normalTransaction.gas.price',
+        'normalTransaction.address',
+        'submitAction',
+        'password'
+      ],
+      validate,
+      touchOnChange: true,
+      initialValues: {
+        submitAction: 'submit',
+      },
+    }
   )(Form)
 )
 
