@@ -119,14 +119,21 @@ const unspentFields = [
   'change',
 ]
 
+const btmID = 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
+
 const balanceFields = Object.keys(mappings)
 
 const buildDisplay = (item, fields, btmAmountUnit, lang) => {
   const details = []
+  const decimals = (item.assetDefinition && item.assetDefinition.decimals && item.assetId !== btmID)?
+    item.assetDefinition.decimals: null
   fields.forEach(key => {
     if (item.hasOwnProperty(key)) {
       if(key === 'amount'){
-        details.push({label: ( lang === 'zh'? mappings_ZH[key]: mappings[key] ), value: normalizeGlobalBTMAmount(item['assetId'], item[key], btmAmountUnit)})
+        details.push({
+          label: ( lang === 'zh'? mappings_ZH[key]: mappings[key] ),
+          value: decimals? formatIntNumToPosDecimal(item[key], decimals) :normalizeGlobalBTMAmount(item['assetId'], item[key], btmAmountUnit)
+        })
       }else{
         details.push({label: ( lang === 'zh'? mappings_ZH[key]: mappings[key] ), value: item[key]})
       }
@@ -137,8 +144,8 @@ const buildDisplay = (item, fields, btmAmountUnit, lang) => {
 
 const addZeroToDecimalPos = (src,pos) => {
   if(src != null ){
-    let srcString = src.toString()
-    var rs = srcString.indexOf('.')
+    let srcString = (src == '') ?  '0' : src.toString()
+    let rs = srcString.indexOf('.')
     if (rs < 0) {
       rs = srcString.length
       srcString += '.'
@@ -154,8 +161,13 @@ const addZeroToDecimalPos = (src,pos) => {
 const formatIntNumToPosDecimal = (neu,pos) => {
   if(neu != null ){
     let neuString = neu.toString()
-    if(neuString.length<=8){
-      return addZeroToDecimalPos((neu/Math.pow(10, pos)), pos)
+    let neuLength = neuString.length
+    if(neuLength <= pos){
+      let zeros = ''
+      while(zeros.length < pos - neuLength){
+        zeros += '0'
+      }
+      return '0.'+ zeros + neuString
     }else {
       return neuString.slice(0, -pos) + '.' + neuString.slice(-pos)
     }
@@ -165,7 +177,7 @@ const formatIntNumToPosDecimal = (neu,pos) => {
 
 export const normalizeGlobalBTMAmount = (assetID, amount, btmAmountUnit) => {
   //normalize BTM Amount
-  if (assetID === 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff') {
+  if (assetID === btmID) {
     switch (btmAmountUnit){
       case 'BTM':
         return formatIntNumToPosDecimal(amount, 8)+' BTM'
@@ -281,8 +293,10 @@ export function buildUnspentDisplay(output, btmAmountUnit, lang) {
 }
 
 export function buildBalanceDisplay(balance, btmAmountUnit, lang) {
+  let amount = (balance.assetDefinition && balance.assetDefinition.decimals && balance.assetId !== btmID)?
+    formatIntNumToPosDecimal(balance.amount, balance.assetDefinition.decimals): balance.amount
   return buildDisplay({
-    amount: balance.amount,
+    amount: amount,
     assetId: balance.assetId,
     assetAlias: balance.assetAlias,
     accountAlias: balance.accountAlias

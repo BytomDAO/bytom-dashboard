@@ -10,6 +10,8 @@ const INOUT_TYPES = {
   retire: 'Retire',
 }
 
+const btmID = 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
+
 class Summary extends React.Component {
   normalizeInouts(inouts) {
     const normalized = {}
@@ -18,6 +20,7 @@ class Summary extends React.Component {
       let asset = normalized[inout.assetId]
       if (!asset) asset = normalized[inout.assetId] = {
         alias: inout.assetAlias,
+        decimals: (inout.assetDefinition && inout.assetDefinition.decimals && inout.assetId !== btmID)? inout.assetDefinition.decimals : null,
         issue: 0,
         retire: 0
       }
@@ -74,12 +77,14 @@ class Summary extends React.Component {
       const asset = summary[assetId]
       const nonAccountTypes = ['issue','retire']
 
+
+
       nonAccountTypes.forEach((type) => {
         if (asset[type] > 0) {
           items.push({
             type: INOUT_TYPES[type],
             rawAction: type,
-            amount: normalizeBtmAmountUnit(assetId, asset[type], this.props.btmAmountUnit),
+            amount: asset.decimals? converIntToDec(asset[type], asset.decimals) : normalizeBtmAmountUnit(assetId, asset[type], this.props.btmAmountUnit),
             asset: asset.alias ? asset.alias : <code className={styles.rawId}>{assetId}</code>,
             assetId: assetId,
           })
@@ -103,7 +108,7 @@ class Summary extends React.Component {
             items.push({
               type: INOUT_TYPES[type],
               rawAction: type,
-              amount: normalizeBtmAmountUnit(assetId, account[type], this.props.btmAmountUnit),
+              amount: asset.decimals? converIntToDec(account[type], asset.decimals) : normalizeBtmAmountUnit(assetId, account[type], this.props.btmAmountUnit),
               asset: asset.alias ? asset.alias : <code className={styles.rawId}>{assetId}</code>,
               assetId: assetId,
               direction: type == 'spend' ? 'from' : 'to',

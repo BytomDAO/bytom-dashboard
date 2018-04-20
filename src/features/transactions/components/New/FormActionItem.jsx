@@ -1,5 +1,5 @@
 import React from 'react'
-import { ErrorBanner, HiddenField, Autocomplete, JsonField, TextField, ObjectSelectorField, AmountUnitField } from 'features/shared/components'
+import { ErrorBanner, HiddenField, Autocomplete, JsonField, TextField, ObjectSelectorField, AmountUnitField, AmountInputMask } from 'features/shared/components'
 import styles from './FormActionItem.scss'
 
 const ISSUE_KEY = 'issue'
@@ -74,6 +74,8 @@ export default class ActionItem extends React.Component {
     const btmAmounUnitVisible = (assetAlias.value === 'BTM' ||
       assetId.value === 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff' )
 
+    const decimal = this.props.decimal
+
     const classNames = [styles.main]
     if (type.error) classNames.push(styles.error)
 
@@ -118,8 +120,11 @@ export default class ActionItem extends React.Component {
             }}
           />}
 
-        {visible.amount && !btmAmounUnitVisible &&
+        {visible.amount && !btmAmounUnitVisible && !decimal &&
           <TextField title={ lang === 'zh' ? '数量' :'Amount' } fieldProps={amount} />}
+
+        {visible.amount && !btmAmounUnitVisible && decimal &&
+          <AmountInputMask title={ lang === 'zh' ? '数量' :'Amount' } fieldProps={amount} decimal={decimal} />}
 
         {visible.amount && btmAmounUnitVisible &&
           <AmountUnitField title={ lang === 'zh' ? '数量' :'Amount' } fieldProps={amount} />}
