@@ -1,4 +1,5 @@
 import AmountUnitField from './AmountUnitField/AmountUnitField'
+import AmountInputMask from './AmountInputMask/AmountInputMask'
 import CheckboxField from './CheckboxField/CheckboxField'
 import Autocomplete from './Autocomplete'
 import BaseUpdate from './BaseUpdate'
@@ -34,6 +35,7 @@ import XpubField from './XpubField/XpubField'
 
 export {
   AmountUnitField,
+  AmountInputMask,
   CheckboxField,
   Autocomplete,
   BaseUpdate,

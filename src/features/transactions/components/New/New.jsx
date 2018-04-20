@@ -6,7 +6,8 @@ import {
   TextField,
   Autocomplete,
   ObjectSelectorField,
-  AmountUnitField
+  AmountUnitField,
+  AmountInputMask
 } from 'features/shared/components'
 import {DropdownButton, MenuItem} from 'react-bootstrap'
 import {reduxForm} from 'redux-form'
@@ -14,7 +15,7 @@ import ActionItem from './FormActionItem'
 import React from 'react'
 import styles from './New.scss'
 import actions from 'actions'
-import { normalizeBTMAmountUnit } from 'utility/buildInOutDisplay'
+import { normalizeBTMAmountUnit, converIntToDec } from 'utility/buildInOutDisplay'
 
 const rangeOptions = [
   {
@@ -68,7 +69,7 @@ class Form extends React.Component {
     this.props.fields.normalTransaction.gas.price.onChange(rangeOptions[0].value)
   }
 
-  balanceAmount(normalTransaction) {
+  balanceAmount(normalTransaction, assetdecimal) {
     let balances = this.props.balances
     let filteredBalances = balances
     if (normalTransaction.accountAlias.value) {
@@ -84,7 +85,17 @@ class Form extends React.Component {
       filteredBalances = filteredBalances.filter(balance => balance.assetId === normalTransaction.assetId.value)
     }
 
-    return filteredBalances.length === 1 ? normalizeBTMAmountUnit(filteredBalances[0].assetId, filteredBalances[0].amount, this.props.btmAmountUnit) : null
+    if(filteredBalances.length === 1){
+      if (filteredBalances[0].assetId === btmID){
+        return normalizeBTMAmountUnit(filteredBalances[0].assetId, filteredBalances[0].amount, this.props.btmAmountUnit)
+      }else if( assetdecimal ){
+        return converIntToDec(filteredBalances[0].amount, assetdecimal)
+      }else{
+        return filteredBalances[0].amount
+      }
+    }else {
+      return null
+    }
   }
 
   assetDecimal(normalTransaction) {
@@ -182,13 +193,15 @@ class Form extends React.Component {
       const range = rangeOptions.find(item => item.label === event.target.value)
       normalTransaction.gas.price.onChange(range.value)
     }
+    const assetDecimal = this.assetDecimal(normalTransaction)
 
     const showAvailableBalance = (normalTransaction.accountAlias.value || normalTransaction.accountId.value) &&
       (normalTransaction.assetAlias.value || normalTransaction.assetId.value)
-    const availableBalance = this.balanceAmount(normalTransaction)
+    const availableBalance = this.balanceAmount(normalTransaction, assetDecimal)
 
     const showBtmAmountUnit = (normalTransaction.assetAlias.value === 'BTM' ||
       normalTransaction.assetId.value === 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff')
+
 
     return (
       <FormContainer
@@ -250,8 +263,11 @@ class Form extends React.Component {
           <label className={styles.title}>{lang === 'zh' ? '至' : 'To'}</label>
           <div className={styles.main}>
             <TextField title={lang === 'zh' ? '地址' : 'Address'} fieldProps={normalTransaction.address}/>
-            {!showBtmAmountUnit &&
+            {!showBtmAmountUnit && !assetDecimal &&
             <TextField title={lang === 'zh' ? '数量' : 'Amount'} fieldProps={normalTransaction.amount}
+            />}
+            {!showBtmAmountUnit && assetDecimal &&
+            <AmountInputMask title={lang === 'zh' ? '数量' : 'Amount'} fieldProps={normalTransaction.amount} decimal={assetDecimal}
             />}
             {showBtmAmountUnit &&
             <AmountUnitField title={lang === 'zh' ? '数量' : 'Amount'} fieldProps={normalTransaction.amount}/>

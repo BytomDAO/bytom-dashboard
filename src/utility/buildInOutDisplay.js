@@ -135,8 +135,8 @@ const buildDisplay = (item, fields, btmAmountUnit, lang) => {
 
 const addZeroToDecimalPos = (src,pos) => {
   if(src != null ){
-    let srcString = src.toString()
-    var rs = srcString.indexOf('.')
+    let srcString = (src == '') ?  '0' : src.toString()
+    let rs = srcString.indexOf('.')
     if (rs < 0) {
       rs = srcString.length
       srcString += '.'
@@ -152,8 +152,13 @@ const addZeroToDecimalPos = (src,pos) => {
 const formatIntNumToPosDecimal = (neu,pos) => {
   if(neu != null ){
     let neuString = neu.toString()
-    if(neuString.length<=8){
-      return addZeroToDecimalPos((neu/Math.pow(10, pos)), pos)
+    let neuLength = neuString.length
+    if(neuLength <= pos){
+      let zeros = ''
+      while(zeros.length < pos - neuLength){
+        zeros += '0'
+      }
+      return '0.'+ zeros + neuString
     }else {
       return neuString.slice(0, -pos) + '.' + neuString.slice(-pos)
     }
