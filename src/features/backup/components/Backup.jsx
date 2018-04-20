@@ -38,9 +38,18 @@ class Backup extends React.Component {
     const fileReader = new FileReader()
     fileReader.onload = fileLoadedEvent => {
       const backupData = JSON.parse(fileLoadedEvent.target.result)
-      window.console.log(backupData)
+      this.connection.request('/restore-wallet', backupData).then(resp => {
+        if (resp.status === 'fail') {
+          this.props.showError(new Error(resp.msg))
+          return
+        }
+        this.props.showRestoreSuccess()
+      })
     }
     fileReader.readAsText(files[0], 'UTF-8')
+
+    const fileElement = document.getElementById('bytom-restore-file-upload')
+    fileElement.value = ''
   }
 
   restore() {
@@ -64,7 +73,7 @@ class Backup extends React.Component {
           {newButton}
           <hr/>
           {restoreButton}
-          <input id='bytom-restore-file-upload' type='file' style={{'display': 'flex', 'alignItems': 'center', 'fontSize': '12px'}}
+          <input id='bytom-restore-file-upload' type='file' style={{'display': 'none', 'alignItems': 'center', 'fontSize': '12px'}}
                  onChange={this.handleFileChange.bind(this)}/>
         </PageContent>
       </div>
@@ -77,6 +86,14 @@ const mapStateToProps = (state) => ({
   navAdvancedState: state.app.navAdvancedState,
 })
 
+const mapDispatchToProps = (dispatch) => ({
+  showError: (err) => {
+    dispatch({type: 'ERROR', payload: err})
+  },
+  showRestoreSuccess: () => dispatch({type: 'RESTORE_SUCCESS'})
+})
+
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(Backup)

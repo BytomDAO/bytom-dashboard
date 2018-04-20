@@ -118,6 +118,10 @@ export const flashMessages = (state = {}, action) => {
       return {}
     }
 
+    case 'RESTORE_SUCCESS': {
+      return newSuccess(state, <p>Wallet restore successfully</p>)
+    }
+
     default: {
       return state
     }
