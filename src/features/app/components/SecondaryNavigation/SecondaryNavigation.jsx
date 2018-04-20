@@ -47,6 +47,13 @@ class SecondaryNavigation extends React.Component {
               { lang === 'zh' ?  '退出' : 'Log Out' }
             </a>
           </li>}
+
+          <li>
+            <Link to='/backup' activeClassName={styles.active}>
+              {navIcon('client', styles)}
+              { lang === 'zh' ?  '备份与恢复' : 'Backup and restore'}
+            </Link>
+          </li>
         </ul>
       </div>
     )

@@ -10,6 +10,7 @@ import {
   AmountInputMask
 } from 'features/shared/components'
 import {DropdownButton, MenuItem} from 'react-bootstrap'
+import {chainClient} from 'utility/environment'
 import {reduxForm} from 'redux-form'
 import ActionItem from './FormActionItem'
 import React from 'react'
@@ -21,12 +22,12 @@ const rangeOptions = [
   {
     label: 'Standard',
     label_zh: '标准',
-    value: '20000000'
+    ratio: 1
   },
   {
     label: 'Fast',
     label_zh: '快速',
-    value: '25000000'
+    ratio: 2
   },
   {
     label: 'Customize',
@@ -40,6 +41,7 @@ const btmID = 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
 class Form extends React.Component {
   constructor(props) {
     super(props)
+    this.connection = chainClient().connection
     this.state = {
       showDropdown: false,
       showAdvanced: false
@@ -171,6 +173,64 @@ class Form extends React.Component {
     })
   }
 
+  estimateNormalTransactionGas() {
+    const transaction = this.props.fields.normalTransaction
+    const address = transaction.address.value
+    const amount = transaction.amount.value
+    const accountAlias = transaction.accountAlias.value
+    const accountId = transaction.accountId.value
+    const assetAlias = transaction.assetAlias.value
+    const assetId = transaction.assetId.value
+
+    const noAccount = !accountAlias && !accountId
+    const noAsset = !assetAlias && !assetId
+
+    if (!address || !amount || noAccount || noAsset) {
+      this.setState({estimateGas: null})
+      return
+    }
+
+    const spendAction = {
+      accountAlias,
+      accountId,
+      assetAlias,
+      assetId,
+      amount: Number(amount),
+      type: 'spend_account'
+    }
+    const receiveAction = {
+      address,
+      assetAlias,
+      assetId,
+      amount: Number(amount),
+      type: 'control_address'
+    }
+
+    const gasAction = {
+      accountAlias,
+      accountId,
+      assetAlias: 'BTM',
+      amount: Math.pow(10, 7),
+      type: 'spend_account'
+    }
+
+    const actions = [spendAction, receiveAction, gasAction]
+    const body = {actions, ttl: 1}
+    this.connection.request('/build-transaction', body).then(resp => {
+      if (resp.status === 'fail') {
+        return
+      }
+
+      return this.connection.request('/estimate-transaction-gas', {
+        transactionTemplate: resp.data
+      }).then(resp => {
+        if (resp.status === 'fail') {
+          return
+        }
+        this.setState({estimateGas: resp.data.totalNeu})
+      })
+    })
+  }
 
   render() {
     const {
@@ -180,6 +240,7 @@ class Form extends React.Component {
       submitting
     } = this.props
     const lang = this.props.lang
+    normalTransaction.amount.onBlur = this.estimateNormalTransactionGas.bind(this)
 
     let submitLabel = lang === 'zh' ? '提交交易' : 'Submit transaction'
     const hasBaseTransaction = ((baseTransaction.value || '').trim()).length > 0
@@ -289,8 +350,12 @@ class Form extends React.Component {
                   </label>
                 </td>
                 <td>
-                  {option.label == normalTransaction.gas.type.value && option.label !== 'Customize'
-                  && normalizeBTMAmountUnit(btmID, option.value, this.props.btmAmountUnit)}
+                  {
+                    option.label == normalTransaction.gas.type.value && option.label !== 'Customize'
+                    && this.state.estimateGas && ((lang === 'zh' ? '估算' : 'estimated') + '   ' + normalizeBTMAmountUnit(btmID,
+                      option.ratio * this.state.estimateGas,
+                      this.props.btmAmountUnit))
+                  }
                   {
                     option.label === 'Customize' && normalTransaction.gas.type.value === 'Customize' &&
                     <div>
@@ -459,6 +524,7 @@ export default BaseNew.connect(
     fetchAll: (cb) => dispatch(actions.balance.fetchAll(cb)),
     didLoadAssetAutocomplete: () => dispatch(actions.asset.didLoadAutocomplete),
     fetchAssetAll: (cb) => dispatch(actions.asset.fetchAll(cb)),
+    showError: err => dispatch({type: 'ERROR', payload: err}),
     ...BaseNew.mapDispatchToProps('transaction')(dispatch)
   }),
   reduxForm({

@@ -20,11 +20,25 @@ function preprocessTransaction(formParams) {
 
   const normalT = formParams.normalTransaction
   if (builder.actions.length == 0) {
+    let gasPrice = 0
+    switch (normalT.gas.type) {
+      case 'Fast':
+        gasPrice = formParams.state.estimateGas * 2
+        break
+      case 'Customize':
+        gasPrice = normalT.gas.price
+        break
+      case 'Standard':
+      default:
+        gasPrice = formParams.state.estimateGas * 1
+        break
+    }
+
     builder.actions.push({
       accountAlias: normalT.accountAlias,
       accountId: normalT.accountId,
       assetAlias: 'BTM',
-      amount: Number(normalT.gas.price),
+      amount: Number(gasPrice),
       type: 'spend_account'
     })
     builder.actions.push({

@@ -1,3 +1,5 @@
+import {btmAmountUnit} from '../features/core/reducers'
+
 const mappings = {
   id: 'ID',
   type: 'Type',
@@ -186,6 +188,17 @@ export const normalizeGlobalBTMAmount = (assetID, amount, btmAmountUnit) => {
     }
   }
   return amount
+}
+
+export const normalizeBTM = (amount, btmAmountUnit) => {
+  switch (btmAmountUnit){
+    case 'BTM':
+      return formatIntNumToPosDecimal(amount, 8)+' BTM'
+    case 'mBTM':
+      return formatIntNumToPosDecimal(amount, 5)+' mBTM'
+    case 'NEU':
+      return amount+' NEU'
+  }
 }
 
 export function formatBTMAmount(value, pos)  {
