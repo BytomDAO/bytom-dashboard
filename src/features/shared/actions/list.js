@@ -22,7 +22,11 @@ export default function(type, options = {}) {
 
       promise.then(
         (resp) => {
-          dispatch(receive(resp))
+          if(resp.status == 'fail'){
+            dispatch({type: 'ERROR', payload: { 'message': resp.msg}})
+          }else{
+            dispatch(receive(resp))
+          }
         }
       )
 
