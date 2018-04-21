@@ -124,7 +124,6 @@ class Form extends React.Component {
   addActionItem(type) {
     this.props.fields.actions.addField({
       type: type,
-      referenceData: '{\n\t\n}'
     })
     this.closeDropdown()
   }
@@ -540,9 +539,7 @@ export default BaseNew.connect(
       'actions[].assetId',
       'actions[].assetAlias',
       'actions[].amount',
-      'actions[].receiver',
       'actions[].outputId',
-      'actions[].referenceData',
       'actions[].type',
       'actions[].address',
       'actions[].password',
