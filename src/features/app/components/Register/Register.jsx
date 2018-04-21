@@ -87,7 +87,7 @@ class Register extends React.Component {
         </div>
 
         {
-          this.state.init &&
+          this.state && this.state.init &&
           <div>
             <h2 className={styles.title}>{lang === 'zh' ? '初始账户和密钥' : 'Init your account and key'}</h2>
             <div className={styles.form}>
@@ -125,7 +125,7 @@ class Register extends React.Component {
           </div>
         }
         {
-          !this.state.init &&
+          this.state && !this.state.init &&
           <div>
             <h2 className={styles.title}>{lang === 'zh' ? '恢复钱包' : 'Restore wallet'}</h2>
             <div className={styles.form}>
