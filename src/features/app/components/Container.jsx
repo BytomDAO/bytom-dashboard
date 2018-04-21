@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import actions from 'actions'
 import { Main, Config, Login, Loading, Register ,Modal } from './'
+import moment from 'moment'
 
 const CORE_POLLING_TIME = 2 * 1000
 
@@ -42,6 +43,11 @@ class Container extends React.Component {
         this.setState({noAccountItem: true})
       }
     })
+    if(this.props.lang === 'zh'){
+      moment.locale('zh-cn')
+    }else{
+      moment.locale(this.props.lang)
+    }
   }
 
   componentWillMount() {
@@ -58,6 +64,11 @@ class Container extends React.Component {
         nextProps.configured != this.props.configured ||
         nextProps.location.pathname != this.props.location.pathname) {
       this.redirectRoot(nextProps)
+    }
+    if(nextProps.lang === 'zh'){
+      moment.locale('zh-cn')
+    }else{
+      moment.locale(nextProps.lang)
     }
   }
 
@@ -97,7 +108,8 @@ export default connect(
     configKnown: true,
     configured: true,
     onTestnet: state.core.onTestnet,
-    accountInit: state.core.accountInit
+    accountInit: state.core.accountInit,
+    lang: state.core.lang
   }),
   (dispatch) => ({
     fetchInfo: options => dispatch(actions.core.fetchCoreInfo(options)),
