@@ -76,11 +76,11 @@ class Register extends React.Component {
     return (
       <div className={styles.main}>
         <div>
-          <a className={`${styles.choice} ${this.state && this.state.init ? styles.active : ''}`}
+          <a className={`${styles.choice} ${(this.state && this.state.init) ? styles.active : ''}`}
              href='javascript:;' onClick={this.setMode.bind(this, true)}>
             {lang === 'zh' ? '初始账户和密钥' : 'Init your account and key'}
           </a>
-          <a className={`${styles.choice} ${styles.restore} ${this.state && this.state.init ? '' : styles.active}`}
+          <a className={`${styles.choice} ${styles.restore} ${(this.state && this.state.init) ? '' : styles.active}`}
              href='javascript:;' onClick={this.setMode.bind(this, false)}>
             {lang === 'zh' ? '恢复钱包' : 'Restore wallet'}
           </a>
