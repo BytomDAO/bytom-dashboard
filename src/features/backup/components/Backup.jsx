@@ -15,7 +15,8 @@ class Backup extends React.Component {
     this.connection.request('/backup-wallet').then(resp => {
       const date = new Date()
       const dateStr = date.toLocaleDateString().split(' ')[0]
-      const fileName = 'bytom-wallet-backup-' + dateStr
+      const timestamp = date.getTime()
+      const fileName = ['bytom-wallet-backup-', dateStr, timestamp].join('-')
 
       var element = document.createElement('a')
       element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(resp.data)))
