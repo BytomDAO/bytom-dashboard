@@ -218,6 +218,7 @@ class Form extends React.Component {
     const body = {actions, ttl: 1}
     this.connection.request('/build-transaction', body).then(resp => {
       if (resp.status === 'fail') {
+        this.props.showError(new Error(resp.msg))
         return
       }
 
@@ -225,6 +226,7 @@ class Form extends React.Component {
         transactionTemplate: resp.data
       }).then(resp => {
         if (resp.status === 'fail') {
+          this.props.showError(new Error(resp.msg))
           return
         }
         this.setState({estimateGas: resp.data.totalNeu})
@@ -239,8 +241,10 @@ class Form extends React.Component {
       handleSubmit,
       submitting
     } = this.props
-    const lang = this.props.lang
-    normalTransaction.amount.onBlur = this.estimateNormalTransactionGas.bind(this)
+    const lang = this.props.lang;
+    ['amount', 'accountAlias', 'accountId', 'assetAlias', 'assetId', 'address'].forEach(key => {
+      normalTransaction[key].onBlur = this.estimateNormalTransactionGas.bind(this)
+    })
 
     let submitLabel = lang === 'zh' ? '提交交易' : 'Submit transaction'
     const hasBaseTransaction = ((baseTransaction.value || '').trim()).length > 0
