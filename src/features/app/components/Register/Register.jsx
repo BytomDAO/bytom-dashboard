@@ -75,23 +75,12 @@ class Register extends React.Component {
 
     return (
       <div className={styles.main}>
-        <div>
-          <a className={`${styles.choice} ${(this.state && this.state.init) ? styles.active : ''}`}
-             href='javascript:;' onClick={this.setMode.bind(this, true)}>
-            {lang === 'zh' ? '初始账户和密钥' : 'Init your account and key'}
-          </a>
-          <a className={`${styles.choice} ${styles.restore} ${(this.state && this.state.init) ? '' : styles.active}`}
-             href='javascript:;' onClick={this.setMode.bind(this, false)}>
-            {lang === 'zh' ? '恢复钱包' : 'Restore wallet'}
-          </a>
-        </div>
-
         {
           this.state && this.state.init &&
           <div>
             <h2 className={styles.title}>{lang === 'zh' ? '初始账户和密钥' : 'Init your account and key'}</h2>
-            <div className={styles.form}>
-              <form onSubmit={handleSubmit(this.submitWithErrors)}>
+            <div className={styles.formWarpper}>
+              <form className={styles.form} onSubmit={handleSubmit(this.submitWithErrors)}>
                 <TextField
                   title={lang === 'zh' ? '账户别名' : 'Account Alias'}
                   placeholder={lang === 'zh' ? '请输入账户别名...' : 'Please enter the account alias...'}
@@ -120,6 +109,10 @@ class Register extends React.Component {
                 <button type='submit' className='btn btn-primary' disabled={submitting}>
                   {lang === 'zh' ? '注册' : 'Register'}
                 </button>
+                <a className={`${styles.choice} ${(this.state && this.state.init) ? '' : styles.active}`}
+                   href='javascript:;' onClick={this.setMode.bind(this, false)}>
+                  {lang === 'zh' ? '恢复钱包' : 'Restore wallet'}
+                </a>
               </form>
             </div>
           </div>
@@ -128,11 +121,16 @@ class Register extends React.Component {
           this.state && !this.state.init &&
           <div>
             <h2 className={styles.title}>{lang === 'zh' ? '恢复钱包' : 'Restore wallet'}</h2>
-            <div className={styles.form}>
-              <form onSubmit={handleSubmit(this.submitWithErrors)}>
+            <div className={styles.formWarpper}>
+              <form className={styles.form} onSubmit={handleSubmit(this.submitWithErrors)}>
                 <button className='btn btn-primary' onClick={this.restore.bind(this)}>
                   {lang === 'zh' ? '恢复' : 'Restore'}
                 </button>
+                <a className={`${styles.choice} ${(this.state && this.state.init) ? styles.active : ''}`}
+                   href='javascript:;' onClick={this.setMode.bind(this, true)}>
+                  {lang === 'zh' ? '初始账户和密钥' : 'Init your account and key'}
+                </a>
+
                 <p></p>
                 {
                   lang === 'zh' && <p>点击恢复按钮，选择备份文件进行恢复</p>

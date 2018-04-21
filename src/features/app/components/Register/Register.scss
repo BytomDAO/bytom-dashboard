@@ -5,20 +5,13 @@
   bottom: 0;
   left: 0;
   right: 0;
+  padding-top: 50px;
   display: block;
   overflow: auto;
 }
 
 .choice {
-  color: white;
-}
-
-.restore {
   margin-left: 10px;
-}
-
-.active {
-  color: #00D9C2;
 }
 
 .image {
@@ -29,20 +22,27 @@
 }
 
 .title{
-  //width: 150px;
-  position: relative;
-  top: 50px;
-  //left: calc(50% - 75px);
   text-align: center;
   color: white;
+}
+
+.switch {
+  display: flex;
+  justify-content: space-around;
+
+  margin-top: 10px;
+}
+
+.formWarpper {
+  display: flex;
+  justify-content: space-around;
+
+  margin-top: 30px;
 }
 
 .form {
   background: $background-color;
   border-radius: $border-radius-standard;
-  position: absolute;
-  left: calc(50% - 250px);
-  top: calc(150px);
   width: 500px;
   padding: 30px;
 }
