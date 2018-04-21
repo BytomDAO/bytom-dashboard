@@ -143,8 +143,8 @@ const buildDisplay = (item, fields, btmAmountUnit, lang) => {
 }
 
 const addZeroToDecimalPos = (src,pos) => {
-  if(src != null ){
-    let srcString = (src == '') ?  '0' : src.toString()
+  if(src != null && src !== '' ){
+    let srcString = src.toString()
     let rs = srcString.indexOf('.')
     if (rs < 0) {
       rs = srcString.length
