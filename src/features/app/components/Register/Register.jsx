@@ -151,22 +151,23 @@ class Register extends React.Component {
   }
 }
 
-const validate = values => {
+const validate = (values, props) => {
   const errors = {}
+  const lang = props.lang
 
   if (!values.keyAlias) {
-    errors.keyAlias = 'Key alias is required'
+    errors.keyAlias = ( lang === 'zh' ? '密钥别名是必须项' : 'Key alias is required' )
   }
   if (!values.password) {
-    errors.password = 'Password is required'
+    errors.password = ( lang === 'zh' ? '密码是必须项' : 'Password is required' )
   } else if (values.password.length < 5) {
-    errors.password = 'Please enter at least 5 characters password.'
+    errors.password = ( lang === 'zh' ? '请输入至少5位数的密码' : 'Please enter at least 5 characters password.' )
   }
   if (values.password !== values.repeatPassword) {
-    errors.repeatPassword = 'Please match the repeat password.'
+    errors.repeatPassword = ( lang === 'zh' ? '请重复输入刚刚所输入的密码' :  'Please match the repeat password.' )
   }
   if (!values.accountAlias) {
-    errors.accountAlias = 'Account alias is required'
+    errors.accountAlias = ( lang === 'zh' ? '账户别名是必须项' : 'Account alias is required' )
   }
 
   return errors

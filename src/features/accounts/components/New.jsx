@@ -51,13 +51,14 @@ class Form extends React.Component {
   }
 }
 
-const validate = values => {
+const validate = ( values, props ) => {
   const errors = {}
+  const lang = props.lang
 
   const tagError = JsonField.validator(values.tags)
   if (tagError) { errors.tags = tagError }
 
-  if (!values.alias) { errors.alias = 'Account alias is required' }
+  if (!values.alias) { errors.alias = ( lang === 'zh' ? '账户别名是必须项' : 'Account alias is required' ) }
 
   return errors
 }

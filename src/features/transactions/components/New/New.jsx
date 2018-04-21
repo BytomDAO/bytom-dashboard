@@ -481,8 +481,9 @@ class Form extends React.Component {
   }
 }
 
-const validate = values => {
+const validate = (values, props) => {
   const errors = {actions: {}, normalTransaction: {gas: {}}}
+  const lang = props.lang
 
   // Base transaction
   let baseTx = (values.baseTransaction || '').trim()
@@ -490,7 +491,7 @@ const validate = values => {
     JSON.parse(baseTx)
   } catch (e) {
     if (baseTx && e) {
-      errors.baseTransaction = 'To sign transaction must be a JSON string.'
+      errors.baseTransaction = ( lang === 'zh' ? '请使用JSON字符来签名交易' : 'To sign transaction must be a JSON string.' )
     }
   }
 
@@ -499,14 +500,14 @@ const validate = values => {
   values.actions.forEach((action, index) => {
     numError = (!/^\d+(\.\d+)?$/i.test(values.actions[index].amount))
     if (numError) {
-      errors.actions[index] = {...errors.actions[index], amount: 'Invalid amount type'}
+      errors.actions[index] = {...errors.actions[index], amount: ( lang === 'zh' ? '请输入数字' : 'Invalid amount type' )}
     }
   })
 
   // Numerical
   let normalTx = values.normalTransaction || ''
   if (normalTx.amount && !/^\d+(\.\d+)?$/i.test(normalTx.amount)) {
-    errors.normalTransaction.amount = 'Invalid amount type'
+    errors.normalTransaction.amount = ( lang === 'zh' ? '请输入数字' : 'Invalid amount type' )
   }
   return errors
 }

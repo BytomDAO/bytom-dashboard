@@ -56,11 +56,12 @@ export default BaseNew.connect(
     ].concat(
       policyOptions.map(p => `policies.${p.value}`)
     ),
-    validate: values => {
+    validate: (values, props) => {
       const errors = {}
+      const lang = props.lang
 
       if (!values.guardData.id) {
-        errors.guardData = {id: 'Token name is required'}
+        errors.guardData = {id: ( lang === 'zh' ? '令牌名称是必须项' : 'Token name is required' )}
       }
 
       return errors
