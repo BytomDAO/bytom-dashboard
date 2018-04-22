@@ -56,6 +56,16 @@ const messageZHLabel ={
 }
 
 class Flash extends React.Component {
+  constructor(props) {
+    super(props)
+    Object.keys(props.messages).forEach(key => {
+      const item = props.messages[key]
+      if (!item.displayed) {
+        this.props.markFlashDisplayed(key)
+      }
+    })
+  }
+
   componentWillReceiveProps(nextProps) {
     Object.keys(nextProps.messages).forEach(key => {
       const item = nextProps.messages[key]
