@@ -24,27 +24,19 @@ export const flashMessages = (state = {}, action) => {
     }
 
     case 'CREATED_ACCOUNT': {
-      return newSuccess(state, <p>
-          Account has been created successfully.
-        </p>)
+      return newSuccess(state, 'CREATED_ACCOUNT')
     }
 
     case 'CREATED_ASSET': {
-      return newSuccess(state, <p>
-        Asset has been created successfully.
-      </p>)
+      return newSuccess(state, 'CREATED_ASSET')
     }
 
     case 'CREATED_TRANSACTION': {
-      return newSuccess(state, <p>
-        Transaction has been submitted successfully.
-      </p>)
+      return newSuccess(state, 'CREATED_TRANSACTION')
     }
 
     case 'CREATED_KEY': {
-      return newSuccess(state, <p>
-        Key has been created successfully.
-      </p>)
+      return newSuccess(state, 'CREATED_KEY')
     }
 
     case 'CREATED_TRANSACTIONFEED': {
@@ -66,9 +58,7 @@ export const flashMessages = (state = {}, action) => {
     }
 
     case 'RESET_PASSWORD_KEY': {
-      return newSuccess(state, <p>
-        Key password has been reset successfully.
-      </p>)
+      return newSuccess(state, 'RESET_PASSWORD_KEY')
     }
 
     case 'DELETE_ACCESS_TOKEN':
@@ -105,9 +95,7 @@ export const flashMessages = (state = {}, action) => {
     }
 
     case 'CREATE_REGISTER_ACCOUNT': {
-      return newSuccess(state, <p>
-          Default account and key have been initialized successfully.
-        </p>)
+      return newSuccess(state, 'CREATE_REGISTER_ACCOUNT')
     }
 
     case 'ERROR': {
@@ -119,7 +107,7 @@ export const flashMessages = (state = {}, action) => {
     }
 
     case 'RESTORE_SUCCESS': {
-      return newSuccess(state, <p>Wallet restore successfully</p>)
+      return newSuccess(state, 'RESTORE_SUCCESS')
     }
 
     default: {
