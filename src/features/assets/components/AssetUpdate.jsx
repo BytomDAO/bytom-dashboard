@@ -19,7 +19,7 @@ class Form extends React.Component {
 
   componentDidMount() {
     this.props.fetchItem(this.props.params.id).then(resp => {
-      if (resp.data.length == 0) {
+      if (resp.status == 'fail') {
         this.setState({notFound: true})
       }
     })
