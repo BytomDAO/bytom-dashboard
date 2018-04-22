@@ -15,7 +15,7 @@ export default class BaseShow extends React.Component {
 
   renderIfFound(view) {
     if (this.state.notFound) {
-      return(<NotFound />)
+      return(<NotFound lang={this.props.lang}/>)
     } else if (view) {
       return(view)
     } else {

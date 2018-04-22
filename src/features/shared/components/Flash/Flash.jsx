@@ -22,6 +22,9 @@ const messageLabel ={
   </p>,
   'RESTORE_SUCCESS': <p>
     Wallet restore successfully
+  </p>,
+  'UPDATED_ASSET': <p>
+    Updated asset alias.
   </p>
 }
 
@@ -46,6 +49,9 @@ const messageZHLabel ={
   </p>,
   'RESTORE_SUCCESS': <p>
     钱包已经成功恢复。
+  </p>,
+  'UPDATED_ASSET': <p>
+    资产别名更改成功。
   </p>
 }
 

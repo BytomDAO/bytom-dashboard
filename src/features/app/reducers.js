@@ -89,9 +89,7 @@ export const flashMessages = (state = {}, action) => {
     }
 
     case 'UPDATED_ASSET': {
-      return newSuccess(state, <p>
-          Updated asset tags.
-        </p>)
+      return newSuccess(state, 'UPDATED_ASSET')
     }
 
     case 'CREATE_REGISTER_ACCOUNT': {
