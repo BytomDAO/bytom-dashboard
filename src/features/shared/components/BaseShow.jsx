@@ -10,6 +10,9 @@ export default class BaseShow extends React.Component {
 
   componentDidMount() {
     this.props.fetchItem(this.props.params.id).then(resp => {
+      if (resp.status == 'fail') {
+        this.setState({notFound: true})
+      }
     })
   }
 
