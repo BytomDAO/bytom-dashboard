@@ -19,18 +19,18 @@ class Form extends React.Component {
 
   componentDidMount() {
     this.props.fetchItem(this.props.params.id).then(resp => {
-      if (resp.data.length == 0) {
+      if (resp.status == 'fail') {
         this.setState({notFound: true})
       }
     })
   }
 
   render() {
+    const lang = this.props.lang
     if (this.state.notFound) {
-      return <NotFound />
+      return <NotFound lang={lang}/>
     }
     const item = this.props.item
-    const lang = this.props.lang
 
     if (!item) {
       return <div>Loading...</div>
@@ -44,7 +44,7 @@ class Form extends React.Component {
     } = this.props
 
     const title = <span>
-      {lang === 'zh' ? '编辑资产alias' : 'Edit asset alias '}
+      {lang === 'zh' ? '编辑资产别名' : 'Edit asset alias '}
       <code>{item.alias ? item.alias :item.id}</code>
     </span>
 
@@ -55,9 +55,9 @@ class Form extends React.Component {
       submitting={submitting}
       lang={lang}>
 
-      <FormSection title='Asset Alias'>
+      <FormSection title={lang === 'zh' ? '资产别名' : 'Asset Alias' }>
         <TextField
-          placeholder={ lang === 'zh' ? '请输入资产Alias' : 'Please entered asset alias' }
+          placeholder={ lang === 'zh' ? '请输入资产别名' : 'Please entered asset alias' }
           fieldProps={alias}
           type= 'text'
         />

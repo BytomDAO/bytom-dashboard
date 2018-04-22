@@ -10,12 +10,15 @@ export default class BaseShow extends React.Component {
 
   componentDidMount() {
     this.props.fetchItem(this.props.params.id).then(resp => {
+      if (resp.status == 'fail') {
+        this.setState({notFound: true})
+      }
     })
   }
 
   renderIfFound(view) {
     if (this.state.notFound) {
-      return(<NotFound />)
+      return(<NotFound lang={this.props.lang}/>)
     } else if (view) {
       return(view)
     } else {

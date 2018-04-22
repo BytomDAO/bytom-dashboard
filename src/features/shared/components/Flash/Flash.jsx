@@ -22,6 +22,9 @@ const messageLabel ={
   </p>,
   'RESTORE_SUCCESS': <p>
     Wallet restore successfully
+  </p>,
+  'UPDATED_ASSET': <p>
+    Updated asset alias.
   </p>
 }
 
@@ -46,10 +49,23 @@ const messageZHLabel ={
   </p>,
   'RESTORE_SUCCESS': <p>
     钱包已经成功恢复。
+  </p>,
+  'UPDATED_ASSET': <p>
+    资产别名更改成功。
   </p>
 }
 
 class Flash extends React.Component {
+  constructor(props) {
+    super(props)
+    Object.keys(props.messages).forEach(key => {
+      const item = props.messages[key]
+      if (!item.displayed) {
+        this.props.markFlashDisplayed(key)
+      }
+    })
+  }
+
   componentWillReceiveProps(nextProps) {
     Object.keys(nextProps.messages).forEach(key => {
       const item = nextProps.messages[key]
