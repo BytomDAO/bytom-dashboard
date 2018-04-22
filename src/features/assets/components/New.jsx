@@ -51,8 +51,9 @@ class Form extends React.Component {
   }
 }
 
-const validate = values => {
+const validate = (values,props) => {
   const errors = {}
+  const lang = props.lang
 
   const jsonFields = ['definition']
   jsonFields.forEach(key => {
@@ -60,7 +61,7 @@ const validate = values => {
     if (fieldError) { errors[key] = fieldError }
   })
 
-  if (!values.alias) { errors.alias = 'Asset alias is required' }
+  if (!values.alias) { errors.alias = ( lang === 'zh' ? '资产别名是必须项' :'Asset alias is required' ) }
 
   return errors
 }

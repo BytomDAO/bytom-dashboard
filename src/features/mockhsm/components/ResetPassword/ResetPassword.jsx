@@ -87,20 +87,22 @@ class ResetPassword extends Component {
   }
 }
 
-const validate = values => {
+const validate = (values, props) => {
   const errors = {}
+  const lang = props.lang
+
   if (!values.oldPassword) {
-    errors.oldPassword = 'Required'
+    errors.oldPassword = ( lang === 'zh' ? '必须项' : 'Required' )
   }
 
   if (!values.newPassword) {
-    errors.newPassword = 'Required'
+    errors.newPassword = ( lang === 'zh' ? '必须项' : 'Required' )
   }else if(values.newPassword.length < 5){
-    errors.newPassword = 'Please enter at least 5 characters password.'
+    errors.newPassword = ( lang === 'zh' ? '请输入至少5位数的密码' :  'Please enter at least 5 characters password.' )
   }
 
   if ( values.newPassword !== values.repeatPassword ) {
-    errors.repeatPassword = 'Please match the repeat password.'
+    errors.repeatPassword = ( lang === 'zh' ? '请重复输入刚刚所输入的密码' :  'Please match the repeat password.' )
   }
   return errors
 }

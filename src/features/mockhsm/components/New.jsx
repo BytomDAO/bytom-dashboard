@@ -56,19 +56,20 @@ export default BaseNew.connect(
   reduxForm({
     form: 'newMockHsmKey',
     fields,
-    validate: values => {
+    validate: (values, props) => {
       const errors = {}
+      const lang = props.lang
 
       if (!values.alias) {
-        errors.alias = 'Key alias is required'
+        errors.alias = ( lang === 'zh' ? '密钥别名是必须项' :'Key alias is required' )
       }
       if (!values.password) {
-        errors.password = 'Password is required'
+        errors.password = ( lang === 'zh' ? '密码是必须项' : 'Password is required' )
       }else if( values.password.length < 5 ) {
-        errors.password = 'Please enter at least 5 characters password.'
+        errors.password = ( lang === 'zh' ? '请输入至少五位数的密码' : 'Please enter at least 5 characters password.' )
       }
       if ( values.password !== values.confirmPassword ) {
-        errors.confirmPassword = 'Please match the repeat password.'
+        errors.confirmPassword = ( lang === 'zh' ? '请重复输入你刚刚输入的密码' : 'Please match the repeat password.' )
       }
 
       return errors
