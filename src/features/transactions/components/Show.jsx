@@ -30,6 +30,8 @@ class Show extends BaseShow {
         return sum
       }, 0)
 
+      item.confirmations = confirmation
+
       const btmOutput = item.outputs.reduce((sum, output) => {
         if (output.type === 'control' && output.assetAlias === 'BTM') {
           sum += output.amount

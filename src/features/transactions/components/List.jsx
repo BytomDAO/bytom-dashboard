@@ -62,6 +62,7 @@ const mapStateToProps = (type, itemComponent, additionalProps = {}) => {
       listItemComponent: itemComponent,
       noResults: currentItems.length == 0,
       showFirstTimeFlow: currentItems.length == 0,
+      highestBlock: highestBlock,
       ...additionalProps
     }
   }

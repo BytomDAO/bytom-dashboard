@@ -9,6 +9,7 @@ class ListItem extends React.Component {
     const item = this.props.item
     const lang = this.props.lang
     const confirmation = item.highest - item.blockHeight + 1
+    item.confirmations = confirmation
 
     return(
       <div className={styles.main}>

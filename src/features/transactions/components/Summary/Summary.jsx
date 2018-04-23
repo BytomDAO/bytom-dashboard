@@ -51,7 +51,7 @@ class Summary extends React.Component {
 
   render() {
     const item = this.props.transaction
-    const confirmation = item.highest - item.blockHeight + 1
+    const confirmation = item.confirmations
     const isCoinbase = item.inputs.length > 0 && item.inputs[0].type === 'coinbase'
     const mature = isCoinbase && confirmation >= 100
 
@@ -76,8 +76,6 @@ class Summary extends React.Component {
     Object.keys(summary).forEach((assetId) => {
       const asset = summary[assetId]
       const nonAccountTypes = ['issue','retire']
-
-
 
       nonAccountTypes.forEach((type) => {
         if (asset[type] > 0) {
