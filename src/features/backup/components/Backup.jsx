@@ -4,6 +4,7 @@ import {PageContent, PageTitle} from 'features/shared/components'
 import styles from './Backup.scss'
 import {connect} from 'react-redux'
 import {chainClient} from 'utility/environment'
+import Restore from './Restore'
 
 class Backup extends React.Component {
   constructor(props) {
@@ -13,6 +14,11 @@ class Backup extends React.Component {
 
   backup() {
     this.connection.request('/backup-wallet').then(resp => {
+      if (resp.status === 'fail') {
+        this.props.showError(new Error(resp.msg))
+        return
+      }
+
       const date = new Date()
       const dateStr = date.toLocaleDateString().split(' ')[0]
       const timestamp = date.getTime()
@@ -29,42 +35,10 @@ class Backup extends React.Component {
     })
   }
 
-  handleFileChange(event) {
-    const files = event.target.files
-    if (files.length <= 0) {
-      this.setState({key: null})
-      return
-    }
-
-    const fileReader = new FileReader()
-    fileReader.onload = fileLoadedEvent => {
-      const backupData = JSON.parse(fileLoadedEvent.target.result)
-      this.connection.request('/restore-wallet', backupData).then(resp => {
-        if (resp.status === 'fail') {
-          this.props.showError(new Error(resp.msg))
-          return
-        }
-        this.props.showRestoreSuccess()
-      })
-    }
-    fileReader.readAsText(files[0], 'UTF-8')
-
-    const fileElement = document.getElementById('bytom-restore-file-upload')
-    fileElement.value = ''
-  }
-
-  restore() {
-    const element = document.getElementById('bytom-restore-file-upload')
-    element.click()
-  }
-
   render() {
     const lang = this.props.core.lang
     const newButton = <button className='btn btn-primary' onClick={this.backup.bind(this)}>
       {lang === 'zh' ? '备份' : 'Backup'}
-    </button>
-    const restoreButton = <button className='btn btn-primary' onClick={this.restore.bind(this)}>
-      {lang === 'zh' ? '恢复' : 'Restore'}
     </button>
 
     return (
@@ -73,9 +47,7 @@ class Backup extends React.Component {
         <PageContent>
           {newButton}
           <hr/>
-          {restoreButton}
-          <input id='bytom-restore-file-upload' type='file' style={{'display': 'none', 'alignItems': 'center', 'fontSize': '12px'}}
-                 onChange={this.handleFileChange.bind(this)}/>
+          <Restore index='0'></Restore>
         </PageContent>
       </div>
     )
@@ -84,14 +56,12 @@ class Backup extends React.Component {
 
 const mapStateToProps = (state) => ({
   core: state.core,
-  navAdvancedState: state.app.navAdvancedState,
 })
 
 const mapDispatchToProps = (dispatch) => ({
   showError: (err) => {
     dispatch({type: 'ERROR', payload: err})
   },
-  showRestoreSuccess: () => dispatch({type: 'RESTORE_SUCCESS'})
 })
 
 export default connect(
