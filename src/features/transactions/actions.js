@@ -131,7 +131,10 @@ form.submitForm = (formParams) => function (dispatch) {
     }))
   }
 
-  if (formParams.state.showAdvanceTx && formParams.state.showAdvanced && formParams.baseTransaction) {
+  if (formParams.state.showAdvanceTx
+    && formParams.state.showAdvanced
+    && formParams.baseTransaction
+    && formParams.submitAction == 'submit') {
     const transaction = JSON.parse(formParams.baseTransaction)
     return signAndSubmitTransaction(transaction, formParams.password)
   }
