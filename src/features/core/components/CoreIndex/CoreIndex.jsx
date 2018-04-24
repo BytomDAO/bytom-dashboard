@@ -64,7 +64,7 @@ class CoreIndex extends React.Component {
             <tbody>
             <tr>
               <td className={styles.row_label}>{lang === 'zh' ? '核心版本号' : 'Core Versions'}:</td>
-              <td>{coreData['version']}</td>
+              <td>{coreData? coreData['version'] : null}</td>
             </tr>
             <tr>
               <td className={styles.row_label}>{lang === 'zh' ? '语言' : 'Language'}:</td>
