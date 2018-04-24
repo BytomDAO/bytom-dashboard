@@ -84,8 +84,7 @@ class Register extends React.Component {
                 <TextField
                   title={lang === 'zh' ? '账户别名' : 'Account Alias'}
                   placeholder={lang === 'zh' ? '请输入账户别名...' : 'Please enter the account alias...'}
-                  fieldProps={accountAlias}
-                  autoFocus={true}/>
+                  fieldProps={accountAlias} />
                 <TextField
                   title={lang === 'zh' ? '密钥别名' : 'Key Alias'}
                   placeholder={lang === 'zh' ? '请输入密钥别名...' : 'Please enter the key alias...'}
