@@ -5,7 +5,6 @@ import actions from 'actions'
 import styles from './Register.scss'
 import {reduxForm} from 'redux-form'
 import {chainClient} from 'utility/environment'
-import {push} from 'react-router-redux'
 
 class Register extends React.Component {
   constructor(props) {
@@ -177,10 +176,7 @@ export default connect(
   (dispatch) => ({
     registerKey: (token) => dispatch(actions.core.registerKey(token)),
     showError: (err) => dispatch({type: 'ERROR', payload: err}),
-    success: () => {
-      dispatch(push({pathname: '/transactions'}))
-      window.location.reload()
-    },
+    success: () => dispatch({type: 'CREATE_REGISTER_ACCOUNT'})
   })
 )(reduxForm({
   form: 'initDefaultPassword',
