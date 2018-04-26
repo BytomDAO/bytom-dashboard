@@ -380,7 +380,7 @@ class Form extends React.Component {
           </table>
 
           <label className={styles.title}>{lang === 'zh' ? '密码' : 'Password'}</label>
-          <TextField placeholder={lang === 'zh' ? '请输入密码' : 'Please enter the assword'} fieldProps={password}
+          <TextField placeholder={lang === 'zh' ? '请输入密码' : 'Please enter the password'} fieldProps={password}
                      autoFocus={false} type={'password'}/>
         </FormSection>}
 
@@ -472,7 +472,7 @@ class Form extends React.Component {
         {
           this.state.showAdvanceTx && (actions.length > 0 || this.state.showAdvanced) && <FormSection>
             <label className={styles.title}>{lang === 'zh' ? '密码' : 'Password'}</label>
-            <TextField placeholder={lang === 'zh' ? '请输入密码' : 'Please enter the assword'} fieldProps={password}
+            <TextField placeholder={lang === 'zh' ? '请输入密码' : 'Please enter the password'} fieldProps={password}
                        autoFocus={false} type={'password'}/>
           </FormSection>
         }
