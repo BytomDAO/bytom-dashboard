@@ -13,8 +13,8 @@ class PageTitle extends React.Component {
     const chevron = require('images/chevron.png')
 
     return(
-      <div className={componentClassNames(this)}>
-        <div className={`${styles.main} navbar navbar-fixed-top`}>
+      <div className={`${componentClassNames(this)} ${styles.pageTitle} navbar navbar-fixed-top`}>
+        <div className={ styles.main }>
           <div className={styles.navigation}>
             <ul className={styles.crumbs}>
               {this.props.breadcrumbs.map(crumb =>
