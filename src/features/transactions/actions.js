@@ -1,7 +1,8 @@
-import { chainClient } from 'utility/environment'
-import { parseNonblankJSON } from 'utility/string'
-import { push } from 'react-router-redux'
-import { baseCreateActions, baseListActions } from 'features/shared/actions'
+import uuid from 'uuid'
+import {chainClient} from 'utility/environment'
+import {parseNonblankJSON} from 'utility/string'
+import {push} from 'react-router-redux'
+import {baseCreateActions, baseListActions} from 'features/shared/actions'
 
 const type = 'transaction'
 
@@ -15,6 +16,46 @@ function preprocessTransaction(formParams) {
   const builder = {
     baseTransaction: copy.baseTransaction,
     actions: copy.actions,
+  }
+
+  const normalT = formParams.normalTransaction
+  if (builder.actions.length == 0) {
+    let gasPrice = 0
+    switch (normalT.gas.type) {
+      case 'Fast':
+        gasPrice = formParams.state.estimateGas * 2
+        break
+      case 'Customize':
+        gasPrice = normalT.gas.price
+        break
+      case 'Standard':
+      default:
+        gasPrice = formParams.state.estimateGas * 1
+        break
+    }
+
+    builder.actions.push({
+      accountAlias: normalT.accountAlias,
+      accountId: normalT.accountId,
+      assetAlias: 'BTM',
+      amount: Number(gasPrice),
+      type: 'spend_account'
+    })
+    builder.actions.push({
+      accountAlias: normalT.accountAlias,
+      accountId: normalT.accountId,
+      assetAlias: normalT.assetAlias,
+      assetId: normalT.assetId,
+      amount: normalT.amount,
+      type: 'spend_account'
+    })
+    builder.actions.push({
+      address: normalT.address,
+      assetAlias: normalT.assetAlias,
+      assetId: normalT.assetId,
+      amount: normalT.amount,
+      type: 'control_address'
+    })
   }
 
   if (builder.baseTransaction == '') {
@@ -32,10 +73,10 @@ function preprocessTransaction(formParams) {
     intFields.forEach(key => {
       const value = a[key]
       if (value) {
-        if ((parseInt(value)+'') == value) {
+        if ((parseInt(value) + '') == value) {
           a[key] = parseInt(value)
         } else {
-          throw new Error(`Action ${parseInt(i)+1} ${key} must be an integer.`)
+          throw new Error(`Action ${parseInt(i) + 1} ${key} must be an integer.`)
         }
       }
     })
@@ -43,65 +84,94 @@ function preprocessTransaction(formParams) {
     try {
       a.referenceData = parseNonblankJSON(a.referenceData)
     } catch (err) {
-      throw new Error(`Action ${parseInt(i)+1} reference data should be valid JSON, or blank.`)
+      throw new Error(`Action ${parseInt(i) + 1} reference data should be valid JSON, or blank.`)
     }
 
     try {
       a.receiver = parseNonblankJSON(a.receiver)
     } catch (err) {
-      throw new Error(`Action ${parseInt(i)+1} receiver should be valid JSON.`)
+      throw new Error(`Action ${parseInt(i) + 1} receiver should be valid JSON.`)
     }
   }
 
   return builder
 }
 
-form.submitForm = (formParams) => function(dispatch) {
-  const buildPromise = chainClient().transactions.build(builder => {
-    const processed = preprocessTransaction(formParams)
+form.submitForm = (formParams) => function (dispatch) {
+  const connection = chainClient().connection
 
-    builder.actions = processed.actions.map(action => {
-      let result = {
-        address: action.address,
-        amount: action.amount,
-        account_id: action.accountId,
-        account_alias: action.accountAlias,
-        asset_id: action.assetId,
-        asset_alias: action.assetAlias,
-        type: action.type,
+  const processed = preprocessTransaction(formParams)
+  const buildPromise = connection.request('/build-transaction', {actions: processed.actions})
+
+  const signAndSubmitTransaction = (transaction, password) => {
+    return connection.request('/sign-transaction', {
+      password,
+      transaction
+    }).then(resp => {
+      if (resp.status === 'fail') {
+        throw new Error(resp.msg)
       }
-      if (action.receiver) {
-        result.receiver = {
-          control_program: action.receiver.controlProgram,
-          expires_at: action.receiver.expiresAt
-        }
-      }
-      return result
-    })
-    if (processed.baseTransaction) {
-      builder.baseTransaction = processed.baseTransaction
+
+      const rawTransaction = resp.data.transaction.rawTransaction
+      return connection.request('/submit-transaction', {rawTransaction})
+    }).then(dealSignSubmitResp)
+  }
+
+  const dealSignSubmitResp = resp => {
+    if (resp.status === 'fail') {
+      throw new Error(resp.msg)
     }
-  })
+
+    dispatch(form.created())
+    dispatch(push({
+      pathname: '/transactions',
+      state: {
+        preserveFlash: true
+      }
+    }))
+  }
+
+  if (formParams.state.showAdvanceTx
+    && formParams.state.showAdvanced
+    && formParams.baseTransaction
+    && formParams.submitAction == 'submit') {
+    const transaction = JSON.parse(formParams.baseTransaction)
+    return signAndSubmitTransaction(transaction, formParams.password)
+  }
 
   if (formParams.submitAction == 'submit') {
     return buildPromise
-      .then(({data: tpl}) => {
-        const password = (tpl.signing_instructions || []).map(() => '123456')
-        const client = chainClient()
-        const body = Object.assign({}, {password, 'transaction': tpl})
-        return client.connection.request('/sign-submit-transaction', body, true)
-      }).then(resp => {
+      .then((resp) => {
         if (resp.status === 'fail') {
-          // TODO: deal with failure
-          return
+          throw new Error(resp.msg)
         }
 
-        dispatch(form.created())
-        dispatch(push({
-          pathname: '/transactions'
-        }))
+        return signAndSubmitTransaction(resp.data, formParams.password)
       })
   }
+
+  // submitAction == 'generate'
+  return buildPromise.then(resp => {
+    if (resp.status === 'fail') {
+      throw new Error(resp.msg)
+    }
+
+    const body = Object.assign({}, {password: formParams.password, 'transaction': resp.data})
+    return connection.request('/sign-transaction', body)
+  }).then(resp => {
+    if (resp.status === 'fail') {
+      throw new Error(resp.msg)
+    }
+    const id = uuid.v4()
+    dispatch({
+      type: 'GENERATED_TX_HEX',
+      generated: {
+        id: id,
+        hex: JSON.stringify(resp.data.transaction),
+      },
+    })
+    dispatch(push(`/transactions/generated/${id}`))
+  })
 }
 
 export default {

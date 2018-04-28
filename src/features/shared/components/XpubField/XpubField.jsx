@@ -7,7 +7,13 @@ import actions from 'features/mockhsm/actions'
 const methodOptions = {
   mockhsm: 'Use existing MockHSM key',
   // generate: 'Generate new MockHSM key',
-  // provide: 'Provide existing xpub',
+  provide: 'Provide existing xpub',
+}
+
+const methodOptionsZh = {
+  mockhsm: '使用已有的密钥',
+  // generate: 'Generate new MockHSM key',
+  provide: '提供已有的扩展公钥',
 }
 
 class XpubField extends React.Component {
@@ -38,6 +44,7 @@ class XpubField extends React.Component {
       valueProps,
       mockhsmKeys,
     } = this.props
+    const lang = this.props.lang
 
     const typeOnChange = event => {
       const value = typeProps.onChange(event).value
@@ -55,11 +62,12 @@ class XpubField extends React.Component {
         autoFocus={this.state.autofocusInput}
         valueKey='xpub'
         labelKey='label'
+        lang={lang}
         fieldProps={{...valueProps, onChange: valueOnChange}} />,
       'provide': <TextField
         autoFocus={this.state.autofocusInput}
         fieldProps={{...valueProps, onChange: valueOnChange}}
-        placeholder='Enter xpub' />,
+        placeholder={ lang === 'zh' ? '输入扩展公钥' : 'Enter xpub' } />,
       'generate': <TextField
         autoFocus={this.state.autofocusInput}
         fieldProps={{...valueProps, onChange: valueOnChange}}
@@ -68,7 +76,7 @@ class XpubField extends React.Component {
 
     return (
       <div className={styles.main}>
-        <FieldLabel>Key {this.props.index + 1}</FieldLabel>
+        <FieldLabel>{ lang === 'zh' ? '密钥' :'Key '}{this.props.index + 1}</FieldLabel>
 
         <table className={styles.options}>
           <tbody>
@@ -76,14 +84,14 @@ class XpubField extends React.Component {
               <tr key={`key-${this.props.index}-option-${key}`}>
                 <td className={styles.label}>
                   <label>
-                    {/*<input type='radio'*/}
-                      {/*className={styles.radio}*/}
-                      {/*name={`keys-${this.props.index}`}*/}
-                      {/*onChange={typeOnChange}*/}
-                      {/*checked={key == typeProps.value}*/}
-                      {/*value={key}*/}
-                    {/*/>*/}
-                    {methodOptions[key]}
+                    <input type='radio'
+                      className={styles.radio}
+                      name={`keys-${this.props.index}`}
+                      onChange={typeOnChange}
+                      checked={key == typeProps.value}
+                      value={key}
+                    />
+                    { lang === 'zh' ? methodOptionsZh[key] : methodOptions[key]}
                   </label>
                 </td>
 
@@ -123,6 +131,7 @@ export default connect(
     return {
       autocompleteIsLoaded: state.key.autocompleteIsLoaded,
       mockhsmKeys: keys,
+      lang: state.core.lang
     }
   },
   (dispatch) => ({

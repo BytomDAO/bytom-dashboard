@@ -33,16 +33,16 @@
 .pencil {
   padding-right: 5px;
   font-size: 10px;
-  font-weight: bold;
+  font-weight: 600;
 }
 
 .label {
   background: $background-color;
   border-right: 1px solid $border-color;
   color: $text-strong-color;
-  font-weight: bold;
+  font-weight: 600;
   width: 200px;
-  font-size: $font-size-caps;
+  font-size: $font-size-base;
   font-family: Nitti Grotesk;
   text-align: right;
   letter-spacing: 0.2px;

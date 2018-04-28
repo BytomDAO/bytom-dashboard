@@ -21,9 +21,11 @@ const accountsAPI = (client) => {
 
     createReceiver: (params, cb) => shared.create(client, '/create-account-receiver', params, {cb, skipArray: true}),
 
-    createAddress: (params, cb) => shared.create(client, '/create-account-address', params, {cb, skipArray: true}),
+    createAddress: (params, cb) => shared.create(client, '/create-account-receiver', params, {cb, skipArray: true}),
 
     createReceiverBatch: (params, cb) => shared.createBatch(client, '/create-account-receiver', params, {cb}),
+
+    listAddresses: (accountId) => shared.query(client, 'accounts', '/list-addresses', {account_id: accountId}),
   }
 }
 

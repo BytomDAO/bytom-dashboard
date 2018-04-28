@@ -2,6 +2,10 @@
   background: $background-color;
   width: 100%;
 
+  code{
+    font-size: $font-size-code;
+  }
+
   thead {
     border-bottom: 1px solid $border-color;
   }
@@ -31,7 +35,7 @@
 }
 
 .colAction {
-  padding-left: $gutter-size * 1.5;
+  padding-left: $gutter-size ;
 }
 
 .colAction, .colAmount, .colAsset, .colAccount {
@@ -47,7 +51,12 @@
 .colLabel {
   color: $text-light-color;
   text-align: right;
-  width: 5%;
+  width: 7%;
+}
+
+.immature {
+  margin-left: 5px;
+  color: $text-danger;
 }
 
 .rawId {

@@ -2,7 +2,7 @@ import { RoutingContainer } from 'features/shared/components'
 import { humanize } from 'utility/string'
 import actions from 'actions'
 
-const makeRoutes = (store, type, List, New, Show, Update, options = {}) => {
+const makeRoutes = (store, type, List, New, Show, options = {}) => {
   const loadPage = () => {
     store.dispatch(actions[type].fetchAll())
   }
@@ -27,17 +27,11 @@ const makeRoutes = (store, type, List, New, Show, Update, options = {}) => {
     })
   }
 
-  if (Update) {
-    childRoutes.push({
-      path: ':id/tags',
-      component: Update
-    })
-  }
-
   return {
     path: options.path || type + 's',
     component: RoutingContainer,
     name: options.name || humanize(type + 's'),
+    name_zh: options.name_zh,
     indexRoute: {
       component: List,
       onEnter: (nextState, replace) => {

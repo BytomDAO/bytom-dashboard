@@ -4,7 +4,7 @@ import { buildBalanceDisplay } from 'utility/buildInOutDisplay'
 
 class ListItem extends React.Component {
   render() {
-    return <KeyValueTable items={buildBalanceDisplay(this.props.item)} />
+    return <KeyValueTable items={buildBalanceDisplay(this.props.item, this.props.btmAmountUnit, this.props.lang)} />
   }
 }
 

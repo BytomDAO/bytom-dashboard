@@ -11,11 +11,12 @@ import componentClassNames from 'utility/componentClassNames'
 class AssetShow extends BaseShow {
   render() {
     const item = this.props.item
+    const lang = this.props.lang
 
     let view
     if (item) {
       const title = <span>
-        {'Asset '}
+        { lang === 'zh' ? '资产' :'Asset ' }
         <code>{item.alias ? item.alias :item.id}</code>
       </span>
 
@@ -26,7 +27,7 @@ class AssetShow extends BaseShow {
           <KeyValueTable
             id={item.id}
             object='asset'
-            title='Details'
+            title={ lang === 'zh' ? '详情' : 'Details' }
             actions={[
               // <button key='show-circulation' className='btn btn-link' onClick={this.props.showCirculation.bind(this, item)}>
               //  Circulation
@@ -35,22 +36,23 @@ class AssetShow extends BaseShow {
             ]}
             items={[
               {label: 'ID', value: item.id},
-              {label: 'Alias', value: item.alias},
-              {label: 'Tags', value: item.tags || {}, editUrl: `/assets/${item.id}/tags`},
-              {label: 'Definition', value: item.definition},
-              {label: 'xpubs', value: (item.xpubs || []).length},
-              {label: 'Quorum', value: item.quorum},
+              {label: ( lang === 'zh' ? '别名' : 'Alias' ), value: item.alias, editUrl: item.alias === 'BTM' ? null : `/assets/${item.id}/alias`},
+              {label: ( lang === 'zh' ? '定义' : 'Definition'), value: item.definition},
+              {label: ( lang === 'zh' ? '扩展公钥数' : 'xpubs' ), value: (item.xpubs || []).length},
+              {label: ( lang === 'zh' ? '签名数' : 'Quorum' ), value: item.quorum},
             ]}
+            lang={lang}
           />
 
           {(item.xpubs || []).map((key, index) =>
             <KeyValueTable
               key={index}
-              title={`xpub ${index + 1}`}
+              title={lang === 'zh' ? `扩展公钥 ${index + 1}` :`xpub ${index + 1}`}
               items={[
-                {label: 'Index', value: index},
-                {label: 'Asset Pubkey', value: key},
+                {label: ( lang === 'zh' ? '索引' : 'Index' ), value: index},
+                {label: ( lang === 'zh' ? '资产公钥' : 'Asset Pubkey') , value: key},
               ]}
+              lang={lang}
             />
           )}
         </PageContent>
@@ -66,7 +68,8 @@ import { connect } from 'react-redux'
 import actions from 'actions'
 
 const mapStateToProps = (state, ownProps) => ({
-  item: state.asset.items[ownProps.params.id]
+  item: state.asset.items[ownProps.params.id],
+  lang: state.core.lang
 })
 
 const mapDispatchToProps = ( dispatch ) => ({

@@ -1,38 +1,22 @@
 import React from 'react'
-import { chainClient } from 'utility/environment'
-
-const clientApi = () => chainClient().mockHsm.keys
+import { Link } from 'react-router'
 
 class ListItem extends React.Component {
   constructor(props) {
     super(props)
-
-    this.echo = (item) => clientApi().export(item.xpub).then(resp => {
-      const privateKey = resp.data.privateKey
-
-      var element = document.createElement('a')
-      element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(privateKey))
-      element.setAttribute('download', item.alias)
-      element.style.display = 'none'
-      document.body.appendChild(element)
-      element.click()
-
-      document.body.removeChild(element)
-    })
   }
 
   render() {
     const item = this.props.item
+    const lang = this.props.lang
 
     return(
       <tr>
         <td>{item.alias}</td>
         <td><code>{item.xpub}</code></td>
-        <td>
-          <button className='btn btn-link' onClick={this.echo.bind(this, item)}>
-            Export private key
-          </button>
-        </td>
+        <td><Link to={`/keys/${item.id}`}>
+          {lang === 'zh' ? '更多' : 'More'}
+        </Link></td>
       </tr>
     )
   }

@@ -18,7 +18,7 @@ class List extends React.Component {
     const ItemList = BaseList.ItemList
     return <div>
       <ItemList {...this.props}/>
-      {!this.props.noResults && <PaginationField
+      {!this.props.noResults && this.props.totalNumberPage > 1 && <PaginationField
         currentPage = { this.props.currentPage }
         totalNumberPage = { this.props.totalNumberPage }
         pushList = { this.props.pushList }/>}
@@ -45,9 +45,11 @@ const mapStateToProps = (type, itemComponent, additionalProps = {}) => {
     const keysArray = Object.keys(totalItems)
     const totalNumberPage = Math.ceil(keysArray.length/pageSize)
     const startIndex = (currentPage - 1) * pageSize
+    const highestBlock = state.core.coreData && state.core.coreData.highestBlock
     const currentItems = keysArray.slice(startIndex, startIndex + pageSize).map(
       id => totalItems[id]
     ).filter(item => item != undefined)
+    currentItems.forEach(item => item.highest = highestBlock)
 
     return {
       currentPage: currentPage,
@@ -55,9 +57,12 @@ const mapStateToProps = (type, itemComponent, additionalProps = {}) => {
       items: currentItems,
       loadedOnce: state[type].queries.loadedOnce,
       type: type,
+      lang: state.core.lang,
+      btmAmountUnit: state.core.btmAmountUnit,
       listItemComponent: itemComponent,
       noResults: currentItems.length == 0,
       showFirstTimeFlow: currentItems.length == 0,
+      highestBlock: highestBlock,
       ...additionalProps
     }
   }

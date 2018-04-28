@@ -19,9 +19,10 @@ const checkParams = (nextState, replace) => {
 export default (store) => {
   const loadGrants = () => store.dispatch(actions.fetchItems())
 
-  const routes = makeRoutes(store, 'accessControl', AccessControlList, null, null, null, {
+  const routes = makeRoutes(store, 'accessControl', AccessControlList, null, null, {
     path: 'access-control',
-    name: 'Access control'
+    name: 'Access control',
+    name_zh: '访问控制'
   })
 
   routes.indexRoute.onEnter = (nextState, replace) => {

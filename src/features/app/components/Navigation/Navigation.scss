@@ -1,3 +1,9 @@
+.border {
+  padding-top: $gutter-size;
+  border-top: 1px solid $border-inverse-color;
+  margin-top: $gutter-size;
+}
+
 .main {
   a {
     display: block;
@@ -19,6 +25,18 @@
   }
 }
 
+.langBtn {
+  width: 80px !important;
+  height: 30px;
+}
+
+.smallFont {
+  font-size: 12px;
+  & > a {
+    font-size: 12px;
+  }
+}
+
 .navigation {
   padding: 0;
   list-style-type: none;
@@ -29,9 +47,25 @@
 
 .navigationTitle {
   color: $highlight-inverse-color;
-  font-size: $font-size-caps;
+  //font-size: $font-size-caps;
   text-transform: uppercase;
   padding: 3px 0;
+  font-size: $font-size-chrome;
+
+  transform:scale(0.916);
+  transform-origin-x: 0%;
+
+  -ms-transform:scale(0.916);
+  -ms-transform-origin-x: 0%;
+
+  -moz-transform:scale(0.916);
+  -moz-transform-origin-x: 0%;
+
+  -o-transform:scale(0.916);
+  -o-transform-origin-x: 0%;
+
+  -webkit-transform: scale(0.916);
+  -webkit-transform-origin-x: 0%;
 }
 
 .activeIcon {
@@ -53,3 +87,4 @@
     margin-top: -2px;
   }
 }
+

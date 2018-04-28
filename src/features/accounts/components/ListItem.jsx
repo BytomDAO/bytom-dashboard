@@ -4,6 +4,7 @@ import { Link } from 'react-router'
 class ListItem extends React.Component {
   render() {
     const item = this.props.item
+    const lang = this.props.lang
 
     return(
       <tr>
@@ -11,7 +12,7 @@ class ListItem extends React.Component {
         <td><code>{item.id}</code></td>
         <td>
           <Link to={`/accounts/${item.id}`}>
-            View details →
+            {lang === 'zh' ? '查看详情' : 'View details'} →
           </Link>
         </td>
       </tr>

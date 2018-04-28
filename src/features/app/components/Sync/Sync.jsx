@@ -1,32 +1,50 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import navStyles from '../Navigation/Navigation.scss'
 import styles from './Sync.scss'
-import { chainClient } from 'utility/environment'
 
 class Sync extends React.Component {
-  constructor(props) {
-    super(props)
-
-    const fetchInfo = () => {
-      chainClient().config.info().then(resp => {
-        this.setState(resp.data)
-      })
-    }
-    setInterval(fetchInfo.bind(this), 2 * 1000)
-  }
-
   render() {
-    if (!this.state) {
+    const coreData = this.props.coreData
+    if(!coreData){
       return <ul></ul>
     }
+    const networkID = coreData.networkId
+    const syncing = coreData.syncing
+    const peerCount = coreData.peerCount
+    const currentBlock = coreData.currentBlock
+    const highestBlock = coreData.highestBlock
+    const lang = this.props.lang
 
-    const arr = Object.keys(this.state).map(key => {
-      return <li key={key}>{key + ': ' + String(this.state[key])}</li>
-    })
-    arr.unshift(<li key='sync-title' className={navStyles.navigationTitle}>Network status</li>)
+    if (syncing) {
+      return <ul className={`${navStyles.navigation} ${styles.main}`}>
+        <li key='sync-title' className={navStyles.navigationTitle}>{ networkID } { lang === 'zh' ? '同步状态' : 'Sync Status'}</li>
+        <li key='sync-status'>{lang === 'zh' ? '同步中: ' : 'Synchronizing: '}  {currentBlock}/{highestBlock}</li>
+        <li key='sync-peer-count'>{lang === 'zh' ? '连接数' : 'Peer Count'}: {peerCount}</li>
+      </ul>
+    }
 
-    return <ul className={`${navStyles.navigation} ${styles.main}`}>{arr}</ul>
+    const elems = []
+
+    // elems.push(<li key='sync-networkID' className={navStyles.navigationTitle}>{ networkID }</li>)
+    elems.push(<li key='sync-title' className={navStyles.navigationTitle}>{ networkID } { lang === 'zh' ? '同步状态' : 'Sync Status' }</li>)
+
+    if(!syncing && currentBlock == highestBlock){
+      elems.push(<li className={styles.blockHightlight} key='sync-done'>{lang === 'zh' ? '同步完成: ' : 'Fully synced: ' } <span>{currentBlock}/{highestBlock}</span></li>)
+    }
+
+    if(!syncing && currentBlock < highestBlock){
+      elems.push(<li key='sync-disconnect'>{lang === 'zh' ? '同步中断' : 'Disconnect'}</li>)
+    }
+
+    elems.push(<li key='sync-peer-count'>{lang === 'zh' ? '连接数' : 'Peer Count'}: {peerCount}</li>)
+
+    return <ul className={`${navStyles.navigation} ${styles.main}`}>{elems}</ul>
   }
 }
 
-export default Sync
+export default connect(
+  (state) => ({
+    coreData:state.core.coreData
+  })
+)(Sync)

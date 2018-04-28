@@ -197,6 +197,42 @@ export const connected = (state = true, action) => {
   return state
 }
 
+export const btmAmountUnit = (state = 'BTM' , action) => {
+  if (action.type == 'UPDATE_BTM_AMOUNT_UNIT') {
+    return action.param
+  }
+  return state
+}
+
+const defaultLang = window.navigator.language.startsWith('zh') ? 'zh' : 'en'
+const lang = (state = defaultLang, action) => {
+  if (action.type === 'UPDATE_CORE_LANGUAGE') {
+    return action.lang || ''
+  }
+  return state
+}
+
+const mingStatus = (state = false, action) => {
+  if (action.type == 'UPDATE_CORE_INFO') {
+    return action.param.data.mining
+  }
+  return state
+}
+
+const coreData = (state = null, action) => {
+  if (action.type == 'UPDATE_CORE_INFO') {
+    return action.param.data || null
+  }
+  return state
+}
+
+const accountInit = (state = false, action) => {
+  if (action.type == 'CREATE_REGISTER_ACCOUNT') {
+    return true
+  }
+  return state
+}
+
 const snapshot = (state = null, action) => {
   if (action.type == 'UPDATE_CORE_INFO') {
     return action.param.snapshot || null // snapshot may be undefined, which Redux doesn't like.
@@ -206,7 +242,9 @@ const snapshot = (state = null, action) => {
 
 const version = (state, action) => coreConfigReducer('version', state, 'N/A', action)
 
+
 export default combineReducers({
+  accountInit,
   blockchainId,
   blockHeight,
   connected,
@@ -215,12 +253,14 @@ export default combineReducers({
   configured,
   configuredAt,
   coreType,
+  coreData,
   generator,
   generatorAccessToken,
   generatorBlockHeight,
   generatorUrl,
   localhostAuth,
   mockhsm,
+  mingStatus,
   crosscoreRpcVersion,
   onTestnet,
   httpOk,
@@ -233,4 +273,6 @@ export default combineReducers({
   syncEstimates,
   validToken,
   version,
+  lang,
+  btmAmountUnit
 })

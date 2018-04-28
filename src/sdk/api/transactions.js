@@ -27,10 +27,6 @@ class TransactionBuilder {
     this.actions.push(Object.assign({}, params, {type: 'issue'}))
   }
 
-  controlWithAccount(params) {
-    this.actions.push(Object.assign({}, params, {type: 'control_account'}))
-  }
-
   controlWithReceiver(params) {
     this.actions.push(Object.assign({}, params, {type: 'control_receiver'}))
   }

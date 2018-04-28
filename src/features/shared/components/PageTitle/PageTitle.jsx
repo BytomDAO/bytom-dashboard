@@ -1,8 +1,10 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { Flash } from 'features/shared/components'
 import { Link } from 'react-router'
 import { humanize, capitalize } from 'utility/string'
+import { AutoAffix } from 'react-overlays'
 import makeRoutes from 'routes'
 import actions from 'actions'
 import styles from './PageTitle.scss'
@@ -10,14 +12,22 @@ import componentClassNames from 'utility/componentClassNames'
 import classNames from 'classnames'
 
 class PageTitle extends React.Component {
+  constructor(props){
+    super(props)
+    this.state={component: null}
+  }
+
+  componentDidMount() {
+    this.setState({component: ReactDOM.findDOMNode(this).parentNode})
+  }
   render() {
     const chevron = require('images/chevron.png')
     // const className = classNames(styles.main, 'navbar', 'navbar-fixed-top')
     const className = classNames(styles.main)
 
     return(
-      <div className={componentClassNames(this)}>
-        <div className={className} style={{marginTop: this.props.margintop+'px'}}>
+      <div className={componentClassNames(this)} >
+        <div className={`${styles.main} navbar navbar-fixed-top`}  style={{marginTop: this.props.margintop+'px'}}>
           <div className={styles.navigation}>
             <ul className={styles.crumbs}>
               {this.props.breadcrumbs.map(crumb =>
@@ -39,11 +49,15 @@ class PageTitle extends React.Component {
             {this.props.actions.map(item => <li key={item.key}>{item}</li>)}
           </ul>}
         </div>
-
-        <Flash messages={this.props.flashMessages}
-          markFlashDisplayed={this.props.markFlashDisplayed}
-          dismissFlash={this.props.dismissFlash}
-        />
+        <AutoAffix viewportOffsetTop={60} container={this.state.component} affixClassName={styles.flash} >
+          <div>
+              <Flash
+                messages={this.props.flashMessages}
+                markFlashDisplayed={this.props.markFlashDisplayed}
+                dismissFlash={this.props.dismissFlash}
+              />
+          </div>
+        </AutoAffix>
       </div>
     )
   }
@@ -53,6 +67,7 @@ const mapStateToProps = (state) => {
   const routes = makeRoutes()
   const pathname = state.routing.locationBeforeTransitions.pathname
   const breadcrumbs = []
+  const lang = state.core.lang
 
   let currentRoutes = routes.childRoutes
   let currentPath = []
@@ -66,8 +81,12 @@ const mapStateToProps = (state) => {
       currentPath.push(component)
 
       if (!match.skipBreadcrumb) {
+        let crumbName =  match.name || humanize(component)
+        if( lang === 'zh' &&  match.name_zh ){
+          crumbName = match.name_zh
+        }
         breadcrumbs.push({
-          name: match.name || humanize(component),
+          name: crumbName ,
           path: currentPath.join('/')
         })
       }

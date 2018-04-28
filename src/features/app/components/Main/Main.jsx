@@ -1,5 +1,6 @@
 import React from 'react'
 import styles from './Main.scss'
+import { MenuItem, Dropdown } from 'react-bootstrap'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import actions from 'actions'
@@ -21,7 +22,7 @@ class Main extends React.Component {
   }
 
   render() {
-    let logo = require('images/logo-bytom-white.png')
+    let logo = require('images/logo-bytom-white.svg')
 
     return (
       <div className={styles.main}
@@ -32,6 +33,27 @@ class Main extends React.Component {
               <Link to={'/'}>
                 <img src={logo} className={styles.brand_image} />
               </Link>
+
+              <Dropdown
+                id='dropdown-custom-1'
+                bsSize='xsmall'
+                className={styles.languagesContainer}
+                pullRight
+                onSelect={this.props.setLang}
+              >
+                <Dropdown.Toggle
+                  className={styles.languages}
+                  noCaret
+                >
+                  {this.props.lang === 'zh' ? '中' : 'EN'}
+                </Dropdown.Toggle>
+                <Dropdown.Menu
+                  className={styles.languagesMenu}
+                >
+                  <MenuItem eventKey='zh'>中文</MenuItem>
+                  <MenuItem eventKey='en'>ENGLISH</MenuItem>
+                </Dropdown.Menu>
+              </Dropdown>
 
               <span>
                 <span className={styles.settings} onClick={this.toggleDropdown}>
@@ -62,11 +84,18 @@ class Main extends React.Component {
 export default connect(
   (state) => ({
     canLogOut: state.core.requireClientToken,
+    lang: state.core.lang,
     connected: true,
     showDropwdown: state.app.dropdownState == 'open',
   }),
   (dispatch) => ({
     toggleDropdown: () => dispatch(actions.app.toggleDropdown),
     closeDropdown: () => dispatch(actions.app.closeDropdown),
+    setLang: (event) => {
+      dispatch({
+        type: 'UPDATE_CORE_LANGUAGE',
+        lang: event
+      })
+    }
   })
 )(Main)

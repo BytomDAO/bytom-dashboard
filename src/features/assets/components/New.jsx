@@ -23,25 +23,27 @@ class Form extends React.Component {
       handleSubmit,
       submitting
     } = this.props
+    const lang = this.props.lang
 
     return(
       <FormContainer
         error={error}
-        label='New asset'
+        label= { lang === 'zh' ? '新建资产' : 'New asset' }
         onSubmit={handleSubmit(this.submitWithErrors)}
-        submitting={submitting} >
+        submitting={submitting}
+        lang={lang}>
 
-        <FormSection title='Asset Information'>
-          <TextField title='Alias' placeholder='Alias' fieldProps={alias} autoFocus={true} />
-          <JsonField title='Tags' fieldProps={tags} />
-          <JsonField title='Definition' fieldProps={definition} />
+        <FormSection title={ lang === 'zh' ? '资产信息' : 'Asset Information'}>
+          <TextField title={ lang === 'zh' ? '别名' : 'Alias'} placeholder={ lang === 'zh' ? '别名' : 'Alias'} fieldProps={alias} autoFocus={true} />
+          <JsonField title={ lang === 'zh' ? '定义' : 'Definition' } fieldProps={definition} lang={lang}/>
         </FormSection>
 
-        <FormSection title='Keys and Signing'>
+        <FormSection title={ lang === 'zh' ? '密钥和签名' :'Keys and Signing' }>
           <KeyConfiguration
+            lang={lang}
             xpubs={xpubs}
             quorum={quorum}
-            quorumHint='Number of signatures required to issue' />
+            quorumHint={ lang === 'zh' ? '所需的签名数' : 'Number of signatures required to issue' } />
         </FormSection>
 
       </FormContainer>
@@ -49,21 +51,23 @@ class Form extends React.Component {
   }
 }
 
-const validate = values => {
+const validate = (values,props) => {
   const errors = {}
+  const lang = props.lang
 
-  const jsonFields = ['tags', 'definition']
+  const jsonFields = ['definition']
   jsonFields.forEach(key => {
     const fieldError = JsonField.validator(values[key])
     if (fieldError) { errors[key] = fieldError }
   })
+
+  if (!values.alias) { errors.alias = ( lang === 'zh' ? '资产别名是必须项' :'Asset alias is required' ) }
 
   return errors
 }
 
 const fields = [
   'alias',
-  'tags',
   'definition',
   'xpubs[].value',
   'xpubs[].type',
@@ -77,8 +81,7 @@ export default BaseNew.connect(
     fields,
     validate,
     initialValues: {
-      tags: '{\n\t\n}',
-      definition: '{\n\t\n}',
+      definition: '{\n  "name": "", \n  "symobol": "",\n  "decimals": 8,\n  "description": {}\n}',
       quorum: 1,
     }
   })(Form)

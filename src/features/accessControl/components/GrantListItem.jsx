@@ -8,6 +8,7 @@ import styles from './GrantListItem.scss'
 class GrantListItem extends React.Component {
   render() {
     const item = this.props.item
+    const lang = this.props.lang
 
     // let desc
     // if (isAccessToken(item)) {
@@ -41,7 +42,7 @@ class GrantListItem extends React.Component {
           {/*</button>*/}
 
           <button className='btn btn-link' onClick={this.props.delete.bind(this, item)}>
-            Delete
+            { lang==='zh'? '删除' : 'Delete' }
           </button>
         </td>}
         {/*{item.isEditing && <td colSpan='2'>*/}

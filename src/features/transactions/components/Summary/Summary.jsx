@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router'
+import { converIntToDec } from 'utility/buildInOutDisplay'
 import styles from './Summary.scss'
 
 const INOUT_TYPES = {
@@ -9,6 +10,8 @@ const INOUT_TYPES = {
   retire: 'Retire',
 }
 
+const btmID = 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
+
 class Summary extends React.Component {
   normalizeInouts(inouts) {
     const normalized = {}
@@ -17,6 +20,7 @@ class Summary extends React.Component {
       let asset = normalized[inout.assetId]
       if (!asset) asset = normalized[inout.assetId] = {
         alias: inout.assetAlias,
+        decimals: (inout.assetDefinition && inout.assetDefinition.decimals && inout.assetId !== btmID)? inout.assetDefinition.decimals : null,
         issue: 0,
         retire: 0
       }
@@ -46,9 +50,28 @@ class Summary extends React.Component {
   }
 
   render() {
+    const item = this.props.transaction
+    const confirmation = item.confirmations
+    const isCoinbase = item.inputs.length > 0 && item.inputs[0].type === 'coinbase'
+    const mature = isCoinbase && confirmation >= 100
+
     const inouts = this.props.transaction.inputs.concat(this.props.transaction.outputs)
     const summary = this.normalizeInouts(inouts)
     const items = []
+    const lang = this.props.lang
+
+    const normalizeBtmAmountUnit = (assetID, amount, btmAmountUnit) => {
+      //normalize BTM Amount
+      if (assetID === 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff') {
+        switch (btmAmountUnit){
+          case 'BTM':
+            return converIntToDec(amount, 8)
+          case 'mBTM':
+            return converIntToDec(amount, 5)
+        }
+      }
+      return amount
+    }
 
     Object.keys(summary).forEach((assetId) => {
       const asset = summary[assetId]
@@ -59,7 +82,7 @@ class Summary extends React.Component {
           items.push({
             type: INOUT_TYPES[type],
             rawAction: type,
-            amount: asset[type],
+            amount: asset.decimals? converIntToDec(asset[type], asset.decimals) : normalizeBtmAmountUnit(assetId, asset[type], this.props.btmAmountUnit),
             asset: asset.alias ? asset.alias : <code className={styles.rawId}>{assetId}</code>,
             assetId: assetId,
           })
@@ -83,7 +106,7 @@ class Summary extends React.Component {
             items.push({
               type: INOUT_TYPES[type],
               rawAction: type,
-              amount: account[type],
+              amount: asset.decimals? converIntToDec(account[type], asset.decimals) : normalizeBtmAmountUnit(assetId, account[type], this.props.btmAmountUnit),
               asset: asset.alias ? asset.alias : <code className={styles.rawId}>{assetId}</code>,
               assetId: assetId,
               direction: type == 'spend' ? 'from' : 'to',
@@ -104,18 +127,26 @@ class Summary extends React.Component {
       <tbody>
         {items.map((item, index) =>
           <tr key={index}>
-            <td className={styles.colAction}>{item.type}</td>
-            <td className={styles.colLabel}>amount</td>
+            {
+              !isCoinbase && <td className={styles.colAction}>{item.type}</td>
+            }
+            {
+              isCoinbase && <td className={styles.colAction}>
+                Coinbase
+                {!mature && <small className={styles.immature}>{ lang === 'zh' ? '未成熟' : 'immature' }</small>}
+              </td>
+            }
+            <td className={styles.colLabel}>{ lang === 'zh' ? '数量' : 'amount' }</td>
             <td className={styles.colAmount}>
               <code className={styles.amount}>{item.amount}</code>
             </td>
-            <td className={styles.colLabel}>asset</td>
+            <td className={styles.colLabel}>{ lang === 'zh' ? '资产' : 'asset' }</td>
             <td className={styles.colAccount}>
               <Link to={`/assets/${item.assetId}`}>
                 {item.asset}
               </Link>
             </td>
-            <td className={styles.colLabel}>{item.account && 'account'}</td>
+            <td className={styles.colLabel}>{item.account && ( lang === 'zh' ? '账户' : 'account')}</td>
             <td className={styles.colAccount}>
               {item.accountId && <Link to={`/accounts/${item.accountId}`}>
                 {item.account}

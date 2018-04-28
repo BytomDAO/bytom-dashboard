@@ -1,17 +1,21 @@
 $grid-gutter-width: 30px;
 
-$font-size-caps: 13px;
-$font-size-code: $font-size-caps;
-$font-size-base: 15px;
-$font-size-nav: 16px;
+$font-size-caps: 12px;
+$font-size-chrome: 12px;
+$font-size-base: 13px;
+$font-size-code: $font-size-base;
+$font-size-nav: 14px;
 $font-size-form-section-title: $font-size-nav;
-$font-size-section-title: 18px;
+$font-size-section-title: 16px;
+$font-size-btn: $font-size-nav;
 $font-size-btn-lg: $font-size-section-title;
-$font-size-page-title: 22px;
-$font-size-close: 26px;
-$font-size-h2: 28px;
+$font-size-page-title: 20px;
+$font-size-close: 24px;
+$font-size-h2: 26px;
 $line-height-base: 1.7;
-$font-family-sans-serif: "Nitti Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif;
+$font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+"Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
+SimSun, sans-serif;
 $font-family-monospace: "Nitti", Menlo, Monaco, Consolas, "Courier New", monospace;
 
 // Disable responsive styles below 900px wide

@@ -1,9 +1,10 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import { Link } from 'react-router'
+import {connect} from 'react-redux'
+import {Link} from 'react-router'
 import styles from './Navigation.scss'
-import { navIcon } from '../../utils'
+import {navIcon} from '../../utils'
 import Sync from '../Sync/Sync'
+import {docsRoot} from '../../../../utility/environment'
 
 class Navigation extends React.Component {
   constructor(props) {
@@ -18,43 +19,45 @@ class Navigation extends React.Component {
   }
 
   render() {
+    const lang = this.props.lang
     return (
       <div className={styles.main}>
         <ul className={styles.navigation}>
-          <li className={styles.navigationTitle}>core data</li>
+          <li className={styles.navigationTitle}>{lang === 'zh' ? '核心数据' : 'core data'}</li>
           <li>
             <Link to='/transactions' activeClassName={styles.active}>
               {navIcon('transaction', styles)}
-              Transactions
+              {}
+              {lang === 'zh' ? '交易' : 'Transactions'}
             </Link>
           </li>
           <li>
             <Link to='/accounts' activeClassName={styles.active}>
               {navIcon('account', styles)}
-              Accounts
+              {lang === 'zh' ? '账户' : 'Accounts'}
             </Link>
           </li>
           <li>
             <Link to='/assets' activeClassName={styles.active}>
               {navIcon('asset', styles)}
-              Assets
+              {lang === 'zh' ? '资产' : 'Assets'}
             </Link>
           </li>
           <li>
             <Link to='/balances' activeClassName={styles.active}>
               {navIcon('balance', styles)}
-              Balances
+              {lang === 'zh' ? '余额' : 'Balances'}
             </Link>
           </li>
         </ul>
 
         <ul className={styles.navigation}>
-          <li className={styles.navigationTitle}>services</li>
+          <li className={styles.navigationTitle}>{lang === 'zh' ? '服务' : 'services' }</li>
           {this.props.mockhsm &&
           <li>
             <Link to='/keys' activeClassName={styles.active}>
               {navIcon('mockhsm', styles)}
-              Keys
+              {lang === 'zh' ? '密钥' : 'Keys'}
             </Link>
           </li>
           }
@@ -66,18 +69,30 @@ class Navigation extends React.Component {
           </li>
         </ul>
 
-        <ul className={styles.navigation}>
-          <li className={styles.navigationTitle}>advanced</li>
+        { this.props.showNavAdvance && <ul className={styles.navigation}>
+          <li className={styles.navigationTitle}>{lang === 'zh' ? '高级' : 'advanced' }</li>
           <li>
             <Link to='/unspents' activeClassName={styles.active}>
               {navIcon('unspent', styles)}
-              Unspent outputs
+              {lang === 'zh' ? '未花费输出' : 'Unspent outputs' }
             </Link>
+          </li>
+        </ul>}
+
+        <ul className={styles.navigation}>
+          <li className={styles.navigationTitle}>{lang === 'zh' ? '帮助' : 'help' }</li>
+          <li>
+            <a href={docsRoot} target='_blank'>
+              {navIcon('docs', styles)}
+              {lang === 'zh' ? '文档' : 'Documentation'}
+            </a>
           </li>
         </ul>
 
+        <Sync
+          lang={lang}
+        />
 
-        {<Sync />}
       </div>
     )
   }
@@ -93,13 +108,22 @@ export default connect(
     }
 
     return {
+      coreData: state.core.coreData,
       routing: state.routing, // required for <Link>s to update active state on navigation
       showSync: state.core.configured && !state.core.generator,
+      lang: state.core.lang,
       mockhsm: true,
-      docVersion
+      docVersion,
+      showNavAdvance: state.app.navAdvancedState === 'advance'
     }
   },
   (dispatch) => ({
-    openTutorial: () => dispatch({ type: 'OPEN_TUTORIAL' })
+    openTutorial: () => dispatch({type: 'OPEN_TUTORIAL'}),
+    setLang: (event) => {
+      dispatch({
+        type: 'UPDATE_CORE_LANGUAGE',
+        lang: event
+      })
+    }
   })
 )(Navigation)

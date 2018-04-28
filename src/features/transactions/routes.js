@@ -8,14 +8,14 @@ export default (store) => {
     List,
     New,
     Show,
-    null,
     {
       childRoutes: [
         {
           path: 'generated/:id',
           component: GeneratedTxHex,
         },
-      ]
+      ],
+      name_zh: '交易'
     }
   )
 }

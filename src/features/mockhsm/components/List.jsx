@@ -1,39 +1,33 @@
 import { BaseList, TableList } from 'features/shared/components'
 import ListItem from './ListItem'
-import { chainClient } from 'utility/environment'
-import { store } from 'app'
 
 const type = 'key'
 
 class KeyList extends BaseList.ItemList {
-  constructor(props) {
-    super(props)
-    const client = chainClient()
+}
 
-    this.setStat = () => client.mockHsm.keys.progress().then(({data}) => {
-      store.dispatch({
-        type: 'RECEIVED_IMPORT_STATUS',
-        data
-      })
+const mapStateToProps = (state) => {
+  let titles
+  if(state.core.lang === 'zh'){
+    titles = ['别名','主公钥']
+  }else{
+    titles = ['Alias', 'xpub']
+  }
 
-      if (data.length > 0) {
-        window.setTimeout(this.setStat, 5000)
+  return {
+    ...BaseList.mapStateToProps(type, ListItem, {
+      skipQuery: true,
+      label: 'Keys',
+      wrapperComponent: TableList,
+      wrapperProps: {
+        titles: titles
       }
-    })
-
-    this.setStat()
+    })(state)
   }
 }
 
 export default BaseList.connect(
-  BaseList.mapStateToProps(type, ListItem, {
-    skipQuery: true,
-    label: 'Keys',
-    wrapperComponent: TableList,
-    wrapperProps: {
-      titles: ['Alias', 'xpub']
-    }
-  }),
+  mapStateToProps,
   BaseList.mapDispatchToProps(type),
   KeyList
 )

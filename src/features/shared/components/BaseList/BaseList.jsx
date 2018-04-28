@@ -9,31 +9,41 @@ import EmptyList from './EmptyList'
 class ItemList extends React.Component {
   render() {
     const label = this.props.label || pluralize(humanize(this.props.type))
-    const objectName = label.slice(0,-1)
     const actions = [...(this.props.actions || [])]
+    const lang = this.props.lang
 
     const labelTitleMap = {
-      transactions: 'Transactions',
-      accounts: 'Accounts',
-      assets: 'Assets',
-      balances: 'Balances',
-      'unspent outputs': 'UTXO'
+      transactions: lang === 'zh' ? '交易' : 'Transactions',
+      accounts: lang === 'zh' ? '账户' : 'Accounts',
+      assets: lang === 'zh' ? '资产' : 'Assets',
+      balances: lang === 'zh' ? '余额' : 'Balances',
+      'unspent outputs': 'UTXO',
+      Keys: lang === 'zh' ? '密钥' : 'Keys'
     }
+    const objectNameZh = {
+      transactions: '交易' ,
+      accounts: '账户',
+      assets: '资产',
+      balances: '余额' ,
+      'unspent outputs': '未完成输出',
+      Keys: '密钥'
+    }
+    const objectName = lang === 'zh' ? objectNameZh[label] :label.slice(0,-1)
     const title = labelTitleMap[label] || capitalize(label)
 
     const newButton = <button key='showCreate' className='btn btn-primary' onClick={this.props.showCreate}>
-      + {'New'}
+      + {lang === 'zh' ? '新建' : 'New'}
     </button>
     if (!this.props.skipCreate) {
       actions.push(newButton)
     }
 
-    let header = <div>
+    let header =
       <PageTitle
         title={title}
         actions={actions}
       />
-    </div>
+
 
     const rootClassNames = componentClassNames(this, 'flex-container')
 
@@ -49,13 +59,14 @@ class ItemList extends React.Component {
             newButton={newButton}
             showFirstTimeFlow={this.props.showFirstTimeFlow}
             skipCreate={this.props.skipCreate}
-            loadedOnce={this.props.loadedOnce} />
+            loadedOnce={this.props.loadedOnce}
+            lang={lang} />
 
         </div>
       )
     } else {
       const items = this.props.items.map((item) =>
-        <this.props.listItemComponent key={item.id} item={item} {...this.props.itemActions}/>)
+        <this.props.listItemComponent key={item.id} item={item} lang={this.props.lang} btmAmountUnit={this.props.btmAmountUnit} {...this.props.itemActions}/>)
       const Wrapper = this.props.wrapperComponent
 
       return(
@@ -91,6 +102,8 @@ export const mapStateToProps = (type, itemComponent, additionalProps = {}) => (s
     items: target,
     loadedOnce: state[type].queries.loadedOnce,
     type: type,
+    lang: state.core.lang,
+    btmAmountUnit: state.core.btmAmountUnit,
     listItemComponent: itemComponent,
     noResults: target.length == 0,
     showFirstTimeFlow: target.length == 0,

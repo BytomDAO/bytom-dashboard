@@ -3,7 +3,7 @@ const shared = require('../shared')
 const mockHsmKeysAPI = (client) => {
   return {
     create: (params, cb) => {
-      let body = Object.assign({}, params, {password: '123456'})
+      let body = Object.assign({}, params)
       const uri = body.xprv ? '/import-private-key' : '/create-key'
 
       return shared.tryCallback(
@@ -20,9 +20,11 @@ const mockHsmKeysAPI = (client) => {
       return shared.query(client, 'mockHsm.keys', '/list-keys', params, {cb})
     },
 
+    resetPassword: (params, cb) =>  client.request('/reset-key-password', params),
+
     queryAll: (params, processor, cb) => shared.queryAll(client, 'mockHsm.keys', params, processor, cb),
 
-    export: (xpub) => client.request('/export-private-key', {xpub, password: '123456'}),
+    export: (params) => client.request('/export-private-key', params),
 
     progress: () => client.request('/import-key-progress')
   }

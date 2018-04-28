@@ -12,16 +12,18 @@ class NewToken extends React.Component {
       handleSubmit,
       submitting
     } = this.props
+    const lang = this.props.lang
 
     return(
       <FormContainer
         error={error}
-        label='New access token'
+        label={ lang === 'zh' ? '新建访问令牌' : 'New access token' }
         onSubmit={handleSubmit(this.props.submitForm)}
-        submitting={submitting} >
+        submitting={submitting}
+        lang={lang}>
 
-        <FormSection title='Token information'>
-          <TextField title='Token Name' fieldProps={guardData.id} autoFocus={true} />
+        <FormSection title={ lang === 'zh' ? '令牌信息' : 'Token information' }>
+          <TextField title={ lang === 'zh' ? '令牌名称' : 'Token Name'} fieldProps={guardData.id} autoFocus={true} />
         </FormSection>
         {/*<FormSection title='Policy'>*/}
           {/*{policyOptions.map(option => {*/}
@@ -54,11 +56,12 @@ export default BaseNew.connect(
     ].concat(
       policyOptions.map(p => `policies.${p.value}`)
     ),
-    validate: values => {
+    validate: (values, props) => {
       const errors = {}
+      const lang = props.lang
 
       if (!values.guardData.id) {
-        errors.guardData = {id: 'Token name is required'}
+        errors.guardData = {id: ( lang === 'zh' ? '令牌名称是必须项' : 'Token name is required' )}
       }
 
       return errors

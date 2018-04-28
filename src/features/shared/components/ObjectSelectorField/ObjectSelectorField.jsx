@@ -34,6 +34,22 @@ class ObjectSelectorField extends React.Component {
   }
 
   render() {
+    const idOnChange = (event) => {
+      this.props.fieldProps.id.onChange(event.target.value)
+      this.props.fieldProps.alias.onChange('')
+    }
+
+    const aliasOnChange = value => {
+      this.props.fieldProps.alias.onChange(value)
+      this.props.fieldProps.id.onChange('')
+    }
+
+    const lang = this.props.lang
+    const alias_title = ( lang === 'zh' ? '别名' : ALIAS_SELECTED )
+
+    const idProps = Object.assign({...this.props.fieldProps.id}, {onChange: idOnChange})
+    const aliasProps = Object.assign({...this.props.fieldProps.alias}, {onChange: aliasOnChange})
+
     return(
       <div className='form-group'>
         {this.props.title && <FieldLabel>{this.props.title}</FieldLabel>}
@@ -42,10 +58,10 @@ class ObjectSelectorField extends React.Component {
             <DropdownButton
               className={styles.dropdownButton}
               id='input-dropdown-addon'
-              title={this.state.selected}
+              title={(this.state.selected === ALIAS_SELECTED)? alias_title: this.state.selected}
               onSelect={this.select}
             >
-              <MenuItem eventKey={ALIAS_SELECTED}>Alias</MenuItem>
+              <MenuItem eventKey={ALIAS_SELECTED}>{ lang === 'zh' ? '别名' : 'Alias'}</MenuItem>
               <MenuItem eventKey={ID_SELECTED}>ID</MenuItem>
             </DropdownButton>
           </div>
@@ -54,13 +70,13 @@ class ObjectSelectorField extends React.Component {
             <input className='form-control'
               type={this.state.type}
               placeholder={`${this.props.title} ID`}
-              {...this.props.fieldProps.id} />}
+              {...idProps} />}
 
           {this.state.selected == ALIAS_SELECTED &&
             <this.props.aliasField
               className={styles.aliasFieldGroupItem}
-              placeholder={`Start typing ${this.props.title.toLowerCase()} alias...`}
-              fieldProps={this.props.fieldProps.alias} />}
+              placeholder={ lang === 'zh' ? `输入${this.props.title.toLowerCase()}别名...` : `Start typing ${this.props.title.toLowerCase()} alias...`}
+              fieldProps={aliasProps} />}
 
         </div>
         {this.props.hint && <span className='help-block'>{this.props.hint}</span>}

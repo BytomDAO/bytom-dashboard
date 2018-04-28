@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router'
 import { combineReducers } from 'redux'
 import uuid from 'uuid'
 
@@ -25,45 +24,41 @@ export const flashMessages = (state = {}, action) => {
     }
 
     case 'CREATED_ACCOUNT': {
-      return newSuccess(state, <p>
-          Created account. <Link to='accounts/create'>Create another?</Link>
-        </p>)
+      return newSuccess(state, 'CREATED_ACCOUNT')
     }
 
     case 'CREATED_ASSET': {
-      return newSuccess(state, <p>
-        Created asset. <Link to='assets/create'>Create another?</Link>
-      </p>)
+      return newSuccess(state, 'CREATED_ASSET')
     }
 
     case 'CREATED_TRANSACTION': {
-      return newSuccess(state, <p>
-        Submitted transaction. <Link to='transactions/create'>Create another?</Link>
-      </p>)
+      return newSuccess(state, 'CREATED_TRANSACTION')
     }
 
-    case 'CREATED_MOCKHSM': {
-      return newSuccess(state, <p>
-        Created key. <Link to='keys/create'>Create another?</Link>
-      </p>)
+    case 'CREATED_KEY': {
+      return newSuccess(state, 'CREATED_KEY')
     }
 
     case 'CREATED_TRANSACTIONFEED': {
       return newSuccess(state, <p>
-        Created transaction feed. <Link to='transaction-feeds/create'>Create another?</Link>
+        Created transaction feed.
       </p>)
     }
 
     case 'CREATED_TOKEN_WITH_GRANT': {
       return newSuccess(state, <p>
-        Created access token. <Link to='access-control/create-token'>Create another?</Link>
+        Access token has been created successfully.
       </p>)
     }
 
     case 'CREATED_X509_GRANT': {
       return newSuccess(state, <p>
-        Granted policy to X509 certificate. <Link to='access-control/add-certificate'>Create another?</Link>
+        Granted policy to X509 certificate.
       </p>)
+    }
+
+    case 'RESET_PASSWORD_KEY': {
+      return newSuccess(state, 'RESET_PASSWORD_KEY')
     }
 
     case 'DELETE_ACCESS_TOKEN':
@@ -94,9 +89,11 @@ export const flashMessages = (state = {}, action) => {
     }
 
     case 'UPDATED_ASSET': {
-      return newSuccess(state, <p>
-          Updated asset tags.
-        </p>)
+      return newSuccess(state, 'UPDATED_ASSET')
+    }
+
+    case 'CREATE_REGISTER_ACCOUNT': {
+      return newSuccess(state, 'CREATE_REGISTER_ACCOUNT')
     }
 
     case 'ERROR': {
@@ -105,6 +102,10 @@ export const flashMessages = (state = {}, action) => {
 
     case 'USER_LOG_IN': {
       return {}
+    }
+
+    case 'RESTORE_SUCCESS': {
+      return newSuccess(state, 'RESTORE_SUCCESS')
     }
 
     default: {
@@ -116,6 +117,15 @@ export const flashMessages = (state = {}, action) => {
 export const modal = (state = { isShowing: false }, action) => {
   if      (action.type == 'SHOW_MODAL') return { isShowing: true, ...action.payload }
   else if (action.type == 'HIDE_MODAL') return { isShowing: false }
+  return state
+}
+
+export const navAdvancedState = (state = 'normal', action) => {
+  if (action.type == 'SHOW_NAV_ADVANCE') {
+    return state === 'normal' ? 'advance' : 'normal'
+  } else if (action.type == 'HIDE_NAV_ADVANCE') {
+    return 'normal'
+  }
   return state
 }
 
@@ -133,4 +143,5 @@ export default combineReducers({
   flashMessages,
   modal,
   dropdownState,
+  navAdvancedState
 })

@@ -12,6 +12,7 @@ class Modal extends React.Component {
       acceptAction,
       cancelAction
     } = this.props
+    const lang = this.props.lang
 
     if (!isShowing) return null
 
@@ -28,7 +29,8 @@ class Modal extends React.Component {
         <div className={`${this.props.options.wide && styles.wide} ${styles.content}`}>
           {body}
 
-          <button className={`btn btn-${this.props.options.danger ? 'danger' : 'primary'} ${styles.accept}`} onClick={accept}>OK</button>
+          <button className={`btn btn-${this.props.options.danger ? 'danger' : 'primary'} ${styles.accept}`} onClick={accept}>
+            { lang === 'zh' ?  '关闭' : 'OK' }</button>
           {cancel && <button className={`btn btn-link ${styles.cancel}`} onClick={cancel}>Cancel</button>}
         </div>
       </div>
@@ -42,6 +44,7 @@ const mapStateToProps = (state) => ({
   acceptAction: state.app.modal.accept,
   cancelAction: state.app.modal.cancel,
   options: state.app.modal.options,
+  lang: state.core.lang
 })
 
 // NOTE: ommitting a function for `mapDispatchToProps` passes `dispatch` as a

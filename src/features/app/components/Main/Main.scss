@@ -7,13 +7,14 @@
 .sidebar {
   width: $sidebar-width;
   position: fixed;
+  z-index: 10;
 }
 
 .content {
   width: 100%;
   background: $background-content-color;
   padding-left: $sidebar-width;
-  //z-index: ;
+  margin-top: $title-height;
 }
 
 .sidebarContent {
@@ -38,13 +39,14 @@
 
   img {
     width: 100px;
+    height: 23.86px;
   }
 }
 
 .settings {
   cursor: pointer;
   line-height: $title-height;
-  padding: 0 20px;
+  padding-right: 10px;
   position: absolute;
   right: 0;
   top: 0;
@@ -55,10 +57,31 @@
   }
 }
 
+.languagesContainer {
+  position: absolute;
+  right: 38px;
+  top: 0px;
+  height: 60px;
+}
+
+.languages {
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background-color: transparentize($background-content-color, 0.9);
+  color: $background-content-color;
+  height: 27px;
+  line-height: 27px !important;
+}
+
 .connectionIssue {
   padding: $gutter-size/2;
   text-align: center;
   background: $highlight-danger-background;
   color: $highlight-danger;
   border-bottom: 1px solid $highlight-danger;
+}
+
+.languagesMenu {
+  right: -26px;
 }

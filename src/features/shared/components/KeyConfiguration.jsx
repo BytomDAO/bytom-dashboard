@@ -50,11 +50,12 @@ class KeyConfiguration extends React.Component {
     }
 
     const quorumOptions = rangeOptions.slice(0, this.state.keys)
+    const lang = this.props.lang
 
     return(
       <div>
         <SelectField options={rangeOptions}
-          title='Keys'
+          title={ lang === 'zh' ? '密钥数' : 'Keys' }
           skipEmpty={true}
           fieldProps={{
             value: this.state.keys,
@@ -62,7 +63,7 @@ class KeyConfiguration extends React.Component {
           }} />
 
         <SelectField options={quorumOptions}
-          title='Quorum'
+          title={ lang === 'zh' ? '签名数' : 'Quorum' }
           skipEmpty={true}
           hint={quorumHint}
           fieldProps={{
@@ -76,6 +77,7 @@ class KeyConfiguration extends React.Component {
             index={index}
             typeProps={xpub.type}
             valueProps={xpub.value}
+            lang={lang}
           />)}
       </div>
     )

@@ -22,6 +22,9 @@ let actions = {
   },
   createAddress: (data) => () => {
     return chainClient().accounts.createAddress(data)
+  },
+  listAddresses: (accountId) => {
+    return chainClient().accounts.listAddresses(accountId)
   }
 }
 

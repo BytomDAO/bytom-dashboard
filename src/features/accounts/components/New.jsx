@@ -18,47 +18,53 @@ class Form extends React.Component {
 
   render() {
     const {
-      fields: { alias, tags, xpubs, quorum },
+      fields: { alias, xpubs, quorum },
       error,
       handleSubmit,
       submitting
     } = this.props
+    const lang = this.props.lang
 
     return(
       <FormContainer
         error={error}
-        label='New account'
+        label={ lang === 'zh' ? '新建账户' : 'New account' }
         onSubmit={handleSubmit(this.submitWithErrors)}
-        submitting={submitting} >
+        submitting={submitting}
+        lang={lang}
+      >
 
-        <FormSection title='Account Information'>
-          <TextField title='Alias' placeholder='Alias' fieldProps={alias} autoFocus={true} />
-          <JsonField title='Tags' fieldProps={tags} />
+        <FormSection title={ lang === 'zh' ? '账户信息' : 'Account Information' }>
+          <TextField title={ lang === 'zh' ? '别名':'Alias'} placeholder={ lang === 'zh' ? '别名':'Alias'} fieldProps={alias} autoFocus={true} />
         </FormSection>
 
-        <FormSection title='Keys and Signing'>
+        <FormSection title={ lang === 'zh' ? '密钥和签名' : 'Keys and Signing' }>
           <KeyConfiguration
             xpubs={xpubs}
             quorum={quorum}
-            quorumHint='Number of keys required for transfer' />
+            quorumHint={ lang === 'zh' ? '传输所需的密钥数' : 'Number of keys required for transfer' }
+            lang={lang}
+          />
         </FormSection>
       </FormContainer>
     )
   }
 }
 
-const validate = values => {
+const validate = ( values, props ) => {
   const errors = {}
+  const lang = props.lang
 
   const tagError = JsonField.validator(values.tags)
   if (tagError) { errors.tags = tagError }
+
+  if (!values.alias) { errors.alias = ( lang === 'zh' ? '账户别名是必须项' : 'Account alias is required' ) }
 
   return errors
 }
 
 const fields = [
   'alias',
-  'tags',
   'xpubs[].value',
   'xpubs[].type',
   'quorum'
@@ -72,7 +78,6 @@ export default BaseNew.connect(
     fields,
     validate,
     initialValues: {
-      tags: '{\n\t\n}',
       quorum: 1,
     }
   })(Form)
