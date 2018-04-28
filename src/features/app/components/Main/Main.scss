@@ -7,13 +7,14 @@
 .sidebar {
   width: $sidebar-width;
   position: fixed;
+  z-index: 10;
 }
 
 .content {
   width: 100%;
   background: $background-content-color;
   padding-left: $sidebar-width;
-  //z-index: ;
+  margin-top: $title-height;
 }
 
 .sidebarContent {

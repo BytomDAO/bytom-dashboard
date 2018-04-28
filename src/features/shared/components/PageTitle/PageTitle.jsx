@@ -1,19 +1,29 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { Flash } from 'features/shared/components'
 import { Link } from 'react-router'
 import { humanize, capitalize } from 'utility/string'
+import { AutoAffix } from 'react-overlays'
 import makeRoutes from 'routes'
 import actions from 'actions'
 import styles from './PageTitle.scss'
 import componentClassNames from 'utility/componentClassNames'
 
 class PageTitle extends React.Component {
+  constructor(props){
+    super(props)
+    this.state={component: null}
+  }
+
+  componentDidMount() {
+    this.setState({component: ReactDOM.findDOMNode(this).parentNode})
+  }
   render() {
     const chevron = require('images/chevron.png')
 
     return(
-      <div className={componentClassNames(this)}>
+      <div className={componentClassNames(this)} >
         <div className={`${styles.main} navbar navbar-fixed-top`}>
           <div className={styles.navigation}>
             <ul className={styles.crumbs}>
@@ -36,12 +46,15 @@ class PageTitle extends React.Component {
             {this.props.actions.map(item => <li key={item.key}>{item}</li>)}
           </ul>}
         </div>
-
-        <Flash className={styles.flash}
-          messages={this.props.flashMessages}
-          markFlashDisplayed={this.props.markFlashDisplayed}
-          dismissFlash={this.props.dismissFlash}
-        />
+        <AutoAffix viewportOffsetTop={60} container={this.state.component} affixClassName={styles.flash} >
+          <div>
+              <Flash
+                messages={this.props.flashMessages}
+                markFlashDisplayed={this.props.markFlashDisplayed}
+                dismissFlash={this.props.dismissFlash}
+              />
+          </div>
+        </AutoAffix>
       </div>
     )
   }
