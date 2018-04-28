@@ -37,7 +37,7 @@ class Sync extends React.Component {
       elems.push(<li key='sync-disconnect'>{lang === 'zh' ? '同步中断' : 'Disconnect'}</li>)
     }
 
-    elems.push(<li key='sync-peer-count'>{lang === 'zh' ? '节点数' : 'Peer Count'}: {peerCount}</li>)
+    elems.push(<li key='sync-peer-count'>{lang === 'zh' ? '连接数' : 'Peer Count'}: {peerCount}</li>)
 
     return <ul className={`${navStyles.navigation} ${styles.main}`}>{elems}</ul>
   }

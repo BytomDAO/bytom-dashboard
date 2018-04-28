@@ -137,7 +137,7 @@ class CoreIndex extends React.Component {
             </tr>
             <tr className={styles.row} key={'core-syncing'}>
               <td className={styles.row_label}> {lang === 'zh' ? '网络同步' : 'Syncing'}:</td>
-              <td className={styles.row_value}>{(coreData['syncing'])? (lang === 'zh' ? '同步中' : 'Synchronizing'): (lang === 'zh' ? '同步完成' : 'Fully synced')}</td>
+              <td className={styles.row_value}>{(coreData['syncing'])? (lang === 'zh' ? '同步中' : <code>true</code>): (lang === 'zh' ? '同步完成' : <code>false</code>)}</td>
             </tr>
             <tr className={styles.row} key={'core-mining'}>
               <td className={styles.row_label}> {lang === 'zh' ? '挖矿状态' : 'Mining'}:</td>
