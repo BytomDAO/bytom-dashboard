@@ -10,6 +10,10 @@
   }
 }
 
+.row{
+  line-height: 30px;
+}
+
 .row_label {
   padding-right: $grid-gutter-width;
   text-transform: capitalize;
@@ -93,6 +97,7 @@ code {
 }
 
 .switch {
+  margin-top: 5px;
   position: relative;
   display: inline-block;
   width: 44px;
