@@ -38,12 +38,12 @@ class ItemList extends React.Component {
       actions.push(newButton)
     }
 
-    let header = <div>
+    let header =
       <PageTitle
         title={title}
         actions={actions}
       />
-    </div>
+
 
     const rootClassNames = componentClassNames(this, 'flex-container')
 
