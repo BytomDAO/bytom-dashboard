@@ -6,7 +6,7 @@
     "dismiss": "Skip",
     "route": "keys",
     "content": [
-      "Would you like a brief tutorial? This guide will walk you through the basic functions available in the Bytom Dashboard."
+      "Would you like a brief tutorial? This guide will walk you through the basic functions available in the Bytom."
     ]
   },
   {
@@ -14,10 +14,10 @@
     "title": "Tutorial - Creating keys - Step 1 of 7",
     "button": "Create a key",
     "route": "keys/create",
-    "image": "mockhsm",
+    "image": "key",
     "content": [
       "Cryptographic private keys are the primary authorization mechanism on a blockchain. They control both the issuance and transfer of asset units. An asset or account will define one or more keys required for issuance or transfers.",
-      "For development environments, Bytom provides a convenient key that simulates production behaviors. Let's begin by creating a new key in our HSM."
+      "For development environments, Bytom provides a convenient key that simulates production behaviors. Let's begin by creating a new key."
     ]
   },
   {
@@ -34,6 +34,9 @@
           ]
         },
         {
+          "title": "Enter and repeat the password for your key"
+        },
+        {
           "title": "Click the \"Submit\" button"
         }
       ]
@@ -45,10 +48,10 @@
     "title": "Tutorial - Creating keys - Step 1 of 7",
     "button": "Learn about assets",
     "route": "assets",
-    "image": "mockhsm",
+    "image": "key",
     "content": [
       {
-        "type": "keys",
+        "type": "key",
         "line": "Great work! You created a new key in the key named \"STRING\". Next up, we'll learn about assets and how to create them."
       }
 
@@ -132,9 +135,9 @@
           ]
         },
         {
-          "title": "Select \"Generate new a key\" under \"Keys and Signing\"",
+          "title": "Select \"Use existing keys\" or \"Enter existing xpub\" under \"Keys and Signing\"",
           "description": [
-            "You can create a new a key here as well. Enter a descriptive alias for your new key (ex. 'aliceKey')."
+            "Choose an existing key alias or enter an existing xpub."
           ]
         },
         {

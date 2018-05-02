@@ -64,7 +64,7 @@ class Navigation extends React.Component {
           <li>
             <a href='#' onClick={this.openTutorial}>
               {navIcon('tutorial', styles)}
-              Tutorial
+              {lang === 'zh' ? '教程' : 'Tutorial'}
             </a>
           </li>
         </ul>
