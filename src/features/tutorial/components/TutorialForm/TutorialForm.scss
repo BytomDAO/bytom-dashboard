@@ -11,7 +11,7 @@
 
     &.fixedTutorial {
       position: fixed;
-      top: $gutter-size;
+      top: $gutter-size+$title-height*2;
     }
 
     .header {
