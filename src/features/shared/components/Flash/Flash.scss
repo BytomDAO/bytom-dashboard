@@ -1,5 +1,7 @@
 .main {
   display: flex;
+  position: relative;
+  top: $title-height;
 }
 
 .alert {

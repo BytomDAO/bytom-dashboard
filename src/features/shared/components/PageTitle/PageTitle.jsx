@@ -1,33 +1,22 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { Flash } from 'features/shared/components'
 import { Link } from 'react-router'
 import { humanize, capitalize } from 'utility/string'
-import { AutoAffix } from 'react-overlays'
+import { Affix } from 'react-overlays'
 import makeRoutes from 'routes'
 import actions from 'actions'
 import styles from './PageTitle.scss'
 import componentClassNames from 'utility/componentClassNames'
-import classNames from 'classnames'
 
 class PageTitle extends React.Component {
-  constructor(props){
-    super(props)
-    this.state={component: null}
-  }
 
-  componentDidMount() {
-    this.setState({component: ReactDOM.findDOMNode(this).parentNode})
-  }
   render() {
     const chevron = require('images/chevron.png')
-    // const className = classNames(styles.main, 'navbar', 'navbar-fixed-top')
-    const className = classNames(styles.main)
 
     return(
       <div className={componentClassNames(this)} >
-        <div className={`${styles.main} navbar navbar-fixed-top`}  style={{marginTop: this.props.margintop+'px'}}>
+        <div className={`${styles.main} navbar`}>
           <div className={styles.navigation}>
             <ul className={styles.crumbs}>
               {this.props.breadcrumbs.map(crumb =>
@@ -49,7 +38,7 @@ class PageTitle extends React.Component {
             {this.props.actions.map(item => <li key={item.key}>{item}</li>)}
           </ul>}
         </div>
-        <AutoAffix viewportOffsetTop={60} container={this.state.component} affixClassName={styles.flash} >
+        <Affix affixClassName={styles.flash} affixStyle={{top: undefined}}>
           <div>
               <Flash
                 messages={this.props.flashMessages}
@@ -57,7 +46,7 @@ class PageTitle extends React.Component {
                 dismissFlash={this.props.dismissFlash}
               />
           </div>
-        </AutoAffix>
+        </Affix>
       </div>
     )
   }

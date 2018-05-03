@@ -5,19 +5,13 @@ import styles from './TutorialHeader.scss'
 class TutorialHeader extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      tutorialHeight: 0
-    }
-    this.handleTutorialHeight = this.handleTutorialHeight.bind(this)
   }
 
-  componentDidUpdate() {
-    this.handleTutorialHeight()
-  }
-
-  handleTutorialHeight() {
-    if (this.state.tutorialHeight != this.tutorialContainer.clientHeight){
-      this.setState({tutorialHeight: this.tutorialContainer.clientHeight})
+  componentDidUpdate(prevProps) {
+    if (this.tutorialContainer && this.props.tutorial != prevProps.tutorial){
+      this.props.handleTutorialHeight(this.tutorialContainer.clientHeight)
+    }else if(!this.tutorialContainer && this.props.tutorial != prevProps.tutorial){
+      this.props.handleTutorialHeight(0)
     }
   }
 
