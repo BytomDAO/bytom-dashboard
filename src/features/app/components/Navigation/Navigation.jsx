@@ -61,12 +61,6 @@ class Navigation extends React.Component {
             </Link>
           </li>
           }
-          <li>
-            <a href='#' onClick={this.openTutorial}>
-              {navIcon('tutorial', styles)}
-              {lang === 'zh' ? '教程' : 'Tutorial'}
-            </a>
-          </li>
         </ul>
 
         { this.props.showNavAdvance && <ul className={styles.navigation}>
@@ -118,7 +112,6 @@ export default connect(
     }
   },
   (dispatch) => ({
-    openTutorial: () => dispatch({type: 'OPEN_TUTORIAL'}),
     setLang: (event) => {
       dispatch({
         type: 'UPDATE_CORE_LANGUAGE',
