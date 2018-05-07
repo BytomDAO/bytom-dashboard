@@ -139,6 +139,31 @@ form.submitForm = (formParams) => function (dispatch) {
     return signAndSubmitTransaction(transaction, formParams.password)
   }
 
+  if (formParams.state.showAdvanceTx
+    && formParams.state.showAdvanced
+    && formParams.baseTransaction
+    && formParams.submitAction !== 'submit') {
+    const transaction = JSON.parse(formParams.baseTransaction)
+    return connection.request('/sign-transaction', {
+      password: formParams.password,
+      transaction
+    }).then(resp => {
+      if (resp.status === 'fail') {
+        throw new Error(resp.msg)
+      }
+
+      const id = uuid.v4()
+      dispatch({
+        type: 'GENERATED_TX_HEX',
+        generated: {
+          id: id,
+          hex: JSON.stringify(resp.data.transaction),
+        },
+      })
+      dispatch(push(`/transactions/generated/${id}`))
+    })
+  }
+
   if (formParams.submitAction == 'submit') {
     return buildPromise
       .then((resp) => {
