@@ -11,11 +11,11 @@ class Tutorial extends React.Component {
   render() {
     const tutorialOpen = !this.props.tutorial.location.isVisited
     const tutorialTypes = this.props.types
-    const TutorialComponent = components[this.props.content['component']]
+    const TutorialComponent = this.props.content ? components[this.props.content['component']]: components['TutorialInfo']
 
     return (
       <div>
-        {tutorialOpen && (tutorialTypes.includes(this.props.content['component'])) &&
+        {this.props.content && tutorialOpen && (tutorialTypes.includes(this.props.content['component'])) &&
           <TutorialComponent
             {...this.props.content}
           />}

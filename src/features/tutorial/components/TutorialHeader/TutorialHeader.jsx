@@ -15,8 +15,14 @@ class TutorialHeader extends React.Component {
   }
 
   render() {
-    return (
-      !this.props.isVisited && <div className={`${styles.main} ${!this.props.isVisited && styles.collapsed}`} ref={element => this.tutorialContainer = element}>
+    if(this.props.isVisited){
+      return(
+        <div>
+          {this.props.children}
+        </div>
+      )
+    }else {
+      return( <div className={`${styles.main} ${!this.props.isVisited && styles.collapsed}`} ref={element => this.tutorialContainer = element}>
         <div className={styles.header}>
           {this.props.content && this.props.content.title }
           <div className={styles.skip}>
@@ -25,8 +31,8 @@ class TutorialHeader extends React.Component {
           </div>
         </div>
         {!this.props.isVisited && this.props.children}
-      </div>
-    )
+      </div>)
+    }
   }
 }
 
