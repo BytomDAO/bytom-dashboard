@@ -10,12 +10,12 @@ class TutorialInfo extends React.Component {
       objectImage = require(`images/empty/${this.props.image}.svg`)
     } catch (err) { /* do nothing */ }
 
-    const userInput = this.props.userInput
-    const nextButton = <Link to={this.props.route} className={styles.nextWrapper}>
-        <button key='showNext' className={`btn ${styles.next}`} onClick={this.props.handleNext}>
-          Next: {this.props.button}
-        </button>
-      </Link>
+    // const userInput = this.props.userInput
+    // const nextButton = <Link to={this.props.route} className={styles.nextWrapper}>
+    //     <button key='showNext' className={`btn ${styles.next}`} onClick={this.props.handleNext}>
+    //       Next: {this.props.button}
+    //     </button>
+    //   </Link>
 
     return (
       <div>
@@ -48,7 +48,7 @@ class TutorialInfo extends React.Component {
               return <p key={i}>{str}</p>
             })}
           </div>
-          {nextButton}
+          {/*{nextButton}*/}
         </div>
     </div>
     )

@@ -1,0 +1,212 @@
+{
+  "/transactions": {
+    "component": "TutorialInfo",
+    "title": "Transactions",
+    "image": "transaction",
+    "content": [
+      "Let's start to learn about transactions and how to issue units of your asset."
+    ]
+  },
+  "/keys": {
+    "component": "TutorialInfo",
+    "title": "Keys",
+    "image": "key",
+    "content": [
+      "Cryptographic private keys are the primary authorization mechanism on a blockchain. They control both the issuance and transfer of asset units. An asset or account will define one or more keys required for issuance or transfers.",
+      "For development environments, Bytom provides a convenient key that simulates production behaviors. Let's begin by creating a new key."
+    ]
+  },
+  "/accounts": {
+    "component": "TutorialInfo",
+    "title": "Accounts",
+    "image": "account",
+    "content": [
+      "An account is an object in Bytom that tracks ownership of assets on a blockchain by creating and tracking control programs. The account object does not exist on the blockchain - it is local to this Bytom. Only the control programs created in the account are visible on the blockchain.",
+      "We'll be moving assets from one account to another; let's create the first one now."
+    ]
+  },
+  "/assets": {
+    "component": "TutorialInfo",
+    "title": "Assets",
+    "image": "asset",
+    "content": [
+      "An asset is a type of value that can be issued on a blockchain. All units of an asset are fungible and can be transacted directly between parties without the involvement of the issuer.",
+      "Let's create a new asset now."
+    ]
+  },
+  "/balances": {
+    "component": "TutorialInfo",
+    "title": "Balances",
+    "image": "balance",
+    "content": [
+      "The balance page shows the asset amount for the account."
+    ]
+  },
+  "/core": {
+    "component": "TutorialInfo",
+    "title": "Core",
+    "content": [
+      "The core page shows the network status and the setting."
+    ]
+  },
+  "/access-control": {
+    "component": "TutorialInfo",
+    "title": "Access Control",
+    "image": "network_access_token",
+    "content": [
+      "Access control."
+    ]
+  },
+  "/unspents":{
+    "component": "TutorialInfo",
+    "title": "UTXO",
+    "image": "unspent",
+    "content": [
+      "Unspent output."
+    ]
+  },
+  "/backup": {
+    "component": "TutorialInfo",
+    "title": "Backup and restore",
+    "image": "client_access_token",
+    "content": [
+      "Backup and Restore the wallet information."
+    ]
+  },
+  "/transactions/create":{
+    "component": "TutorialForm",
+    "title": "Create an transaction",
+    "content": {
+      "header": "Create an transaction",
+      "steps": [
+        {
+          "title": "Click the \"Add action\" button",
+          "description": [
+            "Select \"Issue\" to add a new action to your transaction."
+          ]
+        },
+        {
+          "title": "Fill in the issue action",
+          "description": [
+            {
+              "line": "Enter STRING for the asset alias "
+            },
+            {
+              "line": "and STRING for the amount."
+            }
+          ]
+        },
+        {
+          "title": "Click the \"Add action\" button",
+          "description": [
+            "Select \"Control with account\"."
+          ]
+        },
+        {
+          "title": "Fill in the control action",
+          "description": [
+            {
+              "index": 0,
+              "line": "Enter STRING for the account alias, "
+            },
+            {
+              "line": " STRING for the asset alias"
+            },
+            {
+              "line": " and STRING for the amount."
+            }
+          ]
+        },
+        {
+          "title": "Click the \"Submit transaction\" button"
+        }
+      ]
+    }
+  },
+  "/accounts/create":{
+    "component": "TutorialForm",
+    "title": "Create an account",
+    "content": {
+      "header": "Create account",
+      "steps": [
+        {
+          "title": "Type name for account alias (ex. \"alice\")",
+          "description": [
+            "An alias is a friendly label used to distinguish between accounts."
+          ]
+        },
+        {
+          "title": "Select \"Use existing keys\" or \"Enter existing xpub\" under \"Keys and Signing\"",
+          "description": [
+            "Choose an existing key alias or enter an existing xpub."
+          ]
+        },
+        {
+          "title": "Click the \"Submit\" button"
+        }
+      ]
+    }
+  },
+  "/assets/create":{
+    "component": "TutorialForm",
+    "title": "Create an asset",
+    "content": {
+      "header": "Create asset",
+      "steps": [
+        {
+          "title": "Enter an alias for your asset (ex. \"gold\")",
+          "description": [
+            "An alias is a friendly label used to distinguish between assets."
+          ]
+        },
+        {
+          "title": "Select \"Use existing a key\" under \"Keys and Signing\"",
+          "description": [
+            {
+              "line": "Choose STRING key from the dropdown"
+            }
+          ]
+        },
+        {
+          "title": "Click the \"Submit\" button"
+        }
+      ]
+    }
+  },
+  "/keys/create":{
+    "component": "TutorialForm",
+    "title": "Create a key",
+    "content": {
+      "header": "Create a key",
+      "steps": [
+        {
+          "title": "Enter an alias for your key (ex. \"goldkey\")",
+          "description": [
+            "An alias is a friendly label used to distinguish between keys. We will use this alias in the next step."
+          ]
+        },
+        {
+          "title": "Enter and repeat the password for your key"
+        },
+        {
+          "title": "Click the \"Submit\" button"
+        }
+      ]
+    }
+  },
+  "/access-control/create-token": {
+    "component": "TutorialForm",
+    "title": "Create an access token",
+    "content": {
+      "header": "Create an access token",
+      "steps": [
+        {
+          "title": "Enter alias for the access token"
+        },
+        {
+          "title": "Click the \"Submit\" button"
+        }
+      ]
+    }
+  }
+}
