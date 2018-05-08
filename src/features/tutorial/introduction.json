@@ -4,7 +4,7 @@
     "title": "Transactions",
     "image": "transaction",
     "content": [
-      "Let's start to learn about transactions and how to issue units of your asset."
+      "An transaction provides the amount of the asset either spend out from your account or come in to your account. In your transaction, the total amount of assets spent was equal to the total amount of assets controlled (received). Any combination of actions can be added to a single transaction, as long as what goes in equals what comes out."
     ]
   },
   "/keys": {
@@ -39,14 +39,14 @@
     "title": "Balances",
     "image": "balance",
     "content": [
-      "The balance page shows the asset amount for the account."
+      "The balance shows the asset amount that an account possess."
     ]
   },
   "/core": {
     "component": "TutorialInfo",
     "title": "Core",
     "content": [
-      "The core page shows the network status and the setting."
+      "The core status shows the blockchain network status and the local setting."
     ]
   },
   "/access-control": {
@@ -70,51 +70,43 @@
     "title": "Backup and restore",
     "image": "client_access_token",
     "content": [
-      "Backup and Restore the wallet information."
+      "Backup and Restore the wallet information (accounts and keys information)."
     ]
   },
   "/transactions/create":{
     "component": "TutorialForm",
-    "title": "Create an transaction",
+    "title": "Create a new transaction",
     "content": {
-      "header": "Create an transaction",
+      "header": "Normal Transactions",
       "steps": [
         {
-          "title": "Click the \"Add action\" button",
+          "title": "Fill in the account \"Alias\" or \"ID\"",
           "description": [
-            "Select \"Issue\" to add a new action to your transaction."
+            "The account that you wished to spend from."
           ]
         },
         {
-          "title": "Fill in the issue action",
+          "title": "Fill in the asset \"Alias\" or \"ID\"",
           "description": [
-            {
-              "line": "Enter STRING for the asset alias "
-            },
-            {
-              "line": "and STRING for the amount."
-            }
+            "The asset type that you wished to spend."
           ]
         },
         {
-          "title": "Click the \"Add action\" button",
+          "title": "Paste the \"Address\"",
           "description": [
-            "Select \"Control with account\"."
+            "The address that you wish to send amount of asset to."
           ]
         },
         {
-          "title": "Fill in the control action",
+          "title": "Fill in the amount",
           "description": [
-            {
-              "index": 0,
-              "line": "Enter STRING for the account alias, "
-            },
-            {
-              "line": " STRING for the asset alias"
-            },
-            {
-              "line": " and STRING for the amount."
-            }
+            "Enter the amount of the asset."
+          ]
+        },
+        {
+          "title": "Choose the gas",
+          "description": [
+            "Choose the gas that you want to spend for this transaction."
           ]
         },
         {
@@ -127,7 +119,7 @@
     "component": "TutorialForm",
     "title": "Create an account",
     "content": {
-      "header": "Create account",
+      "header": "New account",
       "steps": [
         {
           "title": "Type name for account alias (ex. \"alice\")",
@@ -136,7 +128,7 @@
           ]
         },
         {
-          "title": "Select \"Use existing keys\" or \"Enter existing xpub\" under \"Keys and Signing\"",
+          "title": "Select \"Use existing keys\" or \"Provide existing xpub\" under \"Keys and Signing\"",
           "description": [
             "Choose an existing key alias or enter an existing xpub."
           ]
@@ -151,7 +143,7 @@
     "component": "TutorialForm",
     "title": "Create an asset",
     "content": {
-      "header": "Create asset",
+      "header": "New asset",
       "steps": [
         {
           "title": "Enter an alias for your asset (ex. \"gold\")",
@@ -160,11 +152,9 @@
           ]
         },
         {
-          "title": "Select \"Use existing a key\" under \"Keys and Signing\"",
+          "title": "Select \"Use existing a key\" or \"Provide existing xpub\" under \"Keys and Signing\"",
           "description": [
-            {
-              "line": "Choose STRING key from the dropdown"
-            }
+            "Choose an existing key alias or enter an existing xpub."
           ]
         },
         {
@@ -177,16 +167,19 @@
     "component": "TutorialForm",
     "title": "Create a key",
     "content": {
-      "header": "Create a key",
+      "header": "New key",
       "steps": [
         {
           "title": "Enter an alias for your key (ex. \"goldkey\")",
           "description": [
-            "An alias is a friendly label used to distinguish between keys. We will use this alias in the next step."
+            "An alias is a friendly label used to distinguish between keys."
           ]
         },
         {
-          "title": "Enter and repeat the password for your key"
+          "title": "Enter and repeat the password for your key",
+          "description": [
+            "It's important to memorize the password for your key and keep it somewhere safe. Bytom doesn't provide any lost and found. "
+          ]
         },
         {
           "title": "Click the \"Submit\" button"
