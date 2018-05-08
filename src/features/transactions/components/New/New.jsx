@@ -251,6 +251,22 @@ class Form extends React.Component {
       normalTransaction[key].onBlur = this.estimateNormalTransactionGas.bind(this)
     })
 
+    const validateAddress = event => {
+      let address = (event.target.value) || 0
+      chainClient().accounts.validateAddresses(address)
+        .then(
+          (resp) => {
+            if(!resp.data.valid){
+              this.props.showError(new Error('invalid address'))
+            }
+          }
+        ).catch((err) => {
+          this.props.showError(new Error(err))
+        })
+    }
+
+    normalTransaction['address'].onBlur = validateAddress
+
     let submitLabel = lang === 'zh' ? '提交交易' : 'Submit transaction'
     const hasBaseTransaction = ((baseTransaction.value || '').trim()).length > 0
     if (submitAction.value == 'generate' && !hasBaseTransaction) {
