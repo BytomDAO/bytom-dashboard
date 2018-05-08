@@ -61,7 +61,6 @@ const registerKey = (data) => {
           'quorum':1,
           'alias': data.accountAlias}
 
-        dispatch({type: 'CREATE_REGISTER_KEY', data})
         chainClient().accounts.create(accountData)
           .then((resp) => {
             if (resp.status === 'fail') {
