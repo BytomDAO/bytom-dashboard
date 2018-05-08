@@ -234,7 +234,7 @@ class Form extends React.Component {
           this.props.showError(new Error(resp.msg))
           return
         }
-        this.setState({estimateGas: resp.data.totalNeu})
+        this.setState({estimateGas: Math.ceil(resp.data.totalNeu/100000)*100000})
       })
     })
   }
