@@ -4,7 +4,7 @@
     "title": "Transactions",
     "image": "transaction",
     "content": [
-      "An transaction provides the amount of the asset either spend out from your account or come in to your account. In your transaction, the total amount of assets spent was equal to the total amount of assets controlled (received). Any combination of actions can be added to a single transaction, as long as what goes in equals what comes out."
+      "A transaction provides the amount of the asset either spend out from your account or come in to your account. In your transaction, the total amount of assets spent was equal to the total amount of assets controlled (received). Any combination of actions can be added to a single transaction, as long as what goes in equals what comes out."
     ]
   },
   "/keys": {
@@ -107,6 +107,44 @@
           "title": "Choose the gas",
           "description": [
             "Choose the gas that you want to spend for this transaction."
+          ]
+        },
+        {
+          "title": "Click the \"Submit transaction\" button"
+        }
+      ]
+    },
+    "content_ad": {
+      "header": "Advanced Transactions",
+      "steps": [
+        {
+          "title": "Add a \"Spend from account\" action",
+          "description": [
+            {
+              "index": 0,
+              "line": "Enter the account alias that you want to spend from, "
+            },
+            {
+              "line": "Enter the asset alias "
+            },
+            {
+              "line": "and the amount."
+            }
+          ]
+        },
+        {
+          "title": "Add a \"Control with address\" action",
+          "description": [
+            {
+              "index": 1,
+              "line": "Paste the address that you want to send to, "
+            },
+            {
+              "line": "Enter the asset alias which should be the same as  the spend from asset alias"
+            },
+            {
+              "line": "and the amount."
+            }
           ]
         },
         {
