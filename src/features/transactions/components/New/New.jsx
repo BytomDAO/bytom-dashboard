@@ -134,7 +134,7 @@ class Form extends React.Component {
     }
 
     if (this.state.showAdvanceTx) {
-      return actions.length == 0 && !this.state.showAdvanced
+      return actions.length === 0 && !this.state.showAdvanced
     }
 
     const hasValue = target => {
@@ -151,7 +151,7 @@ class Form extends React.Component {
   }
 
   emptyActions(actions) {
-    if (actions.length != 0) {
+    if (actions.length !== 0) {
       actions.map(() => this.removeActionItem(0))
     }
   }
@@ -253,7 +253,7 @@ class Form extends React.Component {
 
     let submitLabel = lang === 'zh' ? '提交交易' : 'Submit transaction'
     const hasBaseTransaction = ((baseTransaction.value || '').trim()).length > 0
-    if (submitAction.value == 'generate' && !hasBaseTransaction) {
+    if (submitAction.value === 'generate' && !hasBaseTransaction) {
       submitLabel = lang === 'zh' ? '生成交易JSON' : 'Generate transaction JSON'
     }
 
@@ -353,14 +353,14 @@ class Form extends React.Component {
                            {...normalTransaction.gas.type}
                            onChange={gasOnChange}
                            value={option.label}
-                           checked={option.label == normalTransaction.gas.type.value}
+                           checked={option.label === normalTransaction.gas.type.value}
                     />
                     {lang === 'zh' ? option.label_zh : option.label}
                   </label>
                 </td>
                 <td>
                   {
-                    option.label == normalTransaction.gas.type.value && option.label !== 'Customize'
+                    option.label === normalTransaction.gas.type.value && option.label !== 'Customize'
                     && this.state.estimateGas && ((lang === 'zh' ? '估算' : 'estimated') + '   ' + normalizeBTMAmountUnit(btmID,
                       option.ratio * this.state.estimateGas,
                       this.props.btmAmountUnit))
@@ -440,7 +440,7 @@ class Form extends React.Component {
               <tbody>
               <tr>
                 <td><input id='submit_action_submit' type='radio' {...submitAction} value='submit'
-                           checked={submitAction.value == 'submit'}/></td>
+                           checked={submitAction.value === 'submit'}/></td>
                 <td>
                   <label
                     htmlFor='submit_action_submit'>{lang === 'zh' ? '向区块链提交交易' : 'Submit transaction to blockchain'}</label>
@@ -453,7 +453,7 @@ class Form extends React.Component {
               </tr>
               <tr>
                 <td><input id='submit_action_generate' type='radio' {...submitAction} value='generate'
-                           checked={submitAction.value == 'generate'}/></td>
+                           checked={submitAction.value === 'generate'}/></td>
                 <td>
                   <label htmlFor='submit_action_generate'>{lang === 'zh' ? '需要更多签名' : 'Need more signature'}</label>
                   <br/>

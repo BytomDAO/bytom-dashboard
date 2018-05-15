@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 
 const itemsReducer = (state = {}, action) => {
-  if (action.type == 'APPEND_BALANCE_PAGE') {
+  if (action.type === 'APPEND_BALANCE_PAGE') {
     const newState = {}
     action.param.data.forEach((item, index) => {
       const id = `balance-${index}`
@@ -17,7 +17,7 @@ const itemsReducer = (state = {}, action) => {
 }
 
 const queriesReducer = (state = {}, action) => {
-  if (action.type == 'APPEND_BALANCE_PAGE') {
+  if (action.type === 'APPEND_BALANCE_PAGE') {
     return {
       loadedOnce: true
     }

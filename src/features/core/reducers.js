@@ -6,7 +6,7 @@ import { DeltaSampler } from 'utility/time'
 const LONG_TIME_FORMAT = 'YYYY-MM-DD, h:mm:ss a'
 
 const coreConfigReducer = (key, state, defaultState, action) => {
-  if (action.type == 'UPDATE_CORE_INFO') {
+  if (action.type === 'UPDATE_CORE_INFO') {
     return action.param[key] || defaultState
   }
 
@@ -14,7 +14,7 @@ const coreConfigReducer = (key, state, defaultState, action) => {
 }
 
 const buildConfigReducer = (key, state, defaultState, action) => {
-  // if (action.type == 'UPDATE_CORE_INFO') {
+  // if (action.type === 'UPDATE_CORE_INFO') {
 	// return action.param.buildConfig[key] || defaultState
   // }
 
@@ -22,7 +22,7 @@ const buildConfigReducer = (key, state, defaultState, action) => {
 }
 
 const configKnown = (state = false, action) => {
-  if (action.type == 'UPDATE_CORE_INFO') {
+  if (action.type === 'UPDATE_CORE_INFO') {
     return true
   }
   return state
@@ -32,7 +32,7 @@ export const configured = (state, action) =>
   coreConfigReducer('isConfigured', state, false, action)
 export const configuredAt = (state, action) => {
   let value = coreConfigReducer('configuredAt', state, '', action)
-  if (action.type == 'UPDATE_CORE_INFO' && value != '') {
+  if (action.type === 'UPDATE_CORE_INFO' && value !== '') {
     value = moment(value).format(LONG_TIME_FORMAT)
   }
   return value
@@ -49,8 +49,8 @@ export const httpOk = (state, action) =>
 export const blockHeight = (state, action) =>
   coreConfigReducer('blockHeight', state, 0, action)
 export const generatorBlockHeight = (state, action) => {
-  if (action.type == 'UPDATE_CORE_INFO') {
-    if (action.param.generatorBlockHeight == 0) return '???'
+  if (action.type === 'UPDATE_CORE_INFO') {
+    if (action.param.generatorBlockHeight === 0) return '???'
   }
 
   return coreConfigReducer('generatorBlockHeight', state, 0, action)
@@ -69,7 +69,7 @@ export const crosscoreRpcVersion = (state, action) =>
   coreConfigReducer('crosscoreRpcVersion', state, 0, action)
 
 export const coreType = (state = '', action) => {
-  if (action.type == 'UPDATE_CORE_INFO') {
+  if (action.type === 'UPDATE_CORE_INFO') {
     if (action.param.isGenerator) return 'Generator'
     if (action.param.isSigner) return 'Signer'
     return 'Participant'
@@ -78,8 +78,8 @@ export const coreType = (state = '', action) => {
 }
 
 export const replicationLag = (state = null, action) => {
-  if (action.type == 'UPDATE_CORE_INFO') {
-    if (action.param.generatorBlockHeight == 0) {
+  if (action.type === 'UPDATE_CORE_INFO') {
+    if (action.param.generatorBlockHeight === 0) {
       return null
     }
     return action.param.generatorBlockHeight - action.param.blockHeight
@@ -114,13 +114,13 @@ export const syncEstimates = (state = {}, action) => {
       if (snapshot && snapshot.inProgress) {
         const speed = syncSamplers.snapshot.sample(snapshot.downloaded)
 
-        if (speed != 0) {
+        if (speed !== 0) {
           estimates.snapshot = (snapshot.size - snapshot.downloaded) / speed
         }
       } else if (generatorBlockHeight > 0) {
         const replicationLag = generatorBlockHeight - blockHeight
         const speed = syncSamplers.replicationLag.sample(replicationLag)
-        if (speed != 0) {
+        if (speed !== 0) {
           const duration = -1 * replicationLag / speed
           if (duration > 0) {
             estimates.replicationLag = duration
@@ -141,8 +141,8 @@ export const syncEstimates = (state = {}, action) => {
 }
 
 export const replicationLagClass = (state = null, action) => {
-  if (action.type == 'UPDATE_CORE_INFO') {
-    if (action.param.generatorBlockHeight == 0) {
+  if (action.type === 'UPDATE_CORE_INFO') {
+    if (action.param.generatorBlockHeight === 0) {
       return 'red'
     } else {
       let lag = action.param.generatorBlockHeight - action.param.blockHeight
@@ -160,7 +160,7 @@ export const replicationLagClass = (state = null, action) => {
 }
 
 export const onTestnet = (state = false, action) => {
-  if (action.type == 'UPDATE_CORE_INFO') {
+  if (action.type === 'UPDATE_CORE_INFO') {
     return (action.param.generatorUrl || '').indexOf(testnetUrl) >= 0
   }
 
@@ -168,37 +168,37 @@ export const onTestnet = (state = false, action) => {
 }
 
 export const requireClientToken = (state = false, action) => {
-  if (action.type == 'ERROR' && action.payload.status == 401) return true
+  if (action.type === 'ERROR' && action.payload.status === 401) return true
 
   return state
 }
 
 export const clientToken = (state = '', action) => {
-  if      (action.type == 'SET_CLIENT_TOKEN') return action.token
-  else if (action.type == 'ERROR' &&
-           action.payload.status == 401)      return ''
+  if      (action.type === 'SET_CLIENT_TOKEN') return action.token
+  else if (action.type === 'ERROR' &&
+           action.payload.status === 401)      return ''
 
   return state
 }
 
 export const validToken = (state = false, action) => {
-  if      (action.type == 'SET_CLIENT_TOKEN') return false
-  else if (action.type == 'USER_LOG_IN')      return true
-  else if (action.type == 'ERROR' &&
-           action.payload.status == 401)      return false
+  if      (action.type === 'SET_CLIENT_TOKEN') return false
+  else if (action.type === 'USER_LOG_IN')      return true
+  else if (action.type === 'ERROR' &&
+           action.payload.status === 401)      return false
 
   return state
 }
 
 export const connected = (state = true, action) => {
-  if      (action.type == 'UPDATE_CORE_INFO') return true
-  else if (action.type == 'CORE_DISCONNECT')  return false
+  if      (action.type === 'UPDATE_CORE_INFO') return true
+  else if (action.type === 'CORE_DISCONNECT')  return false
 
   return state
 }
 
 export const btmAmountUnit = (state = 'BTM' , action) => {
-  if (action.type == 'UPDATE_BTM_AMOUNT_UNIT') {
+  if (action.type === 'UPDATE_BTM_AMOUNT_UNIT') {
     return action.param
   }
   return state
@@ -213,28 +213,28 @@ const lang = (state = defaultLang, action) => {
 }
 
 const mingStatus = (state = false, action) => {
-  if (action.type == 'UPDATE_CORE_INFO') {
+  if (action.type === 'UPDATE_CORE_INFO') {
     return action.param.data.mining
   }
   return state
 }
 
 const coreData = (state = null, action) => {
-  if (action.type == 'UPDATE_CORE_INFO') {
+  if (action.type === 'UPDATE_CORE_INFO') {
     return action.param.data || null
   }
   return state
 }
 
 const accountInit = (state = false, action) => {
-  if (action.type == 'CREATE_REGISTER_ACCOUNT') {
+  if (action.type === 'CREATE_REGISTER_ACCOUNT') {
     return true
   }
   return state
 }
 
 const snapshot = (state = null, action) => {
-  if (action.type == 'UPDATE_CORE_INFO') {
+  if (action.type === 'UPDATE_CORE_INFO') {
     return action.param.snapshot || null // snapshot may be undefined, which Redux doesn't like.
   }
   return state

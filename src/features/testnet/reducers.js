@@ -2,7 +2,7 @@ import { combineReducers } from 'redux'
 import moment from 'moment-timezone'
 
 export const nextReset = (state = '', action) => {
-  if (action.type == 'TESTNET_CONFIG') {
+  if (action.type === 'TESTNET_CONFIG') {
     if (action.data.next_reset) {
       return moment(action.data.next_reset)
     } else {
@@ -14,21 +14,21 @@ export const nextReset = (state = '', action) => {
 }
 
 export const blockchainId = (state = 0, action) => {
-  if (action.type == 'TESTNET_CONFIG') {
+  if (action.type === 'TESTNET_CONFIG') {
     return action.data.blockchain_id
   }
   return state
 }
 
 export const crosscoreRpcVersion = (state = 0, action) => {
-  if (action.type == 'TESTNET_CONFIG') {
+  if (action.type === 'TESTNET_CONFIG') {
     return action.data.crosscore_rpc_version || action.data.network_rpc_version
   }
   return state
 }
 
 export const testnetInfo = (state = { loading: true }, action) => {
-  if (action.type == 'TESTNET_CONFIG') {
+  if (action.type === 'TESTNET_CONFIG') {
     state = {...action.data}
   }
   return state

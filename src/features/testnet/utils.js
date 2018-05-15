@@ -4,7 +4,7 @@ const isBlockchainMismatch = (state) => {
   }
 
   return !!state.core.blockchainId && !!state.testnet.blockchainId &&
-    state.core.blockchainId != state.testnet.blockchainId
+    state.core.blockchainId !== state.testnet.blockchainId
 }
 
 const isCrosscoreRpcMismatch = (state) => {
@@ -13,7 +13,7 @@ const isCrosscoreRpcMismatch = (state) => {
   }
 
   return !!state.core.crosscoreRpcVersion && !!state.testnet.crosscoreRpcVersion &&
-    state.core.crosscoreRpcVersion != state.testnet.crosscoreRpcVersion
+    state.core.crosscoreRpcVersion !== state.testnet.crosscoreRpcVersion
 }
 
 export default {

@@ -16,14 +16,14 @@ class HsmSigner {
       }
     }
 
-    signer.xpubs.push(typeof key == 'string' ? key : key.xpub)
+    signer.xpubs.push(typeof key === 'string' ? key : key.xpub)
   }
 
   sign(template, cb) {
     let promise = Promise.resolve(template)
 
     // Return early if no signers
-    if (Object.keys(this.signers).length == 0) {
+    if (Object.keys(this.signers).length === 0) {
       return shared.tryCallback(promise, cb)
     }
 
@@ -42,11 +42,11 @@ class HsmSigner {
   }
 
   signBatch(templates, cb) {
-    templates = templates.filter((template) => template != null)
+    templates = templates.filter((template) => template !== null)
     let promise = Promise.resolve(templates)
 
     // Return early if no signers
-    if (Object.keys(this.signers).length == 0) {
+    if (Object.keys(this.signers).length === 0) {
       return shared.tryCallback(promise.then(() => new shared.BatchResponse(templates)), cb)
     }
 
@@ -87,7 +87,7 @@ class HsmSigner {
       })
 
       errors.forEach((error, index) => {
-        if (error != null) {
+        if (error !== null) {
           resp[index] = error
         }
       })

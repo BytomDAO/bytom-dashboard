@@ -53,7 +53,7 @@ class Index extends React.Component {
     const typeChange = (event) => {
       const value = type.onChange(event).value
 
-      if (value != 'join') {
+      if (value !== 'join') {
         generatorUrl.onChange('')
         generatorAccessToken.onChange('')
         blockchainId.onChange('')

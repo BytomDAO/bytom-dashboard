@@ -8,7 +8,7 @@ export const getPolicyNames = createSelector(
       const isProtected = grant.protected
       const policy = grant.policy
 
-      const found = policyOptions.find(elem => elem.value == policy)
+      const found = policyOptions.find(elem => elem.value === policy)
       let label = found ? found.label : policy
       if (isProtected) {
         label = label + ' (Protected)'
@@ -22,8 +22,8 @@ export const guardType = (item) => item.guardType
 
 export const isAccessToken = createSelector(
   guardType,
-  type => type == 'access_token'
+  type => type === 'access_token'
 )
 
 export const hasProtectedGrant = (grants, policy) =>
-  grants.find(grant => grant.protected && grant.policy == policy) != undefined
+  grants.find(grant => grant.protected && grant.policy === policy) !== undefined

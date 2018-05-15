@@ -34,7 +34,7 @@ export default class ActionItem extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      referenceDataOpen: props.fieldProps.type.value == TRANSACTION_REFERENCE_DATA
+      referenceDataOpen: props.fieldProps.type.value === TRANSACTION_REFERENCE_DATA
     }
     this.openReferenceData = this.openReferenceData.bind(this)
   }

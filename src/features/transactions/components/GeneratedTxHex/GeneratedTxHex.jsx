@@ -35,7 +35,7 @@ export default connect(
   // mapStateToProps
   (state, ownProps) => {
     const generated = (state.transaction || {}).generated || []
-    const found = generated.find(i => i.id == ownProps.params.id)
+    const found = generated.find(i => i.id === ownProps.params.id)
     if (found) return {hex: found.hex}
     return {}
   }

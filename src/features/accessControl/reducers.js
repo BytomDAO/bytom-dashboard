@@ -2,7 +2,7 @@ import createHash from 'sha.js'
 
 export default (state = {ids: [], items: {}}, action) => {
   // Grant list is always complete, so we rebuild state from scratch
-  if (action.type == 'RECEIVED_ACCESS_GRANTS') {
+  if (action.type === 'RECEIVED_ACCESS_GRANTS') {
     const newObjects = {}
 
     return {
@@ -27,7 +27,7 @@ export default (state = {ids: [], items: {}}, action) => {
       const id = createHash('sha256').update(JSON.stringify(grant.guardData), 'utf8').digest('hex')
 
       if (newObjects[id]) {
-        const existingIndex = newObjects[id].grants.findIndex(g => g.policy == grant.policy)
+        const existingIndex = newObjects[id].grants.findIndex(g => g.policy === grant.policy)
         if (existingIndex >= 0) {
           const existing = newObjects[id].grants[existingIndex]
           if (existing.protected) { return }
@@ -57,7 +57,7 @@ export default (state = {ids: [], items: {}}, action) => {
       ids: newIds,
       items: newObjects
     }
-  } else if (action.type == 'BEGIN_POLICY_EDITING') {
+  } else if (action.type === 'BEGIN_POLICY_EDITING') {
     const id = action.id
     const item = {...state.items[id]}
     item.isEditing = true
@@ -69,7 +69,7 @@ export default (state = {ids: [], items: {}}, action) => {
         [id]: item
       }
     }
-  // } else if (action.type == 'END_POLICY_EDITING') {
+  // } else if (action.type === 'END_POLICY_EDITING') {
   //   const id = action.id
   //   const item = {...state.items[id]}
   //   item.isEditing = false
@@ -77,7 +77,7 @@ export default (state = {ids: [], items: {}}, action) => {
   //     item.grants = Object.keys(action.policies)
   //       .filter(policy => action.policies[policy])
   //       .map(policy => ({
-  //         ...item.grants.find(grant => grant.policy == policy),
+  //         ...item.grants.find(grant => grant.policy === policy),
   //         policy: policy
   //       }))
   //   }
@@ -89,7 +89,7 @@ export default (state = {ids: [], items: {}}, action) => {
   //       [id]: item
   //     }
   //   }
-  } else if (action.type == 'DELETE_ACCESS_TOKEN') {
+  } else if (action.type === 'DELETE_ACCESS_TOKEN') {
     const tokens = [...state.tokens]
     const ids = state.tokens.map(token => token.id)
     // const ids = [...state.ids]

@@ -19,10 +19,10 @@ class KeyConfiguration extends React.Component {
     // Override onChange here rather than in a redux-form normalizer because
     // we're using component state (keys) to determine the max value
     const quorumChange = (event, maxKeys) => {
-      let quorum = parseInt(typeof(event) == 'object' ? event.target.value : event)
+      let quorum = parseInt(typeof(event) === 'object' ? event.target.value : event)
       if (isNaN(quorum)) { return }
 
-      if (maxKeys == undefined) {
+      if (maxKeys === undefined) {
         maxKeys = parseInt(this.state.keys || 0)
       }
 

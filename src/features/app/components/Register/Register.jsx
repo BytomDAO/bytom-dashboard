@@ -134,7 +134,7 @@ class Register extends React.Component {
                   lang === 'zh' && <p>点击恢复按钮，选择备份文件进行恢复</p>
                 }
                 {
-                  lang != 'zh' && <p>Click the button, and select the backup file</p>
+                  lang !== 'zh' && <p>Click the button, and select the backup file</p>
                 }
                 <input id='bytom-restore-file-upload-init' type='file' style={{'display': 'none'}}
                        onChange={this.handleFileChange.bind(this)}/>

@@ -19,7 +19,7 @@ function preprocessTransaction(formParams) {
   }
 
   const normalT = formParams.normalTransaction
-  if (builder.actions.length == 0) {
+  if (builder.actions.length === 0) {
     let gasPrice = 0
     switch (normalT.gas.type) {
       case 'Fast':
@@ -58,11 +58,11 @@ function preprocessTransaction(formParams) {
     })
   }
 
-  if (builder.baseTransaction == '') {
+  if (builder.baseTransaction === '') {
     delete builder.baseTransaction
   }
 
-  if (formParams.submitAction == 'generate') {
+  if (formParams.submitAction === 'generate') {
     builder.ttl = '1h' // 1 hour
   }
 
@@ -73,7 +73,7 @@ function preprocessTransaction(formParams) {
     intFields.forEach(key => {
       const value = a[key]
       if (value) {
-        if ((parseInt(value) + '') == value) {
+        if ((parseInt(value) + '') === value) {
           a[key] = parseInt(value)
         } else {
           throw new Error(`Action ${parseInt(i) + 1} ${key} must be an integer.`)
@@ -134,7 +134,7 @@ form.submitForm = (formParams) => function (dispatch) {
   if (formParams.state.showAdvanceTx
     && formParams.state.showAdvanced
     && formParams.baseTransaction
-    && formParams.submitAction == 'submit') {
+    && formParams.submitAction === 'submit') {
     const transaction = JSON.parse(formParams.baseTransaction)
     return signAndSubmitTransaction(transaction, formParams.password)
   }
@@ -164,7 +164,7 @@ form.submitForm = (formParams) => function (dispatch) {
     })
   }
 
-  if (formParams.submitAction == 'submit') {
+  if (formParams.submitAction === 'submit') {
     return buildPromise
       .then((resp) => {
         if (resp.status === 'fail') {
@@ -175,7 +175,7 @@ form.submitForm = (formParams) => function (dispatch) {
       })
   }
 
-  // submitAction == 'generate'
+  // submitAction === 'generate'
   return buildPromise.then(resp => {
     if (resp.status === 'fail') {
       throw new Error(resp.msg)

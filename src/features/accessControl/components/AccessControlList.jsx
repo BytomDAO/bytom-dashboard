@@ -65,8 +65,8 @@ class AccessControlList extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
   const items = state.accessControl.tokens
-  const tokensSelected = ownProps.location.query.type == 'token'
-  const certificatesSelected = ownProps.location.query.type != 'token'
+  const tokensSelected = ownProps.location.query.type === 'token'
+  const certificatesSelected = ownProps.location.query.type !== 'token'
 
   return {
     tokens: items || [],

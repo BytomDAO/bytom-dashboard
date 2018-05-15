@@ -29,7 +29,7 @@ class Sync extends React.Component {
     // elems.push(<li key='sync-networkID' className={navStyles.navigationTitle}>{ networkID }</li>)
     elems.push(<li key='sync-title' className={navStyles.navigationTitle}>{ networkID } { lang === 'zh' ? '同步状态' : 'Sync Status' }</li>)
 
-    if(!syncing && currentBlock == highestBlock){
+    if(!syncing && currentBlock === highestBlock){
       elems.push(<li className={styles.blockHightlight} key='sync-done'>{lang === 'zh' ? '同步完成: ' : 'Fully synced: ' } <span>{currentBlock}/{highestBlock}</span></li>)
     }
 

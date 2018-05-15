@@ -4,7 +4,7 @@ import moment from 'moment'
 const defaultIdFunc = (item) => item.id
 
 export const itemsReducer = (type, idFunc = defaultIdFunc) => (state = {}, action) => {
-  if (action.type == `RECEIVED_${type.toUpperCase()}_ITEMS`) {
+  if (action.type === `RECEIVED_${type.toUpperCase()}_ITEMS`) {
     const newObjects = {}
 
     const data = type.toUpperCase() !== 'TRANSACTION' ? action.param.data : action.param.data.map(data => ({
@@ -20,7 +20,7 @@ export const itemsReducer = (type, idFunc = defaultIdFunc) => (state = {}, actio
       newObjects[idFunc(item)] = item
     })
     return newObjects
-  } else if (action.type == `DELETE_${type.toUpperCase()}`) {
+  } else if (action.type === `DELETE_${type.toUpperCase()}`) {
     delete state[action.id]
     return {...state}
   }
@@ -32,21 +32,21 @@ export const queryItemsReducer = (type, idFunc = defaultIdFunc) => (state = [], 
 }
 
 export const queryCursorReducer = (type) => (state = {}, action) => {
-  if (action.type == `APPEND_${type.toUpperCase()}_PAGE`) {
+  if (action.type === `APPEND_${type.toUpperCase()}_PAGE`) {
     return action.param
   }
   return state
 }
 
 export const queryTimeReducer = (type) => (state = '', action) => {
-  if (action.type == `APPEND_${type.toUpperCase()}_PAGE`) {
+  if (action.type === `APPEND_${type.toUpperCase()}_PAGE`) {
     return moment().format('h:mm:ss a')
   }
   return state
 }
 
 export const autocompleteIsLoadedReducer = (type) => (state = false, action) => {
-  if (action.type == `DID_LOAD_${type.toUpperCase()}_AUTOCOMPLETE`) {
+  if (action.type === `DID_LOAD_${type.toUpperCase()}_AUTOCOMPLETE`) {
     return true
   }
 
@@ -60,7 +60,7 @@ export const listViewReducer = (type, idFunc = defaultIdFunc) => combineReducers
 })
 
 export const queriesReducer = (type) => (state = {}, action) => {
-  if (action.type == `APPEND_${type.toUpperCase()}_PAGE`) {
+  if (action.type === `APPEND_${type.toUpperCase()}_PAGE`) {
     return {
       ...state,
       loadedOnce: true

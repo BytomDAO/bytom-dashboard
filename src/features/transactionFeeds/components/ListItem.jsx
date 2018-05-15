@@ -11,7 +11,7 @@ class ListItem extends React.Component {
 
     // int max (2147483647) is used to indicate that a feed
     // hasn't yet been read from.
-    const hasStarted = blockPosition != '2147483647'
+    const hasStarted = blockPosition !== '2147483647'
 
     const options = [
       {label: 'ID', value: item.id}
