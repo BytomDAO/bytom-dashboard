@@ -15,10 +15,10 @@ function preprocessTransaction(formParams) {
   const copy = JSON.parse(JSON.stringify(formParams))
   const builder = {
     baseTransaction: copy.baseTransaction,
-    actions: copy.actions,
+    actions: copy.actions || [],
   }
 
-  const normalT = formParams.normalTransaction
+  const normalT = formParams
   if (builder.actions.length == 0) {
     let gasPrice = 0
     switch (normalT.gas.type) {
@@ -131,7 +131,7 @@ form.submitForm = (formParams) => function (dispatch) {
     }))
   }
 
-  if (formParams.state.showAdvanceTx
+  if (formParams.actions.length !== 0
     && formParams.state.showAdvanced
     && formParams.baseTransaction
     && formParams.submitAction == 'submit') {
@@ -139,7 +139,7 @@ form.submitForm = (formParams) => function (dispatch) {
     return signAndSubmitTransaction(transaction, formParams.password)
   }
 
-  if (formParams.state.showAdvanceTx
+  if (formParams.actions.length !== 0
     && formParams.state.showAdvanced
     && formParams.baseTransaction
     && formParams.submitAction !== 'submit') {
