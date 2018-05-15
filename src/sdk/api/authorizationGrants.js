@@ -4,7 +4,7 @@ const util = require('../util')
 const authorizationGrants = (client) => ({
   create: (params, cb) => {
     params = Object.assign({}, params)
-    if (params.guardType == 'x509') {
+    if (params.guardType === 'x509') {
       params.guardData = util.sanitizeX509GuardData(params.guardData)
     }
 

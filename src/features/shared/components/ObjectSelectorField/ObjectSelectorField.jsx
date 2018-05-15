@@ -66,13 +66,13 @@ class ObjectSelectorField extends React.Component {
             </DropdownButton>
           </div>
 
-          {this.state.selected == ID_SELECTED &&
+          {this.state.selected === ID_SELECTED &&
             <input className='form-control'
               type={this.state.type}
               placeholder={`${this.props.title} ID`}
               {...idProps} />}
 
-          {this.state.selected == ALIAS_SELECTED &&
+          {this.state.selected === ALIAS_SELECTED &&
             <this.props.aliasField
               className={styles.aliasFieldGroupItem}
               placeholder={ lang === 'zh' ? `输入${this.props.title.toLowerCase()}别名...` : `Start typing ${this.props.title.toLowerCase()} alias...`}

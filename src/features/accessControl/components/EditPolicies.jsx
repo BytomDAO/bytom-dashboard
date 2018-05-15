@@ -46,7 +46,7 @@ const initialValues = (state, ownProps) => {
     initialValues: {
       grant: item,
       policies: policyOptions.reduce((memo, p) => {
-        const policyIndex = item.grants.findIndex(grant => grant.policy == p.value)
+        const policyIndex = item.grants.findIndex(grant => grant.policy === p.value)
         memo[p.value] = policyIndex >= 0
         return memo
       }, {}),

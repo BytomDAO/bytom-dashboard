@@ -30,7 +30,7 @@ const snakeize = (object) => {
       delete object[key]
     }
 
-    if (typeof value == 'object' && blacklistAttributes.indexOf(newKey) == -1) {
+    if (typeof value === 'object' && blacklistAttributes.indexOf(newKey) === -1) {
       value = snakeize(value)
     }
 
@@ -50,7 +50,7 @@ const camelize = (object) => {
       delete object[key]
     }
 
-    if (typeof value == 'object' && blacklistAttributes.indexOf(key) == -1) {
+    if (typeof value === 'object' && blacklistAttributes.indexOf(key) === -1) {
       value = camelize(value)
     }
 
@@ -127,7 +127,7 @@ class Connection {
         {sourceError: err}
       )
     }).then((resp) => {
-      if (resp.status == 204) {
+      if (resp.status === 204) {
         return { status: 204 }
       }
 
@@ -138,17 +138,17 @@ class Connection {
           {response: resp, status: resp.status}
         )
       }).then((body) => {
-        if (resp.status / 100 == 2) {
+        if (resp.status / 100 === 2) {
           return body
         }
 
         // Everything else is a status error.
         let errType = null
-        if (resp.status == 401) {
+        if (resp.status === 401) {
           errType = errors.types.UNAUTHORIZED
-        } else if (resp.status == 404) {
+        } else if (resp.status === 404) {
           errType = errors.types.NOT_FOUND
-        } else if (resp.status / 100 == 4) {
+        } else if (resp.status / 100 === 4) {
           errType = errors.types.BAD_REQUEST
         } else {
           errType = errors.types.SERVER

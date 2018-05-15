@@ -16,19 +16,19 @@ import { reducers as unspent } from 'features/unspents'
 import { clear as clearStorage } from 'utility/localStorage'
 
 const makeRootReducer = () => (state, action) => {
-  if (action.type == 'UPDATE_CORE_INFO' &&
+  if (action.type === 'UPDATE_CORE_INFO' &&
       !action.param.isConfigured) {
     // const newState = {
     //   form: state.form,
     //   routing: state.routing,
     // }
     //
-    // if (state.core.blockchainId == (action.param.blockchainId || 0)) {
+    // if (state.core.blockchainId === (action.param.blockchainId || 0)) {
     //   newState.core = state.core
     // }
     //
     // state = newState
-  } else if (action.type == 'USER_LOG_OUT') {
+  } else if (action.type === 'USER_LOG_OUT') {
     // TODO: see if we can't move this outside of a reducer..
 
     // Actions still may fire after the location redirect, so make sure they

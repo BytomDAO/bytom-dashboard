@@ -24,7 +24,7 @@ class ResetPassword extends Component {
 
   componentDidMount() {
     this.props.fetchItem().then(resp => {
-      if (resp.data.length == 0) {
+      if (resp.data.length === 0) {
         this.setState({notFound: true})
       }
     })

@@ -8,11 +8,11 @@ class KeyValueTable extends React.Component {
   shouldUsePre(item) {
     if (item.pre) return true
 
-    return item.value != null && (typeof item.value == 'object')
+    return item.value !== null && (typeof item.value === 'object')
   }
 
   stringify(value) {
-    if (isObject(value) && size(value) == 1) {
+    if (isObject(value) && size(value) === 1) {
       // Random sample will always be the lone value here
       let sampled = sample(value)
 

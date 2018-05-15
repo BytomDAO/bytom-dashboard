@@ -105,8 +105,8 @@ export const mapStateToProps = (type, itemComponent, additionalProps = {}) => (s
     lang: state.core.lang,
     btmAmountUnit: state.core.btmAmountUnit,
     listItemComponent: itemComponent,
-    noResults: target.length == 0,
-    showFirstTimeFlow: target.length == 0,
+    noResults: target.length === 0,
+    showFirstTimeFlow: target.length === 0,
 
     ...additionalProps
   }

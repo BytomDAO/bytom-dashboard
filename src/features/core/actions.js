@@ -28,9 +28,9 @@ const fetchCoreInfo = (options = {}) => {
       })
       .catch((err) => {
         if (options.throw || !err.status) {
-          throw err
+          throw errswitch.go
         } else {
-          if (err.status == 401) {
+          if (err.status === 401) {
             dispatch({type: 'ERROR', payload: err})
           } else {
             dispatch({type: 'CORE_DISCONNECT'})
@@ -43,7 +43,7 @@ const fetchCoreInfo = (options = {}) => {
 //todo: change the function later
 const registerKey = (data) => {
   return (dispatch) => {
-    if (typeof data.keyAlias == 'string')  data.keyAlias = data.keyAlias.trim()
+    if (typeof data.keyAlias === 'string')  data.keyAlias = data.keyAlias.trim()
 
     const keyData = {
       'alias': data.keyAlias,
@@ -55,7 +55,7 @@ const registerKey = (data) => {
           throw new Error(resp.msg)
         }
 
-        if (typeof data.accountAlias == 'string')  data.accountAlias = data.accountAlias.trim()
+        if (typeof data.accountAlias === 'string')  data.accountAlias = data.accountAlias.trim()
         const accountData = {
           'root_xpubs':[resp.data.xpub],
           'quorum':1,

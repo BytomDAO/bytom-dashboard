@@ -23,11 +23,11 @@ let actions = {
     }
 
     return (dispatch) => {
-      if (data.type == 'testnet') {
+      if (data.type === 'testnet') {
         return dispatch(fetchTestnetInfo()).then(testnet =>
           configureWithRetry(dispatch, testnet))
       } else {
-        if (data.type == 'new') {
+        if (data.type === 'new') {
           data = {
             isGenerator: true,
             isSigner: true,

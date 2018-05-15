@@ -39,7 +39,7 @@ class Container extends React.Component {
 
   componentDidMount() {
     this.props.fetchAccountItem().then(resp => {
-      if (resp.data.length == 0) {
+      if (resp.data.length === 0) {
         this.setState({noAccountItem: true})
       }
     })
@@ -59,10 +59,10 @@ class Container extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.authOk != this.props.authOk ||
-        nextProps.configKnown != this.props.configKnown ||
-        nextProps.configured != this.props.configured ||
-        nextProps.location.pathname != this.props.location.pathname) {
+    if (nextProps.authOk !== this.props.authOk ||
+        nextProps.configKnown !== this.props.configKnown ||
+        nextProps.configured !== this.props.configured ||
+        nextProps.location.pathname !== this.props.location.pathname) {
       this.redirectRoot(nextProps)
     }
     if(nextProps.lang === 'zh'){

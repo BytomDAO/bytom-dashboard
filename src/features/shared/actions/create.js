@@ -16,8 +16,8 @@ export default function(type, options = {}) {
       const clientApi = options.clientApi ? options.clientApi() : chainClient()[`${type}s`]
       let promise = Promise.resolve()
 
-      if (typeof data.id == 'string')     data.id = data.id.trim()
-      if (typeof data.alias == 'string')  data.alias = data.alias.trim()
+      if (typeof data.id === 'string')     data.id = data.id.trim()
+      if (typeof data.alias === 'string')  data.alias = data.alias.trim()
 
       const jsonFields = options.jsonFields || []
       jsonFields.map(fieldName => {
@@ -32,7 +32,7 @@ export default function(type, options = {}) {
       if (data.xpubs) {
         data.rootXpubs = []
         data.xpubs.forEach(key => {
-          if (key.type == 'generate') {
+          if (key.type === 'generate') {
             promise = promise
               .then(() => {
                 const alias = (key.value || '').trim()

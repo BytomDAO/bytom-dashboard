@@ -75,7 +75,7 @@ class Show extends BaseShow {
           {item.inputs.map((input, index) =>
             <KeyValueTable
               key={index}
-              title={index == 0 ? lang === 'zh' ? '输入' : 'Inputs' : ''}
+              title={index === 0 ? lang === 'zh' ? '输入' : 'Inputs' : ''}
               items={buildTxInputDisplay(input, btmAmountUnit, lang)}
             />
           )}
@@ -83,7 +83,7 @@ class Show extends BaseShow {
           {item.outputs.map((output, index) =>
             <KeyValueTable
               key={index}
-              title={index == 0 ? lang === 'zh' ? '输出' : 'Outputs' : ''}
+              title={index === 0 ? lang === 'zh' ? '输出' : 'Outputs' : ''}
               items={buildTxOutputDisplay(output, btmAmountUnit, lang)}
             />
           )}

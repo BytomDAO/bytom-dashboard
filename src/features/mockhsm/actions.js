@@ -42,7 +42,7 @@ export default {
   ...resetPassword,
   createExport: (arg, fileName) => (dispatch) => {
     clientApi().export(arg).then(resp => {
-      if(resp.status == 'success'){
+      if(resp.status === 'success'){
         const privateKey = resp.data.privateKey
 
         var element = document.createElement('a')
@@ -53,7 +53,7 @@ export default {
         element.click()
 
         document.body.removeChild(element)
-      }else if(resp.status == 'fail'){
+      }else if(resp.status === 'fail'){
         dispatch({ type: 'ERROR', payload: {message: resp.msg} })
       }
     })

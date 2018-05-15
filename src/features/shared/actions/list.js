@@ -22,7 +22,7 @@ export default function(type, options = {}) {
 
       promise.then(
         (resp) => {
-          if(resp.status == 'fail'){
+          if(resp.status === 'fail'){
             dispatch({type: 'ERROR', payload: { 'message': resp.msg}})
           }else{
             dispatch(receive(resp))
@@ -45,7 +45,7 @@ export default function(type, options = {}) {
 
       const fetchNextPage = () =>
         dispatch(_load(query, getFilterStore(), options)).then((resp) => {
-          if (!resp || resp.type == 'ERROR') return
+          if (!resp || resp.type === 'ERROR') return
 
           return Promise.resolve(resp)
         })

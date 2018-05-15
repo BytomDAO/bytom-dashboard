@@ -115,24 +115,24 @@ export const flashMessages = (state = {}, action) => {
 }
 
 export const modal = (state = { isShowing: false }, action) => {
-  if      (action.type == 'SHOW_MODAL') return { isShowing: true, ...action.payload }
-  else if (action.type == 'HIDE_MODAL') return { isShowing: false }
+  if      (action.type === 'SHOW_MODAL') return { isShowing: true, ...action.payload }
+  else if (action.type === 'HIDE_MODAL') return { isShowing: false }
   return state
 }
 
 export const navAdvancedState = (state = 'normal', action) => {
-  if (action.type == 'SHOW_NAV_ADVANCE') {
+  if (action.type === 'SHOW_NAV_ADVANCE') {
     return state === 'normal' ? 'advance' : 'normal'
-  } else if (action.type == 'HIDE_NAV_ADVANCE') {
+  } else if (action.type === 'HIDE_NAV_ADVANCE') {
     return 'normal'
   }
   return state
 }
 
 export const dropdownState = (state = '', action) => {
-  if (action.type == 'TOGGLE_DROPDOWN') {
+  if (action.type === 'TOGGLE_DROPDOWN') {
     return state === '' ? 'open' : ''
-  } else if (action.type == 'CLOSE_DROPDOWN') {
+  } else if (action.type === 'CLOSE_DROPDOWN') {
     return ''
   }
 

@@ -65,10 +65,10 @@ class AutocompleteField extends React.Component {
     // Fills input with top suggestion if suggestions are present and key
     // pressed was either tab (keyCode 9), or enter/return (keyCode 13)
     const suggestions = this.state.suggestions
-    if (suggestions.length > 0 && (event.keyCode == 9 || event.keyCode == 13)) {
+    if (suggestions.length > 0 && (event.keyCode === 9 || event.keyCode === 13)) {
 
       // Prevent form submission if key pressed was enter/return
-      event.keyCode == 13 && event.preventDefault()
+      event.keyCode === 13 && event.preventDefault()
 
       const suggestion = suggestions[0]['alias']
       const input = this.props.fieldProps.value.toLowerCase()

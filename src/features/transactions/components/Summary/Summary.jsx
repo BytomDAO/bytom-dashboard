@@ -36,11 +36,11 @@ class Summary extends React.Component {
           control: 0
         }
 
-        if (inout.type == 'spend') {
+        if (inout.type === 'spend') {
           account.spend += inout.amount
-        } else if (inout.type == 'control' && inout.purpose == 'change') {
+        } else if (inout.type === 'control' && inout.purpose === 'change') {
           account.spend -= inout.amount
-        } else if (inout.type == 'control') {
+        } else if (inout.type === 'control') {
           account.control += inout.amount
         }
       }
@@ -95,7 +95,7 @@ class Summary extends React.Component {
         const account = asset[accountId]
         if (!account) return
 
-        if (accountId == 'external') {
+        if (accountId === 'external') {
           account.alias = 'external'
           accountId = null
         }
@@ -109,7 +109,7 @@ class Summary extends React.Component {
               amount: asset.decimals? converIntToDec(account[type], asset.decimals) : normalizeBtmAmountUnit(assetId, account[type], this.props.btmAmountUnit),
               asset: asset.alias ? asset.alias : <code className={styles.rawId}>{assetId}</code>,
               assetId: assetId,
-              direction: type == 'spend' ? 'from' : 'to',
+              direction: type === 'spend' ? 'from' : 'to',
               account: account.alias ? account.alias : <code className={styles.rawId}>{accountId}</code>,
               accountId: accountId,
             })

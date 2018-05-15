@@ -81,7 +81,7 @@ export default connect(
     canLogOut: state.core.requireClientToken,
     lang: state.core.lang,
     connected: true,
-    showDropwdown: state.app.dropdownState == 'open',
+    showDropwdown: state.app.dropdownState === 'open',
   }),
   (dispatch) => ({
     toggleDropdown: () => dispatch(actions.app.toggleDropdown),

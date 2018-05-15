@@ -16,7 +16,7 @@ export const parseNonblankJSON = (json) => {
   json = json || ''
   json = json.trim()
 
-  if (json == '') {
+  if (json === '') {
     return null
   }
 

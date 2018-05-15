@@ -10,7 +10,7 @@ const setPolicies = (body, policies) => {
   const promises = []
 
   for (let policy in policies) {
-    if (policyOptions.find(opt => opt.value == policy).hidden) continue
+    if (policyOptions.find(opt => opt.value === policy).hidden) continue
     if (hasProtectedGrant(body.grants || [], policy)) continue
 
     const grant = {
@@ -96,7 +96,7 @@ export default {
     }
 
     return dispatch => {
-      if (!Object.values(data.policies).some(policy => policy == true)) {
+      if (!Object.values(data.policies).some(policy => policy === true)) {
         return Promise.reject({_error: 'You must specify one or more policies'})
       }
 

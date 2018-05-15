@@ -88,7 +88,7 @@ class XpubField extends React.Component {
                       className={styles.radio}
                       name={`keys-${this.props.index}`}
                       onChange={typeOnChange}
-                      checked={key == typeProps.value}
+                      checked={key === typeProps.value}
                       value={key}
                     />
                     { lang === 'zh' ? methodOptionsZh[key] : methodOptions[key]}
@@ -96,7 +96,7 @@ class XpubField extends React.Component {
                 </td>
 
                 <td className={styles.field}>
-                  {typeProps.value == key && fields[key]}
+                  {typeProps.value === key && fields[key]}
                 </td>
               </tr>
             )}

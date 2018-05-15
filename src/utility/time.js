@@ -47,7 +47,7 @@ export class DeltaSampler {
 }
 
 export const humanizeDuration = seconds => {
-  if (seconds == 0) {
+  if (seconds === 0) {
     return '0s'
   }
 
@@ -79,7 +79,7 @@ export const humanizeDuration = seconds => {
   const littleVal = Math.round((seconds % bigUnit) / littleUnit)
 
   // Rounding may give us little-unit vals of 60s, 24h, etc.
-  if (littleVal == bigUnit / littleUnit) {
+  if (littleVal === bigUnit / littleUnit) {
     return `${bigVal + 1}${bigLabel}`
   }
 
@@ -87,12 +87,12 @@ export const humanizeDuration = seconds => {
   const little = `${littleVal}${littleLabel}`
 
   // Don't show little unit if the big unit is in double digits
-  if (bigVal > 9 || littleVal == 0) {
+  if (bigVal > 9 || littleVal === 0) {
     return big
   }
 
   // For values that round to under 60 seconds
-  if (bigVal == 0) {
+  if (bigVal === 0) {
     return little
   }
 

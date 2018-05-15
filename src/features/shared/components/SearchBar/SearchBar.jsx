@@ -13,8 +13,8 @@ class SearchBar extends React.Component {
       sumBy: this.props.currentFilter.sumBy || '',
       sumByVisible: false,
     }
-    this.state.showClear = (this.state.query != (this.props.defaultFilter || '')) || this.state.sumBy != ''
-    this.state.sumByVisible = this.state.sumBy != ''
+    this.state.showClear = (this.state.query !== (this.props.defaultFilter || '')) || this.state.sumBy !== ''
+    this.state.sumByVisible = this.state.sumBy !== ''
 
     this.filterKeydown = this.filterKeydown.bind(this)
     this.filterOnChange = this.filterOnChange.bind(this)
@@ -26,7 +26,7 @@ class SearchBar extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     // Override text field with default query when provided
-    if (nextProps.currentFilter.filter != this.props.currentFilter.filter) {
+    if (nextProps.currentFilter.filter !== this.props.currentFilter.filter) {
       this.setState({query: nextProps.currentFilter.filter})
     }
   }
@@ -46,8 +46,8 @@ class SearchBar extends React.Component {
         value = value.substr(0, value.length - 1) + "'"
         break
       case "'":
-        if (value[cursorPosition] == "'" &&
-            value[cursorPosition - 1] == "'") {
+        if (value[cursorPosition] === "'" &&
+            value[cursorPosition - 1] === "'") {
           value = value.substr(0, cursorPosition-1)
             + value.substr(cursorPosition)
         }
@@ -59,8 +59,8 @@ class SearchBar extends React.Component {
 
         break
       case ')':
-        if (value[cursorPosition] == ')' &&
-            value[cursorPosition - 1] == ')') {
+        if (value[cursorPosition] === ')' &&
+            value[cursorPosition - 1] === ')') {
           value = value.substr(0, cursorPosition-1)
             + value.substr(cursorPosition)
         }
@@ -89,7 +89,7 @@ class SearchBar extends React.Component {
 
     const query = {}
     const state = {
-      showClear: (this.state.query && (this.state.query != this.props.defaultFilter)) || this.state.sumBy
+      showClear: (this.state.query && (this.state.query !== this.props.defaultFilter)) || this.state.sumBy
     }
 
     if (this.state.query) {

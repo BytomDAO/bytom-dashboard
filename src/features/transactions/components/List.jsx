@@ -8,8 +8,8 @@ const type = 'transaction'
 
 class List extends React.Component {
   componentWillReceiveProps(nextProps) {
-    if (nextProps.blockHeight != this.props.blockHeight) {
-      if (nextProps.currentPage == 1) {
+    if (nextProps.blockHeight !== this.props.blockHeight) {
+      if (nextProps.currentPage === 1) {
         this.props.getLatest(nextProps.currentFilter)
       }
     }
@@ -48,7 +48,7 @@ const mapStateToProps = (type, itemComponent, additionalProps = {}) => {
     const highestBlock = state.core.coreData && state.core.coreData.highestBlock
     const currentItems = keysArray.slice(startIndex, startIndex + pageSize).map(
       id => totalItems[id]
-    ).filter(item => item != undefined)
+    ).filter(item => item !== undefined)
     currentItems.forEach(item => item.highest = highestBlock)
 
     return {
@@ -60,8 +60,8 @@ const mapStateToProps = (type, itemComponent, additionalProps = {}) => {
       lang: state.core.lang,
       btmAmountUnit: state.core.btmAmountUnit,
       listItemComponent: itemComponent,
-      noResults: currentItems.length == 0,
-      showFirstTimeFlow: currentItems.length == 0,
+      noResults: currentItems.length === 0,
+      showFirstTimeFlow: currentItems.length === 0,
       highestBlock: highestBlock,
       ...additionalProps
     }

@@ -39,7 +39,7 @@ const mapStateToProps = (type, itemComponent, additionalProps = {}) => {
     const startIndex = (currentPage - 1) * UTXOpageSize
     const currentItems = keysArray.slice(startIndex, startIndex + UTXOpageSize).map(
       id => totalItems[id]
-    ).filter(item => item != undefined)
+    ).filter(item => item !== undefined)
 
     return {
       currentPage: currentPage,
@@ -48,8 +48,8 @@ const mapStateToProps = (type, itemComponent, additionalProps = {}) => {
       loadedOnce: state[type].queries.loadedOnce,
       type: type,
       listItemComponent: itemComponent,
-      noResults: currentItems.length == 0,
-      showFirstTimeFlow: currentItems.length == 0,
+      noResults: currentItems.length === 0,
+      showFirstTimeFlow: currentItems.length === 0,
       btmAmountUnit : state.core.btmAmountUnit,
       lang: state.core.lang,
       ...additionalProps
