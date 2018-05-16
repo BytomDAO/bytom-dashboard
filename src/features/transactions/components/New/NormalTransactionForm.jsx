@@ -68,7 +68,7 @@ class NormalTxForm extends React.Component {
 
   submitWithValidation(data) {
     return new Promise((resolve, reject) => {
-      this.props.submitForm(Object.assign({}, data, {state: this.state}))
+      this.props.submitForm(Object.assign({}, data, {state: this.state, form: 'normalTx'}))
         .catch((err) => {
           const response = {}
 

@@ -54,7 +54,7 @@ class AdvancedTxForm extends React.Component {
 
   submitWithValidation(data) {
     return new Promise((resolve, reject) => {
-      this.props.submitForm(Object.assign({}, data, {state: this.state}))
+      this.props.submitForm(Object.assign({}, data, {state: this.state, form: 'advancedTx'}))
         .catch((err) => {
           const response = {}
 
