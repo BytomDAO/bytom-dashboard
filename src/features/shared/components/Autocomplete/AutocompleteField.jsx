@@ -96,6 +96,7 @@ class AutocompleteField extends React.Component {
           className: `form-control ${this.props.className}`,
           value: fieldProps.value,
           placeholder: this.props.placeholder,
+          onBlur: fieldProps.onBlur,
           onChange: (event, { newValue }) => fieldProps.onChange(newValue),
           onKeyDown: (event) => this.keyCheck(event)}}
       />
