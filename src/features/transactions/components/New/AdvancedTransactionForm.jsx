@@ -74,7 +74,7 @@ class AdvancedTxForm extends React.Component {
 
   render() {
     const {
-      fields: {baseTransaction, actions, submitAction, password},
+      fields: {signTransaction, actions, submitAction, password},
       error,
       handleSubmit,
       submitting
@@ -82,7 +82,7 @@ class AdvancedTxForm extends React.Component {
     const lang = this.props.lang
 
     let submitLabel = lang === 'zh' ? '提交交易' : 'Submit transaction'
-    const hasBaseTransaction = ((baseTransaction.value || '').trim()).length > 0
+    const hasBaseTransaction = ((signTransaction.value || '').trim()).length > 0
     if (submitAction.value == 'generate' && !hasBaseTransaction) {
       submitLabel = lang === 'zh' ? '生成交易JSON' : 'Generate transaction JSON'
     }
@@ -138,7 +138,7 @@ class AdvancedTxForm extends React.Component {
             <TextField
               title={lang === 'zh' ? '带签名交易' : 'To sign transaction'}
               placeholder={lang === 'zh' ? '在这里复制交易 HEX ...' : 'Paste transaction hex here...'}
-              fieldProps={baseTransaction}
+              fieldProps={signTransaction}
               autoFocus={true}/>
 
             <FieldLabel>{lang === 'zh' ? '交易构建类型' : 'Transaction Build Type'}</FieldLabel>
@@ -207,12 +207,12 @@ const validate = (values, props) => {
   const lang = props.lang
 
   // Base transaction
-  let baseTx = (values.baseTransaction || '').trim()
+  let baseTx = (values.signTransaction || '').trim()
   try {
     JSON.parse(baseTx)
   } catch (e) {
     if (baseTx && e) {
-      errors.baseTransaction = ( lang === 'zh' ? '请使用JSON字符来签名交易' : 'To sign transaction must be a JSON string.' )
+      errors.signTransaction = ( lang === 'zh' ? '请使用JSON字符来签名交易' : 'To sign transaction must be a JSON string.' )
     }
   }
 
@@ -233,7 +233,7 @@ export default BaseNew.connect(
   reduxForm({
     form: 'AdvancedTransactionForm',
     fields: [
-      'baseTransaction',
+      'signTransaction',
       'actions[].accountId',
       'actions[].accountAlias',
       'actions[].assetId',

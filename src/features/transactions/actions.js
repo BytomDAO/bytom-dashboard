@@ -97,30 +97,19 @@ function preprocessTransaction(formParams) {
 }
 
 form.submitForm = (formParams) => function (dispatch) {
-  const connection = chainClient().connection
+  const client = chainClient()
 
-  const processed = preprocessTransaction(formParams)
-  const buildPromise = connection.request('/build-transaction', {actions: processed.actions})
+  const buildPromise = (formParams.state.showAdvanced && formParams.signTransaction) ? null :
+    client.transactions.build(builder => {
+      const processed = preprocessTransaction(formParams)
 
-  const signAndSubmitTransaction = (transaction, password) => {
-    return connection.request('/sign-transaction', {
-      password,
-      transaction
-    }).then(resp => {
-      if (resp.status === 'fail') {
-        throw new Error(resp.msg)
+      builder.actions = processed.actions
+      if (processed.baseTransaction) {
+        builder.baseTransaction = processed.baseTransaction
       }
+    })
 
-      const rawTransaction = resp.data.transaction.rawTransaction
-      return connection.request('/submit-transaction', {rawTransaction})
-    }).then(dealSignSubmitResp)
-  }
-
-  const dealSignSubmitResp = resp => {
-    if (resp.status === 'fail') {
-      throw new Error(resp.msg)
-    }
-
+  const submitSucceeded = () => {
     dispatch(form.created())
     dispatch(push({
       pathname: '/transactions',
@@ -133,92 +122,63 @@ form.submitForm = (formParams) => function (dispatch) {
   // normal transactions
   if(formParams.form === 'normalTx'){
     return buildPromise
-      .then((resp) => {
-        if (resp.status === 'fail') {
-          throw new Error(resp.msg)
-        }
-
-        const body = Object.assign({}, {password: formParams.password, 'transaction': resp.data})
-        return connection.request('/sign-transaction', body)
+      .then(tpl => {
+        const body = Object.assign({}, {password: formParams.password, transaction: tpl.data})
+        return client.transactions.sign(body)
       })
-      .then(signResp => {
-        if (signResp.status === 'fail') {
-          throw new Error(signResp.msg)
-        }
-        else if(!signResp.data.signComplete){
+      .then(signed => {
+        if(!signed.data.signComplete){
           throw new Error('Signature failed, it might be your password is wrong.')
         }
-
-        const rawTransaction = signResp.data.transaction.rawTransaction
-        return connection.request('/submit-transaction', {rawTransaction})
-      }).then(dealSignSubmitResp)
+        return client.transactions.submit(signed.data.transaction.rawTransaction)
+      })
+      .then(submitSucceeded)
   }
   //advanced transactions
   else{
-    if ( formParams.state.showAdvanced
-      && formParams.baseTransaction
-      && formParams.submitAction == 'submit') {
-      const transaction = JSON.parse(formParams.baseTransaction)
-      return signAndSubmitTransaction(transaction, formParams.password)
-    }
-
-    if (formParams.state.showAdvanced
-      && formParams.baseTransaction
-      && formParams.submitAction !== 'submit') {
-      const transaction = JSON.parse(formParams.baseTransaction)
-      return connection.request('/sign-transaction', {
-        password: formParams.password,
-        transaction
-      }).then(resp => {
-        if (resp.status === 'fail') {
-          throw new Error(resp.msg)
-        }
-
-        const id = uuid.v4()
-        dispatch({
-          type: 'GENERATED_TX_HEX',
-          generated: {
-            id: id,
-            hex: JSON.stringify(resp.data.transaction),
-          },
-        })
-        dispatch(push(`/transactions/generated/${id}`))
-      })
-    }
-
     if (formParams.submitAction == 'submit') {
-      return buildPromise
-        .then((resp) => {
-          if (resp.status === 'fail') {
-            throw new Error(resp.msg)
-          }
+      const signAndSubmitTransaction = (transaction) => {
+        const body = Object.assign({}, {password: formParams.password, transaction: transaction})
+        return client.transactions.sign(body)
+          .then( signed => client.transactions.submit(signed.data.transaction.rawTransaction) )
+          .then(submitSucceeded)
+      }
 
-          return signAndSubmitTransaction(resp.data, formParams.password)
-        })
+      if( formParams.state.showAdvanced
+        && formParams.signTransaction ){
+        const transaction = JSON.parse(formParams.signTransaction)
+        return signAndSubmitTransaction(transaction)
+      }
+
+      return buildPromise
+        .then(tpl => signAndSubmitTransaction(tpl.data))
     }
 
     // submitAction == 'generate'
-    return buildPromise.then(resp => {
-      if (resp.status === 'fail') {
-        throw new Error(resp.msg)
-      }
+    const signAndSubmitGeneratedTransaction = (transaction) => {
+      const body = Object.assign({}, {password: formParams.password, transaction: transaction})
+      return client.transactions.sign(body)
+        .then(resp => {
+          const id = uuid.v4()
+          dispatch({
+            type: 'GENERATED_TX_HEX',
+            generated: {
+              id: id,
+              hex: JSON.stringify(resp.data.transaction),
+            },
+          })
+          dispatch(push(`/transactions/generated/${id}`))
+        })
+    }
 
-      const body = Object.assign({}, {password: formParams.password, 'transaction': resp.data})
-      return connection.request('/sign-transaction', body)
-    }).then(resp => {
-      if (resp.status === 'fail') {
-        throw new Error(resp.msg)
-      }
-      const id = uuid.v4()
-      dispatch({
-        type: 'GENERATED_TX_HEX',
-        generated: {
-          id: id,
-          hex: JSON.stringify(resp.data.transaction),
-        },
-      })
-      dispatch(push(`/transactions/generated/${id}`))
-    })
+    if (formParams.state.showAdvanced
+      && formParams.signTransaction) {
+      const transaction = JSON.parse(formParams.signTransaction)
+      return signAndSubmitGeneratedTransaction(transaction)
+    }
+
+    return buildPromise
+      .then(resp => signAndSubmitGeneratedTransaction(resp.data))
   }
 }
 
