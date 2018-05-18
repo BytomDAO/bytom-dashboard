@@ -209,7 +209,13 @@ class NormalTxForm extends React.Component {
 
             <label className={styles.title}>{lang === 'zh' ? '至' : 'To'}</label>
             <div className={styles.main}>
-              <TextField title={lang === 'zh' ? '地址' : 'Address'} fieldProps={address}/>
+              <TextField title={lang === 'zh' ? '地址' : 'Address'} fieldProps={{
+                ...address,
+                onBlur: (e) => {
+                  address.onBlur(e)
+                  this.estimateNormalTransactionGas()
+                },
+              }}/>
               {!showBtmAmountUnit && !assetDecimal &&
               <TextField title={lang === 'zh' ? '数量' : 'Amount'} fieldProps={amount}
               />}
@@ -294,40 +300,9 @@ const validate = (values, props) => {
   return errors
 }
 
-const asyncValidate = (values, dispatch , props) => {
-  // console.log(values)
-  // console.log(this)
-  // console.log(props)
-  // //
-  // console.log(dispatch)
+const asyncValidate = (values) => {
   return new Promise((resolve, reject) => {
     const address = values.address
-    const amount = props.form.amount.value
-    const accountAlias = values.accountAlias
-    const accountId = values.accountId
-    const assetAlias = values.assetAlias
-    const assetId = values.assetId
-    // const gasType = values.gas.type
-    //
-    // if (props.form._active === ('amount' || 'accountAlias' || 'accountId' || 'assetAlias' || 'assetId')){
-    //
-    const noAccount = !accountAlias && !accountId
-    const noAsset = !assetAlias && !assetId
-    //
-    //   // if (!address || !amount || noAccount || noAsset) {
-    //   //   this.setState({estimateGas: null})
-    //   //   return
-    //   // }
-    //
-    //   debugger
-
-    //   // const previousErrors = props.state.form.myform.asyncErrors
-    //   // const [ currentFieldName, currentFieldValue ] = Object.entries(values)[0]
-    //   // asyncOperation(currentFieldName, currentFieldValue).catch(err => {
-    //   //   throw Object.assign({}, previousErrors, {[currentFieldName]: err})
-    //   // })
-    // } else if (props.form._active === 'address') {
-      // values.gas.price = 1
     chainClient().accounts.validateAddresses(address)
       .then(
         (resp) => {
@@ -336,62 +311,10 @@ const asyncValidate = (values, dispatch , props) => {
           }else {
             resolve()
           }
-          //   if (address && amount && !noAccount && !noAsset) {
-          //   const connection = chainClient().connection
-          //
-          //   const spendAction = {
-          //     accountAlias,
-          //     accountId,
-          //     assetAlias,
-          //     assetId,
-          //     amount: Number(amount),
-          //     type: 'spend_account'
-          //   }
-          //
-          //   const receiveAction = {
-          //     address,
-          //     assetAlias,
-          //     assetId,
-          //     amount: Number(amount),
-          //     type: 'control_address'
-          //   }
-          //
-          //   const gasAction = {
-          //     accountAlias,
-          //     accountId,
-          //     assetAlias: 'BTM',
-          //     amount: Math.pow(10, 7),
-          //     type: 'spend_account'
-          //   }
-          //
-          //   const actions = [spendAction, receiveAction, gasAction]
-          //   const body = {actions, ttl: 1}
-          //   connection.request('/build-transaction', body).then(resp => {
-          //     if (resp.status === 'fail') {
-          //       props.showError(new Error(resp.msg))
-          //     }else {
-          //       connection.request('/estimate-transaction-gas', {
-          //         transactionTemplate: resp.data
-          //       }).then(resp => {
-          //         if (resp.status === 'fail') {
-          //           props.showError(new Error(resp.msg))
-          //         }else {
-          //           // if (gasType !== 'Customize'){
-          //           //   values.gas.price = Math.ceil(resp.data.totalNeu / 100000) * 100000
-          //           // }
-          //           resolve()
-          //         }
-          //       })
-          //     }
-          //   })
-          //   // }
-          //   // resolve()
-          // }
         }
       ).catch((err) => {
         reject({ address: err })
       })
-    // }
   })
 }
 
@@ -418,7 +341,6 @@ export default BaseNew.connect(
       'password'
     ],
     asyncValidate,
-    // asyncBlurFields: [ 'address', 'amount', 'accountAlias', 'accountId', 'assetAlias', 'assetId'],
     asyncBlurFields: [ 'address'],
     validate,
     touchOnChange: true,
