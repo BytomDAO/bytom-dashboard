@@ -27,7 +27,6 @@ export const history = useRouterHistory(createHistory)({
   basename: basename
 })
 
-export const pageSize = 25
 export const UTXOpageSize = 10
 
 export const testnetInfoUrl = process.env.TESTNET_INFO_URL || 'https://testnet-info.chain.com'
