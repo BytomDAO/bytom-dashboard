@@ -3,8 +3,14 @@ import { humanize } from 'utility/string'
 import actions from 'actions'
 
 const makeRoutes = (store, type, List, New, Show, options = {}) => {
-  const loadPage = () => {
-    store.dispatch(actions[type].fetchAll())
+  const loadPage = (nextState) => {
+    if (type === 'transaction' &&
+      nextState.location.query) {
+      const page = typeof nextState.location.query.page === 'number' ? nextState.location.query.page : 1
+      store.dispatch(actions[type].fetchPage(nextState.location.query, page))
+    } else {
+      store.dispatch(actions[type].fetchAll())
+    }
   }
 
   const childRoutes = []
@@ -37,7 +43,9 @@ const makeRoutes = (store, type, List, New, Show, options = {}) => {
       onEnter: (nextState, replace) => {
         loadPage(nextState, replace)
       },
-      onChange: (_, nextState, replace) => { loadPage(nextState, replace) }
+      onChange: (_, nextState, replace) => {
+        loadPage(nextState, replace)
+      }
     },
     childRoutes: childRoutes
   }
