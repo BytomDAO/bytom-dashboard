@@ -1,29 +1,14 @@
-import {
-  BaseNew,
-  FormContainer,
-  FormSection,
-  FieldLabel,
-  TextField,
-  Autocomplete,
-  ObjectSelectorField,
-  AmountUnitField,
-  AmountInputMask,
-  PageTitle
-} from 'features/shared/components'
-import {DropdownButton, MenuItem} from 'react-bootstrap'
-import {chainClient} from 'utility/environment'
-import {reduxForm} from 'redux-form'
-import ActionItem from './FormActionItem'
+import { PageTitle } from 'features/shared/components'
 import React from 'react'
 import { connect } from 'react-redux'
 import styles from './New.scss'
 import actions from 'actions'
 import componentClassNames from 'utility/componentClassNames'
-import disableAutocomplete from 'utility/disableAutocomplete'
 import { normalizeBTMAmountUnit, converIntToDec } from 'utility/buildInOutDisplay'
 import Tutorial from 'features/tutorial/components/Tutorial'
 import NormalTxForm from './NormalTransactionForm'
 import AdvancedTxForm from './AdvancedTransactionForm'
+import { withRouter } from 'react-router'
 
 const btmID = 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
 
@@ -46,6 +31,12 @@ class Form extends React.Component {
         this.props.didLoadAssetAutocomplete()
       })
     }
+    this.props.router.setRouteLeaveHook(this.props.route, this.routerWillLeave)
+  }
+
+  routerWillLeave(nextLocation) {
+    // if (!this.state.isSaved)
+    return 'Your work is not saved! Are you sure you want to leave?'
   }
 
   handleKeyDown(e, cb, disable) {
@@ -176,4 +167,4 @@ export default connect(
     didLoadAssetAutocomplete: () => dispatch(actions.asset.didLoadAutocomplete),
     fetchAssetAll: (cb) => dispatch(actions.asset.fetchAll(cb)),
   })
-)(Form)
+)(withRouter(Form))
