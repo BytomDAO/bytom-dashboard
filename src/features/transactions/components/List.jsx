@@ -2,7 +2,6 @@ import React from 'react'
 import { BaseList, PaginationField } from 'features/shared/components'
 import ListItem from './ListItem/ListItem'
 import actions from 'actions'
-import { pageSize } from '../../../utility/environment'
 
 const type = 'transaction'
 
@@ -43,12 +42,9 @@ const mapStateToProps = (type, itemComponent, additionalProps = {}) => {
     const currentPage = Math.max(parseInt(ownProps.location.query.page) || 1, 1)
     const totalItems = state[type].items
     const keysArray = Object.keys(totalItems)
-    const totalNumberPage = Math.ceil(keysArray.length/pageSize)
-    const startIndex = (currentPage - 1) * pageSize
+    const totalNumberPage = state[type].status.totalPage
     const highestBlock = state.core.coreData && state.core.coreData.highestBlock
-    const currentItems = keysArray.slice(startIndex, startIndex + pageSize).map(
-      id => totalItems[id]
-    ).filter(item => item != undefined)
+    const currentItems = keysArray.map(id => totalItems[id]).filter(item => item != undefined)
     currentItems.forEach(item => item.highest = highestBlock)
 
     return {
