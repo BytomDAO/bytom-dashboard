@@ -48,6 +48,13 @@ class Form extends React.Component {
     }
   }
 
+  handleKeyDown(e, cb, disable) {
+    if (e.key === 'Enter' && e.shiftKey === false && !disable) {
+      e.preventDefault()
+      cb()
+    }
+  }
+
   render() {
     const lang = this.props.lang
 
@@ -126,6 +133,7 @@ class Form extends React.Component {
               btmAmountUnit={this.props.btmAmountUnit}
               balanceAmount={balanceAmount}
               assetDecimal={assetDecimal}
+              handleKeyDown={this.handleKeyDown}
             /> }
 
             {this.state.showAdvanceTx &&
@@ -135,6 +143,7 @@ class Form extends React.Component {
               asset={this.props.asset}
               balanceAmount={balanceAmount}
               assetDecimal={assetDecimal}
+              handleKeyDown={this.handleKeyDown}
             />}
 
           </div>

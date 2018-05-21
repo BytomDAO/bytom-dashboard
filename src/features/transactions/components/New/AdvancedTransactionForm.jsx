@@ -88,7 +88,8 @@ class AdvancedTxForm extends React.Component {
     }
 
     return (
-      <form onSubmit={handleSubmit(this.submitWithValidation)} {...disableAutocomplete}>
+      <form onSubmit={handleSubmit(this.submitWithValidation)} {...disableAutocomplete}
+            onKeyDown={(e) => { this.props.handleKeyDown(e, handleSubmit(this.submitWithValidation), this.disableSubmit(actions)) }}>
 
         <FormSection title='Actions'>
           {actions.map((action, index) =>

@@ -179,7 +179,9 @@ class NormalTxForm extends React.Component {
     const showBtmAmountUnit = (assetAlias.value === 'BTM' || assetId.value === btmID)
 
     return (
-        <form onSubmit={handleSubmit(this.submitWithValidation)} {...disableAutocomplete}>
+        <form
+          onSubmit={handleSubmit(this.submitWithValidation)} {...disableAutocomplete}
+          onKeyDown={(e) => { this.props.handleKeyDown(e, handleSubmit(this.submitWithValidation), this.disableSubmit(this.props.fields)) }}>
           <FormSection title={lang === 'zh' ? '简单交易' : 'Normal Trasaction'}>
             <label className={styles.title}>{lang === 'zh' ? '从' : 'From'}</label>
             <div className={styles.main}>
