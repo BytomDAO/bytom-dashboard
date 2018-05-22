@@ -44,7 +44,8 @@
     "redux-thunk": "~2.1.0",
     "reselect": "^3.0.0",
     "sha.js": "^2.4.8",
-    "uuid": "~2.0.2"
+    "uuid": "~2.0.2",
+    "wdio-selenium-standalone-service": "0.0.10"
   },
   "devDependencies": {
     "autoprefixer": "~6.7.7",
@@ -81,7 +82,6 @@
     "url-loader": "~0.5.7",
     "wdio-browserstack-service": "~0.1.4",
     "wdio-mocha-framework": "~0.5.8",
-    "wdio-selenium-standalone-service": "0.0.7",
     "wdio-spec-reporter": "0.0.5",
     "webdriverio": "~4.6.2"
   }
