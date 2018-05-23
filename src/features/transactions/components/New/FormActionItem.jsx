@@ -92,6 +92,7 @@ export default class ActionItem extends React.Component {
 
         {visible.account &&
           <ObjectSelectorField
+            keyIndex='advtx-account'
             lang={lang}
             title={ lang === 'zh' ? '账户' : 'Account' }
             aliasField={Autocomplete.AccountAlias}
@@ -111,6 +112,7 @@ export default class ActionItem extends React.Component {
 
         {visible.asset &&
           <ObjectSelectorField
+            keyIndex='advtx-asset'
             title={ lang === 'zh' ? '资产' :'Asset'}
             lang={lang}
             aliasField={Autocomplete.AssetAlias}

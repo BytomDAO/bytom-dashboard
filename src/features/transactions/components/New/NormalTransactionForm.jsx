@@ -187,6 +187,7 @@ class NormalTxForm extends React.Component {
             <div className={styles.main}>
               <ObjectSelectorField
                 key='account-selector-field'
+                keyIndex='normaltx-account'
                 lang={lang}
                 title={lang === 'zh' ? '账户' : 'Account'}
                 aliasField={Autocomplete.AccountAlias}
@@ -197,6 +198,7 @@ class NormalTxForm extends React.Component {
               />
               <ObjectSelectorField
                 key='asset-selector-field'
+                keyIndex='normaltx-asset'
                 lang={lang}
                 title={lang === 'zh' ? '资产' : 'Asset'}
                 aliasField={Autocomplete.AssetAlias}
@@ -230,39 +232,41 @@ class NormalTxForm extends React.Component {
             </div>
 
             <label className={styles.title}>Gas</label>
-            <table className={styles.optionsBtnContianer}>
-              {rangeOptions.map((option) =>
-                <tr className={styles.optionsBtn}>
-                  <td className={styles.optionsLabel}>
-                    <label>
-                      <input type='radio'
-                             {...gas.type}
-                             onChange={gasOnChange}
-                             value={option.label}
-                             checked={option.label == gas.type.value}
-                      />
-                      {lang === 'zh' ? option.label_zh : option.label}
-                    </label>
-                  </td>
-                  <td>
-                    {
-                      option.label == gas.type.value && option.label !== 'Customize'
-                      && this.state.estimateGas && ((lang === 'zh' ? '估算' : 'estimated') + '   ' + normalizeBTMAmountUnit(btmID,
-                        option.ratio * this.state.estimateGas,
-                        this.props.btmAmountUnit))
-                    }
-                    {
-                      option.label === 'Customize' && gas.type.value === 'Customize' &&
-                      <div>
-                        <AmountUnitField
-                          autoFocus={true}
-                          fieldProps={gas.price}
-                          placeholder='Enter gas'/>
-                      </div>
-                    }
-                  </td>
-                </tr>
-              )}
+            <table>
+              <tbody className={styles.optionsBtnContianer}>
+                {rangeOptions.map((option) =>
+                  <tr className={styles.optionsBtn}>
+                    <td className={styles.optionsLabel}>
+                      <label>
+                        <input type='radio'
+                               {...gas.type}
+                               onChange={gasOnChange}
+                               value={option.label}
+                               checked={option.label == gas.type.value}
+                        />
+                        {lang === 'zh' ? option.label_zh : option.label}
+                      </label>
+                    </td>
+                    <td>
+                      {
+                        option.label == gas.type.value && option.label !== 'Customize'
+                        && this.state.estimateGas && ((lang === 'zh' ? '估算' : 'estimated') + '   ' + normalizeBTMAmountUnit(btmID,
+                          option.ratio * this.state.estimateGas,
+                          this.props.btmAmountUnit))
+                      }
+                      {
+                        option.label === 'Customize' && gas.type.value === 'Customize' &&
+                        <div>
+                          <AmountUnitField
+                            autoFocus={true}
+                            fieldProps={gas.price}
+                            placeholder='Enter gas'/>
+                        </div>
+                      }
+                    </td>
+                  </tr>
+                )}
+              </tbody>
             </table>
 
             <label className={styles.title}>{lang === 'zh' ? '密码' : 'Password'}</label>
