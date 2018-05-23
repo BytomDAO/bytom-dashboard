@@ -33,8 +33,8 @@ class Form extends React.Component {
         this.props.didLoadAssetAutocomplete()
       })
     }
-    this.props.router.setRouteLeaveHook(this.props.route, () => {
-      if (!this.handleFormEmpty())
+    this.props.router.setRouteLeaveHook(this.props.route, (nextLocation) => {
+      if (!(this.handleFormEmpty() || nextLocation.state))
         return 'Your work is not saved! Are you sure you want to leave?'
     })
   }
