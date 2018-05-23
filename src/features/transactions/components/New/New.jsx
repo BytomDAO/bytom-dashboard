@@ -9,6 +9,7 @@ import Tutorial from 'features/tutorial/components/Tutorial'
 import NormalTxForm from './NormalTransactionForm'
 import AdvancedTxForm from './AdvancedTransactionForm'
 import { withRouter } from 'react-router'
+import {getValues} from 'redux-form'
 
 const btmID = 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
 
@@ -18,6 +19,7 @@ class Form extends React.Component {
     this.state = {
       showAdvanceTx: false
     }
+    this.handleFormEmpty = this.handleFormEmpty.bind(this)
   }
 
   componentDidMount() {
@@ -31,12 +33,10 @@ class Form extends React.Component {
         this.props.didLoadAssetAutocomplete()
       })
     }
-    this.props.router.setRouteLeaveHook(this.props.route, this.routerWillLeave)
-  }
-
-  routerWillLeave(nextLocation) {
-    // if (!this.state.isSaved)
-    return 'Your work is not saved! Are you sure you want to leave?'
+    this.props.router.setRouteLeaveHook(this.props.route, () => {
+      if (!this.handleFormEmpty())
+        return 'Your work is not saved! Are you sure you want to leave?'
+    })
   }
 
   handleKeyDown(e, cb, disable) {
@@ -44,6 +44,41 @@ class Form extends React.Component {
       e.preventDefault()
       cb()
     }
+  }
+
+  handleFormEmpty() {
+    if(!this.state.showAdvanceTx){
+      const array = [
+        'accountAlias',
+        'accountId',
+        'amount',
+        'assetAlias',
+        'assetId',
+        'address',
+        'password']
+
+      for (let k in array){
+        if(this.props.normalform[array[k]]){
+          return false
+        }
+      }
+
+      return !(this.props.normalform['gas']['price'])
+    }else{
+      return !(this.props.advform['actions'].length > 0 ||
+      this.props.advform['signTransaction'] ||
+      this.props.advform['password'])
+    }
+  }
+
+  showForm(e, type){
+    e.preventDefault()
+    const showAdTx = (type === 'advanced')
+    if ( this.state.showAdvanceTx === showAdTx ||
+      ( !this.handleFormEmpty() && !window.confirm('Your work is not saved! Are you sure you want to leave?') )){
+      return
+    }
+    this.setState({ showAdvanceTx: showAdTx })
   }
 
   render() {
@@ -91,7 +126,6 @@ class Form extends React.Component {
       return (filteredAsset.length === 1 && filteredAsset[0].definition && filteredAsset[0].id !== btmID ) ? filteredAsset[0].definition.decimals : null
     }
 
-
     return (
       <div className={componentClassNames(this, 'flex-container')}>
         <PageTitle title={lang === 'zh' ? '新建交易' : 'New transaction'} />
@@ -102,18 +136,12 @@ class Form extends React.Component {
             <div className={`btn-group ${styles.btnGroup}`} role='group'>
               <button
                 className={`btn btn-default ${this.state.showAdvanceTx ? null : 'active'}`}
-                onClick={(e) => {
-                  e.preventDefault()
-                  this.setState({showAdvanceTx: false})
-                }}>
+                onClick={(e) => this.showForm(e, 'normal')}>
                 {lang === 'zh' ? '简单交易' : 'Normal'}
                 </button>
               <button
                 className={`btn btn-default ${this.state.showAdvanceTx ? 'active' : null}`}
-                onClick={(e) => {
-                  e.preventDefault()
-                  this.setState({showAdvanceTx: true})
-                }}>
+                onClick={(e) => this.showForm(e, 'advanced')}>
                 {lang === 'zh' ? '高级交易' : 'Advanced'}
                 </button>
             </div>
@@ -159,6 +187,8 @@ export default connect(
       btmAmountUnit: state.core.btmAmountUnit,
       balances,
       asset: Object.keys(state.asset.items).map(k => state.asset.items[k]),
+      normalform: getValues(state.form.NormalTransactionForm),
+      advform: getValues(state.form.AdvancedTransactionForm),
     }
   },
   (dispatch) => ({
