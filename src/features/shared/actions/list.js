@@ -84,7 +84,6 @@ export default function(type, options = {}) {
         const params = {}
         if (query.filter) params.filter = filter
         if (query.sumBy) params.sumBy = query.sumBy.split(',')
-        if (query.page) params.page = parseInt(query.page)
 
         promise = dispatch(fetchItems(params))
       }

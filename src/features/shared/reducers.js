@@ -7,7 +7,7 @@ export const itemsReducer = (type, idFunc = defaultIdFunc) => (state = {}, actio
   if (action.type == `RECEIVED_${type.toUpperCase()}_ITEMS`) {
     const newObjects = {}
 
-    const data = type.toUpperCase() !== 'TRANSACTION' ? action.param.data : action.param.data.items.map(data => ({
+    const data = type.toUpperCase() !== 'TRANSACTION' ? action.param.data : action.param.data.map(data => ({
       ...data,
       id: data.txId,
       timestamp: data.blockTime,
