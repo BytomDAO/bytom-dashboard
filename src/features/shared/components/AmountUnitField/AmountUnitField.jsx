@@ -72,7 +72,9 @@ class AmountUnitField extends React.Component {
 
   handleBlur(event) {
     const value = event.target.value
-    this.setState({ value: addZeroToDecimalPosition( value, this.state.pos ) })
+    if( this.state.pos > 0 ) {
+      this.setState({value: addZeroToDecimalPosition(value, this.state.pos)})
+    }
     if (this.props.fieldProps.onBlur) {
       // Swallow the event to prevent Redux Form from
       // extracting the form value
