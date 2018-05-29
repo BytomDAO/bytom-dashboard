@@ -175,7 +175,7 @@ class CoreIndex extends React.Component {
 
     return (
       <div className={componentClassNames(this, 'flex-container', styles.mainContainer)}>
-        <PageTitle title={lang === 'zh' ? '核心' :'Core'} />
+        <PageTitle title={lang === 'zh' ? '核心状态' :'Core Status'} />
 
         <PageContent>
           <div className={`${styles.flex}`}>
