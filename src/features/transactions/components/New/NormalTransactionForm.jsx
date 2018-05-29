@@ -169,7 +169,7 @@ class NormalTxForm extends React.Component {
       const range = rangeOptions.find(item => item.label === event.target.value)
       gas.price.onChange(range.value)
     }
-    const assetDecimal = this.props.assetDecimal(this.props.fields)
+    const assetDecimal = this.props.assetDecimal(this.props.fields) || 0
 
     const showAvailableBalance = (accountAlias.value || accountId.value) &&
       (assetAlias.value || assetId.value)
@@ -220,10 +220,7 @@ class NormalTxForm extends React.Component {
                   this.estimateNormalTransactionGas()
                 },
               }}/>
-              {!showBtmAmountUnit && !assetDecimal &&
-              <TextField title={lang === 'zh' ? '数量' : 'Amount'} fieldProps={amount}
-              />}
-              {!showBtmAmountUnit && assetDecimal &&
+              {!showBtmAmountUnit &&
               <AmountInputMask title={lang === 'zh' ? '数量' : 'Amount'} fieldProps={amount} decimal={assetDecimal}
               />}
               {showBtmAmountUnit &&

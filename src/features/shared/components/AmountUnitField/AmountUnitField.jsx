@@ -33,6 +33,14 @@ class AmountUnitField extends React.Component {
     this.handleBlur = this.handleBlur.bind(this)
   }
 
+  componentDidMount() {
+    if(this.props.fieldProps.value){
+      this.props.fieldProps.onChange(
+        parseBTMAmount(this.props.fieldProps.value, this.state.pos )
+      )
+      this.setState({ value: addZeroToDecimalPosition( this.props.fieldProps.value, this.state.pos ) })
+    }
+  }
 
   toggleDropwdown() {
     this.setState({ showDropdown: !this.state.showDropdown })
@@ -93,7 +101,7 @@ class AmountUnitField extends React.Component {
       <div className='form-group'>
         {this.props.title && <FieldLabel>{this.props.title}</FieldLabel>}
         <div className='input-group'>
-          {<input className='form-control'
+          <input className='form-control'
             type={this.state.type}
             {...fieldProps}
             value={formatBTMAmount(this.state.value, this.state.pos)}
@@ -101,7 +109,7 @@ class AmountUnitField extends React.Component {
             autoFocus={!!this.props.autoFocus}
             onBlur={this.handleBlur}
             onChange={this.handleChange}
-          />}
+          />
 
 
           <div className={`input-group-btn ${this.state.showDropdown && 'open'}`}>
