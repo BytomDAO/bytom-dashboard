@@ -50,6 +50,8 @@ class ObjectSelectorField extends React.Component {
     const idProps = Object.assign({...this.props.fieldProps.id}, {onChange: idOnChange})
     const aliasProps = Object.assign({...this.props.fieldProps.alias}, {onChange: aliasOnChange})
 
+
+
     return(
       <div className='form-group'>
         {this.props.title && <FieldLabel>{this.props.title}</FieldLabel>}
@@ -57,7 +59,7 @@ class ObjectSelectorField extends React.Component {
           <div className={`input-group-btn ${this.state.showDropdown && 'open'}`}>
             <DropdownButton
               className={styles.dropdownButton}
-              id='input-dropdown-addon'
+              id={ this.props.keyIndex? `input-dropdown-addon-${this.props.keyIndex}` : 'input-dropdown-addon' }
               title={(this.state.selected === ALIAS_SELECTED)? alias_title: this.state.selected}
               onSelect={this.select}
             >

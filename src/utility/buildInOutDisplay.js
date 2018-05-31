@@ -221,7 +221,7 @@ export function formatBTMAmount(value, pos)  {
   // If numbers exist after first .
   if (sections[1]) {
     return sections[0] + '.' + sections[1].slice(0, pos)
-  } else if (onlyNums.indexOf('.') !== -1) {
+  } else if (onlyNums.indexOf('.') !== -1 && pos !== 0) {
     return sections[0] + '.'
   } else {
     return sections[0]

@@ -94,6 +94,7 @@ class AutocompleteField extends React.Component {
         focusFirstSuggestion={true}
         inputProps={{
           className: `form-control ${this.props.className}`,
+          ...fieldProps,
           value: fieldProps.value,
           placeholder: this.props.placeholder,
           onChange: (event, { newValue }) => fieldProps.onChange(newValue),

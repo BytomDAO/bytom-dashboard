@@ -110,7 +110,7 @@ class AccountShow extends BaseShow {
           )}
 
           {(this.state.addresses || []).length > 0 &&
-          <KeyValueTable title={lang === 'zh' ? '地址' : 'ADDRESSES'}
+          <KeyValueTable title={lang === 'zh' ? '地址' : 'Addresses'}
                          items={this.state.addresses.map((address, index) => ({
                            label: index,
                            value: address
@@ -118,7 +118,7 @@ class AccountShow extends BaseShow {
           }
 
           {(this.state.changeAddresses || []).length > 0 &&
-          <KeyValueTable title={lang === 'zh' ? '找零地址' : 'ADDRESSES FOR CHANGE'}
+          <KeyValueTable title={lang === 'zh' ? '找零地址' : 'Addresses for Change'}
                          items={this.state.changeAddresses.map((address, index) => ({
                            label: index,
                            value: address

@@ -74,7 +74,7 @@ export default class ActionItem extends React.Component {
     const btmAmounUnitVisible = (assetAlias.value === 'BTM' ||
       assetId.value === 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff' )
 
-    const decimal = this.props.decimal
+    const decimal = this.props.decimal || 0
 
     const classNames = [styles.main]
     if (type.error) classNames.push(styles.error)
@@ -92,6 +92,7 @@ export default class ActionItem extends React.Component {
 
         {visible.account &&
           <ObjectSelectorField
+            keyIndex='advtx-account'
             lang={lang}
             title={ lang === 'zh' ? '账户' : 'Account' }
             aliasField={Autocomplete.AccountAlias}
@@ -111,6 +112,7 @@ export default class ActionItem extends React.Component {
 
         {visible.asset &&
           <ObjectSelectorField
+            keyIndex='advtx-asset'
             title={ lang === 'zh' ? '资产' :'Asset'}
             lang={lang}
             aliasField={Autocomplete.AssetAlias}
@@ -120,10 +122,7 @@ export default class ActionItem extends React.Component {
             }}
           />}
 
-        {visible.amount && !btmAmounUnitVisible && !decimal &&
-          <TextField title={ lang === 'zh' ? '数量' :'Amount' } fieldProps={amount} />}
-
-        {visible.amount && !btmAmounUnitVisible && decimal &&
+        {visible.amount && !btmAmounUnitVisible &&
           <AmountInputMask title={ lang === 'zh' ? '数量' :'Amount' } fieldProps={amount} decimal={decimal} />}
 
         {visible.amount && btmAmounUnitVisible &&

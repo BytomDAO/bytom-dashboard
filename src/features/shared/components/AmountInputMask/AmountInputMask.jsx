@@ -24,10 +24,33 @@ class AmountInputMask extends React.Component {
     this.handleBlur = this.handleBlur.bind(this)
   }
 
+  componentDidMount() {
+    if(this.props.fieldProps.value){
+      const value = (this.props.fieldProps.value/ Math.pow(10, 8)).toString()
+
+      this.props.fieldProps.onChange(
+        parseBTMAmount(value, this.props.decimal )
+      )
+      this.setState({ value: ( this.props.decimal === 0 ? value: addZeroToDecimalPosition( value, this.props.decimal ) ) })
+    }
+  }
+
+  componentDidUpdate(prevProps){
+    if(prevProps.decimal !== this.props.decimal){
+      const value = (prevProps.fieldProps.value/ Math.pow(10, prevProps.decimal)).toString()
+
+      this.props.fieldProps.onChange(
+        parseBTMAmount(value, this.props.decimal )
+      )
+      this.setState({ value: ( this.props.decimal === 0 ? value: addZeroToDecimalPosition( value, this.props.decimal ) ) })
+    }
+  }
 
   handleBlur(event) {
     const value = event.target.value
-    this.setState({ value: addZeroToDecimalPosition( value, this.props.decimal ) })
+    if( this.props.decimal > 0 ){
+      this.setState({ value: addZeroToDecimalPosition( value, this.props.decimal ) })
+    }
     if (this.props.fieldProps.onBlur) {
       // Swallow the event to prevent Redux Form from
       // extracting the form value
