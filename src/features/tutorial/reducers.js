@@ -1,8 +1,11 @@
 import introduction from './introduction.json'
 
+const router = ['/backup','/access-control','/core','/keys/create','/keys','/balances','/accounts/create',
+  '/assets/create','/assets','/accounts','/transactions/create','/transactions', '/access-control/create-token']
+
 export const location = (state = { visited: [], isVisited: false }, action) => {
   if (action.type == '@@router/LOCATION_CHANGE' ) {
-    if ( !state.visited.includes(action.payload.pathname ) ){
+    if ( !state.visited.includes(action.payload.pathname ) &&  router.includes(action.payload.pathname)){
       if(action.payload.pathname !== '/access-control' ||
         ( action.payload.search.includes('?type=token') && action.payload.pathname === '/access-control' )){
         return {  ...state, visited: [  action.payload.pathname, ...state.visited ], isVisited: false }
