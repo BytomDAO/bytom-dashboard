@@ -17,6 +17,7 @@ class Tutorial extends React.Component {
       <div>
         {this.props.content && tutorialOpen && (tutorialTypes.includes(this.props.content['component'])) &&
           <TutorialComponent
+            advTx={this.props.advTx}
             {...this.props.content}
           />}
       </div>

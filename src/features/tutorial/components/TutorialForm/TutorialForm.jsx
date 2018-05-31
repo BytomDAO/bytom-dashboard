@@ -3,15 +3,16 @@ import styles from './TutorialForm.scss'
 
 class TutorialForm extends React.Component {
   render() {
+    let content = this.props.advTx? this.props.content_ad: this.props.content
     return (
       <div className={styles.container}>
         <div className={`${styles.tutorialContainer} ${styles.fixedTutorial}`}>
           <div className={styles.header}>
-            {this.props.content['header']}
+            {content['header']}
           </div>
           <div className={styles.list}>
             <table className={styles.listItemContainer}>
-              {this.props.content['steps'].map(function (contentLine, i){
+              {content['steps'].map(function (contentLine, i){
                 let title = contentLine['title']
                 let rows = [
                   <tr key={`item-title-${i}`}>
