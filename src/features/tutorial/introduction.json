@@ -4,7 +4,7 @@
     "title": "Transactions",
     "image": "transaction",
     "content": [
-      "A transaction provides the amount of the asset either spend out from your account or come in to your account. In your transaction, the total amount of assets spent was equal to the total amount of assets controlled (received). Any combination of actions can be added to a single transaction, as long as what goes in equals what comes out."
+      "A transaction provides the amount of the asset either spend out from your account or come in to your account. In your transaction, the total amount of assets spent was equal to the total amount of assets controlled (received) plus the gas cost of transactions fee. SPEND Actions represent what comes in the transactions, while CONTROL Actions represent what comes out. Any combination of actions can be added to a single advanced transaction, as long as what goes in bigger than what comes out. Note that the differences of which become the amount of transactions fee."
     ]
   },
   "/keys": {
@@ -12,8 +12,7 @@
     "title": "Keys",
     "image": "key",
     "content": [
-      "Cryptographic private keys are the primary authorization mechanism on a blockchain. They control both the issuance and transfer of asset units. An asset or account will define one or more keys required for issuance or transfers.",
-      "For development environments, Bytom provides a convenient key that simulates production behaviors. Let's begin by creating a new key."
+      "Cryptographic private keys are the primary authorization mechanism on a blockchain. They control both the issuance and transfer of asset units. An asset or account will define one or more keys required for issuance or transfers."
     ]
   },
   "/accounts": {
@@ -21,8 +20,7 @@
     "title": "Accounts",
     "image": "account",
     "content": [
-      "An account is an object in Bytom that tracks ownership of assets on a blockchain by creating and tracking control programs. The account object does not exist on the blockchain - it is local to this Bytom. Only the control programs created in the account are visible on the blockchain.",
-      "We'll be moving assets from one account to another; let's create the first one now."
+      "An account is an object in Bytom that tracks ownership of assets on a blockchain by creating and tracking control programs. The account object does not exist on the blockchain - it is local to this Bytom. Only the control programs created in the account are visible on the blockchain."
     ]
   },
   "/assets": {
@@ -30,8 +28,7 @@
     "title": "Assets",
     "image": "asset",
     "content": [
-      "An asset is a type of value that can be issued on a blockchain. All units of an asset are fungible and can be transacted directly between parties without the involvement of the issuer.",
-      "Let's create a new asset now."
+      "An asset is a type of value that can be issued on a blockchain. All units of an asset are fungible and can be transacted directly between parties without the involvement of the issuer."
     ]
   },
   "/balances": {
@@ -39,7 +36,7 @@
     "title": "Balances",
     "image": "balance",
     "content": [
-      "The balance shows the asset amount that an account possess."
+      "The balance shows the amount and the type of asset that a local Bytom account possess."
     ]
   },
   "/core": {
@@ -54,7 +51,7 @@
     "title": "Access Control",
     "image": "network_access_token",
     "content": [
-      "Access control."
+      "Access token is used for remote authorizations. An access token is required to connect a remote Bytom Core."
     ]
   },
   "/unspents":{
@@ -62,7 +59,7 @@
     "title": "UTXO",
     "image": "unspent",
     "content": [
-      "Unspent output."
+      "Each new transaction in the blockchain consumes some unspent outputs and creates others. An output is considered unspent when it has not yet been used as an input to a new transaction. All asset units on a blockchain exist in the unspent output set."
     ]
   },
   "/backup": {
@@ -70,7 +67,7 @@
     "title": "Backup and restore",
     "image": "client_access_token",
     "content": [
-      "Backup and Restore the wallet information (accounts and keys information)."
+      "Backup and Restore the wallet information will be stored in a txt format. It’s important to keep your backup files in a safe place."
     ]
   },
   "/transactions/create":{
@@ -98,15 +95,18 @@
           ]
         },
         {
-          "title": "Fill in the amount",
-          "description": [
-            "Enter the amount of the asset."
-          ]
+          "title": "Fill in the amount of the asset"
         },
         {
           "title": "Choose the gas",
           "description": [
-            "Choose the gas that you want to spend for this transaction."
+            "Choose the gas (tx. fees) that you want to spend for this transaction."
+          ]
+        },
+        {
+          "title":"Fill in the Key password",
+          "description":[
+            "Fill in the key password when account created. Note：please use advanced transaction for multi-sign."
           ]
         },
         {
@@ -118,33 +118,51 @@
       "header": "Advanced Transactions",
       "steps": [
         {
-          "title": "Add a \"Spend from account\" action",
+          "title": "Click the \"Add action\" button",
+          "description":[
+            "Select \"Spend from account\" to add a new spend action."
+          ]
+        },
+        {
+          "title": "Fill in the spend action",
           "description": [
             {
               "index": 0,
-              "line": "Enter the account alias that you want to spend from, "
+              "line": "Enter the account alias, "
             },
             {
-              "line": "Enter the asset alias "
+              "line": "the asset alias "
             },
             {
-              "line": "and the amount."
+              "line": "and the spend amount."
             }
           ]
         },
         {
-          "title": "Add a \"Control with address\" action",
+          "title": "Click the \"Add action\" button",
+          "description":[
+            "Select \"Control with address\" to add a new control action."
+          ]
+        },
+        {
+          "title": "Fill in the control action",
           "description": [
             {
               "index": 1,
-              "line": "Paste the address that you want to send to, "
+              "line": "Paste the address, "
             },
             {
-              "line": "Enter the asset alias which should be the same as  the spend from asset alias"
+              "line": "fill in the asset alias"
             },
             {
-              "line": "and the amount."
+              "line": "and the received amount."
             }
+          ]
+        },
+        {
+          "title":"Fill in the Key password",
+          "description":[
+            "The key password when account created. Please use the \"show advanced options\" for multi-sign."
           ]
         },
         {
