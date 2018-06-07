@@ -10,7 +10,10 @@ export const location = (state = { visited: [], isVisited: false }, action) => {
         ( action.payload.search.includes('?type=token') && action.payload.pathname === '/access-control' )){
         return {  ...state, visited: [  action.payload.pathname, ...state.visited ], isVisited: false }
       }
-    }else{
+    }else if (action.payload.pathname.match(/^\/keys.*reset-password$/g) && !state.visited.includes('/keys/:id/reset-password'))
+    {
+      return {  ...state, visited: [  '/keys/:id/reset-password', ...state.visited ], isVisited: false }
+    } else{
       return{ ...state, isVisited:true }
     }
   }

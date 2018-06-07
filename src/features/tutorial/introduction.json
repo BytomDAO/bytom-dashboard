@@ -225,6 +225,27 @@
       ]
     }
   },
+  "/keys/:id/reset-password":{
+    "component": "TutorialForm",
+    "title": "Reset password",
+    "content": {
+      "header": "Reset password",
+      "steps": [
+        {
+          "title": "Enter the original password for your key"
+        },
+        {
+          "title": "Enter and repeat the new password for your key",
+          "description": [
+            "It's important to memorize the password for your key and keep it somewhere safe. Bytom doesn't provide any lost and found. "
+          ]
+        },
+        {
+          "title": "Click the \"Reset the Password\" button"
+        }
+      ]
+    }
+  },
   "/access-control/create-token": {
     "component": "TutorialForm",
     "title": "Create an access token",
