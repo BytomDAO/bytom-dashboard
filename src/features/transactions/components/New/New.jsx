@@ -166,7 +166,7 @@ class Form extends React.Component {
             />}
 
           </div>
-          <Tutorial types={['TutorialForm']} />
+          <Tutorial types={['TutorialForm']} advTx={this.state.showAdvanceTx}/>
         </div>
       </div>
     )

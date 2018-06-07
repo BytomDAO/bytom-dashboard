@@ -1,28 +1,21 @@
 import React from 'react'
 import styles from './TutorialInfo.scss'
-import { Link } from 'react-router'
 
 class TutorialInfo extends React.Component {
 
   render() {
+    const content = this.props.lang ==='zh' ? this.props.content_zh: this.props.content
     let objectImage
     try {
       objectImage = require(`images/empty/${this.props.image}.svg`)
     } catch (err) { /* do nothing */ }
-
-    const userInput = this.props.userInput
-    const nextButton = <Link to={this.props.route} className={styles.nextWrapper}>
-        <button key='showNext' className={`btn ${styles.next}`} onClick={this.props.handleNext}>
-          Next: {this.props.button}
-        </button>
-      </Link>
 
     return (
       <div>
         <div className={styles.container}>
           {this.props.image && <img className={styles.image} src={objectImage} />}
           <div className={styles.text}>
-            {this.props.content.map(function (contentLine, i){
+            {content.map(function (contentLine, i){
               let str = contentLine
               if (contentLine['line']) { str = contentLine['line'] }
               if(contentLine['list']){
@@ -37,19 +30,9 @@ class TutorialInfo extends React.Component {
                   <tbody>{list}</tbody>
                 </table>
               }
-              if (contentLine['type']){
-                let replacement = userInput[contentLine['type']]
-                if ('index' in contentLine){
-                  replacement = replacement[contentLine['index']]
-                }
-                str = str.replace('STRING', replacement['alias'])
-              }
-
               return <p key={i}>{str}</p>
             })}
           </div>
-
-          {nextButton}
         </div>
     </div>
     )

@@ -4,6 +4,8 @@ import { MenuItem, Dropdown } from 'react-bootstrap'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import actions from 'actions'
+import Tutorial from 'features/tutorial/components/Tutorial'
+import TutorialHeader from 'features/tutorial/components/TutorialHeader/TutorialHeader'
 import { Navigation, SecondaryNavigation } from '../'
 
 class Main extends React.Component {
@@ -11,7 +13,15 @@ class Main extends React.Component {
   constructor(props) {
     super(props)
 
+    this.state = {
+      tutorialHeight: 0
+    }
     this.toggleDropdown = this.toggleDropdown.bind(this)
+    this.setTutorialHeight = this.setTutorialHeight.bind(this)
+  }
+
+  setTutorialHeight(height) {
+    this.setState({tutorialHeight: height })
   }
 
   toggleDropdown(event) {
@@ -65,10 +75,13 @@ class Main extends React.Component {
           </div>
         </div>
 
-        <div className={`${styles.content} flex-container`}>
+        <div className={`${styles.content} flex-container`} style={{marginTop: this.state.tutorialHeight}}>
           {!this.props.connected && <div className={styles.connectionIssue}>
             There was an issue connecting to Chain Core. Please check your connection while dashboard attempts to reconnect.
           </div>}
+          <TutorialHeader handleTutorialHeight={this.setTutorialHeight}>
+            <Tutorial types={['TutorialInfo']}/>
+          </TutorialHeader>
           {this.props.children}
         </div>
       </div>

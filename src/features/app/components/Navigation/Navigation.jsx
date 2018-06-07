@@ -112,7 +112,6 @@ export default connect(
     }
   },
   (dispatch) => ({
-    openTutorial: () => dispatch({type: 'OPEN_TUTORIAL'}),
     setLang: (event) => {
       dispatch({
         type: 'UPDATE_CORE_LANGUAGE',

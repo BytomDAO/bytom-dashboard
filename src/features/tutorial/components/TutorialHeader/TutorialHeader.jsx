@@ -1,32 +1,38 @@
 import React from 'react'
-import { Link } from 'react-router'
 import styles from './TutorialHeader.scss'
 
 class TutorialHeader extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.tutorialContainer && this.props.tutorial != prevProps.tutorial){
+      this.props.handleTutorialHeight(this.tutorialContainer.clientHeight)
+    }else if(!this.tutorialContainer && this.props.tutorial != prevProps.tutorial){
+      this.props.handleTutorialHeight(0)
+    }
+  }
 
   render() {
-    if(!this.props.tutorial.isShowing || this.props.currentStep.component == 'TutorialModal'){
-      return (
+    const lang = this.props.lang
+    if(this.props.isVisited){
+      return(
         <div>
           {this.props.children}
         </div>
       )
-    } else {
-      return (
-        <div className={`${styles.main} ${this.props.showTutorial && styles.collapsed}`}>
-          <div className={styles.header}>
-            {this.props.currentStep.title}
-            <div className={styles.skip}>
-              {!this.props.showTutorial && <Link to={this.props.tutorial.route}>
-                Resume tutorial
-              </Link>}
-              {this.props.showTutorial &&
-              <a onClick={this.props.dismissTutorial}>{this.props.currentStep.dismiss || 'End tutorial'}</a>}
-            </div>
+    }else {
+      return( <div className={`${styles.main} ${!this.props.isVisited && styles.collapsed}`} ref={element => this.tutorialContainer = element}>
+        <div className={styles.header}>
+          {this.props.content && (lang === 'zh'?this.props.content.title_zh:this.props.content.title) }
+          <div className={styles.skip}>
+            {!this.props.isVisited &&
+            <a onClick={this.props.dismissTutorial}>{lang === 'zh'? '关闭' : 'close'}</a>}
           </div>
-          {this.props.showTutorial && this.props.children}
         </div>
-      )
+        {!this.props.isVisited && this.props.children}
+      </div>)
     }
   }
 }
@@ -34,9 +40,11 @@ class TutorialHeader extends React.Component {
 import { connect } from 'react-redux'
 
 const mapStateToProps = (state) => ({
+  visitedLocation: state.tutorial.location.visited,
+  isVisited: state.tutorial.location.isVisited,
+  content: state.tutorial.content,
   tutorial: state.tutorial,
-  currentStep: state.tutorial.currentStep,
-  showTutorial: state.routing.locationBeforeTransitions.pathname.includes(state.tutorial.route)
+  lang:state.core.lang
 })
 
 const mapDispatchToProps = ( dispatch ) => ({

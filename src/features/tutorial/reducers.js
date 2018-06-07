@@ -1,51 +1,32 @@
-import steps from './steps.json'
+import introduction from './introduction.json'
 
-export const step = (state = 0, action) => {
-  if (action.type == 'TUTORIAL_NEXT_STEP') return state + 1
-  if (action.type == 'UPDATE_TUTORIAL' && steps[state].objectType == action.object) {
-    return state + 1
-  }
-  if (action.type == 'DISMISS_TUTORIAL') return 0
-  return state
-}
+const router = ['/backup','/access-control','/core','/keys/create','/keys','/balances','/accounts/create',
+  '/assets/create','/assets','/accounts','/transactions/create','/transactions', '/access-control/create-token']
 
-export const isShowing = (state = true, action) => {
-  if (action.type == 'DISMISS_TUTORIAL') return false
-  if (action.type == 'OPEN_TUTORIAL') return true
-  return state
-}
-
-export const route = (currentStep) => (state = 'transactions', action) => {
-  if (action.type == 'TUTORIAL_NEXT_STEP') return action.route
-  if (action.type == 'UPDATE_TUTORIAL' && currentStep.objectType == action.object) {
-    return action.object + 's'
-  }
-  if (action.type == 'DISMISS_TUTORIAL') return 'transactions'
-  return state
-}
-
-export const userInputs = (currentStep) => (state = { accounts: [] }, action) => {
-  if (action.type == 'UPDATE_TUTORIAL' && currentStep.objectType == action.object) {
-    if (action.object == 'mockhsm') return { ...state, mockhsm: action.data }
-    if (action.object == 'asset') return { ...state, asset: action.data }
-    if (action.object == 'account') {
-      return { ...state, accounts: [...state.accounts, action.data] }
+export const location = (state = { visited: [], isVisited: false }, action) => {
+  if (action.type == '@@router/LOCATION_CHANGE' ) {
+    if ( !state.visited.includes(action.payload.pathname ) &&  router.includes(action.payload.pathname)){
+      if(action.payload.pathname !== '/access-control' ||
+        ( action.payload.search.includes('?type=token') && action.payload.pathname === '/access-control' )){
+        return {  ...state, visited: [  action.payload.pathname, ...state.visited ], isVisited: false }
+      }
+    }else if (action.payload.pathname.match(/^\/keys.*reset-password$/g) && !state.visited.includes('/keys/:id/reset-password'))
+    {
+      return {  ...state, visited: [  '/keys/:id/reset-password', ...state.visited ], isVisited: false }
+    } else{
+      return{ ...state, isVisited:true }
     }
-    return state
   }
-  if (action.type == 'DISMISS_TUTORIAL') return { accounts: [] }
+  if (action.type == 'DISMISS_TUTORIAL')   return{ ...state, isVisited:true }
+
   return state
 }
 
 export default (state = {}, action) => {
   const newState = {
-    step: step(state.step, action),
-    isShowing: isShowing(state.isShowing, action)
+    location: location(state.location, action)
   }
 
-  newState.currentStep = steps[newState.step]
-  newState.userInputs = userInputs(newState.currentStep)(state.userInputs, action)
-  newState.route = route(newState.currentStep)(state.route, action)
-
+  newState.content = introduction[newState.location.visited[0]]
   return newState
 }

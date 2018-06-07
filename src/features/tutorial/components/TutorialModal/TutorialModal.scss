@@ -30,14 +30,14 @@
     height: $title-height;
     display: flex;
     align-items: center;
-    font-size: 16px;
-    font-weight: bold;
+    font-size: 14px;
+    font-weight: 500;
     width: 100%;
   }
 
   .text {
     padding: $gutter-size/2 $gutter-size;
-    font-size: 15px;
+    font-size: 13px;
     font-weight: 500;
     line-height: 18px;
     color: #747C89;
@@ -54,8 +54,8 @@
         background: $highlight-tutorial;
         width: 18px;
         height: 18px;
-        font-size: 12px;
-        font-weight: bold;
+        font-size: 10px;
+        font-weight: 500;
         text-align: center;
         line-height: 14px;
         color: #FFFFFF;
@@ -63,7 +63,7 @@
 
       .listItemGroup {
         margin-bottom: 10px;
-        font-size: 15px;
+        font-size: 13px;
         font-weight: 500;
         line-height: 1.4;
       }

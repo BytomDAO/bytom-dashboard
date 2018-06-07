@@ -1,37 +1,40 @@
 [
   {
     "component": "TutorialModal",
-    "title": "Welcome to Chain Core!",
+    "title": "Welcome to Bytom!",
     "button": "Start 5-minute tutorial",
     "dismiss": "Skip",
-    "route": "mockhsms",
+    "route": "keys",
     "content": [
-      "Would you like a brief tutorial? This guide will walk you through the basic functions available in the Chain Core Dashboard."
+      "Would you like a brief tutorial? This guide will walk you through the basic functions available in the Bytom."
     ]
   },
   {
     "component": "TutorialInfo",
     "title": "Tutorial - Creating keys - Step 1 of 7",
-    "button": "Create MockHSM key",
-    "route": "mockhsms/create",
-    "image": "mockhsm",
+    "button": "Create a key",
+    "route": "keys/create",
+    "image": "key",
     "content": [
       "Cryptographic private keys are the primary authorization mechanism on a blockchain. They control both the issuance and transfer of asset units. An asset or account will define one or more keys required for issuance or transfers.",
-      "For development environments, Chain Core provides a convenient MockHSM that simulates production behaviors. Let's begin by creating a new key in our HSM."
+      "For development environments, Bytom provides a convenient key that simulates production behaviors. Let's begin by creating a new key."
     ]
   },
   {
     "component": "TutorialForm",
-    "objectType": "mockhsm",
+    "objectType": "key",
     "title": "Tutorial - Creating keys - Step 1 of 7",
     "content": {
-      "header": "Create MockHSM key",
+      "header": "Create a key",
       "steps": [
         {
           "title": "Enter an alias for your key (ex. \"goldkey\")",
           "description": [
             "An alias is a friendly label used to distinguish between keys. We will use this alias in the next step."
           ]
+        },
+        {
+          "title": "Enter and repeat the password for your key"
         },
         {
           "title": "Click the \"Submit\" button"
@@ -41,15 +44,15 @@
   },
   {
     "component": "TutorialInfo",
-    "objectType": "mockhsm",
+    "objectType": "key",
     "title": "Tutorial - Creating keys - Step 1 of 7",
     "button": "Learn about assets",
     "route": "assets",
-    "image": "mockhsm",
+    "image": "key",
     "content": [
       {
-        "type": "mockhsm",
-        "line": "Great work! You created a new key in the MockHSM named \"STRING\". Next up, we'll learn about assets and how to create them."
+        "type": "key",
+        "line": "Great work! You created a new key in the key named \"STRING\". Next up, we'll learn about assets and how to create them."
       }
 
     ]
@@ -79,10 +82,10 @@
           ]
         },
         {
-          "title": "Select \"Use existing MockHSM key\" under \"Keys and Signing\"",
+          "title": "Select \"Use existing a key\" under \"Keys and Signing\"",
           "description": [
             {
-              "type": "mockhsm",
+              "type": "keys",
               "line": "Choose STRING key from the dropdown"
             }
           ]
@@ -114,7 +117,7 @@
     "route": "accounts/create",
     "image": "account",
     "content": [
-      "An account is an object in Chain Core that tracks ownership of assets on a blockchain by creating and tracking control programs. The account object does not exist on the blockchain - it is local to this Chain Core. Only the control programs created in the account are visible on the blockchain.",
+      "An account is an object in Bytom that tracks ownership of assets on a blockchain by creating and tracking control programs. The account object does not exist on the blockchain - it is local to this Bytom. Only the control programs created in the account are visible on the blockchain.",
       "We'll be moving assets from one account to another; let's create the first one now."
     ]
   },
@@ -132,9 +135,9 @@
           ]
         },
         {
-          "title": "Select \"Generate new MockHSM key\" under \"Keys and Signing\"",
+          "title": "Select \"Use existing keys\" or \"Enter existing xpub\" under \"Keys and Signing\"",
           "description": [
-            "You can create a new MockHSM key here as well. Enter a descriptive alias for your new key (ex. 'aliceKey')."
+            "Choose an existing key alias or enter an existing xpub."
           ]
         },
         {
@@ -174,9 +177,9 @@
           ]
         },
         {
-          "title": "Select \"Generate new MockHSM key\" under \"Keys and Signing\"",
+          "title": "Select \"Generate new a key\" under \"Keys and Signing\"",
           "description": [
-            "You can leave the name field blank, and Chain Core will generate a key with a unique name based on your alias."
+            "You can leave the name field blank, and Bytom will generate a key with a unique name based on your alias."
           ]
         },
         {
@@ -209,7 +212,7 @@
     "content": [
       {
         "type": "asset",
-        "line": "Chain Core allows you to build transactions using a predefined set of actions to issue, spend, control, or retire asset units. We'll start by creating a transaction that issues units of your \"STRING\" asset."
+        "line": "Bytom allows you to build transactions using a predefined set of actions to issue, spend, control, or retire asset units. We'll start by creating a transaction that issues units of your \"STRING\" asset."
       }
     ]
   },
@@ -283,11 +286,11 @@
         "type": "asset",
         "line": "You just issued your first units of \"STRING\" onto the blockchain. Nice work!"
       },
-      "When you clicked \"Submit transaction\", Chain Core Dashboard built your blockchain transaction in three steps:",
+      "When you clicked \"Submit transaction\", Bytom Dashboard built your blockchain transaction in three steps:",
       {
         "list": [
-          "your raw actions were sent to Chain Core and an unsigned transaction was returned.",
-          "the Dashboard submitted the unsigned transaction to the MockHSM for signature.",
+          "your raw actions were sent to Bytom and an unsigned transaction was returned.",
+          "the Dashboard submitted the unsigned transaction to the key for signature.",
           "the signed transaction was submitted to the blockchain (you can see the committed result below)."
         ]
       },
