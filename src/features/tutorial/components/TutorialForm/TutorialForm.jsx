@@ -3,7 +3,10 @@ import styles from './TutorialForm.scss'
 
 class TutorialForm extends React.Component {
   render() {
-    let content = this.props.advTx? this.props.content_ad: this.props.content
+    const content_normal = this.props.lang ==='zh' ? this.props.content_zh: this.props.content
+    const content_adv = this.props.lang ==='zh' ? this.props.content_ad_zh: this.props.content_ad
+
+    let content = this.props.advTx? content_adv: content_normal
     return (
       <div className={styles.container}>
         <div className={`${styles.tutorialContainer} ${styles.fixedTutorial}`}>

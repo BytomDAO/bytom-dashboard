@@ -15,6 +15,7 @@ class TutorialHeader extends React.Component {
   }
 
   render() {
+    const lang = this.props.lang
     if(this.props.isVisited){
       return(
         <div>
@@ -24,10 +25,10 @@ class TutorialHeader extends React.Component {
     }else {
       return( <div className={`${styles.main} ${!this.props.isVisited && styles.collapsed}`} ref={element => this.tutorialContainer = element}>
         <div className={styles.header}>
-          {this.props.content && this.props.content.title }
+          {this.props.content && (lang === 'zh'?this.props.content.title_zh:this.props.content.title) }
           <div className={styles.skip}>
             {!this.props.isVisited &&
-            <a onClick={this.props.dismissTutorial}>close</a>}
+            <a onClick={this.props.dismissTutorial}>{lang === 'zh'? '关闭' : 'close'}</a>}
           </div>
         </div>
         {!this.props.isVisited && this.props.children}
@@ -43,6 +44,7 @@ const mapStateToProps = (state) => ({
   isVisited: state.tutorial.location.isVisited,
   content: state.tutorial.content,
   tutorial: state.tutorial,
+  lang:state.core.lang
 })
 
 const mapDispatchToProps = ( dispatch ) => ({

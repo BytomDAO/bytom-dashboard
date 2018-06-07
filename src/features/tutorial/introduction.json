@@ -1,78 +1,115 @@
 {
   "/transactions": {
     "component": "TutorialInfo",
+    "title_zh": "交易",
     "title": "Transactions",
     "image": "transaction",
     "content": [
       "A transaction provides the amount of the asset either spend out from your account or come in to your account. In your transaction, the total amount of assets spent was equal to the total amount of assets controlled (received) plus the gas cost of transactions fee. SPEND Actions represent what comes in the transactions, while CONTROL Actions represent what comes out. Any combination of actions can be added to a single advanced transaction, as long as what goes in bigger than what comes out. Note that the differences of which become the amount of transactions fee."
+    ],
+    "content_zh": [
+      "交易记录展示了账户资产的输入输出数额。 在你的交易显示中，个人的资产账户的输出与输入，手续费消耗燃料的总额是相等的。SPEND行为代表输入行为,  CONTROL代表输出行为，在高级交易中， 任何Actions只要满足输入大于输出都可以组合成交易进行发送, 但要注意差额形成的手续费数量。"
     ]
   },
   "/keys": {
     "component": "TutorialInfo",
+    "title_zh": "密钥",
     "title": "Keys",
     "image": "key",
     "content": [
       "Cryptographic private keys are the primary authorization mechanism on a blockchain. They control both the issuance and transfer of asset units. An asset or account will define one or more keys required for issuance or transfers."
+    ],
+    "content_zh": [
+      "加密私钥是区块链上的主要授权机制。 他们控制着资产单位的发行和交易。资产或账户将定义发行或转账所需的一个或多个密钥。"
     ]
   },
   "/accounts": {
     "component": "TutorialInfo",
+    "title_zh": "账户",
     "title": "Accounts",
     "image": "account",
     "content": [
       "An account is an object in Bytom that tracks ownership of assets on a blockchain by creating and tracking control programs. The account object does not exist on the blockchain - it is local to this Bytom. Only the control programs created in the account are visible on the blockchain."
+    ],
+    "content_zh": [
+      "账户是Bytom中的对象，它通过创建和追溯Control Program来追溯区块链上资产的所有权。账户对象不存在与区块链中， 它是存在于本地Bytom中。 只有账户中创建的Control Program存在于区块链上。"
     ]
   },
   "/assets": {
     "component": "TutorialInfo",
     "title": "Assets",
+    "title_zh": "资产",
     "image": "asset",
     "content": [
       "An asset is a type of value that can be issued on a blockchain. All units of an asset are fungible and can be transacted directly between parties without the involvement of the issuer."
+    ],
+    "content_zh":[
+      "资产是可以在区块链上发行的一种价值。资产的所有单位都是可替代的，并且可以在各方之间直接进行交易，而无需发行人的参与。"
     ]
   },
   "/balances": {
     "component": "TutorialInfo",
+    "title_zh": "余额",
     "title": "Balances",
     "image": "balance",
     "content": [
       "The balance shows the amount and the type of asset that a local Bytom account possess."
+    ],
+    "content_zh":[
+      "余额显示了本地比原账户所拥有的资产种类和资产数。"
     ]
   },
   "/core": {
     "component": "TutorialInfo",
     "title": "Core",
+    "title_zh": "内核",
     "content": [
       "The core status shows the blockchain network status and the local setting."
+    ],
+    "content_zh":[
+      "核心状态显示了一些区块链网络的状态和本地的配置。"
     ]
   },
   "/access-control": {
     "component": "TutorialInfo",
     "title": "Access Control",
+    "title_zh": "访问控制",
     "image": "network_access_token",
     "content": [
       "Access token is used for remote authorizations. An access token is required to connect a remote Bytom Core."
+    ],
+    "content_zh":[
+      "访问令牌是用于远程授权。远程控制非本地节点，需要访问令牌。"
     ]
   },
   "/unspents":{
     "component": "TutorialInfo",
     "title": "UTXO",
+    "title_zh": "未花费输出",
     "image": "unspent",
     "content": [
       "Each new transaction in the blockchain consumes some unspent outputs and creates others. An output is considered unspent when it has not yet been used as an input to a new transaction. All asset units on a blockchain exist in the unspent output set."
+    ],
+    "content_zh":[
+      "区块链上的每个新交易都会消耗一些未花费的输出并创建其他交易。输出如果未用作新交易的输入，将被视为未花费输出。区块链上的所有资产单位都存在于未花费输出集中。"
     ]
   },
   "/backup": {
     "component": "TutorialInfo",
     "title": "Backup and restore",
+    "title_zh": "备份和恢复",
     "image": "client_access_token",
     "content": [
       "Backup and Restore the wallet information will be stored in a txt format. It’s important to keep your backup files in a safe place."
+    ],
+    "content_zh":[
+      "备份和恢复钱包信息将会以TXT文件的形式储存。 请妥善保管你的备份信息。"
     ]
   },
   "/transactions/create":{
     "component": "TutorialForm",
     "title": "Create a new transaction",
+    "title_zh": "新建交易",
     "content": {
       "header": "Normal Transactions",
       "steps": [
@@ -111,6 +148,47 @@
         },
         {
           "title": "Click the \"Submit transaction\" button"
+        }
+      ]
+    },
+    "content_zh": {
+      "header": "简单交易",
+      "steps": [
+        {
+          "title": "填写账户的 \"别名\" 或者 \"ID\"",
+          "description": [
+            "选择你想要花费的账户。"
+          ]
+        },
+        {
+          "title": "填写资产的 \"别名\" 或者 \"ID\"",
+          "description": [
+            "选择你想要发送的资产类型。"
+          ]
+        },
+        {
+          "title": "复制 \"地址\"",
+          "description": [
+            "复制接受资产的地址。"
+          ]
+        },
+        {
+          "title": "填写所发送的资产数额"
+        },
+        {
+          "title": "选择gas",
+          "description": [
+            "选择交易的手续费gas。"
+          ]
+        },
+        {
+          "title":"填写密钥密码",
+          "description":[
+            "填写创建账户时所选密钥的密码。注意，多重签名交易请使用高级交易。"
+          ]
+        },
+        {
+          "title": "点击 \"提交交易\" 的按钮"
         }
       ]
     },
@@ -169,11 +247,50 @@
           "title": "Click the \"Submit transaction\" button"
         }
       ]
+    },
+    "content_ad_zh": {
+      "header": "高级交易",
+      "steps": [
+        {
+          "title": "点击 \"Add action\" 的按钮",
+          "description":[
+            "选择 \"Spend from account\" 添加一个spend action"
+          ]
+        },
+        {
+          "title": "填写 spend action",
+          "description": [
+            "填写账户别名, 资产别名和发送数额。"
+          ]
+        },
+        {
+          "title": "点击 \"Add action\"的按钮",
+          "description":[
+            "选择\"Control with address\" 添加一个control action。"
+          ]
+        },
+        {
+          "title": "填写 control action",
+          "description": [
+            "复制地址, 填写资产和接收数额"
+          ]
+        },
+        {
+          "title":"填写密钥密码",
+          "description":[
+            "填写创建账户时所选密钥的密码。 多重签名交易请点击 show advanced options。"
+          ]
+        },
+        {
+          "title": "点击 \"提交交易\" 的按钮"
+        }
+      ]
     }
   },
   "/accounts/create":{
     "component": "TutorialForm",
     "title": "Create an account",
+    "title_zh": "新建账户",
     "content": {
       "header": "New account",
       "steps": [
@@ -193,11 +310,32 @@
           "title": "Click the \"Submit\" button"
         }
       ]
+    },
+    "content_zh": {
+      "header": "新建账户",
+      "steps": [
+        {
+          "title": "在账户别名栏填写名称 (例如： \"alice\")",
+          "description": [
+            "别名是用来区分账户的用户友好的标签。"
+          ]
+        },
+        {
+          "title": "在 \"密钥和签名\" 栏目中选择 \"使用已有的密钥\" 或者 \"提供已有的扩展公钥\"",
+          "description": [
+            "选择已有的密钥或者输入提供公钥。"
+          ]
+        },
+        {
+          "title": "点击 \"提交\" 按钮"
+        }
+      ]
     }
   },
   "/assets/create":{
     "component": "TutorialForm",
     "title": "Create an asset",
+    "title_zh": "新建资产",
     "content": {
       "header": "New asset",
       "steps": [
@@ -217,11 +355,32 @@
           "title": "Click the \"Submit\" button"
         }
       ]
+    },
+    "content_zh": {
+      "header": "新建资产",
+      "steps": [
+        {
+          "title": "填写资产别名 (例如： \"gold\")",
+          "description": [
+            "别名是用来区分资产的用户友好的标签。"
+          ]
+        },
+        {
+          "title": "在 \"密钥和签名\" 栏目中选择 \"使用已有的密钥\" 或者 \"提供已有的扩展公钥\"",
+          "description": [
+            "选择已有的密钥或者输入提供公钥。"
+          ]
+        },
+        {
+          "title": "点击 \"提交\" 按钮"
+        }
+      ]
     }
   },
   "/keys/create":{
     "component": "TutorialForm",
     "title": "Create a key",
+    "title_zh": "新建密钥",
     "content": {
       "header": "New key",
       "steps": [
@@ -241,11 +400,32 @@
           "title": "Click the \"Submit\" button"
         }
       ]
+    },
+    "content_zh": {
+      "header": "新建密钥",
+      "steps": [
+        {
+          "title": "填写密钥别名 (例如. \"goldkey\")",
+          "description": [
+            "别名是用来区分密钥的用户友好的标签。"
+          ]
+        },
+        {
+          "title": "输入和重复输入密钥的密码",
+          "description": [
+            "请妥善保管你的密钥密码， Bytom 不提供找回密码的功能。 "
+          ]
+        },
+        {
+          "title": "点击 \"提交\" 按钮"
+        }
+      ]
     }
   },
   "/keys/:id/reset-password":{
     "component": "TutorialForm",
     "title": "Reset password",
+    "title_zh": "重置密钥密码",
     "content": {
       "header": "Reset password",
       "steps": [
@@ -262,11 +442,29 @@
           "title": "Click the \"Reset the Password\" button"
         }
       ]
+    },
+    "content_zh": {
+      "header": "重置密码密钥",
+      "steps": [
+        {
+          "title": "输入原始的密钥密码"
+        },
+        {
+          "title": "输入和重复输入密钥的新密码",
+          "description": [
+            "请妥善保管你的密钥密码， Bytom 不提供找回密码的功能。"
+          ]
+        },
+        {
+          "title": "点击 \"提交\" 按钮"
+        }
+      ]
     }
   },
   "/access-control/create-token": {
     "component": "TutorialForm",
     "title": "Create an access token",
+    "title_zh": "新建访问令牌",
     "content": {
       "header": "Create an access token",
       "steps": [
@@ -275,6 +473,17 @@
         },
         {
           "title": "Click the \"Submit\" button"
+        }
+      ]
+    },
+    "content_zh": {
+      "header": "新建访问令牌",
+      "steps": [
+        {
+          "title": "填写访问令牌的别名"
+        },
+        {
+          "title": "点击\"提交\" 按钮"
         }
       ]
     }

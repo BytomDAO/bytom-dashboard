@@ -1,10 +1,10 @@
 import React from 'react'
 import styles from './TutorialInfo.scss'
-import { Link } from 'react-router'
 
 class TutorialInfo extends React.Component {
 
   render() {
+    const content = this.props.lang ==='zh' ? this.props.content_zh: this.props.content
     let objectImage
     try {
       objectImage = require(`images/empty/${this.props.image}.svg`)
@@ -15,7 +15,7 @@ class TutorialInfo extends React.Component {
         <div className={styles.container}>
           {this.props.image && <img className={styles.image} src={objectImage} />}
           <div className={styles.text}>
-            {this.props.content.map(function (contentLine, i){
+            {content.map(function (contentLine, i){
               let str = contentLine
               if (contentLine['line']) { str = contentLine['line'] }
               if(contentLine['list']){
