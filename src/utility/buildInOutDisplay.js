@@ -1,4 +1,4 @@
-import {btmAmountUnit} from '../features/core/reducers'
+import { btmID } from './environment'
 
 const mappings = {
   id: 'ID',
@@ -118,8 +118,6 @@ const unspentFields = [
   'referenceData',
   'change',
 ]
-
-const btmID = 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
 
 const balanceFields = Object.keys(mappings)
 

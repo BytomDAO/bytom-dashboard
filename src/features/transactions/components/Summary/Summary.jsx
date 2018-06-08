@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router'
 import { converIntToDec } from 'utility/buildInOutDisplay'
+import { btmID } from 'utility/environment'
 import styles from './Summary.scss'
 
 const INOUT_TYPES = {
@@ -9,8 +10,6 @@ const INOUT_TYPES = {
   control: 'Control',
   retire: 'Retire',
 }
-
-const btmID = 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
 
 class Summary extends React.Component {
   normalizeInouts(inouts) {
@@ -62,7 +61,7 @@ class Summary extends React.Component {
 
     const normalizeBtmAmountUnit = (assetID, amount, btmAmountUnit) => {
       //normalize BTM Amount
-      if (assetID === 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff') {
+      if (assetID === btmID) {
         switch (btmAmountUnit){
           case 'BTM':
             return converIntToDec(amount, 8)
