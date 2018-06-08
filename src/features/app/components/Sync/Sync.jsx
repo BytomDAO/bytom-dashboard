@@ -17,10 +17,10 @@ class Sync extends React.Component {
     const highestBlock = coreData.highestBlock
     const lang = this.props.lang
 
-    const now = (currentBlock * 100/highestBlock).toFixed(1)
+    const now = currentBlock * 100/highestBlock
     const tooltip = (
       <Tooltip id='tooltip'>
-        {currentBlock}/{highestBlock} <strong>({now}%)</strong>
+        {currentBlock}/{highestBlock} <strong>({now.toFixed(1)}%)</strong>
       </Tooltip>
     )
     const progressInstance = (<ProgressBar className={styles.progressBar} now={now} />)
