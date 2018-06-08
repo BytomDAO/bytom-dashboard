@@ -4,14 +4,13 @@ import { connect } from 'react-redux'
 import styles from './New.scss'
 import actions from 'actions'
 import componentClassNames from 'utility/componentClassNames'
+import { btmID } from 'utility/environment'
 import { normalizeBTMAmountUnit, converIntToDec } from 'utility/buildInOutDisplay'
 import Tutorial from 'features/tutorial/components/Tutorial'
 import NormalTxForm from './NormalTransactionForm'
 import AdvancedTxForm from './AdvancedTransactionForm'
 import { withRouter } from 'react-router'
 import {getValues} from 'redux-form'
-
-const btmID = 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
 
 class Form extends React.Component {
   constructor(props) {

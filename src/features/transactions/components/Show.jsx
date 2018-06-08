@@ -11,6 +11,7 @@ import { normalizeGlobalBTMAmount } from 'utility/buildInOutDisplay'
 
 import { Summary } from './'
 import { buildTxInputDisplay, buildTxOutputDisplay } from 'utility/buildInOutDisplay'
+import { btmID } from 'utility/environment'
 import moment from 'moment/moment'
 
 class Show extends BaseShow {
@@ -24,7 +25,7 @@ class Show extends BaseShow {
     if (item) {
       const confirmation = this.props.highestBlock - item.blockHeight + 1
       const btmInput = item.inputs.reduce((sum, input) => {
-        if (input.type === 'spend' && input.assetAlias === 'BTM') {
+        if (input.type === 'spend' && input.assetId === btmID) {
           sum += input.amount
         }
         return sum
@@ -33,7 +34,7 @@ class Show extends BaseShow {
       item.confirmations = confirmation
 
       const btmOutput = item.outputs.reduce((sum, output) => {
-        if (output.type === 'control' && output.assetAlias === 'BTM') {
+        if (output.type === 'control' && output.assetId === btmID) {
           sum += output.amount
         }
         return sum
@@ -41,7 +42,9 @@ class Show extends BaseShow {
 
       const gasAmount = btmInput > 0 ? btmInput - btmOutput : 0
 
-      const gas = normalizeGlobalBTMAmount('ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff', gasAmount, btmAmountUnit)
+      const gas = normalizeGlobalBTMAmount(btmID, gasAmount, btmAmountUnit)
+
+      const unconfirmedItem = (item.timestamp === 0 && item.blockId === '0000000000000000000000000000000000000000000000000000000000000000')
 
       const title = <span>
         {lang === 'zh' ? '交易' : 'Transaction '}
@@ -64,10 +67,12 @@ class Show extends BaseShow {
             title={lang === 'zh' ? '详情' : 'Details'}
             items={[
               {label: 'ID', value: item.id},
-              {label: (lang === 'zh' ? '时间戳' : 'Timestamp'), value: moment.unix(item.timestamp).format()},
-              {label: (lang === 'zh' ? '区块ID' : 'Block ID'), value: item.blockId},
-              {label: (lang === 'zh' ? '区块高度': 'Block Height'), value: (item.blockHeight + `(${confirmation} confirmation${confirmation > 1 ? 's' : ''})`)},
-              {label: (lang === 'zh' ? '位置' : 'Position'), value: item.position},
+              {label: (lang === 'zh' ? '时间戳' : 'Timestamp'), value:  unconfirmedItem ? '-' : moment.unix(item.timestamp).format()},
+              {label: (lang === 'zh' ? '区块ID' : 'Block ID'), value: unconfirmedItem? '-' : item.blockId},
+              {label: (lang === 'zh' ? '区块高度': 'Block Height'), value: unconfirmedItem?
+                  (lang === 'zh' ? '未知 ':'Unknown')+'(0 confirmation)':
+                  (item.blockHeight + `(${confirmation} confirmation${confirmation > 1 ? 's' : ''})`)},
+              {label: (lang === 'zh' ? '位置' : 'Position'), value: unconfirmedItem? '-' :item.position},
               {label: 'Gas', value: gas},
             ]}
           />

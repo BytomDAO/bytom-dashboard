@@ -15,6 +15,7 @@ import React from 'react'
 import styles from './New.scss'
 import disableAutocomplete from 'utility/disableAutocomplete'
 import { normalizeBTMAmountUnit } from 'utility/buildInOutDisplay'
+import { btmID } from 'utility/environment'
 
 const rangeOptions = [
   {
@@ -33,8 +34,6 @@ const rangeOptions = [
     value: ''
   }
 ]
-
-const btmID = 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
 
 class NormalTxForm extends React.Component {
   constructor(props) {

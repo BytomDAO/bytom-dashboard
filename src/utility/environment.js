@@ -27,6 +27,8 @@ export const history = useRouterHistory(createHistory)({
   basename: basename
 })
 
+export const btmID = 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
+
 export const pageSize = 25
 export const UTXOpageSize = 10
 

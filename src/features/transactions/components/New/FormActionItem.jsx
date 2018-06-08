@@ -1,6 +1,7 @@
 import React from 'react'
 import { ErrorBanner, HiddenField, Autocomplete, JsonField, TextField, ObjectSelectorField, AmountUnitField, AmountInputMask } from 'features/shared/components'
 import styles from './FormActionItem.scss'
+import { btmID } from 'utility/environment'
 
 const ISSUE_KEY = 'issue'
 const SPEND_ACCOUNT_KEY = 'spend_account'
@@ -72,7 +73,7 @@ export default class ActionItem extends React.Component {
 
     const lang = this.props.lang
     const btmAmounUnitVisible = (assetAlias.value === 'BTM' ||
-      assetId.value === 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff' )
+      assetId.value === btmID )
 
     const decimal = this.props.decimal || 0
 
