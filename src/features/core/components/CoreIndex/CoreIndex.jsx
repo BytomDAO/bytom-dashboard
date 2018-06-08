@@ -132,8 +132,8 @@ class CoreIndex extends React.Component {
           <table className={styles.table}>
             <tbody>
             <tr className={styles.row} key={'core-listening'}>
-              <td className={styles.row_label}> {lang === 'zh' ? '节点监听' : 'Listening'}:</td>
-              <td className={styles.row_value}>{(coreData['listening'])? (lang === 'zh' ? '连接' : 'Connected'): (lang === 'zh' ? '断开' : 'Disconnected')}</td>
+              <td className={styles.row_label}> {lang === 'zh' ? '节点监听' : 'Peer Listening'}:</td>
+              <td className={styles.row_value}>{(coreData['listening'])? (lang === 'zh' ? '连接' : <code>true</code>): (lang === 'zh' ? '断开' : <code>false</code>)}</td>
             </tr>
             <tr className={styles.row} key={'core-syncing'}>
               <td className={styles.row_label}> {lang === 'zh' ? '网络同步' : 'Syncing'}:</td>
