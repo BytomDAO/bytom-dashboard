@@ -21,7 +21,7 @@ const mappings = {
   spentOutputId: 'Spent Output ID',
   refData: 'Reference Data',
   sourceId: 'Source ID',
-  sourcePos: 'Source Postion',
+  sourcePos: 'Source Position',
   issuanceProgram: 'Issuance Program',
   isLocal: 'Local?',
   referenceData: 'Reference Data',
