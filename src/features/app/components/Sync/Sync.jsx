@@ -17,7 +17,7 @@ class Sync extends React.Component {
     const highestBlock = coreData.highestBlock
     const lang = this.props.lang
 
-    const now = currentBlock * 100/highestBlock
+    const now = ( (highestBlock === 0) ? 0 : (currentBlock * 100/highestBlock))
     const tooltip = (
       <Tooltip id='tooltip'>
         {currentBlock}/{highestBlock} <strong>({now.toFixed(1)}%)</strong>

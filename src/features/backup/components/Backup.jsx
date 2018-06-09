@@ -69,7 +69,7 @@ class Backup extends React.Component {
 
     return (
       <div className={componentClassNames(this, 'flex-container', styles.mainContainer)}>
-        <PageTitle title={lang === 'zh' ? '备份与恢复' : 'Backup and restore'}/>
+        <PageTitle title={lang === 'zh' ? '备份与恢复' : 'Backup and Restore'}/>
         <PageContent>
           {newButton}
           <hr/>

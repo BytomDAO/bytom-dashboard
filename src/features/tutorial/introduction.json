@@ -96,7 +96,7 @@
   },
   "/backup": {
     "component": "TutorialInfo",
-    "title": "Backup and restore",
+    "title": "Backup and Restore",
     "title_zh": "备份和恢复",
     "image": "client_access_token",
     "content": [

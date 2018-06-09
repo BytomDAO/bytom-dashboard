@@ -154,7 +154,7 @@ class AdvancedTxForm extends React.Component {
                   <br/>
                   <label htmlFor='submit_action_submit' className={styles.submitDescription}>
                     {lang === 'zh' ? '此次交易将通过密钥签名然后提交到区块链。' :
-                      'This transaction will be signed by the MockHSM and submitted to the blockchain.'}
+                      'This transaction will be signed by the key and submitted to the blockchain.'}
                   </label>
                 </td>
               </tr>

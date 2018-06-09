@@ -51,7 +51,7 @@ class SecondaryNavigation extends React.Component {
           <li>
             <Link to='/backup' activeClassName={styles.active}>
               {navIcon('client', styles)}
-              { lang === 'zh' ?  '备份与恢复' : 'Backup and restore'}
+              { lang === 'zh' ?  '备份与恢复' : 'Backup and Restore'}
             </Link>
           </li>
         </ul>
