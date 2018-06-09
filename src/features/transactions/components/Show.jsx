@@ -44,7 +44,7 @@ class Show extends BaseShow {
 
       const gas = normalizeGlobalBTMAmount(btmID, gasAmount, btmAmountUnit)
 
-      const unconfirmedItem = (item.timestamp === 0 && item.blockId === '0000000000000000000000000000000000000000000000000000000000000000')
+      const unconfirmedItem = (item.blockHeight === 0 && item.blockId === '0000000000000000000000000000000000000000000000000000000000000000')
 
       const title = <span>
         {lang === 'zh' ? '交易' : 'Transaction '}

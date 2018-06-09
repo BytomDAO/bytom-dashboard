@@ -11,7 +11,7 @@ class ListItem extends React.Component {
     const confirmation = item.highest - item.blockHeight + 1
     item.confirmations = confirmation
 
-    const unconfirmedTx = item.blockTime === 0 && item.blockHash === '0000000000000000000000000000000000000000000000000000000000000000'
+    const unconfirmedTx = item.blockHeight === 0 && item.blockHash === '0000000000000000000000000000000000000000000000000000000000000000'
 
     return(
       <div className={styles.main}>
@@ -19,7 +19,7 @@ class ListItem extends React.Component {
           <div className={styles.title}>
             <label>{lang === 'zh' ? '交易ID:' : 'Transaction ID:'}</label>
             &nbsp;<code>{item.id}</code>&nbsp;
-            {item.timestamp === 0? null : <span className={styles.timestamp}>
+            {unconfirmedTx? null : <span className={styles.timestamp}>
               <RelativeTime timestamp={item.timestamp} />
             </span>}
 
