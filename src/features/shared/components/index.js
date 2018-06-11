@@ -22,6 +22,7 @@ import ObjectSelectorField from './ObjectSelectorField/ObjectSelectorField'
 import PageContent from './PageContent/PageContent'
 import PageTitle from './PageTitle/PageTitle'
 import PaginationField from './Pagination/PaginationField'
+import PasswordField from './PasswordField/PasswordField'
 import RawJsonButton from './RawJsonButton'
 import RelativeTime from './RelativeTime'
 import RoutingContainer from './RoutingContainer'
@@ -58,6 +59,7 @@ export {
   PageContent,
   PageTitle,
   PaginationField,
+  PasswordField,
   RawJsonButton,
   RelativeTime,
   RoutingContainer,
