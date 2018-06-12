@@ -1,5 +1,5 @@
 import React from 'react'
-import { BaseNew, FormContainer, FormSection, TextField } from 'features/shared/components'
+import { BaseNew, FormContainer, FormSection, TextField, PasswordField } from 'features/shared/components'
 import { reduxForm } from 'redux-form'
 
 class New extends React.Component {
@@ -41,8 +41,8 @@ class New extends React.Component {
 
         <FormSection title={ lang === 'zh' ? '密钥信息' : 'Key Information' }>
           <TextField title={ lang === 'zh' ? '别名' : 'Alias'} placeholder={ lang === 'zh' ? '请输入密钥别名...' :'Please enter key alias...'} fieldProps={alias} autoFocus={true} />
-          <TextField title={ lang === 'zh' ? '密码' : 'Password'}  placeholder={ lang === 'zh' ? '请输入密码...' : 'Please enter your password...'} fieldProps={password} autoFocus={false} type={'password'} />
-          <TextField title={ lang === 'zh' ? '重复密码' : 'Repeat Password'} placeholder={ lang === 'zh' ? '请重复输入密码...' : 'Please repeat your password'} fieldProps={confirmPassword} autoFocus={false} type={'password'} />
+          <PasswordField title={ lang === 'zh' ? '密码' : 'Password'}  placeholder={ lang === 'zh' ? '请输入密码...' : 'Please enter your password...'} fieldProps={password} autoFocus={false} />
+          <PasswordField title={ lang === 'zh' ? '重复密码' : 'Repeat Password'} placeholder={ lang === 'zh' ? '请重复输入密码...' : 'Please repeat your password'} fieldProps={confirmPassword} autoFocus={false} />
         </FormSection>
       </FormContainer>
     )

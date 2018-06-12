@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {ErrorBanner, TextField} from 'features/shared/components'
+import {ErrorBanner, TextField, PasswordField} from 'features/shared/components'
 import actions from 'actions'
 import styles from './Register.scss'
 import {reduxForm} from 'redux-form'
@@ -88,16 +88,14 @@ class Register extends React.Component {
                   title={lang === 'zh' ? '密钥别名' : 'Key Alias'}
                   placeholder={lang === 'zh' ? '请输入密钥别名...' : 'Please enter the key alias...'}
                   fieldProps={keyAlias}/>
-                <TextField
+                <PasswordField
                   title={lang === 'zh' ? '密钥密码' : 'Key Password'}
                   placeholder={lang === 'zh' ? '请输入密钥密码...' : 'Please enter the key password...'}
-                  fieldProps={password}
-                  type='password'/>
-                <TextField
+                  fieldProps={password} />
+                <PasswordField
                   title={lang === 'zh' ? '重复输入密钥密码' : 'Repeat your key password'}
                   placeholder={lang === 'zh' ? '请重复输入密钥密码...' : 'Please repeat the key password...'}
-                  fieldProps={repeatPassword}
-                  type='password'/>
+                  fieldProps={repeatPassword} />
 
                 {error &&
                 <ErrorBanner
