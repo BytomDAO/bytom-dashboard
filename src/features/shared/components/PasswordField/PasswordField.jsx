@@ -35,8 +35,9 @@ class PasswordField extends React.Component {
     return(
       <div className='form-group'>
         {this.props.title && <FieldLabel>{this.props.title}</FieldLabel>}
-        <input className={`form-control ${styles.password} ${this.state.capLock? styles.capsIconGreen: styles.capsIcon}`}
-          type='password'
+        <input className={`form-control ${styles.password} ${fieldProps.value? styles.dotFont: null}
+         ${this.state.capLock? styles.capsIconGreen: styles.capsIcon}`}
+          type='text'
           placeholder={this.props.placeholder}
           autoFocus={!!this.props.autoFocus}
           onKeyPress={capLock}

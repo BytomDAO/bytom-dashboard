@@ -14,6 +14,16 @@
   src: url('fonts/nittigrotesk-medium.woff');
 }
 
+@font-face
+{
+  font-family: 'dotsfont';
+  src: url('fonts/dotsfont/dotsfont.eot');
+  src: url('fonts/dotsfont/dotsfont.eot?#iefix') format('embedded-opentype'),
+  url('fonts/dotsfont/dotsfont.svg#dotsfontregular') format('svg'),
+  url('fonts/dotsfont/dotsfont.woff') format('woff'),
+  url('fonts/dotsfont/dotsfont.ttf') format('truetype');
+}
+
 html {
   height: 100%;
   box-sizing: border-box;
