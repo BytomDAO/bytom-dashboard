@@ -11,6 +11,7 @@ import { routes as transactionFeeds } from 'features/transactionFeeds'
 import { routes as unspents } from 'features/unspents'
 import { routes as mockhsm } from 'features/mockhsm'
 import { routes as backup } from 'features/backup'
+import { routes as console } from 'features/console'
 
 const makeRoutes = (store) => ({
   path: '/',
@@ -27,6 +28,7 @@ const makeRoutes = (store) => ({
     unspents(store),
     mockhsm(store),
     backup,
+    console,
     {
       path: '*',
       component: NotFound

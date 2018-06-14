@@ -7,6 +7,7 @@ import BaseList from './BaseList/BaseList'
 import BaseNew from './BaseNew'
 import BaseShow from './BaseShow'
 import CopyableBlock from './CopyableBlock/CopyableBlock'
+import ConsoleSection from './ConsoleSection/ConsoleSection'
 import EmptyContent from './EmptyContent/EmptyContent'
 import ErrorBanner from './ErrorBanner/ErrorBanner'
 import FieldLabel from './FieldLabel/FieldLabel'
@@ -38,6 +39,7 @@ export {
   AmountUnitField,
   AmountInputMask,
   CheckboxField,
+  ConsoleSection,
   Autocomplete,
   BaseUpdate,
   BaseList,

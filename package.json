@@ -32,6 +32,7 @@
     "react-ace": "~3.5.0",
     "react-autosuggest": "~6.0.4",
     "react-bootstrap": "~0.30.3",
+    "react-console-component": "^0.6.1",
     "react-dom": "~15.5.0",
     "react-markdown": "^2.5.0",
     "react-overlays": "~0.8.3",
