@@ -169,6 +169,7 @@ a:focus {
 }
 
 div.react-console-prompt-box {
+  padding-top: 1em;
   color: #444;
 }
 
@@ -207,5 +208,9 @@ div.react-console-focus span.react-console-cursor-idle {
     color: #444; } }
 
 div.react-console-message {
-  color: #999;
+  white-space: pre-wrap;      /* CSS3 */
+  white-space: -moz-pre-wrap; /* Firefox */
+  white-space: -pre-wrap;     /* Opera <7 */
+  white-space: -o-pre-wrap;   /* Opera 7 */
+  word-wrap: break-word;      /* IE */
   padding: 0.1em; }

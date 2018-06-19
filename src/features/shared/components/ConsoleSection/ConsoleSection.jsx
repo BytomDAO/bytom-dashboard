@@ -1,6 +1,7 @@
 import React from 'react'
 import styles  from './ConsoleSection.scss'
 import Console from 'react-console-component'
+import command from './command.json'
 
 class ConsoleSection extends React.Component {
   constructor(props) {
@@ -9,7 +10,18 @@ class ConsoleSection extends React.Component {
   }
 
   echo (text) {
-    this.terminal.log(text)
+    if(text.startsWith('help')){
+      this.terminal.log(command['help'])
+    }else{
+      this.props.cmd(text)
+        .then(data=>
+        {
+          this.terminal.log(JSON.stringify(data, null, 2))
+        }).catch(() =>
+        {
+          this.terminal.log('command not found')
+        })
+    }
     this.terminal.return()
   }
 

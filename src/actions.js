@@ -4,6 +4,7 @@ import { actions as app } from 'features/app'
 import { actions as asset } from 'features/assets'
 import { actions as balance } from 'features/balances'
 import { actions as configuration } from 'features/configuration'
+import { actions as console } from 'features/console'
 import { actions as core } from 'features/core'
 import { actions as mockhsm } from 'features/mockhsm'
 import { actions as testnet } from 'features/testnet'
@@ -19,6 +20,7 @@ const actions = {
   asset,
   balance,
   configuration,
+  console,
   core,
   key: mockhsm,
   testnet,
