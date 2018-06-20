@@ -2,5 +2,7 @@
   font-size: 0.85em;
   font-family: "Menlo", "Consolas", "DejaVu Sans Mono", monospace;
   box-sizing: border-box;
-  padding: 0.5em;
+  height: calc( 100% - 50px );
+  padding: 30px;
+  overflow: scroll;
 }

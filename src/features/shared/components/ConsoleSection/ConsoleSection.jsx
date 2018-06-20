@@ -10,16 +10,37 @@ class ConsoleSection extends React.Component {
   }
 
   echo (text) {
-    if(text.startsWith('help')){
-      this.terminal.log(command['help'])
+    if(text.trim() === 'help'){
+      command['help'].forEach( (descriptionLine) => {
+        this.terminal.log(descriptionLine)
+      })
+    }else if(text.trim() === 'clear'){
+      this.terminal.setState({
+        acceptInput: true,
+        log: []
+      })
     }else{
       this.props.cmd(text)
         .then(data=>
         {
-          this.terminal.log(JSON.stringify(data, null, 2))
+          if(data.status === 'success'){
+            let output = data.data
+            if(output){
+              const keys = Object.keys(output)
+              if(keys.length === 1){
+                this.terminal.log(output[keys[0]])
+              }else{
+                this.terminal.log(JSON.stringify(output, null, 2))
+              }
+            }
+          }else if(data.status === 'fail'){
+            this.terminal.logX('Error', data.msg.replace(/"/g,''))
+          }else{
+            this.terminal.log(JSON.stringify(data.data, null, 2))
+          }
         }).catch(() =>
         {
-          this.terminal.log('command not found')
+          this.terminal.logX('Error','command not found')
         })
     }
     this.terminal.return()
@@ -27,24 +48,22 @@ class ConsoleSection extends React.Component {
 
   render() {
     return(
-      <div className='form-group'>
-        <div
-          className={styles.reactConsoleContainer}
-        >
-          <p>
-            Welcome to the Bytom Core API console.<br/>
-            Type <code>help</code> for an overview of available commands.
-          </p>
-          <p className='text-danger'>
-            <strong>WARNING:</strong> Scammers have been active, telling users to type commands here, stealing their wallet contents. Do not use this console without fully understanding the ramification of a command.
-          </p>
+      <div
+        className={styles.reactConsoleContainer}
+      >
+        <p>
+          Welcome to the Bytom Core API console.<br/>
+          Type <code>help</code> for an overview of available commands.
+        </p>
+        <p className='text-danger'>
+          <strong>WARNING:</strong> Scammers have been active, telling users to type commands here, stealing their wallet contents. Do not use this console without fully understanding the ramification of a command.
+        </p>
 
-          <Console
-            ref={ref => this.terminal = ref}
-            handler={this.echo}
-            autofocus={true}
-          />
-        </div>
+        <Console
+          ref={ref => this.terminal = ref}
+          handler={this.echo}
+          autofocus={true}
+        />
       </div>
     )
   }

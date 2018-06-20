@@ -168,6 +168,10 @@ a:focus {
   font-weight: normal;
 }
 
+.text-danger{
+  color: $text-danger;
+}
+
 div.react-console-prompt-box {
   padding-top: 1em;
   color: #444;
@@ -207,10 +211,16 @@ div.react-console-focus span.react-console-cursor-idle {
     background: none;
     color: #444; } }
 
-div.react-console-message {
+div.react-console-message,
+span.react-console-prompt {
   white-space: pre-wrap;      /* CSS3 */
   white-space: -moz-pre-wrap; /* Firefox */
   white-space: -pre-wrap;     /* Opera <7 */
   white-space: -o-pre-wrap;   /* Opera 7 */
   word-wrap: break-word;      /* IE */
-  padding: 0.1em; }
+  padding: 0.1em;
+}
+
+div.react-console-message-Error{
+  color: $text-danger;
+}
