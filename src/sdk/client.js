@@ -4,6 +4,7 @@ const accessTokensAPI = require('./api/accessTokens')
 const accountsAPI = require('./api/accounts')
 const assetsAPI = require('./api/assets')
 const balancesAPI = require('./api/balances')
+const bytomCLI = require('./api/bytomCLI')
 const configAPI = require('./api/config')
 const hsmSigner = require('./api/hsmSigner')
 const mockHsmKeysAPI = require('./api/mockHsmKeys')
@@ -34,6 +35,8 @@ class Client {
     this.assets = assetsAPI(this)
 
     this.balances = balancesAPI(this)
+
+    this.bytomCli = bytomCLI(this)
 
     this.config = configAPI(this)
 

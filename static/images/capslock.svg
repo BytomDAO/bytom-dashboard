@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 30 30">
+  <defs>
+    <style>
+      .cls-1 {
+        clip-path: url(#clip-capslocks_2);
+      }
+
+      .cls-2 {
+        fill: #e4e4e4;
+      }
+    </style>
+    <clipPath id="clip-capslocks_2">
+      <rect width="30" height="30"/>
+    </clipPath>
+  </defs>
+  <g id="capslocks_2" data-name="capslocks – 2" class="cls-1">
+    <path id="Union_86" data-name="Union 86" class="cls-2" d="M-2140.041-318.8v-3.233h8.081v3.233Zm0-5.657V-331H-2144l8-8,8,8h-3.959v6.546Z" transform="translate(2151 343.398)"/>
+  </g>
+</svg>

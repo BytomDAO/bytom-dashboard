@@ -1,0 +1,26 @@
+{
+  "help": [
+    "validate-address <address>",
+    "sign-message <address> <message> <password>",
+    "get-transaction <transaction id>",
+    "list-transactions",
+    "build-transaction <base_transaction> [{\"account_id\":id,\"amount\":amount,\"asset_id\": id,\"type\":type of transaction}…] <ttl> <time_range>",
+    "sign-transaction <password> <transaction>",
+    "estimate-transaction-gas <transaction>",
+    "get-unconfirmed-transaction <tx_id>",
+    "list-unconfirmed-transactions",
+    "decode-raw-transaction <raw_transaction>",
+    "get-block-count",
+    "get-block-hash",
+    "get-block  ( <block_height> | <block_hash> )",
+    "get-block-header  ( <block_height> | <block_hash> )",
+    "get-difficulty  ( <block_height> | <block_hash> )",
+    "get-hash-rate ( <block_height> | <block_hash> )",
+    "net-info",
+    "is-mining",
+    "set-mining <true|false>",
+    "gas-rate",
+    "verify-message <address> <derived_xpub> <message> <signature>",
+    "decode-program <program>"
+  ]
+}

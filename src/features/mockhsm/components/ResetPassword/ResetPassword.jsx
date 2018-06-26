@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import { reduxForm } from 'redux-form'
 
-import { TextField, FormContainer, FormSection} from 'features/shared/components'
+import { TextField, FormContainer, FormSection, PasswordField} from 'features/shared/components'
 
 class ResetPassword extends Component {
   constructor(props) {
@@ -63,23 +63,20 @@ class ResetPassword extends Component {
         lang={lang}>
 
         <FormSection title= {lang === 'zh' ? '重置密码' : 'Reset password' }>
-          <TextField
+          <PasswordField
             title = { lang === 'zh' ? '原始密码' : 'Old Password' }
             placeholder={ lang === 'zh' ? '请输入原始密码' : 'Please entered the old password.' }
             fieldProps={oldPassword}
-            type= 'password'
             />
-          <TextField
+          <PasswordField
             title = { lang === 'zh' ? '新密码' : 'New Password' }
             placeholder={ lang === 'zh' ? '请输入新密码' : 'Please entered the new password.' }
             fieldProps={newPassword}
-            type= 'password'
             />
-          <TextField
+          <PasswordField
             title = { lang === 'zh' ? '重复新密码' : 'Repeat Password' }
             placeholder={ lang === 'zh' ? '请重复输入新密码' : 'Please repeated the new password.' }
             fieldProps={repeatPassword}
-            type= 'password'
             />
         </FormSection>
       </FormContainer>

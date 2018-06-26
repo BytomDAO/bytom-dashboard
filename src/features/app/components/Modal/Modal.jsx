@@ -22,16 +22,23 @@ class Modal extends React.Component {
     }
     const cancel = cancelAction ? () => dispatch(cancelAction) : null
     const backdropAction = cancel || accept
+    const boxStyle = this.props.options.box
 
     return(
       <div className={styles.main}>
         <div className={styles.backdrop} onClick={backdropAction}></div>
-        <div className={`${this.props.options.wide && styles.wide} ${styles.content}`}>
+        <div className={`${this.props.options.wide && styles.wide} ${boxStyle? styles.box: styles.content}`}>
+          {
+            boxStyle &&
+              <div className={styles.title}>
+                <p>{ lang === 'zh' ? '命令行' : 'Console'}</p>
+                <button className={`btn ${styles.close}`} onClick={accept}>X</button>
+              </div>
+          }
           {body}
-
-          <button className={`btn btn-${this.props.options.danger ? 'danger' : 'primary'} ${styles.accept}`} onClick={accept}>
-            { lang === 'zh' ?  '关闭' : 'OK' }</button>
-          {cancel && <button className={`btn btn-link ${styles.cancel}`} onClick={cancel}>Cancel</button>}
+          {!boxStyle && <button className={`btn btn-${this.props.options.danger ? 'danger' : 'primary'} ${styles.accept}`} onClick={accept}>
+            { lang === 'zh' ?  '关闭' : 'OK' }</button>}
+          {!boxStyle && cancel && <button className={`btn btn-link ${styles.cancel}`} onClick={cancel}>Cancel</button>}
         </div>
       </div>
     )

@@ -1,4 +1,5 @@
 import { push } from 'react-router-redux'
+import { chainClient } from 'utility/environment'
 
 const actions = {
   dismissFlash: (param) => ({type: 'DISMISS_FLASH', param}),
@@ -28,6 +29,9 @@ const actions = {
         dispatch(push('/configuration'))
       }
     }
+  },
+  cmd: (data) => () => {
+    return chainClient().bytomCli.request(data)
   }
 }
 

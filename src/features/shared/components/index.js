@@ -7,6 +7,7 @@ import BaseList from './BaseList/BaseList'
 import BaseNew from './BaseNew'
 import BaseShow from './BaseShow'
 import CopyableBlock from './CopyableBlock/CopyableBlock'
+import ConsoleSection from './ConsoleSection/ConsoleSection'
 import EmptyContent from './EmptyContent/EmptyContent'
 import ErrorBanner from './ErrorBanner/ErrorBanner'
 import FieldLabel from './FieldLabel/FieldLabel'
@@ -22,6 +23,7 @@ import ObjectSelectorField from './ObjectSelectorField/ObjectSelectorField'
 import PageContent from './PageContent/PageContent'
 import PageTitle from './PageTitle/PageTitle'
 import PaginationField from './Pagination/PaginationField'
+import PasswordField from './PasswordField/PasswordField'
 import RawJsonButton from './RawJsonButton'
 import RelativeTime from './RelativeTime'
 import RoutingContainer from './RoutingContainer'
@@ -37,6 +39,7 @@ export {
   AmountUnitField,
   AmountInputMask,
   CheckboxField,
+  ConsoleSection,
   Autocomplete,
   BaseUpdate,
   BaseList,
@@ -58,6 +61,7 @@ export {
   PageContent,
   PageTitle,
   PaginationField,
+  PasswordField,
   RawJsonButton,
   RelativeTime,
   RoutingContainer,
