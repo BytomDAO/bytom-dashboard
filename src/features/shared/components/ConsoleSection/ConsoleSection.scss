@@ -1,8 +1,23 @@
 .reactConsoleContainer {
-  font-size: 0.85em;
-  font-family: "Menlo", "Consolas", "DejaVu Sans Mono", monospace;
   box-sizing: border-box;
   height: calc( 100% - 50px );
   padding: 30px;
   overflow: scroll;
+  height: 460px;
+  background-color: $background-content-color;
+}
+
+.input {
+  height: 65px;
+  border: none;
+  color: $text-strong-color;
+  padding: 10px 12px;
+  width: 750px;
+}
+
+.inputBox{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top: solid 1px $border-color;
 }

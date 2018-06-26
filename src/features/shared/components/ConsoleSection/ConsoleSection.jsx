@@ -1,70 +1,129 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 import styles  from './ConsoleSection.scss'
-import Console from 'react-console-component'
-import command from './command.json'
+import commandList from './command.json'
+import ListItem from './ListItem/ListItem'
+import disableAutocomplete from 'utility/disableAutocomplete'
 
 class ConsoleSection extends React.Component {
   constructor(props) {
     super(props)
-    this.echo = this.echo.bind(this)
+    this.state= {
+      data:[],
+      historyCount:0,
+      commandHistory:[]
+    }
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.scrollToBottom = this.scrollToBottom.bind(this)
   }
 
-  echo (text) {
-    if(text.trim() === 'help'){
-      command['help'].forEach( (descriptionLine) => {
-        this.terminal.log(descriptionLine)
-      })
-    }else if(text.trim() === 'clear'){
-      this.terminal.setState({
-        acceptInput: true,
-        log: []
-      })
+  scrollToBottom () {
+    const messagesContainer = ReactDOM.findDOMNode(this.messagesContainer)
+    messagesContainer.scrollTop = messagesContainer.scrollHeight
+  }
+  componentDidMount() {
+    this.scrollToBottom()
+  }
+
+  componentDidUpdate() {
+    this.scrollToBottom()
+  }
+
+  handleSubmit(event) {
+    event.preventDefault()
+    let dataArray = this.state.data
+    const command = event.target[0].value.trim()
+
+    this.setState({
+      commandHistory: this.state.commandHistory.concat(command),
+      historyCount: this.state.commandHistory.length
+    })
+
+    event.target[0].value = ''
+
+    if(command === 'help'){
+      dataArray = dataArray.concat([{'command': command , 'success':true, 'commandOutput': commandList['help']}])
+      this.setState({data: dataArray})
+    }else if(command === 'clear'){
+      this.setState({data: []})
     }else{
-      this.props.cmd(text)
-        .then(data=>
+      this.props.cmd(command)
+        .then(resp=>
         {
-          if(data.status === 'success'){
-            let output = data.data
-            if(output){
-              const keys = Object.keys(output)
-              if(keys.length === 1){
-                this.terminal.log(output[keys[0]])
-              }else{
-                this.terminal.log(JSON.stringify(output, null, 2))
-              }
-            }
-          }else if(data.status === 'fail'){
-            this.terminal.logX('Error', data.msg.replace(/"/g,''))
+          if(resp.status === 'fail'){
+            dataArray = dataArray.concat( [{'command': command , 'success':false, 'commandOutput': resp.msg}] )
           }else{
-            this.terminal.log(JSON.stringify(data.data, null, 2))
+            dataArray = dataArray.concat( [{'command': command , 'success':true, 'commandOutput': resp.data}] )
           }
+          this.setState({data: dataArray})
         }).catch(() =>
         {
-          this.terminal.logX('Error','command not found')
+          dataArray = dataArray.concat([{'command': command , 'success':false, 'commandOutput': 'command not found'}])
+          this.setState({data: dataArray})
         })
     }
-    this.terminal.return()
+  }
+
+  keyDownEvent(event) {
+    if ([38, 40].includes(event.keyCode) && this.state.commandHistory.length > 0) {
+      let historyCount = this.state.historyCount
+      if (event.keyCode === 38) {
+        if (historyCount > 0) {
+          this.setState({ historyCount: historyCount-1})
+        }
+      } else {
+        if (historyCount < this.state.commandHistory.length-1) {
+          this.setState({ historyCount: historyCount+1})
+        }
+      }
+      event.target.value = this.state.commandHistory[historyCount]
+    }
   }
 
   render() {
-    return(
-      <div
-        className={styles.reactConsoleContainer}
-      >
-        <p>
-          Welcome to the Bytom Core API console.<br/>
-          Type <code>help</code> for an overview of available commands.
-        </p>
-        <p className='text-danger'>
-          <strong>WARNING:</strong> Scammers have been active, telling users to type commands here, stealing their wallet contents. Do not use this console without fully understanding the ramification of a command.
-        </p>
-
-        <Console
-          ref={ref => this.terminal = ref}
-          handler={this.echo}
-          autofocus={true}
+    const lang = this.porps.lang
+    let taskList = this.state.data.map(function(listItem) {
+      return (
+        <ListItem
+          content={listItem}
         />
+      )
+    })
+    return(
+      <div>
+        <div
+          className={styles.reactConsoleContainer}
+          ref={(el) => { this.messagesContainer = el }}
+        >
+          <p>
+            Welcome to the Bytom Core API console.<br/>
+            Type <code>help</code> for an overview of available commands.
+          </p>
+          <p className='text-danger'>
+            <strong>WARNING:</strong> Scammers have been active, telling users to type commands here, stealing their wallet contents. Do not use this console without fully understanding the ramification of a command.
+          </p>
+
+          {taskList}
+
+        </div>
+        <div>
+          <form className={styles.inputBox} onSubmit={this.handleSubmit} {...disableAutocomplete}>
+            <span>
+              <input
+                className={styles.input}
+                type='text'
+                autoFocus='autofocus'
+                onKeyDown={(event) => this.keyDownEvent(event)}
+                placeholder='Enter "help" for an overview of available commands' />
+            </span>
+            <button type='submit' className={'btn btn-primary'} tabIndex='-1'>
+              { lang === 'zh' ? '提交' : 'Submit' }
+            </button>
+          </form>
+        </div>
       </div>
+
+
     )
   }
 }

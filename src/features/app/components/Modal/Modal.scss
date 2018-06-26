@@ -51,12 +51,12 @@
   height: 50px;
   padding: 10px 30px;
   border-bottom: 1px solid $border-color;
-  font-size: $font-size-page-title;
+  font-size: $font-size-section-title;
   color: $text-strong-color;
 }
 
 .close {
   position: absolute;
   right: 10px;
-  top: 10px;
+  top: 5px;
 }
