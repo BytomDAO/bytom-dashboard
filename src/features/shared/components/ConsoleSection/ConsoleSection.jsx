@@ -81,7 +81,7 @@ class ConsoleSection extends React.Component {
   }
 
   render() {
-    const lang = this.porps.lang
+    const lang = this.props.lang
     let taskList = this.state.data.map(function(listItem) {
       return (
         <ListItem
@@ -96,11 +96,17 @@ class ConsoleSection extends React.Component {
           ref={(el) => { this.messagesContainer = el }}
         >
           <p>
-            Welcome to the Bytom Core API console.<br/>
-            Type <code>help</code> for an overview of available commands.
+            {lang === 'zh' ?
+              '欢迎来到Bytom Core API 命令行。':
+            'Welcome to the Bytom Core API console.'}<br/>
+            {lang === 'zh' ? '输入':'Type' }<code>help</code>  {lang === 'zh' ?'查看所有可用命令行。':'for an overview of available commands.'}
           </p>
           <p className='text-danger'>
-            <strong>WARNING:</strong> Scammers have been active, telling users to type commands here, stealing their wallet contents. Do not use this console without fully understanding the ramification of a command.
+            <strong>
+              {lang === 'zh' ? '注意' : 'WARNING'}:
+            </strong> {lang === 'zh' ?
+            '骗子可能会让你在此输入命令，以盗取你的钱包内容。 如果你没有了解命令所带来的后果，请不要在此输入命令。':
+            'Scammers have been active, telling users to type commands here, stealing their wallet contents. Do not use this console without fully understanding the ramification of a command.'}
           </p>
 
           {taskList}
@@ -114,10 +120,10 @@ class ConsoleSection extends React.Component {
                 type='text'
                 autoFocus='autofocus'
                 onKeyDown={(event) => this.keyDownEvent(event)}
-                placeholder='Enter "help" for an overview of available commands' />
+                placeholder={ lang === 'zh' ? '输入 \"help\" 查看所有可用的命令' : 'Enter "help" for an overview of available commands' } />
             </span>
             <button type='submit' className={'btn btn-primary'} tabIndex='-1'>
-              { lang === 'zh' ? '提交' : 'Submit' }
+              > { lang === 'zh' ? '输入' : 'Enter' }
             </button>
           </form>
         </div>

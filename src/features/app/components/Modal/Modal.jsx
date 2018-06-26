@@ -31,7 +31,7 @@ class Modal extends React.Component {
           {
             boxStyle &&
               <div className={styles.title}>
-                <p>Console</p>
+                <p>{ lang === 'zh' ? '命令行' : 'Console'}</p>
                 <button className={`btn ${styles.close}`} onClick={accept}>X</button>
               </div>
           }
