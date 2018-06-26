@@ -90,7 +90,7 @@ class ConsoleSection extends React.Component {
       )
     })
     return(
-      <div>
+      <div className={styles.main}>
         <div
           className={styles.reactConsoleContainer}
           ref={(el) => { this.messagesContainer = el }}
@@ -108,9 +108,7 @@ class ConsoleSection extends React.Component {
             '骗子可能会让你在此输入命令，以盗取你的钱包内容。 如果你没有了解命令所带来的后果，请不要在此输入命令。':
             'Scammers have been active, telling users to type commands here, stealing their wallet contents. Do not use this console without fully understanding the ramification of a command.'}
           </p>
-
           {taskList}
-
         </div>
         <div>
           <form className={styles.inputBox} onSubmit={this.handleSubmit} {...disableAutocomplete}>
@@ -128,8 +126,6 @@ class ConsoleSection extends React.Component {
           </form>
         </div>
       </div>
-
-
     )
   }
 }
