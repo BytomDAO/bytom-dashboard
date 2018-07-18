@@ -222,7 +222,8 @@ const mapDispatchToProps = (dispatch) => ({
     null,
     {
       box: true,
-      wide: true
+      wide: true,
+      noCloseBtn: true
     }
   )),
   cmd: (data) => dispatch(actions.app.cmd(data))

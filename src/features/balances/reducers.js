@@ -26,8 +26,24 @@ const queriesReducer = (state = {}, action) => {
   return state
 }
 
+const rescanProgress = (state = {}, action) => {
+  if (action.type == 'UPDATE_WALLET_INFO') {
+    return action.param
+  }
+  return state
+}
+
+
+const rescanning = (state = {}, action) => {
+  if (action.type == 'START_RESCAN') return true
+  else if (action.type == 'STOP_RESCAN') return false
+  return state
+}
+
 
 export default combineReducers({
   items: itemsReducer,
-  queries: queriesReducer
+  queries: queriesReducer,
+  rescanning,
+  rescanProgress
 })
