@@ -7,7 +7,8 @@ import {
   AmountUnitField,
   AmountInputMask,
   ErrorBanner,
-  SubmitIndicator
+  SubmitIndicator,
+  PasswordField
 } from 'features/shared/components'
 import {chainClient} from 'utility/environment'
 import {reduxForm} from 'redux-form'
@@ -266,8 +267,10 @@ class NormalTxForm extends React.Component {
             </table>
 
             <label className={styles.title}>{lang === 'zh' ? '密码' : 'Password'}</label>
-            <TextField placeholder={lang === 'zh' ? '请输入密码' : 'Please enter the password'} fieldProps={password}
-                       autoFocus={false} type={'password'}/>
+            <PasswordField
+              placeholder={lang === 'zh' ? '请输入密码' : 'Please enter the password'}
+              fieldProps={password}
+            />
           </FormSection>
 
           <FormSection className={styles.submitSection}>
