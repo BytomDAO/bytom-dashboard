@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 180 180">
+  <defs>
+    <style>
+      .cls-1 {
+        clip-path: url(#clip-restore-active);
+      }
+
+      .cls-2 {
+        fill: #b9f4ee;
+      }
+
+      .cls-2, .cls-3, .cls-4, .cls-5 {
+        fill-rule: evenodd;
+      }
+
+      .cls-3 {
+        fill: #00bfaa;
+      }
+
+      .cls-4 {
+        fill: #d0faf6;
+      }
+
+      .cls-5 {
+        fill: #eafdfb;
+      }
+    </style>
+    <clipPath id="clip-restore-active">
+      <rect width="180" height="180"/>
+    </clipPath>
+  </defs>
+  <g id="restore-active" class="cls-1">
+    <path id="路径_4811" data-name="路径 4811" class="cls-2" d="M75.6-87.606,3.606-46.041,75.6-4.476l71.993-41.565Z" transform="translate(14.394 177.736)"/>
+    <path id="路径_4812" data-name="路径 4812" class="cls-3" d="M147.591-46.041,75.6-4.476,3.606-46.041,75.6-87.606Zm-136.068,0L75.6-9.047l64.076-36.994L75.6-83.035Z" transform="translate(14.394 177.736)"/>
+    <path id="路径_4813" data-name="路径 4813" class="cls-4" d="M75.944-108.306,37.034-85.841,75.944-63.376l38.911-22.465Z" transform="translate(14.048 177.95)"/>
+    <path id="路径_4814" data-name="路径 4814" class="cls-3" d="M114.855-85.841,75.944-63.376,37.034-85.841l38.911-22.465Zm-69.9,0L75.944-67.946l30.994-17.894L75.944-103.735Z" transform="translate(14.048 177.95)"/>
+    <path id="路径_4815" data-name="路径 4815" class="cls-4" d="M76.029-63.606,45.175-45.792,76.029-27.979l30.854-17.814Z" transform="translate(13.964 177.487)"/>
+    <path id="路径_4816" data-name="路径 4816" class="cls-5" d="M75.6-171.606,3.606-130.041,75.6-88.476l71.993-41.565Z" transform="translate(14.394 178.606)"/>
+    <path id="路径_4817" data-name="路径 4817" class="cls-3" d="M147.591-130.041,75.6-88.476,3.606-130.041,75.6-171.606Zm-136.068,0L75.6-93.047l64.076-36.994L75.6-167.035Z" transform="translate(14.394 178.606)"/>
+    <path id="路径_4818" data-name="路径 4818" class="cls-4" d="M76.029-147.606,45.175-129.792l30.854,17.814,30.854-17.814Z" transform="translate(13.964 178.357)"/>
+  </g>
+</svg>

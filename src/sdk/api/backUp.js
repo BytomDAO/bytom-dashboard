@@ -16,6 +16,11 @@ const backUp = (client) => {
       client.request('/rescan-wallet'),
       cb
     ),
+
+    info: (cb) => shared.tryCallback(
+      client.request('/wallet-info'),
+      cb
+    ),
   }
 }
 

@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 180 180">
+  <defs>
+    <style>
+      .cls-1 {
+        clip-path: url(#clip-restore);
+      }
+
+      .cls-2 {
+        fill: #f2f2f2;
+      }
+
+      .cls-2, .cls-3, .cls-4, .cls-5 {
+        fill-rule: evenodd;
+      }
+
+      .cls-3 {
+        fill: #a3a9b8;
+      }
+
+      .cls-4 {
+        fill: #f7f7f7;
+      }
+
+      .cls-5 {
+        fill: #fff;
+      }
+    </style>
+    <clipPath id="clip-restore">
+      <rect width="180" height="180"/>
+    </clipPath>
+  </defs>
+  <g id="restore" class="cls-1">
+    <path id="路径_4819" data-name="路径 4819" class="cls-2" d="M75.6-87.606,3.606-46.041,75.6-4.476l71.993-41.565Z" transform="translate(14.394 177.736)"/>
+    <path id="路径_4820" data-name="路径 4820" class="cls-3" d="M147.591-46.041,75.6-4.476,3.606-46.041,75.6-87.606Zm-136.068,0L75.6-9.047l64.076-36.994L75.6-83.035Z" transform="translate(14.394 177.736)"/>
+    <path id="路径_4821" data-name="路径 4821" class="cls-4" d="M75.944-108.306,37.034-85.841,75.944-63.376l38.911-22.465Z" transform="translate(14.048 177.95)"/>
+    <path id="路径_4822" data-name="路径 4822" class="cls-3" d="M114.855-85.841,75.944-63.376,37.034-85.841l38.911-22.465Zm-69.9,0L75.944-67.946l30.994-17.894L75.944-103.735Z" transform="translate(14.048 177.95)"/>
+    <path id="路径_4823" data-name="路径 4823" class="cls-4" d="M76.029-63.606,45.175-45.792,76.029-27.979l30.854-17.814Z" transform="translate(13.964 177.487)"/>
+    <path id="路径_4824" data-name="路径 4824" class="cls-5" d="M75.6-171.606,3.606-130.041,75.6-88.476l71.993-41.565Z" transform="translate(14.394 178.606)"/>
+    <path id="路径_4825" data-name="路径 4825" class="cls-3" d="M147.591-130.041,75.6-88.476,3.606-130.041,75.6-171.606Zm-136.068,0L75.6-93.047l64.076-36.994L75.6-167.035Z" transform="translate(14.394 178.606)"/>
+    <path id="路径_4826" data-name="路径 4826" class="cls-4" d="M76.029-147.606,45.175-129.792l30.854,17.814,30.854-17.814Z" transform="translate(13.964 178.357)"/>
+  </g>
+</svg>

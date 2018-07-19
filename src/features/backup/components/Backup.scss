@@ -13,7 +13,7 @@ code {
   justify-content: space-between;
 
   > div {
-    width: 30%;
+    width: 45%;
     min-height: 100%;
   }
 }
@@ -82,16 +82,12 @@ code {
   }
 }
 
-.new {
-  background-image: url('images/config/new.png')
+.backup {
+  background-image: url('images/backup/backup.svg')
 }
 
-.join {
-  background-image: url('images/config/join.png')
-}
-
-.testnet {
-  background-image: url('images/config/testnet.png')
+.restore {
+  background-image: url('images/backup/restore.svg')
 }
 
 input[type=radio]:checked ~ .choice {
@@ -103,18 +99,13 @@ input[type=radio]:checked ~ .choice {
     background-color: $background-color;
   }
 
-  &.new {
-    background-image: url('images/config/new-active.png')
+  &.backup {
+    background-image: url('images/backup/backup-active.svg')
   }
 
-  &.join {
-    background-image: url('images/config/join-active.png')
+  &.restore {
+    background-image: url('images/backup/restore-active.svg')
   }
-
-  &.testnet {
-    background-image: url('images/config/testnet-active.png')
-  }
-
 
   .choice_title {
     color: $brand-primary;

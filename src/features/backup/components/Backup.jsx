@@ -72,9 +72,9 @@ class Backup extends React.Component {
     const restoreButton = <button className={`btn btn-primary btn-lg ${styles.submit}`} onClick={this.restore.bind(this)}>
       {lang === 'zh' ? '选择备份文件' : 'Select Restore File'}
     </button>
-    const rescanButton = <button className={`btn btn-primary btn-lg ${styles.submit}`}  onClick={() => this.props.rescan()}>
-      {lang === 'zh' ? '重新扫描' : 'Rescan'}
-    </button>
+    // const rescanButton = <button className={`btn btn-primary btn-lg ${styles.submit}`}  onClick={() => this.props.rescan()}>
+    //   {lang === 'zh' ? '重新扫描' : 'Rescan'}
+    // </button>
 
     return (
       <div className='flex-container'>
@@ -89,12 +89,12 @@ class Backup extends React.Component {
                          type='radio'
                          name='type'
                          value='backup'/>
-                  <div className={`${styles.choice} ${styles.new} `}>
+                  <div className={`${styles.choice} ${styles.backup} `}>
                     <span className={styles.choice_title}>{lang === 'zh' ?'备份':'Back Up'}</span>
                     <p>
-                      This option will back up all data stored in this core,
-                      including blockchain data, accounts, assets
-                      and balances.
+                      {lang === 'zh' ?
+                        '这个选项备份所有本地数据，包括账户，资产和余额。 请妥善保管你的备份文件。' :
+                      'This option will back up all data stored in this core, including blockchain data, accounts, assets and balances.'}
                     </p>
                   </div>
                 </label>
@@ -106,32 +106,18 @@ class Backup extends React.Component {
                          type='radio'
                          name='type'
                          value='restore' />
-                  <div className={`${styles.choice} ${styles.join}`}>
+                  <div className={`${styles.choice} ${styles.restore}`}>
                     <span className={styles.choice_title}>{lang === 'zh' ?'恢复':'Restore'}</span>
                     <p>
-                      This option will restore the wallet data form files.
-                      You might need to rescan your wallet, if you balance is not up to date
+                      {
+                        lang === 'zh' ?
+                        '这个选项将从文件中恢复钱包数据。 如果你的钱包余额显示不正确，请点滴扫描钱包的按钮。' :
+                        'This option will restore the wallet data form files. You might need to rescan your wallet, if you balance is not up to date'
+                      }
                     </p>
                   </div>
                 </label>
               </div>
-
-              <div className={styles.choice_wrapper}>
-                <label>
-                  <input className={styles.choice_radio_button}
-                         type='radio'
-                         name='type'
-                         value='rescan' />
-                  <div className={`${styles.choice} ${styles.join}`}>
-                    <span className={styles.choice_title}>{lang === 'zh' ?'重新扫描':'Rescan'}</span>
-                    <p>
-                      This option will rescan your wallet and update your balance.
-                    </p>
-                  </div>
-                </label>
-              </div>
-
-
             </div>
 
             <div className={styles.choices}>
@@ -151,13 +137,6 @@ class Backup extends React.Component {
                 <input id='bytom-restore-file-upload' type='file'
                        style={{'display': 'none', 'alignItems': 'center', 'fontSize': '12px'}}
                        onChange={this.handleFileChange.bind(this)}/>
-              </div>
-              <div>
-                {
-                  this.state.value === 'rescan'
-                  &&
-                  <span className={styles.submitWrapper}>{rescanButton}</span>
-                }
               </div>
             </div>
           </div>
