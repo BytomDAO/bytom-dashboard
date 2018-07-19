@@ -1,9 +1,12 @@
+.main{
+  height: 100%;
+}
+
 .reactConsoleContainer {
   box-sizing: border-box;
-  height: calc( 100% - 50px );
+  height: calc(100% - 116px);
   padding: 30px;
   overflow: scroll;
-  height: 460px;
   background-color: $background-content-color;
 }
 

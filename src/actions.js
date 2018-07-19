@@ -2,6 +2,7 @@ import accessControl from 'features/accessControl/actions'
 import { actions as account } from 'features/accounts'
 import { actions as app } from 'features/app'
 import { actions as asset } from 'features/assets'
+import { actions as backUp } from 'features/backup'
 import { actions as balance } from 'features/balances'
 import { actions as configuration } from 'features/configuration'
 import { actions as core } from 'features/core'
@@ -17,6 +18,7 @@ const actions = {
   account,
   app,
   asset,
+  backUp,
   balance,
   configuration,
   core,

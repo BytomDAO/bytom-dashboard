@@ -3,6 +3,7 @@ const authorizationGrantsAPI = require('./api/authorizationGrants')
 const accessTokensAPI = require('./api/accessTokens')
 const accountsAPI = require('./api/accounts')
 const assetsAPI = require('./api/assets')
+const backUpAPI = require('./api/backUp')
 const balancesAPI = require('./api/balances')
 const bytomCLI = require('./api/bytomCLI')
 const configAPI = require('./api/config')
@@ -33,6 +34,8 @@ class Client {
     this.accounts = accountsAPI(this)
 
     this.assets = assetsAPI(this)
+
+    this.backUp = backUpAPI(this)
 
     this.balances = balancesAPI(this)
 
