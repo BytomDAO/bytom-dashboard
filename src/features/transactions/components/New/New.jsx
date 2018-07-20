@@ -33,7 +33,7 @@ class Form extends React.Component {
       })
     }
     this.props.router.setRouteLeaveHook(this.props.route, (nextLocation) => {
-      if (!(this.handleFormEmpty() || nextLocation.state))
+      if (!(this.handleFormEmpty() || nextLocation.state || nextLocation.pathname.startsWith('/transactions/generated/')))
         return this.props.lang === 'zh'? '交易表格有未完成内容，你确定要离开么？' : 'Your work is not saved! Are you sure you want to leave?'
     })
   }
