@@ -25,8 +25,8 @@ const lib = {
   newBatchError: function (body, requestId = false) {
     let err = new Error(lib.formatErrMsg(body, requestId))
     err.code = body.code
-    err.chainMessage = body.message
-    err.detail = body.detail
+    err.chainMessage = body.msg
+    err.detail = body.errorDetail
     err.requestId = requestId
     err.resp = body.resp
     return err
@@ -40,10 +40,10 @@ const lib = {
       tokens.push('Code: ' + body.code)
     }
 
-    tokens.push('Message: ' + body.message)
+    tokens.push('Message: ' + body.msg)
 
-    if (typeof body.detail === 'string' && body.detail.length > 0) {
-      tokens.push('Detail: ' + body.detail)
+    if (typeof body.errorDetail === 'string' && body.errorDetail.length > 0) {
+      tokens.push('Detail: ' + body.errorDetail)
     }
 
     if (requestId) {
