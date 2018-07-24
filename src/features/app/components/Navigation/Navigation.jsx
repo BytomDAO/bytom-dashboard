@@ -66,12 +66,6 @@ class Navigation extends React.Component {
         { this.props.showNavAdvance && <ul className={styles.navigation}>
           <li className={styles.navigationTitle}>{lang === 'zh' ? '高级' : 'advanced' }</li>
           <li>
-            <a href='/equity' target='_blank'>
-              {navIcon('transaction', styles)}
-              {lang === 'zh' ? 'Equity 合约' : 'Equity Contract'}
-            </a>
-          </li>
-          <li>
             <Link to='/unspents' activeClassName={styles.active}>
               {navIcon('unspent', styles)}
               {lang === 'zh' ? '未花费输出' : 'Unspent outputs' }
@@ -85,6 +79,16 @@ class Navigation extends React.Component {
             <a href={docsRoot} target='_blank'>
               {navIcon('docs', styles)}
               {lang === 'zh' ? '文档' : 'Documentation'}
+            </a>
+          </li>
+        </ul>
+
+        <ul className={styles.navigation}>
+          <li className={styles.navigationTitle}>{lang === 'zh' ? '开发者' : 'Developer' }</li>
+          <li>
+            <a href='/equity' target='_blank'>
+              {navIcon('transaction', styles)}
+              {lang === 'zh' ? 'Equity 合约' : 'Equity Contract'}
             </a>
           </li>
         </ul>
