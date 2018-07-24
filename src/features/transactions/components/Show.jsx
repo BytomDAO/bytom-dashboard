@@ -46,6 +46,8 @@ class Show extends BaseShow {
 
       const unconfirmedItem = (item.blockHeight === 0 && item.blockId === '0000000000000000000000000000000000000000000000000000000000000000')
 
+      const status = (!item.statusFail)? (lang === 'zh' ? '成功' : 'Succeed'): (lang === 'zh' ? '失败' : 'Failed')
+
       const title = <span>
         {lang === 'zh' ? '交易' : 'Transaction '}
         &nbsp;<code>{item.id}</code>
@@ -74,6 +76,7 @@ class Show extends BaseShow {
                   (item.blockHeight + `(${confirmation} confirmation${confirmation > 1 ? 's' : ''})`)},
               {label: (lang === 'zh' ? '位置' : 'Position'), value: unconfirmedItem? '-' :item.position},
               {label: 'Gas', value: gas},
+              {label: (lang === 'zh' ? '交易状态': 'Transaction status'), value: status}
             ]}
           />
 
