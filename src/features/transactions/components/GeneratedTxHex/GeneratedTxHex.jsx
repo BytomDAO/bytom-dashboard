@@ -6,21 +6,32 @@ import { copyToClipboard } from 'utility/clipboard'
 
 class Generated extends React.Component {
   render() {
-    if (!this.props.hex) return <NotFound />
+    const lang = this.props.lang
+    if (!this.props.hex) return <NotFound lang={lang} />
 
     return (
       <div>
-        <PageTitle title='Generated Transaction' />
+        <PageTitle title={ lang==='zh'? '生成的交易' :'Generated Transaction'} />
 
         <PageContent>
           <div className={styles.main}>
-            <p>Use the following JSON string as the transaction to sign by another account:</p>
+            <p>
+              {
+                lang==='zh'?
+                  '需要让另一个账户签名，请使用一下JSON格式的字符串作为交易：'
+                : 'Use the following JSON string as the transaction to sign by another account:'
+              }
+              </p>
 
             <button
               className='btn btn-primary'
               onClick={() => copyToClipboard(this.props.hex)}
             >
-              Copy to clipboard
+              {
+                lang === 'zh'?
+                  '拷贝交易JSON':
+                  'Copy to clipboard'
+              }
             </button>
 
             <pre className={styles.hex}>{this.props.hex}</pre>
@@ -36,7 +47,10 @@ export default connect(
   (state, ownProps) => {
     const generated = (state.transaction || {}).generated || []
     const found = generated.find(i => i.id == ownProps.params.id)
-    if (found) return {hex: found.hex}
-    return {}
+    if (found) return {
+      hex: found.hex,
+      lang: state.core.lang
+    }
+    return { lang: state.core.lang }
   }
 )(Generated)
