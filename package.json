@@ -10,7 +10,7 @@
     "start": "hjs-dev-server webpack/webpack.app.js --hot --host 0.0.0.0",
     "generate-component": "babel-node bin/generate.js component"
   },
-  "author": "Chain",
+  "author": "Bytom",
   "license": "",
   "browserslist": [
     "> 1%",
