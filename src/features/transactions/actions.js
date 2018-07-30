@@ -99,26 +99,6 @@ function preprocessTransaction(formParams) {
 form.submitForm = (formParams) => function (dispatch) {
   const client = chainClient()
 
-  const buildPromise = (formParams.state.showAdvanced && formParams.signTransaction) ? null :
-    client.transactions.build(builder => {
-      const processed = preprocessTransaction(formParams)
-
-      builder.actions = processed.actions
-      if (processed.baseTransaction) {
-        builder.baseTransaction = processed.baseTransaction
-      }
-    })
-
-  const submitSucceeded = () => {
-    dispatch(form.created())
-    dispatch(push({
-      pathname: '/transactions',
-      state: {
-        preserveFlash: true
-      }
-    }))
-  }
-
   const checkIfFormChanged = () =>{
     const lastFormParms = formParams.tpl && JSON.parse(formParams.tpl.formParams)
     const copy = JSON.parse(JSON.stringify(formParams))
@@ -139,6 +119,28 @@ form.submitForm = (formParams) => function (dispatch) {
     }
 
     return isPasswordChangeOnly
+  }
+
+  const isPasswordChangeOnly = (formParams.tpl !== '' && checkIfFormChanged())
+
+  const buildPromise = ((formParams.state.showAdvanced && formParams.signTransaction) || isPasswordChangeOnly) ? null :
+    client.transactions.build(builder => {
+      const processed = preprocessTransaction(formParams)
+
+      builder.actions = processed.actions
+      if (processed.baseTransaction) {
+        builder.baseTransaction = processed.baseTransaction
+      }
+    })
+
+  const submitSucceeded = () => {
+    dispatch(form.created())
+    dispatch(push({
+      pathname: '/transactions',
+      state: {
+        preserveFlash: true
+      }
+    }))
   }
 
   const normalTxSignAndSubmit = (transaction) => {
@@ -162,9 +164,8 @@ form.submitForm = (formParams) => function (dispatch) {
 
   // normal transactions
   if(formParams.form === 'normalTx'){
-    const isPasswordChangeOnly = checkIfFormChanged()
 
-    if(formParams.tpl !== '' && isPasswordChangeOnly){
+    if(isPasswordChangeOnly){
       const transaction = JSON.parse(formParams.tpl.tx)
       return normalTxSignAndSubmit(transaction)
     } else{
