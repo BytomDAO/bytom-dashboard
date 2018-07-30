@@ -13,4 +13,13 @@ export default combineReducers({
     }
     return state
   },
+  template: (state = '' , action) => {
+    if (action.type == 'TX_SIGN_FAIL') {
+      return action.transaction
+    }
+    if (action.type == 'CREATED_TRANSACTION') {
+      return ''
+    }
+    return state
+  },
 })

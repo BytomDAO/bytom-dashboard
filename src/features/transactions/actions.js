@@ -119,21 +119,60 @@ form.submitForm = (formParams) => function (dispatch) {
     }))
   }
 
-  // normal transactions
-  if(formParams.form === 'normalTx'){
-    return buildPromise
-      .then(tpl => {
-        const body = Object.assign({}, {password: formParams.password, transaction: tpl.data})
-        return client.transactions.sign(body)
-      })
+  const checkIfFormChanged = () =>{
+    const lastFormParms = formParams.tpl && JSON.parse(formParams.tpl.formParams)
+    const copy = JSON.parse(JSON.stringify(formParams))
+    let isPasswordChangeOnly = true
+
+    for (const key in lastFormParms) {
+      const lastParam = lastFormParms[key]
+      const copyParam = copy[key]
+
+      if (lastParam !== copyParam
+        && key !== 'password'
+        && key !== 'tpl'
+        && JSON.stringify(lastParam) !== JSON.stringify(copyParam)
+      ) {
+        isPasswordChangeOnly = false
+        break
+      }
+    }
+
+    return isPasswordChangeOnly
+  }
+
+  const normalTxSignAndSubmit = (transaction) => {
+    const body = Object.assign({}, {password: formParams.password, transaction: transaction})
+    return client.transactions.sign(body)
       .then(signed => {
         if(!signed.data.signComplete){
+          dispatch({
+            type: 'TX_SIGN_FAIL',
+            transaction:  {
+              tx: JSON.stringify(transaction),
+              formParams: JSON.stringify(formParams),
+            }
+          })
           throw new Error('Signature failed, it might be your password is wrong.')
         }
         return client.transactions.submit(signed.data.transaction.rawTransaction)
       })
       .then(submitSucceeded)
   }
+
+  // normal transactions
+  if(formParams.form === 'normalTx'){
+    const isPasswordChangeOnly = checkIfFormChanged()
+
+    if(formParams.tpl !== '' && isPasswordChangeOnly){
+      const transaction = JSON.parse(formParams.tpl.tx)
+      return normalTxSignAndSubmit(transaction)
+    } else{
+      return buildPromise
+        .then(tpl => normalTxSignAndSubmit(tpl.data))
+    }
+  }
+
   //advanced transactions
   else{
     if (formParams.submitAction == 'submit') {

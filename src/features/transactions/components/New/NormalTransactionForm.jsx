@@ -68,7 +68,7 @@ class NormalTxForm extends React.Component {
 
   submitWithValidation(data) {
     return new Promise((resolve, reject) => {
-      this.props.submitForm(Object.assign({}, data, {state: this.state, form: 'normalTx'}))
+      this.props.submitForm(Object.assign({}, data, {state: this.state, form: 'normalTx', tpl: this.props.tpl}))
         .catch((err) => {
           const response = {}
 
@@ -325,7 +325,10 @@ const asyncValidate = (values) => {
 
 
 export default BaseNew.connect(
-  BaseNew.mapStateToProps('transaction'),
+  (state)=>({
+    tpl: state.transaction.template,
+    ...BaseNew.mapStateToProps('transaction')
+  }),
   (dispatch) => ({
     showError: err => dispatch({type: 'ERROR', payload: err}),
     ...BaseNew.mapDispatchToProps('transaction')(dispatch)
