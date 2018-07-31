@@ -36,7 +36,7 @@ class AmountInputMask extends React.Component {
   }
 
   componentDidUpdate(prevProps){
-    if(prevProps.decimal !== this.props.decimal){
+    if(prevProps.decimal !== this.props.decimal && prevProps.fieldProps.value){
       const value = (prevProps.fieldProps.value/ Math.pow(10, prevProps.decimal)).toString()
 
       this.props.fieldProps.onChange(

@@ -157,7 +157,7 @@ const addZeroToDecimalPos = (src,pos) => {
 }
 
 const formatIntNumToPosDecimal = (neu,pos) => {
-  if(neu != null ){
+  if(neu != null && neu !== ''){
     let neuString = neu.toString()
     let neuLength = neuString.length
     if(neuLength <= pos){
