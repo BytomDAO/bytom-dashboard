@@ -112,7 +112,7 @@ class Backup extends React.Component {
                       {
                         lang === 'zh' ?
                         '这个选项将从文件中恢复钱包数据。 如果你的钱包余额显示不正确，请点击扫描钱包的按钮。' :
-                        'This option will restore the wallet data form files. You might need to rescan your wallet, if you balance is not up to date'
+                        'This option will restore the wallet data form a file. You might need to rescan your wallet, if you balance is not up to date.'
                       }
                     </p>
                   </div>
