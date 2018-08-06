@@ -1,5 +1,5 @@
 import React from 'react'
-import { BaseList, PaginationField } from 'features/shared/components'
+import { BaseList, Pagination } from 'features/shared/components'
 import ListItem from './ListItem/ListItem'
 import actions from 'actions'
 import { pageSize } from '../../../utility/environment'
@@ -18,7 +18,7 @@ class List extends React.Component {
     const ItemList = BaseList.ItemList
     return <div>
       <ItemList {...this.props}/>
-      {!this.props.noResults && this.props.totalNumberPage > 1 && <PaginationField
+      {!this.props.noResults && this.props.totalNumberPage > 1 && <Pagination
         currentPage = { this.props.currentPage }
         totalNumberPage = { this.props.totalNumberPage }
         pushList = { this.props.pushList }/>}

@@ -1,5 +1,5 @@
 import React from 'react'
-import { BaseList, PaginationField } from 'features/shared/components'
+import { BaseList, Pagination } from 'features/shared/components'
 import ListItem from './ListItem'
 import {UTXOpageSize, UTXOUTXOpageSize} from '../../../utility/environment'
 
@@ -10,7 +10,7 @@ class List extends React.Component {
     const ItemList = BaseList.ItemList
     return <div>
       <ItemList {...this.props}/>
-      {!this.props.noResults && <PaginationField
+      {!this.props.noResults && <Pagination
         currentPage = { this.props.currentPage }
         totalNumberPage = { this.props.totalNumberPage }
         pushList = { this.props.pushList }/>}
