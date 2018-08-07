@@ -1,8 +1,8 @@
 import React from 'react'
 import { BaseList, Pagination } from 'features/shared/components'
+import { pageSize} from 'utility/environment'
 import ListItem from './ListItem/ListItem'
 import actions from 'actions'
-import { pageSize } from '../../../utility/environment'
 
 const type = 'transaction'
 
@@ -16,55 +16,25 @@ class List extends React.Component {
   }
   render() {
     const ItemList = BaseList.ItemList
-    return <div>
-      <ItemList {...this.props}/>
-      {!this.props.noResults && this.props.totalNumberPage > 1 && <Pagination
-        currentPage = { this.props.currentPage }
-        totalNumberPage = { this.props.totalNumberPage }
-        pushList = { this.props.pushList }/>}
-    </div>
+    return (<ItemList {...this.props} />)
   }
 }
 
 export default BaseList.connect(
-  (state, ownProps) => ({
-    ...mapStateToProps(type,ListItem)(state,ownProps),
-    blockHeight: state.core.blockHeight
-  }),
+  (state, ownProps) => {
+
+    const count = pageSize
+
+    const isLastPage = ListItem.length < count
+    return {
+      ...BaseList.mapStateToProps(type, ListItem)(state, ownProps),
+      // currentPage: Math.max(parseInt(ownProps.location.query.page) || 1, 1),
+      // isLastPage: isLastPage,
+  }},
   (dispatch) => ({
     ...BaseList.mapDispatchToProps(type)(dispatch),
     getLatest: (query) => dispatch(actions.transaction.fetchPage(query, 1, { refresh: true })),
   }),
   List
 )
-
-const mapStateToProps = (type, itemComponent, additionalProps = {}) => {
-  return (state, ownProps) => {
-    const currentPage = Math.max(parseInt(ownProps.location.query.page) || 1, 1)
-    const totalItems = state[type].items
-    const keysArray = Object.keys(totalItems)
-    const totalNumberPage = Math.ceil(keysArray.length/pageSize)
-    const startIndex = (currentPage - 1) * pageSize
-    const highestBlock = state.core.coreData && state.core.coreData.highestBlock
-    const currentItems = keysArray.slice(startIndex, startIndex + pageSize).map(
-      id => totalItems[id]
-    ).filter(item => item != undefined)
-    currentItems.forEach(item => item.highest = highestBlock)
-
-    return {
-      currentPage: currentPage,
-      totalNumberPage: totalNumberPage,
-      items: currentItems,
-      loadedOnce: state[type].queries.loadedOnce,
-      type: type,
-      lang: state.core.lang,
-      btmAmountUnit: state.core.btmAmountUnit,
-      listItemComponent: itemComponent,
-      noResults: currentItems.length == 0,
-      showFirstTimeFlow: currentItems.length == 0,
-      highestBlock: highestBlock,
-      ...additionalProps
-    }
-  }
-}
 

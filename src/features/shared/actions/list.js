@@ -43,6 +43,8 @@ export default function(type, options = {}) {
     return (dispatch, getState) => {
       const getFilterStore = () => getState()[type].queries[listId] || {}
 
+      options.pageNumber = pageNumber
+
       const fetchNextPage = () =>
         dispatch(_load(query, getFilterStore(), options)).then((resp) => {
           if (!resp || resp.type == 'ERROR') return
@@ -84,6 +86,13 @@ export default function(type, options = {}) {
         const params = {}
         if (query.filter) params.filter = filter
         if (query.sumBy) params.sumBy = query.sumBy.split(',')
+
+        if(requestOptions.pageNumber !== -1){
+          const count = requestOptions.pageSize
+          const from = ( count ) * ( requestOptions.pageNumber -1 )
+          params.from = from
+          params.count = count
+        }
 
         promise = dispatch(fetchItems(params))
       }
