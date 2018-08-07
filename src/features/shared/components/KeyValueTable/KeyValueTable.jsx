@@ -45,6 +45,7 @@ class KeyValueTable extends React.Component {
   }
 
   render() {
+    const lang = this.props.lang
     return (
       <Section
         title={this.props.title}
@@ -57,8 +58,11 @@ class KeyValueTable extends React.Component {
               <td className={styles.value}>{this.renderValue(item)}
                 {item.editUrl && <Link to={item.editUrl} className={styles.edit}>
                   <span
-                    className={`${styles.pencil} glyphicon glyphicon-pencil`}></span>{this.props.lang === 'zh' ? '编辑' : 'Edit'}
+                    className={`${styles.pencil} glyphicon glyphicon-pencil`}></span>{lang === 'zh' ? '编辑' : 'Edit'}
                 </Link>}
+                {item.program && <button  onClick={item.program} className={`${styles.detail} ${styles.edit} btn btn-link`}>
+                  { lang === 'zh' ? '合约程序': 'Program' }
+                </button>}
               </td>
             </tr>
           })}

@@ -25,8 +25,9 @@ class AccountShow extends BaseShow {
       if (data.status !== 'success') {
         return
       }
-      const normalAddresses = data.data.filter(address => !address.change).map(address => address.address)
-      const changeAddresses = data.data.filter(address => address.change).map(address => address.address)
+      const normalAddresses = data.data.filter(address => !address.change).map((address) => {return {address: address.address, program: address.controlProgram}})
+      const changeAddresses = data.data.filter(address => address.change).map((address) => {return {address: address.address, program: address.controlProgram}})
+
       this.setState({addresses: normalAddresses, changeAddresses})
     })
   }
@@ -54,6 +55,16 @@ class AccountShow extends BaseShow {
         <CopyableBlock value={data.address} lang={lang}/>
       </div>)
     })
+  }
+
+  showProgram(program){
+    const lang = this.props.lang
+    this.props.showModal(
+      <div>
+        <p>{lang === 'zh' ? '拷贝这个合约程序以用于交易中：' : 'Copy this control program to use in a transaction:'}</p>
+        <CopyableBlock value={program} lang={lang}/>
+      </div>
+    )
   }
 
   render() {
@@ -111,17 +122,21 @@ class AccountShow extends BaseShow {
 
           {(this.state.addresses || []).length > 0 &&
           <KeyValueTable title={lang === 'zh' ? '地址' : 'Addresses'}
-                         items={this.state.addresses.map((address, index) => ({
+                         lang={lang}
+                         items={this.state.addresses.map((item, index) => ({
                            label: index,
-                           value: address
+                           value: item.address,
+                           program: (e => this.showProgram(item.program))
                          }))}/>
           }
 
           {(this.state.changeAddresses || []).length > 0 &&
           <KeyValueTable title={lang === 'zh' ? '找零地址' : 'Addresses for Change'}
-                         items={this.state.changeAddresses.map((address, index) => ({
+                         lang={lang}
+                         items={this.state.changeAddresses.map((item, index) => ({
                            label: index,
-                           value: address
+                           value: item.address,
+                           program: (e => this.showProgram(item.program))
                          }))}/>
           }
         </PageContent>
