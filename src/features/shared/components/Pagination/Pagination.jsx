@@ -3,6 +3,7 @@ import styles from './Pagination.scss'
 
 class Pagination extends React.Component {
   render() {
+    const lang = this.props.lang
     const prevClass = `${styles.button} ${this.props.currentPage > 1 ? '' : styles.disabled}`
     const nextClass = `${styles.button} ${this.props.isLastPage ? styles.disabled : ''}`
     const nextPage = () => this.props.pushList(this.props.currentFilter, this.props.currentPage + 1)
@@ -15,7 +16,7 @@ class Pagination extends React.Component {
             &larr;
           </a>
         </li>
-        <li className={styles.label}>Page {this.props.currentPage}</li>
+        <li className={styles.label}>{lang ==='zh'? '页面' :'Page'} {this.props.currentPage}</li>
         <li>
           <a className={nextClass} onClick={nextPage}>
             &rarr;

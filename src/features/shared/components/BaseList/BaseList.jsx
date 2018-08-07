@@ -70,7 +70,9 @@ class ItemList extends React.Component {
         currentPage={this.props.currentPage}
         currentFilter={this.props.currentFilter}
         isLastPage={this.props.isLastPage}
-        pushList={this.props.pushList} />
+        pushList={this.props.pushList}
+        lang={this.props.lang}
+      />
 
       const items = this.props.items.map((item) =>
         <this.props.listItemComponent
