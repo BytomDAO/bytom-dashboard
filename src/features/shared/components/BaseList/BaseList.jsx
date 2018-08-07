@@ -2,8 +2,9 @@ import React from 'react'
 import actions from 'actions'
 import { connect as reduxConnect } from 'react-redux'
 import { pluralize, capitalize, humanize } from 'utility/string'
+import {UTXOpageSize, pageSize} from 'utility/environment'
 import componentClassNames from 'utility/componentClassNames'
-import { PageContent, PageTitle } from '../'
+import { PageContent, PageTitle, Pagination } from '../'
 import EmptyList from './EmptyList'
 
 class ItemList extends React.Component {
@@ -65,8 +66,22 @@ class ItemList extends React.Component {
         </div>
       )
     } else {
+      let pagination = <Pagination
+        currentPage={this.props.currentPage}
+        currentFilter={this.props.currentFilter}
+        isLastPage={this.props.isLastPage}
+        pushList={this.props.pushList}
+        lang={this.props.lang}
+      />
+
       const items = this.props.items.map((item) =>
-        <this.props.listItemComponent key={item.id} item={item} lang={this.props.lang} btmAmountUnit={this.props.btmAmountUnit} {...this.props.itemActions}/>)
+        <this.props.listItemComponent
+          key={item.id}
+          item={item}
+          lang={this.props.lang}
+          btmAmountUnit={this.props.btmAmountUnit}
+          {...this.props.itemActions}/>)
+
       const Wrapper = this.props.wrapperComponent
 
       return(
@@ -75,6 +90,8 @@ class ItemList extends React.Component {
 
           <PageContent>
             {Wrapper ? <Wrapper {...this.props.wrapperProps}>{items}</Wrapper> : items}
+
+            { ( label==='transactions' || label === 'unspent outputs') && pagination}
           </PageContent>
         </div>
       )
@@ -82,8 +99,14 @@ class ItemList extends React.Component {
   }
 }
 
-export const mapStateToProps = (type, itemComponent, additionalProps = {}) => (state) => {
+export const mapStateToProps = (type, itemComponent, additionalProps = {}) => (state, ownProps ) => {
+  const paginationArray =[ 'unspent', 'transaction' ]
+
   let items = Object.assign({}, state[type].items)
+  const highestBlock = state.core.coreData && state.core.coreData.highestBlock
+  const count = (type === 'unspent')? UTXOpageSize: pageSize
+
+  const currentPage = paginationArray.includes(type) && Math.max(parseInt(ownProps.location.query.page) || 1, 1)
 
   if (type === 'key') {
     (state[type].importStatus || []).forEach(status => {
@@ -95,15 +118,23 @@ export const mapStateToProps = (type, itemComponent, additionalProps = {}) => (s
 
   let target = []
   for (let key in items) {
+    items[key].highest = highestBlock
     target.push(items[key])
   }
+
+  const isLastPage = target.length <count
 
   return {
     items: target,
     loadedOnce: state[type].queries.loadedOnce,
     type: type,
+
+    isLastPage: isLastPage,
+    currentPage: currentPage,
+
     lang: state.core.lang,
     btmAmountUnit: state.core.btmAmountUnit,
+
     listItemComponent: itemComponent,
     noResults: target.length == 0,
     showFirstTimeFlow: target.length == 0,
