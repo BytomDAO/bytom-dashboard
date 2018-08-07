@@ -21,16 +21,9 @@ class List extends React.Component {
 }
 
 export default BaseList.connect(
-  (state, ownProps) => {
-
-    const count = pageSize
-
-    const isLastPage = ListItem.length < count
-    return {
-      ...BaseList.mapStateToProps(type, ListItem)(state, ownProps),
-      // currentPage: Math.max(parseInt(ownProps.location.query.page) || 1, 1),
-      // isLastPage: isLastPage,
-  }},
+  (state, ownProps) => ({
+    ...BaseList.mapStateToProps(type, ListItem)(state, ownProps)
+  }),
   (dispatch) => ({
     ...BaseList.mapDispatchToProps(type)(dispatch),
     getLatest: (query) => dispatch(actions.transaction.fetchPage(query, 1, { refresh: true })),
