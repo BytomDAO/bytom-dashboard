@@ -1,3 +1,7 @@
+.view{
+  margin-top: $gutter-size;
+}
+
 .main {
   padding: $gutter-size;
   margin-bottom: $gutter-size;
@@ -6,7 +10,7 @@
 }
 
 .btn {
-  margin: $gutter-size/2  0px ;
+  margin: 10px  0px ;
 }
 
 .table{
