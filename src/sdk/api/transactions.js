@@ -103,6 +103,11 @@ const transactionsAPI = (client) => {
       return shared.createBatch(client, '/build-transaction', builders, {cb})
     },
 
+    decodeTransaction: (raw_transaction, cb) => shared.tryCallback(
+      client.request('/decode-raw-transaction', {'raw_transaction': raw_transaction}).then(resp => checkForError(resp)),
+      cb
+    ),
+
     sign: (template, cb) => finalize(template)
       .then(finalized => client.request('/sign-transaction', finalized ).then(resp => checkForError(resp)),
         cb

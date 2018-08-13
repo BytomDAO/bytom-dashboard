@@ -182,7 +182,24 @@ form.submitForm = (formParams) => function (dispatch) {
   }
 }
 
+const decode = (data) => {
+  return (dispatch) => {
+    return  chainClient().transactions.decodeTransaction(data)
+      .then((resp) => {
+        if (resp.status === 'fail') {
+          dispatch({type: 'ERROR', payload: {'message': resp.msg}})
+        } else {
+          dispatch({type: 'DECODE_TRANSACTION', data:resp.data})
+        }
+      })
+      .catch(err => {
+        throw {_error: err}
+      })
+  }
+}
+
 export default {
   ...list,
   ...form,
+  decode,
 }
