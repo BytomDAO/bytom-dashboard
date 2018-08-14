@@ -27,8 +27,6 @@ const accountsAPI = (client) => {
 
     listAddresses: (accountId) => shared.query(client, 'accounts', '/list-addresses', {account_id: accountId}),
 
-    listPubKey: (accountId) => shared.query(client, 'accounts', '/list-pubkeys', {account_id: accountId}),
-
     validateAddresses: (address, cb) => shared.query(client, 'accounts', '/validate-address', {'address': address},  {cb})
   }
 }
