@@ -144,8 +144,7 @@ class AdvancedTxForm extends React.Component {
               fieldProps={signTransaction}
               decode={this.props.decode}
               transaction={this.props.decodedTx}
-              btmAmountUnit={this.props.btmAmountUnit}
-              asset={this.props.asset}
+              showJsonModal={this.props.showJsonModal}
             />
 
             <FieldLabel>{lang === 'zh' ? '交易构建类型' : 'Transaction Build Type'}</FieldLabel>
@@ -244,6 +243,12 @@ export default BaseNew.connect(
   (dispatch) => ({
     ...BaseNew.mapDispatchToProps('transaction')(dispatch),
     decode: (transaction) => dispatch( actions.transaction.decode(transaction)),
+    showJsonModal: (body) => dispatch(actions.app.showModal(
+      body,
+      actions.app.hideModal,
+      null,
+      { wide: true }
+    )),
   }),
   reduxForm({
     form: 'AdvancedTransactionForm',
