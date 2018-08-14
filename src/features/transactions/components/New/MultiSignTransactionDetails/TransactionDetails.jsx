@@ -45,13 +45,10 @@ class TransactionDetails extends React.Component {
 
         {touched && error && <span className='text-danger'><strong>{error}</strong></span>}
         {this.props.hint && <span className='help-block'>{this.props.hint}</span>}
-
-        <div>
-          <button className={`btn btn-default ${styles.btn}`}
+          <button className={`btn btn-link ${styles.btn}`}
                   onClick={(e) => this.showDetailTransactions(e, fieldProps.value)}>
             {lang === 'zh' ? '展示交易内容':'Transaction details'}
           </button>
-        </div>
       </div>
     )
   }
