@@ -47,7 +47,7 @@ class TransactionDetails extends React.Component {
         {this.props.hint && <span className='help-block'>{this.props.hint}</span>}
           <button className={`btn btn-link ${styles.btn}`}
                   onClick={(e) => this.showDetailTransactions(e, fieldProps.value)}>
-            {lang === 'zh' ? '展示交易内容':'Transaction details'}
+            {lang === 'zh' ? '展示交易内容':'Show transaction details'}
           </button>
       </div>
     )
