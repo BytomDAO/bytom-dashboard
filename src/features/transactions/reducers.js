@@ -4,6 +4,13 @@ import { combineReducers } from 'redux'
 const type = 'transaction'
 const maxGeneratedHistory = 50
 
+const decodedTx = (state = [], action) => {
+  if (action.type == 'DECODE_TRANSACTION') {
+    return action.data
+  }
+  return state
+}
+
 export default combineReducers({
   items: reducers.itemsReducer(type),
   queries: reducers.queriesReducer(type),
@@ -13,4 +20,5 @@ export default combineReducers({
     }
     return state
   },
+  decodedTx
 })

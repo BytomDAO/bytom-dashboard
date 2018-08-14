@@ -1,0 +1,64 @@
+.view{
+  margin-top: $gutter-size;
+}
+
+.main {
+  padding: $gutter-size;
+  margin-bottom: $gutter-size;
+  word-break: break-word;
+  background: $background-content-color;
+}
+
+.btn {
+  margin-top: 5px;
+  padding: 0px;
+  float: right;
+  font-size: $font-size-caps;
+}
+
+.table{
+  background: $background-color;
+  width: 100%;
+  margin-bottom: $gutter-size;
+
+  code{
+    font-size: $font-size-code;
+  }
+
+  thead {
+    border-bottom: 1px solid $border-color;
+  }
+
+  td, th {
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-right: 10px;
+  }
+
+  td {
+    border-bottom: 1px solid $border-light-color;
+  }
+  tr:last-of-type td {
+    border-bottom: none;
+  }
+
+  a {
+    .rawId {
+      color: $highlight-default;
+    }
+
+    &:hover .rawId {
+      text-decoration: underline;
+    }
+  }
+}
+
+.colLabel {
+  color: $text-strong-color;
+  text-align: right;
+  width: 25%;
+}
+
+.txID{
+  margin-bottom: $gutter-size;
+}
