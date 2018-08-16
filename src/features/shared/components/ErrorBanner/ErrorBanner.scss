@@ -13,6 +13,21 @@
   }
 }
 
+.mainSuccess {
+  background: $success-background;
+  color: $success;
+  border: 1px solid $success-border;
+  border-radius: $border-radius-standard;
+  padding: 20px;
+  margin-bottom: 20px;
+  word-wrap: break-word;
+
+  a {
+    color: $success;
+    text-decoration: underline;
+  }
+}
+
 .message {
   margin-bottom: 15px;
 }

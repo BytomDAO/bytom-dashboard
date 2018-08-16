@@ -4,10 +4,11 @@ import styles from './ErrorBanner.scss'
 class ErrorBanner extends React.Component {
   render() {
     const error = this.props.error || ''
-    const message = error.chainMessage || error.message || error
+    const success = this.props.success
+    const message = error.chainMessage || error.message || error || success
 
     return (
-      <div className={styles.main}>
+      <div className={success? styles.mainSuccess:  styles.main }>
         {this.props.title && <strong>{this.props.title}<br/></strong>}
 
         {message &&

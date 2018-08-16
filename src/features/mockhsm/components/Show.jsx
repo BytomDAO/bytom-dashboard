@@ -50,6 +50,7 @@ class Show extends BaseShow {
             object='key'
             title={lang === 'zh' ? '详情' : 'Details'}
             actions={[
+              <Link key='check-password-btn' className='btn btn-link' to={`/keys/${item.id}/check-password`}>{lang === 'zh' ? '密码校验' : 'Try Password' }</Link>,
               <Link key='reset-password-btn' className='btn btn-link' to={`/keys/${item.id}/reset-password`}>{lang === 'zh' ? '重置密码' : 'Reset Password' }</Link>
             ]}
             items={[

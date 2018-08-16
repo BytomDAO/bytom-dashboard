@@ -99,15 +99,14 @@ function preprocessTransaction(formParams) {
 form.submitForm = (formParams) => function (dispatch) {
   const client = chainClient()
 
-  const buildPromise = (formParams.state.showAdvanced && formParams.signTransaction) ? null :
-    client.transactions.build(builder => {
-      const processed = preprocessTransaction(formParams)
+  const builderFunction = ( builder ) => {
+    const processed = preprocessTransaction(formParams)
 
-      builder.actions = processed.actions
-      if (processed.baseTransaction) {
-        builder.baseTransaction = processed.baseTransaction
-      }
-    })
+    builder.actions = processed.actions
+    if (processed.baseTransaction) {
+      builder.baseTransaction = processed.baseTransaction
+    }
+  }
 
   const submitSucceeded = () => {
     dispatch(form.created())
@@ -121,21 +120,43 @@ form.submitForm = (formParams) => function (dispatch) {
 
   // normal transactions
   if(formParams.form === 'normalTx'){
-    return buildPromise
-      .then(tpl => {
+
+    const accountId = formParams.accountId
+    const accountAlias = formParams.accountAlias
+    const accountInfo = Object.assign({},  accountAlias!== ''? {alias: accountAlias}: {id: accountId})
+
+    return client.accounts.query(accountInfo)
+      .then( resp => {
+        if(resp.data[0].xpubs.length > 1){
+          throw new Error('Your account has multiple keys, please use advanced transactions.')
+        }
+        const body = Object.assign({}, {xpub: resp.data[0].xpubs[0], password: formParams.password})
+        return client.mockHsm.keys.checkPassword(body)
+      })
+      .then( result => {
+        if(!result.data.checkResult){
+          throw new Error('Your password is wrong, please check your password.')
+        }
+        return client.transactions.build(builderFunction)
+      })
+      .then( tpl => {
         const body = Object.assign({}, {password: formParams.password, transaction: tpl.data})
         return client.transactions.sign(body)
       })
       .then(signed => {
         if(!signed.data.signComplete){
-          throw new Error('Signature failed, it might be your password is wrong.')
+          throw new Error('Signature failed.')
         }
         return client.transactions.submit(signed.data.transaction.rawTransaction)
       })
       .then(submitSucceeded)
   }
+
   //advanced transactions
   else{
+    const buildPromise = (formParams.state.showAdvanced && formParams.signTransaction) ? null :
+      client.transactions.build(builderFunction)
+
     if (formParams.submitAction == 'submit') {
       const signAndSubmitTransaction = (transaction) => {
         const body = Object.assign({}, {password: formParams.password, transaction: transaction})
