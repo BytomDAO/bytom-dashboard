@@ -24,6 +24,11 @@ class FormContainer extends React.Component {
                     title='Error submitting form'
                     error={this.props.error} />}
 
+                {this.props.success &&
+                  <ErrorBanner
+                    title='Success'
+                    success={this.props.success} />}
+
                 <div className={styles.submit}>
                   <button type='submit' className='btn btn-primary' disabled={this.props.submitting || this.props.disabled}>
                     {this.props.submitLabel ||  ( lang === 'zh' ? '提交' : 'Submit' )}
