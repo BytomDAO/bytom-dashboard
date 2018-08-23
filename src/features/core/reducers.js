@@ -7,7 +7,7 @@ const LONG_TIME_FORMAT = 'YYYY-MM-DD, h:mm:ss a'
 
 const coreConfigReducer = (key, state, defaultState, action) => {
   if (action.type == 'UPDATE_CORE_INFO') {
-    return action.param[key] || defaultState
+    return action.param.data[key] || defaultState
   }
 
   return state || defaultState
@@ -240,7 +240,26 @@ const snapshot = (state = null, action) => {
   return state
 }
 
-const version = (state, action) => coreConfigReducer('version', state, 'N/A', action)
+const version = (state = 'N/A', action) => {
+  if (action.type == 'UPDATE_CORE_INFO') {
+    return action.param.data.versionInfo.version
+  }
+  return state
+}
+
+const newVersionCode = (state = 'N/A', action) => {
+  if (action.type == 'UPDATE_CORE_INFO') {
+    return action.param.data.versionInfo.newVersion
+  }
+  return state
+}
+
+const update = (state = false, action) => {
+  if (action.type == 'UPDATE_CORE_INFO') {
+    return action.param.data.versionInfo.update > 0
+  }
+  return state
+}
 
 
 export default combineReducers({
@@ -259,6 +278,7 @@ export default combineReducers({
   generatorBlockHeight,
   generatorUrl,
   localhostAuth,
+  newVersionCode,
   mockhsm,
   mingStatus,
   crosscoreRpcVersion,
@@ -271,6 +291,7 @@ export default combineReducers({
   signer,
   snapshot,
   syncEstimates,
+  update,
   validToken,
   version,
   lang,

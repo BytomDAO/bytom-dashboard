@@ -32,6 +32,9 @@ class Main extends React.Component {
   render() {
     let logo = require('images/logo-bytom-white.svg')
 
+    const version = this.props.version
+    const lang = this.props.lang
+
     return (
       <div className={styles.main}
            onClick={this.props.closeDropdown} >
@@ -53,7 +56,7 @@ class Main extends React.Component {
                   className={styles.languages}
                   noCaret
                 >
-                  {this.props.lang === 'zh' ? '中' : 'EN'}
+                  {lang === 'zh' ? '中' : 'EN'}
                 </Dropdown.Toggle>
                 <Dropdown.Menu
                   className={styles.languagesMenu}
@@ -72,6 +75,13 @@ class Main extends React.Component {
             </div>
 
             <Navigation />
+
+            <div className={styles.version}>
+              <span>
+                {lang==='zh'?'版本号':'Version'}: {version}
+              </span>
+            </div>
+
           </div>
         </div>
 
@@ -92,6 +102,7 @@ class Main extends React.Component {
 export default connect(
   (state) => ({
     canLogOut: state.core.requireClientToken,
+    version:state.core.version,
     lang: state.core.lang,
     connected: true,
     showDropwdown: state.app.dropdownState == 'open',

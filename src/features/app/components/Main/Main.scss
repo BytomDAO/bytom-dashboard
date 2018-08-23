@@ -29,6 +29,15 @@
   z-index: 10;
 }
 
+.version {
+  position: absolute;
+  bottom: 0;
+  padding: $gutter-size/2 $gutter-size;
+  width: 100%;
+  background: $background-inverse-color;
+  font-size: $font-size-chrome;
+}
+
 .logo {
   border-bottom: 1px solid $border-inverse-color;
   height: $title-height;
