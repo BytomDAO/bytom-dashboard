@@ -8,12 +8,14 @@ const mappings = {
   position: 'Position',
   assetId: 'Asset ID',
   assetAlias: 'Asset Alias',
+  asset: 'Asset',
   assetDefinition: 'Asset Definition',
   assetTags: 'Asset Tags',
   assetIsLocal: 'Asset Is Local?',
   amount: 'Amount',
   accountId: 'Account ID',
   accountAlias: 'Account Alias',
+  account: 'Account',
   accountTags: 'Account Tags',
   controlProgram: 'Control Program',
   address: 'Address',
@@ -34,12 +36,14 @@ const mappings_ZH = {
   purpose: 'Purpose',
   transactionId: '交易ID',
   position: '位置',
+  asset: '资产',
   assetId: '资产ID',
   assetAlias: '资产别名',
   assetDefinition: '资产定义',
   assetTags: 'Asset Tags',
   assetIsLocal: 'Asset Is Local?',
   amount: '数量',
+  account: '账户',
   accountId: '账户ID',
   accountAlias: '账户别名',
   accountTags: 'Account Tags',
@@ -58,41 +62,21 @@ const mappings_ZH = {
 
 const txInputFields = [
   'type',
-  'assetId',
-  'assetAlias',
-  'assetDefinition',
-  'assetTags',
-  'assetIsLocal',
+  'asset',
   'amount',
-  'accountId',
-  'accountAlias',
-  'accountTags',
-  'issuanceProgram',
+  'account',
   'controlProgram',
   'address',
-  'spentOutputId',
-  'isLocal',
-  'referenceData',
 ]
 
 const txOutputFields = [
   'type',
-  'purpose',
   'id',
-  'position',
-  'assetId',
-  'assetAlias',
-  'assetDefinition',
-  'assetTags',
-  'assetIsLocal',
+  'asset',
   'amount',
-  'accountId',
-  'accountAlias',
-  'accountTags',
+  'account',
   'controlProgram',
   'address',
-  'isLocal',
-  'referenceData',
 ]
 
 const unspentFields = [
@@ -131,6 +115,18 @@ const buildDisplay = (item, fields, btmAmountUnit, lang) => {
         details.push({
           label: ( lang === 'zh'? mappings_ZH[key]: mappings[key] ),
           value: decimals? formatIntNumToPosDecimal(item[key], decimals) :normalizeGlobalBTMAmount(item['assetId'], item[key], btmAmountUnit)
+        })
+      }else if(key === 'asset'){
+        details.push({
+          label: ( lang === 'zh'? mappings_ZH[key]: mappings[key] ),
+          value: item[key],
+          link: `/assets/${item.assetId}`
+        })
+      }else if(key === 'account'){
+        details.push({
+          label: ( lang === 'zh'? mappings_ZH[key]: mappings[key] ),
+          value: item[key],
+          link: `/accounts/${item.accountId}`
         })
       }else{
         details.push({label: ( lang === 'zh'? mappings_ZH[key]: mappings[key] ), value: item[key]})
