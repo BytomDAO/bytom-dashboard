@@ -30,10 +30,12 @@
 }
 
 .version {
-  position: absolute;
+  position: fixed;
+  width: $sidebar-width;
   bottom: 0;
+  border-top: solid 1px $border-inverse-color;
+
   padding: $gutter-size/2 $gutter-size;
-  width: 100%;
   background: $background-inverse-color;
   font-size: $font-size-chrome;
 }
