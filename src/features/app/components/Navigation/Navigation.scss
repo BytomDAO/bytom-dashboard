@@ -88,3 +88,15 @@
   }
 }
 
+.warningIcon {
+  height: 10px;
+  padding-right: 5px;
+}
+
+.updateWarning{
+  background-color:  transparentize($background-content-color, 0.9);
+  padding: 10px $gutter-size/4;
+  color: white;
+  margin: $gutter-size/2 $gutter-size 0px;
+  border-radius: 3px;
+}
