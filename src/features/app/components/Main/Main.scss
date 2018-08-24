@@ -29,6 +29,17 @@
   z-index: 10;
 }
 
+.version {
+  position: fixed;
+  width: $sidebar-width;
+  bottom: 0;
+  border-top: solid 1px $border-inverse-color;
+
+  padding: $gutter-size/2 $gutter-size;
+  background: $background-inverse-color;
+  font-size: $font-size-chrome;
+}
+
 .logo {
   border-bottom: 1px solid $border-inverse-color;
   height: $title-height;
