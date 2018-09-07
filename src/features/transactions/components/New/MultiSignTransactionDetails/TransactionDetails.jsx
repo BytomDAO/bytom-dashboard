@@ -3,7 +3,7 @@ import pick from 'lodash/pick'
 import { FieldLabel } from 'features/shared/components'
 import disableAutocomplete from 'utility/disableAutocomplete'
 import styles from './TransactionDetails.scss'
-
+import { Connection } from 'sdk'
 
 const TEXT_FIELD_PROPS = [
   'value',
@@ -21,7 +21,7 @@ class TransactionDetails extends React.Component {
 
   showDetailTransactions(e, json){
     e.preventDefault()
-    const rawTransaction = JSON.parse(json).rawTransaction
+    const rawTransaction = Connection.camelize(JSON.parse(json)).rawTransaction
     this.props.decode(rawTransaction).then(() => {
       this.props.showJsonModal(<pre>{JSON.stringify(this.props.transaction, null, 2)}</pre>)
     })
