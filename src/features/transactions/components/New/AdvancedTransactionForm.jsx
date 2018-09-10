@@ -20,7 +20,8 @@ class AdvancedTxForm extends React.Component {
     super(props)
     this.state = {
       showDropdown: false,
-      showAdvanced: false
+      showAdvanced: false,
+      counter: 0
     }
 
     this.submitWithValidation = this.submitWithValidation.bind(this)
@@ -40,10 +41,15 @@ class AdvancedTxForm extends React.Component {
   }
 
   addActionItem(type) {
+    const counter = this.state.counter
     this.props.fields.actions.addField({
       type: type,
+      ID: counter
     })
     this.closeDropdown()
+    this.setState({
+      counter: counter+1
+    })
   }
 
   disableSubmit(actions) {
@@ -97,7 +103,7 @@ class AdvancedTxForm extends React.Component {
         <FormSection title='Actions'>
           {actions.map((action, index) =>
             <ActionItem
-              key={index}
+              key={action.ID.value}
               index={index}
               fieldProps={action}
               accounts={this.props.accounts}
@@ -254,6 +260,7 @@ export default BaseNew.connect(
     form: 'AdvancedTransactionForm',
     fields: [
       'signTransaction',
+      'actions[].ID',
       'actions[].accountId',
       'actions[].accountAlias',
       'actions[].assetId',
