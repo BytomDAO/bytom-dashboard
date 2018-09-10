@@ -116,7 +116,7 @@ const buildDisplay = (item, fields, btmAmountUnit, lang) => {
           label: ( lang === 'zh'? mappings_ZH[key]: mappings[key] ),
           value: decimals? formatIntNumToPosDecimal(item[key], decimals) :normalizeGlobalBTMAmount(item['assetId'], item[key], btmAmountUnit)
         })
-      }else if(key === 'asset'){
+      }else if(key === 'asset' && item.assetId !=='0000000000000000000000000000000000000000000000000000000000000000'){
         details.push({
           label: ( lang === 'zh'? mappings_ZH[key]: mappings[key] ),
           value: item[key],
