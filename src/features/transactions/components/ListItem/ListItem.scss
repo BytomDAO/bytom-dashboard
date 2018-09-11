@@ -8,7 +8,7 @@
   border-bottom: 1px solid $border-color;
   display: flex;
   align-items: center;
-  padding: 20px 25px;
+  padding: 13px 25px;
 
   code {
     display: inline-block;
@@ -37,7 +37,12 @@
 }
 
 .timestamp {
-  margin-left: $gutter-size;
+  flex-grow: 3;
+  text-align: center;
+}
+
+.confirmation {
+  margin-left: $gutter-size/2;
 }
 
 .viewLink {
