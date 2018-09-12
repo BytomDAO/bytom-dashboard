@@ -13,7 +13,7 @@ import {
 import {chainClient} from 'utility/environment'
 import {reduxForm} from 'redux-form'
 import React from 'react'
-import styles from './New.scss'
+import styles from '../New.scss'
 import disableAutocomplete from 'utility/disableAutocomplete'
 import { normalizeBTMAmountUnit } from 'utility/buildInOutDisplay'
 import { btmID } from 'utility/environment'
@@ -183,94 +183,98 @@ class NormalTxForm extends React.Component {
           onSubmit={handleSubmit(this.submitWithValidation)} {...disableAutocomplete}
           onKeyDown={(e) => { this.props.handleKeyDown(e, handleSubmit(this.submitWithValidation), this.disableSubmit(this.props.fields)) }}>
           <FormSection title={lang === 'zh' ? '简单交易' : 'Normal Trasaction'}>
-            <label className={styles.title}>{lang === 'zh' ? '从' : 'From'}</label>
-            <div className={styles.main}>
-              <ObjectSelectorField
-                key='account-selector-field'
-                keyIndex='normaltx-account'
-                lang={lang}
-                title={lang === 'zh' ? '账户' : 'Account'}
-                aliasField={Autocomplete.AccountAlias}
-                fieldProps={{
-                  id: accountId,
-                  alias: accountAlias
-                }}
-              />
-              <ObjectSelectorField
-                key='asset-selector-field'
-                keyIndex='normaltx-asset'
-                lang={lang}
-                title={lang === 'zh' ? '资产' : 'Asset'}
-                aliasField={Autocomplete.AssetAlias}
-                fieldProps={{
-                  id: assetId,
-                  alias: assetAlias
-                }}
-              />
-              {showAvailableBalance && availableBalance &&
-              <small className={styles.balanceHint}>{availableBalance} {lang === 'zh' ? '可用' : 'available'} </small>}
-            </div>
+              <div>
+                <label className={styles.title}>{lang === 'zh' ? '从' : 'From'}</label>
+                <div className={styles.main}>
+                  <ObjectSelectorField
+                    key='account-selector-field'
+                    keyIndex='normaltx-account'
+                    lang={lang}
+                    title={lang === 'zh' ? '账户' : 'Account'}
+                    aliasField={Autocomplete.AccountAlias}
+                    fieldProps={{
+                      id: accountId,
+                      alias: accountAlias
+                    }}
+                  />
+                  <ObjectSelectorField
+                    key='asset-selector-field'
+                    keyIndex='normaltx-asset'
+                    lang={lang}
+                    title={lang === 'zh' ? '资产' : 'Asset'}
+                    aliasField={Autocomplete.AssetAlias}
+                    fieldProps={{
+                      id: assetId,
+                      alias: assetAlias
+                    }}
+                  />
+                  {showAvailableBalance && availableBalance &&
+                  <small className={styles.balanceHint}>{lang === 'zh' ? '可用余额:' : 'Available balance:'} {availableBalance}</small>}
+                </div>
+              </div>
 
-            <label className={styles.title}>{lang === 'zh' ? '至' : 'To'}</label>
-            <div className={styles.main}>
-              <TextField title={lang === 'zh' ? '地址' : 'Address'} fieldProps={{
-                ...address,
-                onBlur: (e) => {
-                  address.onBlur(e)
-                  this.estimateNormalTransactionGas()
-                },
-              }}/>
-              {!showBtmAmountUnit &&
-              <AmountInputMask title={lang === 'zh' ? '数量' : 'Amount'} fieldProps={amount} decimal={assetDecimal}
-              />}
-              {showBtmAmountUnit &&
-              <AmountUnitField title={lang === 'zh' ? '数量' : 'Amount'} fieldProps={amount}/>
-              }
-            </div>
+              <div>
+                <label className={styles.title}>{lang === 'zh' ? '至' : 'To'}</label>
+                <div className={styles.main}>
+                  <TextField title={lang === 'zh' ? '地址' : 'Address'} fieldProps={{
+                    ...address,
+                    onBlur: (e) => {
+                      address.onBlur(e)
+                      this.estimateNormalTransactionGas()
+                    },
+                  }}/>
+                  {!showBtmAmountUnit &&
+                  <AmountInputMask title={lang === 'zh' ? '数量' : 'Amount'} fieldProps={amount} decimal={assetDecimal}
+                  />}
+                  {showBtmAmountUnit &&
+                  <AmountUnitField title={lang === 'zh' ? '数量' : 'Amount'} fieldProps={amount}/>
+                  }
+                </div>
+              </div>
 
-            <label className={styles.title}>Gas</label>
-            <table>
-              <tbody className={styles.optionsBtnContianer}>
-                {rangeOptions.map((option) =>
-                  <tr className={styles.optionsBtn}>
-                    <td className={styles.optionsLabel}>
-                      <label>
-                        <input type='radio'
-                               {...gas.type}
-                               onChange={gasOnChange}
-                               value={option.label}
-                               checked={option.label == gas.type.value}
-                        />
-                        {lang === 'zh' ? option.label_zh : option.label}
-                      </label>
-                    </td>
-                    <td>
-                      {
-                        option.label == gas.type.value && option.label !== 'Customize'
-                        && this.state.estimateGas && ((lang === 'zh' ? '估算' : 'estimated') + '   ' + normalizeBTMAmountUnit(btmID,
-                          option.ratio * this.state.estimateGas,
-                          this.props.btmAmountUnit))
-                      }
-                      {
-                        option.label === 'Customize' && gas.type.value === 'Customize' &&
-                        <div>
-                          <AmountUnitField
-                            autoFocus={true}
-                            fieldProps={gas.price}
-                            placeholder='Enter gas'/>
-                        </div>
-                      }
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
+            {/*<label className={styles.title}>Gas</label>*/}
+            {/*<table>*/}
+              {/*<tbody className={styles.optionsBtnContianer}>*/}
+                {/*{rangeOptions.map((option) =>*/}
+                  {/*<tr className={styles.optionsBtn}>*/}
+                    {/*<td className={styles.optionsLabel}>*/}
+                      {/*<label>*/}
+                        {/*<input type='radio'*/}
+                               {/*{...gas.type}*/}
+                               {/*onChange={gasOnChange}*/}
+                               {/*value={option.label}*/}
+                               {/*checked={option.label == gas.type.value}*/}
+                        {/*/>*/}
+                        {/*{lang === 'zh' ? option.label_zh : option.label}*/}
+                      {/*</label>*/}
+                    {/*</td>*/}
+                    {/*<td>*/}
+                      {/*{*/}
+                        {/*option.label == gas.type.value && option.label !== 'Customize'*/}
+                        {/*&& this.state.estimateGas && ((lang === 'zh' ? '估算' : 'estimated') + '   ' + normalizeBTMAmountUnit(btmID,*/}
+                          {/*option.ratio * this.state.estimateGas,*/}
+                          {/*this.props.btmAmountUnit))*/}
+                      {/*}*/}
+                      {/*{*/}
+                        {/*option.label === 'Customize' && gas.type.value === 'Customize' &&*/}
+                        {/*<div>*/}
+                          {/*<AmountUnitField*/}
+                            {/*autoFocus={true}*/}
+                            {/*fieldProps={gas.price}*/}
+                            {/*placeholder='Enter gas'/>*/}
+                        {/*</div>*/}
+                      {/*}*/}
+                    {/*</td>*/}
+                  {/*</tr>*/}
+                {/*)}*/}
+              {/*</tbody>*/}
+            {/*</table>*/}
 
-            <label className={styles.title}>{lang === 'zh' ? '密码' : 'Password'}</label>
-            <PasswordField
-              placeholder={lang === 'zh' ? '请输入密码' : 'Please enter the password'}
-              fieldProps={password}
-            />
+            {/*<label className={styles.title}>{lang === 'zh' ? '密码' : 'Password'}</label>*/}
+            {/*<PasswordField*/}
+              {/*placeholder={lang === 'zh' ? '请输入密码' : 'Please enter the password'}*/}
+              {/*fieldProps={password}*/}
+            {/*/>*/}
           </FormSection>
 
           <FormSection className={styles.submitSection}>
