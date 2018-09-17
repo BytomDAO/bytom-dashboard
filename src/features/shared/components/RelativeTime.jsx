@@ -13,11 +13,11 @@ class RelativeTime extends React.Component {
       timestamp = humanizeDuration(diff/1000) + ' ahead of local time'
     }
     else if( moment.duration(diff).asHours()<-24){
-      timestamp = momentTime.format('ll')
+      timestamp = momentTime.format('YYYY-MM-DD HH:mm:ss')
     }
 
     return(
-      <span title={this.props.timestamp}>{timestamp}</span>
+      <span>{timestamp}</span>
     )
   }
 }

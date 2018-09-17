@@ -50,7 +50,9 @@ class DetailSummary extends React.Component {
 
   render() {
     const item = this.props.transaction
+    const confirmation = item.confirmations
     const isCoinbase = item.inputs.length > 0 && item.inputs[0].type === 'coinbase'
+    const mature = isCoinbase && confirmation >= 100
 
     const inouts = this.props.transaction.inputs.concat(this.props.transaction.outputs)
     const summary = this.normalizeInouts(inouts)
@@ -118,16 +120,21 @@ class DetailSummary extends React.Component {
     })
 
 
+
     return(<table className={styles.main}>
       <tbody>
         {items.map((item, index) =>
           <tr key={index}>
+            {/*<td className={styles.colLabel}><img src={require(`images/transactions/${isCoinbase?'coinbase':item.type}.svg`)}/></td>*/}
             {
-              !isCoinbase && <td className={styles.colAction}>{lang==='zh'? INOUT_TYPES_ZH[item.type] : item.type}</td>
+              !isCoinbase && <td className={styles.colAction}>
+                <img src={require(`images/transactions/${item.type}.svg`)}/> {lang==='zh'? INOUT_TYPES_ZH[item.type] : item.type}
+                </td>
             }
             {
               isCoinbase && <td className={styles.colAction}>
-                {lang==='zh'? '挖矿收入':'coinbase'}
+                <img src={require('images/transactions/coinbase.svg')}/> {lang==='zh'? '挖矿收入':'coinbase'}
+                {!mature && <small className={styles.immature}>{ lang === 'zh' ? '未成熟' : 'immature' }</small>}
               </td>
             }
 
@@ -140,7 +147,9 @@ class DetailSummary extends React.Component {
             </td>
 
             <td className={`${styles.colAmount} ${styles.recievedAmount}`}>
-              <code className={ `${styles.amount} ${addType.includes(item.type)? styles.emphasisLabel : 'text-danger'}`}> {item.type && ( addType.includes(item.type) ? '+' : '-' )}{item.amount}</code>
+              <code className={ `${styles.amount} ${addType.includes(item.type)? styles.emphasisLabel : 'text-danger'}`}> {item.type && ( addType.includes(item.type) ? '+' : '-' )} {item.amount}</code>
+            </td>
+            <td className={styles.colUnit}>
               <Link to={`/assets/${item.assetId}`}>
                 {item.asset}
               </Link>

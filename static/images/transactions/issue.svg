@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+      }
+
+      .cls-2 {
+        fill: #20252d;
+      }
+    </style>
+  </defs>
+  <g id="issue" transform="translate(-61 -89)">
+    <rect id="矩形_3673" data-name="矩形 3673" class="cls-1" width="18" height="18" transform="translate(61 89)"/>
+    <g id="组_2965" data-name="组 2965" transform="translate(-183.738 -1151.178)">
+      <path id="路径_4955" data-name="路径 4955" class="cls-2" d="M300.064,554.158h-1.282v2.159h-2.225V557.6h2.225v2.154h1.282V557.6H302.3v-1.282h-2.233Z" transform="translate(-51.419 697.98)"/>
+      <path id="减去_14" data-name="减去 14" class="cls-2" d="M9.483,13.193h0l-2.989-1.7-2.2,1.433V11.594L5.9,10.487V7.833L3.623,6.5,1.337,7.783v.924H0V7.164L2.99,5.39V2.01L6.494,0,10,2.01V5.318l2.99,1.846v4.02l-3.5,2.009ZM9.4,6.6,7.159,7.882v2.573L9.4,11.74l2.242-1.286V7.882L9.4,6.6ZM6.539,1.408l-2.3,1.318V5.362l2.3,1.317,2.3-1.317V2.726l-2.3-1.318Z" transform="translate(247.314 1242.678)"/>
+    </g>
+  </g>
+</svg>

@@ -3,6 +3,7 @@ import { Link } from 'react-router'
 import { DetailSummary } from 'features/transactions/components'
 import { RelativeTime } from 'features/shared/components'
 import styles from './ListItem.scss'
+import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 
 class ListItem extends React.Component {
   render() {
@@ -11,15 +12,24 @@ class ListItem extends React.Component {
     const confirmation = item.highest - item.blockHeight + 1
     item.confirmations = confirmation
 
-    const immatured = confirmation> 0 && confirmation<100
+    const isCoinbase = item.inputs.length > 0 && item.inputs[0].type === 'coinbase'
 
     const unconfirmedTx = item.blockHeight === 0 && item.blockHash === '0000000000000000000000000000000000000000000000000000000000000000'
 
+    const confirmView =(confirmation<=6?
+        [confirmation, (lang === 'zh' ? ' 确认数' :` confirmation${confirmation>1?'s':''}`)]
+      :
+      (lang === 'zh' ? '已确认': 'confirmed'))
 
-    const confirmView =(<span>
-          <span className={immatured? 'text-danger': null}>{confirmation}</span>
-      {lang === 'zh' ? ` 确认数${immatured?' (100)': ''}` :' of 100 confirmations'}
-      </span>)
+    const tooltip = (
+      <Tooltip id='tooltip'>
+        {lang === 'zh' ? '合约运行状态' : 'Contract Execution Status'}
+      </Tooltip>
+    )
+
+    const icon = <OverlayTrigger placement='top' overlay={tooltip}>
+      <img src={require(`images/transactions/${item.statusFail?'fail': 'success'}.svg`)}/>
+    </OverlayTrigger>
 
     return(
       <div className={styles.main}>
@@ -28,18 +38,20 @@ class ListItem extends React.Component {
             <label>{lang === 'zh' ? '交易ID:' : 'Tx ID:'}</label>
             &nbsp;<code>{item.id}</code>&nbsp;
 
-            <span className={`${styles.confirmation} ${unconfirmedTx?'text-danger': null}`}>
+            {!isCoinbase && <span className={`${styles.confirmation} ${unconfirmedTx ? 'text-danger' : null}`}>
               {
                 unconfirmedTx ?
-                  (lang === 'zh' ? '未确认交易' : 'unconfirmed Transaction'):
-                  confirmView
+                  (lang === 'zh' ? '未确认交易' : 'unconfirmed Transaction') :
+                  [confirmView, icon]
               }
             </span>
-
+            }
           </div>
+
           {unconfirmedTx? null : <span className={styles.timestamp}>
               <RelativeTime timestamp={item.timestamp} />
             </span>}
+
           <Link className={styles.viewLink} to={`/transactions/${item.id}`}>
             {lang === 'zh' ? '查看详情' : 'View details'}
           </Link>

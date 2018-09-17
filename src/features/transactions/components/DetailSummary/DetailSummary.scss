@@ -45,11 +45,20 @@
   padding-left: 25px ;
   text-transform: uppercase;
   font-weight: 500;
+  img {
+    width: 20px;
+    margin-bottom: 4px;
+    margin-right: 6px;
+  }
 }
 
-.colAction, .colAmount, .colAsset, .colAccount {
+.colAction, .colAmount {
   color: $text-strong-color;
   width: 20%;
+}
+
+.colAccount {
+  width: 10%;
 }
 
 .amount {
@@ -66,7 +75,21 @@
   width: 7%;
 }
 
+.colUnit {
+  text-align: right;
+  width: 1%;
+  white-space: nowrap;
+
+  > a{
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+  }
+}
+
 .immature {
+  text-transform: lowercase;
   margin-left: 5px;
   color: $text-danger;
 }
