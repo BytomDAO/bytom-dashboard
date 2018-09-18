@@ -1,0 +1,107 @@
+.main {
+  background: $background-color;
+  width: 100%;
+
+  code{
+    font-size: $font-size-code;
+  }
+
+  thead {
+    border-bottom: 1px solid $border-color;
+  }
+
+  td, th {
+    padding-top: 13px;
+    padding-bottom: 13px;
+    padding-right: 10px;
+  }
+
+  td {
+    border-bottom: 1px solid $border-light-color;
+  }
+
+  td:last-child {
+    padding-right: $gutter-size;
+  }
+
+  tr:last-of-type td {
+    border-bottom: none;
+  }
+
+  a {
+    .rawId {
+      color: $highlight-default;
+    }
+
+    &:hover .rawId {
+      text-decoration: underline;
+    }
+  }
+}
+
+
+
+.colAction {
+  padding-left: 25px ;
+  text-transform: uppercase;
+  font-weight: 500;
+  img {
+    width: 20px;
+    margin-bottom: 4px;
+    margin-right: 6px;
+  }
+}
+
+.colAction, .colAmount {
+  color: $text-strong-color;
+  width: 20%;
+}
+
+.colAccount {
+  width: 10%;
+}
+
+.amount {
+  background: none;
+}
+
+.emphasisLabel{
+  color: $text-strong-color;
+}
+
+.colLabel {
+  color: $text-light-color;
+  text-align: right;
+  width: 7%;
+}
+
+.colUnit {
+  text-align: right;
+  width: 1%;
+  white-space: nowrap;
+
+  > a{
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+  }
+}
+
+.immature {
+  text-transform: lowercase;
+  margin-left: 5px;
+  color: $text-danger;
+}
+
+.rawId {
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 150px;
+  vertical-align: middle;
+}
+
+.recievedAmount {
+  text-align: right;
+}

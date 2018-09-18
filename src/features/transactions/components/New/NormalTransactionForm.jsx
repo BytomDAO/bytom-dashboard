@@ -183,50 +183,54 @@ class NormalTxForm extends React.Component {
           onSubmit={handleSubmit(this.submitWithValidation)} {...disableAutocomplete}
           onKeyDown={(e) => { this.props.handleKeyDown(e, handleSubmit(this.submitWithValidation), this.disableSubmit(this.props.fields)) }}>
           <FormSection title={lang === 'zh' ? '简单交易' : 'Normal Trasaction'}>
-            <label className={styles.title}>{lang === 'zh' ? '从' : 'From'}</label>
-            <div className={styles.main}>
-              <ObjectSelectorField
-                key='account-selector-field'
-                keyIndex='normaltx-account'
-                lang={lang}
-                title={lang === 'zh' ? '账户' : 'Account'}
-                aliasField={Autocomplete.AccountAlias}
-                fieldProps={{
-                  id: accountId,
-                  alias: accountAlias
-                }}
-              />
-              <ObjectSelectorField
-                key='asset-selector-field'
-                keyIndex='normaltx-asset'
-                lang={lang}
-                title={lang === 'zh' ? '资产' : 'Asset'}
-                aliasField={Autocomplete.AssetAlias}
-                fieldProps={{
-                  id: assetId,
-                  alias: assetAlias
-                }}
-              />
-              {showAvailableBalance && availableBalance &&
-              <small className={styles.balanceHint}>{availableBalance} {lang === 'zh' ? '可用' : 'available'} </small>}
-            </div>
+              <div>
+                <label className={styles.title}>{lang === 'zh' ? '从' : 'From'}</label>
+                <div className={styles.main}>
+                  <ObjectSelectorField
+                    key='account-selector-field'
+                    keyIndex='normaltx-account'
+                    lang={lang}
+                    title={lang === 'zh' ? '账户' : 'Account'}
+                    aliasField={Autocomplete.AccountAlias}
+                    fieldProps={{
+                      id: accountId,
+                      alias: accountAlias
+                    }}
+                  />
+                  <ObjectSelectorField
+                    key='asset-selector-field'
+                    keyIndex='normaltx-asset'
+                    lang={lang}
+                    title={lang === 'zh' ? '资产' : 'Asset'}
+                    aliasField={Autocomplete.AssetAlias}
+                    fieldProps={{
+                      id: assetId,
+                      alias: assetAlias
+                    }}
+                  />
+                  {showAvailableBalance && availableBalance &&
+                  <small className={styles.balanceHint}>{lang === 'zh' ? '可用余额:' : 'Available balance:'} {availableBalance}</small>}
+                </div>
+              </div>
 
-            <label className={styles.title}>{lang === 'zh' ? '至' : 'To'}</label>
-            <div className={styles.main}>
-              <TextField title={lang === 'zh' ? '地址' : 'Address'} fieldProps={{
-                ...address,
-                onBlur: (e) => {
-                  address.onBlur(e)
-                  this.estimateNormalTransactionGas()
-                },
-              }}/>
-              {!showBtmAmountUnit &&
-              <AmountInputMask title={lang === 'zh' ? '数量' : 'Amount'} fieldProps={amount} decimal={assetDecimal}
-              />}
-              {showBtmAmountUnit &&
-              <AmountUnitField title={lang === 'zh' ? '数量' : 'Amount'} fieldProps={amount}/>
-              }
-            </div>
+              <div>
+                <label className={styles.title}>{lang === 'zh' ? '至' : 'To'}</label>
+                <div className={styles.main}>
+                  <TextField title={lang === 'zh' ? '地址' : 'Address'} fieldProps={{
+                    ...address,
+                    onBlur: (e) => {
+                      address.onBlur(e)
+                      this.estimateNormalTransactionGas()
+                    },
+                  }}/>
+                  {!showBtmAmountUnit &&
+                  <AmountInputMask title={lang === 'zh' ? '数量' : 'Amount'} fieldProps={amount} decimal={assetDecimal}
+                  />}
+                  {showBtmAmountUnit &&
+                  <AmountUnitField title={lang === 'zh' ? '数量' : 'Amount'} fieldProps={amount}/>
+                  }
+                </div>
+              </div>
 
             <label className={styles.title}>Gas</label>
             <table>

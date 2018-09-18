@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 18 18">
+  <defs>
+    <style>
+      .cls-1, .cls-2 {
+        fill: #20252d;
+      }
+
+      .cls-1 {
+        clip-rule: evenodd;
+      }
+
+      .cls-3 {
+        fill: none;
+      }
+
+      .cls-4 {
+        clip-path: url(#clip-path);
+      }
+
+      .cls-5 {
+        clip-path: url(#clip-path-2);
+      }
+    </style>
+    <clipPath id="clip-path">
+      <path id="路径_5108" data-name="路径 5108" class="cls-1" d="M5.376-13.527l3.036,3.216.945-.885L7.779-12.85H13v-1.3H7.779l1.578-1.685-.945-.876ZM6.5-7H0V-20H6.5v2.6H5.2v-1.3H1.3V-8.3H5.2V-9.6H6.5Z" transform="translate(0 0)"/>
+    </clipPath>
+    <clipPath id="clip-path-2">
+      <path id="路径_5107" data-name="路径 5107" class="cls-2" d="M-220,389H53V-40H-220Z" transform="translate(220 40)"/>
+    </clipPath>
+  </defs>
+  <g id="recieved" transform="translate(-61 -33)">
+    <rect id="矩形_3673" data-name="矩形 3673" class="cls-3" width="18" height="18" transform="translate(61 33)"/>
+    <g id="组_2964" data-name="组 2964" class="cls-4" transform="translate(83.5 48.5) rotate(-90)">
+      <g id="组_2963" data-name="组 2963" class="cls-5" transform="translate(-143 -33)">
+        <path id="路径_5106" data-name="路径 5106" class="cls-2" d="M-5-5.5H14.5V-25H-5Z" transform="translate(144.75 34.75)"/>
+      </g>
+    </g>
+  </g>
+</svg>

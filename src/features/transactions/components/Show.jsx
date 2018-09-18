@@ -48,6 +48,45 @@ class Show extends BaseShow {
 
       const status = (!item.statusFail)? (lang === 'zh' ? '成功' : 'Succeed'): (lang === 'zh' ? '失败' : 'Failed')
 
+      const getInout = (inout) =>{
+        let resultoutput = {}
+
+        resultoutput.id = inout.id
+
+        if(inout.address){
+          resultoutput.address = inout.address
+        }else if(inout.controlProgram){
+          resultoutput.controlProgram = inout.controlProgram
+        }
+
+        resultoutput.amount = inout.amount
+
+        if(inout.accountAlias ||inout.accountId){
+          resultoutput.account = inout.accountAlias ||inout.accountId
+        }
+
+        resultoutput.accountId = inout.accountId
+        resultoutput.asset = inout.assetAlias || inout.assetId
+        resultoutput.assetId =  inout.assetId
+        resultoutput.assetDefinition =  inout.assetDefinition
+        resultoutput.type = inout.type
+
+        return resultoutput
+      }
+
+      let outputs = []
+      item.outputs.forEach((output,index) =>{
+        let resultoutput = getInout(output)
+        outputs[index] = resultoutput
+      })
+
+      let inputs = []
+      item.inputs.forEach((input,index) =>{
+        let resultinput = getInout(input)
+        inputs[index] = resultinput
+      })
+
+
       const title = <span>
         {lang === 'zh' ? '交易' : 'Transaction '}
         &nbsp;<code>{item.id}</code>
@@ -80,7 +119,7 @@ class Show extends BaseShow {
             ]}
           />
 
-          {item.inputs.map((input, index) =>
+          {inputs.map((input, index) =>
             <KeyValueTable
               key={index}
               title={index == 0 ? lang === 'zh' ? '输入' : 'Inputs' : ''}
@@ -88,7 +127,7 @@ class Show extends BaseShow {
             />
           )}
 
-          {item.outputs.map((output, index) =>
+          {outputs.map((output, index) =>
             <KeyValueTable
               key={index}
               title={index == 0 ? lang === 'zh' ? '输出' : 'Outputs' : ''}
