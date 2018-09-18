@@ -13,7 +13,7 @@ import {
 import {chainClient} from 'utility/environment'
 import {reduxForm} from 'redux-form'
 import React from 'react'
-import styles from '../New.scss'
+import styles from './New.scss'
 import disableAutocomplete from 'utility/disableAutocomplete'
 import { normalizeBTMAmountUnit } from 'utility/buildInOutDisplay'
 import { btmID } from 'utility/environment'
@@ -232,49 +232,49 @@ class NormalTxForm extends React.Component {
                 </div>
               </div>
 
-            {/*<label className={styles.title}>Gas</label>*/}
-            {/*<table>*/}
-              {/*<tbody className={styles.optionsBtnContianer}>*/}
-                {/*{rangeOptions.map((option) =>*/}
-                  {/*<tr className={styles.optionsBtn}>*/}
-                    {/*<td className={styles.optionsLabel}>*/}
-                      {/*<label>*/}
-                        {/*<input type='radio'*/}
-                               {/*{...gas.type}*/}
-                               {/*onChange={gasOnChange}*/}
-                               {/*value={option.label}*/}
-                               {/*checked={option.label == gas.type.value}*/}
-                        {/*/>*/}
-                        {/*{lang === 'zh' ? option.label_zh : option.label}*/}
-                      {/*</label>*/}
-                    {/*</td>*/}
-                    {/*<td>*/}
-                      {/*{*/}
-                        {/*option.label == gas.type.value && option.label !== 'Customize'*/}
-                        {/*&& this.state.estimateGas && ((lang === 'zh' ? '估算' : 'estimated') + '   ' + normalizeBTMAmountUnit(btmID,*/}
-                          {/*option.ratio * this.state.estimateGas,*/}
-                          {/*this.props.btmAmountUnit))*/}
-                      {/*}*/}
-                      {/*{*/}
-                        {/*option.label === 'Customize' && gas.type.value === 'Customize' &&*/}
-                        {/*<div>*/}
-                          {/*<AmountUnitField*/}
-                            {/*autoFocus={true}*/}
-                            {/*fieldProps={gas.price}*/}
-                            {/*placeholder='Enter gas'/>*/}
-                        {/*</div>*/}
-                      {/*}*/}
-                    {/*</td>*/}
-                  {/*</tr>*/}
-                {/*)}*/}
-              {/*</tbody>*/}
-            {/*</table>*/}
+            <label className={styles.title}>Gas</label>
+            <table>
+              <tbody className={styles.optionsBtnContianer}>
+                {rangeOptions.map((option) =>
+                  <tr className={styles.optionsBtn}>
+                    <td className={styles.optionsLabel}>
+                      <label>
+                        <input type='radio'
+                               {...gas.type}
+                               onChange={gasOnChange}
+                               value={option.label}
+                               checked={option.label == gas.type.value}
+                        />
+                        {lang === 'zh' ? option.label_zh : option.label}
+                      </label>
+                    </td>
+                    <td>
+                      {
+                        option.label == gas.type.value && option.label !== 'Customize'
+                        && this.state.estimateGas && ((lang === 'zh' ? '估算' : 'estimated') + '   ' + normalizeBTMAmountUnit(btmID,
+                          option.ratio * this.state.estimateGas,
+                          this.props.btmAmountUnit))
+                      }
+                      {
+                        option.label === 'Customize' && gas.type.value === 'Customize' &&
+                        <div>
+                          <AmountUnitField
+                            autoFocus={true}
+                            fieldProps={gas.price}
+                            placeholder='Enter gas'/>
+                        </div>
+                      }
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
 
-            {/*<label className={styles.title}>{lang === 'zh' ? '密码' : 'Password'}</label>*/}
-            {/*<PasswordField*/}
-              {/*placeholder={lang === 'zh' ? '请输入密码' : 'Please enter the password'}*/}
-              {/*fieldProps={password}*/}
-            {/*/>*/}
+            <label className={styles.title}>{lang === 'zh' ? '密码' : 'Password'}</label>
+            <PasswordField
+              placeholder={lang === 'zh' ? '请输入密码' : 'Please enter the password'}
+              fieldProps={password}
+            />
           </FormSection>
 
           <FormSection className={styles.submitSection}>
