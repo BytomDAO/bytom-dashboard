@@ -96,7 +96,9 @@ class AdvancedTxForm extends React.Component {
     }
 
     return (
-      <form onSubmit={handleSubmit(this.submitWithValidation)} {...disableAutocomplete}
+      <form
+        className={styles.content}
+        onSubmit={handleSubmit(this.submitWithValidation)} {...disableAutocomplete}
             // onKeyDown={(e) => { this.props.handleKeyDown(e, handleSubmit(this.submitWithValidation), this.disableSubmit(actions)) }}
       >
 

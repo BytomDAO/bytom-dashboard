@@ -130,9 +130,9 @@ class Form extends React.Component {
         <PageTitle title={lang === 'zh' ? '新建交易' : 'New transaction'} />
 
         <div className={`${styles.mainContainer} flex-container`}>
-          <div className={styles.content}>
 
-            <div className={`btn-group ${styles.btnGroup}`} role='group'>
+          <div className={styles.btnGroup} >
+            <div className={'btn-group'} role='group'>
               <button
                 className={`btn btn-default ${this.state.showAdvanceTx ? null : 'active'}`}
                 onClick={(e) => this.showForm(e, 'normal')}>
@@ -144,6 +144,7 @@ class Form extends React.Component {
                 {lang === 'zh' ? '高级交易' : 'Advanced'}
                 </button>
             </div>
+          </div>
 
             {!this.state.showAdvanceTx &&
             <NormalTxForm
@@ -164,7 +165,6 @@ class Form extends React.Component {
               handleKeyDown={this.handleKeyDown}
             />}
 
-          </div>
           <Tutorial types={['TutorialForm']} advTx={this.state.showAdvanceTx}/>
         </div>
       </div>
