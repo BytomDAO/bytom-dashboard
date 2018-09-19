@@ -1,5 +1,8 @@
 import React from 'react'
 import pick from 'lodash/pick'
+import { normalizeBTMAmountUnit } from 'utility/buildInOutDisplay'
+import { btmID } from 'utility/environment'
+import styles from './GasField.scss'
 
 const TEXT_FIELD_PROPS = [
   'value',
@@ -9,7 +12,7 @@ const TEXT_FIELD_PROPS = [
   'name'
 ]
 
-class SliderField extends React.Component {
+class GasField extends React.Component {
   constructor(props) {
     super(props)
   }
@@ -19,12 +22,12 @@ class SliderField extends React.Component {
     const {touched, error} = this.props.fieldProps
 
     return(
-      <div className='form-group'>
-        <span>{fieldProps.value}</span>
-        <input className='form-control'
+      <div className={`form-group ${styles.slider}`}>
+        {this.props.gas && <span>{normalizeBTMAmountUnit(btmID, fieldProps.value* this.props.gas, this.props.btmAmountUnit)}</span>}
+        <input className={fieldProps.value>0&&styles[`gradient-${fieldProps.value}`]}
                type='range'
-               min={this.props.min}
-               max={this.props.max}
+               min={0}
+               max={3}
                step='1'
                {...fieldProps} />
 
@@ -35,4 +38,4 @@ class SliderField extends React.Component {
   }
 }
 
-export default SliderField
+export default GasField

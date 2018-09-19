@@ -19,20 +19,8 @@ function preprocessTransaction(formParams) {
   }
 
   if (formParams.form === 'normalTx') {
-    let gasPrice = 0
-    switch (formParams.gas.type) {
-      case 'Fast':
-        gasPrice = formParams.state.estimateGas * 2
-        break
-      case 'Customize':
-        gasPrice = formParams.gas.price
-        break
-      case 'Standard':
-      default:
-        gasPrice = formParams.state.estimateGas * 1
-        break
-    }
-
+    const gasPrice = formParams.state.estimateGas * Number(formParams.gasLevel)
+   
     builder.actions.push({
       accountAlias: formParams.accountAlias,
       accountId: formParams.accountId,

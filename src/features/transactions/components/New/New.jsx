@@ -62,7 +62,7 @@ class Form extends React.Component {
         }
       }
 
-      return !(this.props.normalform['gas']['price'])
+      return true
     }else{
       return !(this.props.advform['actions'].length > 0 ||
       this.props.advform['signTransaction'] ||
