@@ -36,7 +36,7 @@ class NormalTxForm extends React.Component {
       return !!(target && target.value)
     }
 
-    return !( (this.state.estimateGas)&&
+    return !( (this.state.estimateGas) &&
       (hasValue(props.accountId) || hasValue(props.accountAlias)) &&
       (hasValue(props.assetId) || hasValue(props.assetAlias)) &&
       hasValue(props.address) && (hasValue(props.amount)) &&

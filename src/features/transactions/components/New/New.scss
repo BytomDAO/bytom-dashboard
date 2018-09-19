@@ -55,6 +55,14 @@
 .btnGroup {
   margin-top: $gutter-size;
   text-align: center;
+  button{
+    padding: 0 40px;
+    color: $text-color;
+    &.active{
+      background-color: $highlight-default;
+      color: white;
+    }
+  }
 }
 
 .title {
