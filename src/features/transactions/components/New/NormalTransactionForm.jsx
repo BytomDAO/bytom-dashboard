@@ -8,7 +8,6 @@ import {
   AmountInputMask,
   ErrorBanner,
   SubmitIndicator,
-  PasswordField,
   GasField
 } from 'features/shared/components'
 import {chainClient} from 'utility/environment'
@@ -17,6 +16,8 @@ import React from 'react'
 import styles from './New.scss'
 import disableAutocomplete from 'utility/disableAutocomplete'
 import { btmID } from 'utility/environment'
+import actions from 'actions'
+import ConfirmModal from './ConfirmModal/ConfirmModal'
 
 
 class NormalTxForm extends React.Component {
@@ -39,29 +40,33 @@ class NormalTxForm extends React.Component {
     return !( (this.state.estimateGas) &&
       (hasValue(props.accountId) || hasValue(props.accountAlias)) &&
       (hasValue(props.assetId) || hasValue(props.assetAlias)) &&
-      hasValue(props.address) && (hasValue(props.amount)) &&
-      hasValue(props.password)
+      hasValue(props.address) && (hasValue(props.amount))
     )
   }
 
   submitWithValidation(data) {
     return new Promise((resolve, reject) => {
       this.props.submitForm(Object.assign({}, data, {state: this.state, form: 'normalTx'}))
+        .then(
+          this.props.closeModal()
+        )
         .catch((err) => {
           const response = {}
-
-          if (err.data) {
-            response.actions = []
-
-            err.data.forEach((error) => {
-              response.actions[error.data.actionIndex] = {type: error}
-            })
-          }
 
           response['_error'] = err
           return reject(response)
         })
     })
+  }
+
+  confirmedTransaction(e){
+    e.preventDefault()
+    this.props.showModal(
+      <ConfirmModal
+        onSubmit={this.submitWithValidation}
+        gas={this.state.estimateGas}
+      />
+    )
   }
 
   estimateNormalTransactionGas() {
@@ -129,9 +134,8 @@ class NormalTxForm extends React.Component {
 
   render() {
     const {
-      fields: {accountId, accountAlias, assetId, assetAlias, address, amount, password, gasLevel},
+      fields: {accountId, accountAlias, assetId, assetAlias, address, amount, gasLevel},
       error,
-      handleSubmit,
       submitting
     } = this.props
     const lang = this.props.lang;
@@ -153,8 +157,10 @@ class NormalTxForm extends React.Component {
     return (
         <form
           className={styles.container}
-          onSubmit={handleSubmit(this.submitWithValidation)} {...disableAutocomplete}
-          onKeyDown={(e) => { this.props.handleKeyDown(e, handleSubmit(this.submitWithValidation), this.disableSubmit(this.props.fields)) }}>
+          onSubmit={e => this.confirmedTransaction(e)}
+          {...disableAutocomplete}
+          // onKeyDown={(e) => { this.props.handleKeyDown(e, handleSubmit(this.submitWithValidation), this.disableSubmit(this.props.fields)) }}
+        >
           <div>
             <label className={styles.title}>{lang === 'zh' ? '从' : 'From'}</label>
             <div className={styles.main}>
@@ -209,13 +215,6 @@ class NormalTxForm extends React.Component {
               fieldProps={gasLevel}
               btmAmountUnit={this.props.btmAmountUnit}
             />
-
-
-            <label className={styles.title}>{lang === 'zh' ? '密码' : 'Password'}</label>
-            <PasswordField
-              placeholder={lang === 'zh' ? '请输入密码' : 'Please enter the password'}
-              fieldProps={password}
-            />
           </div>
 
           <FormSection className={styles.submitSection}>
@@ -225,8 +224,10 @@ class NormalTxForm extends React.Component {
               error={error} />}
 
             <div className={styles.submit}>
-              <button type='submit' className='btn btn-primary' disabled={submitting || this.disableSubmit(this.props.fields)}>
-                {submitLabel ||  ( lang === 'zh' ? '提交' : 'Submit' )}
+              <button type='submit' className='btn btn-primary'
+                      disabled={submitting || this.disableSubmit(this.props.fields)}
+              >
+                {submitLabel}
               </button>
 
               {submitting &&
@@ -273,6 +274,16 @@ export default BaseNew.connect(
   BaseNew.mapStateToProps('transaction'),
   (dispatch) => ({
     showError: err => dispatch({type: 'ERROR', payload: err}),
+    closeModal: () => dispatch(actions.app.hideModal),
+    showModal: (body) => dispatch(actions.app.showModal(
+      body,
+      actions.app.hideModal,
+      null,
+      {
+        // dialog: true,
+        noCloseBtn: true
+      }
+    )),
     ...BaseNew.mapDispatchToProps('transaction')(dispatch)
   }),
   reduxForm({
@@ -285,19 +296,16 @@ export default BaseNew.connect(
       'assetId',
       'gasLevel',
       'address',
-      'submitAction',
-      'password'
     ],
     asyncValidate,
     asyncBlurFields: [ 'address'],
     validate,
+    destroyOnUnmount: false,
     touchOnChange: true,
     initialValues: {
-      submitAction: 'submit',
       gasLevel: '1'
     },
-  }
-  )(NormalTxForm)
+  })(NormalTxForm)
 )
 
 

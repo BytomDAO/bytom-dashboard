@@ -20,7 +20,7 @@ function preprocessTransaction(formParams) {
 
   if (formParams.form === 'normalTx') {
     const gasPrice = formParams.state.estimateGas * Number(formParams.gasLevel)
-   
+
     builder.actions.push({
       accountAlias: formParams.accountAlias,
       accountId: formParams.accountId,
