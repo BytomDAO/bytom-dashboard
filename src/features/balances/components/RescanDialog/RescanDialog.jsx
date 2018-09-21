@@ -40,7 +40,7 @@ class RescanDialog extends React.Component {
   render() {
     const now = this.state.now
     const lang = this.props.lang
-    const success = (lang === 'zh' ? '扫描成功!!!':'Success!!!')
+    const success = (lang === 'zh' ? '扫描成功':'Success')
     const start = (lang === 'zh' ? '扫描开始...':'Starting...')
     const rescan = (lang === 'zh' ? '扫描中...':'Rescanning...')
     return (
