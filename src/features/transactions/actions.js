@@ -123,7 +123,7 @@ form.submitForm = (formParams) => function (dispatch) {
       })
       .then( result => {
         if(!result.data.checkResult){
-          throw new Error('Your password is wrong, please check your password.')
+          throw new Error('PasswordWrong')
         }
         return client.transactions.build(builderFunction)
       })

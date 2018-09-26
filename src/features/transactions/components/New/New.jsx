@@ -150,6 +150,7 @@ class Form extends React.Component {
             <NormalTxForm
               lang={this.props.lang}
               btmAmountUnit={this.props.btmAmountUnit}
+              asset={this.props.asset}
               balanceAmount={balanceAmount}
               assetDecimal={assetDecimal}
               handleKeyDown={this.handleKeyDown}

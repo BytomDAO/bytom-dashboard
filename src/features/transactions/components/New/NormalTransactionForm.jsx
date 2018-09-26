@@ -7,7 +7,6 @@ import {
   AmountUnitField,
   AmountInputMask,
   ErrorBanner,
-  SubmitIndicator,
   GasField
 } from 'features/shared/components'
 import {chainClient} from 'utility/environment'
@@ -47,24 +46,30 @@ class NormalTxForm extends React.Component {
   submitWithValidation(data) {
     return new Promise((resolve, reject) => {
       this.props.submitForm(Object.assign({}, data, {state: this.state, form: 'normalTx'}))
-        .then(
+        .then(() => {
           this.props.closeModal()
-        )
+          this.props.destroyForm()
+        })
         .catch((err) => {
-          const response = {}
-
-          response['_error'] = err
-          return reject(response)
+          if(err.message !== 'PasswordWrong'){
+            this.props.closeModal()
+          }
+          reject({_error: err})
         })
     })
   }
 
-  confirmedTransaction(e){
+  confirmedTransaction(e, assetDecimal){
     e.preventDefault()
     this.props.showModal(
       <ConfirmModal
+        cancel={this.props.closeModal}
         onSubmit={this.submitWithValidation}
         gas={this.state.estimateGas}
+        btmAmountUnit={this.props.btmAmountUnit}
+        assetDecimal={assetDecimal}
+        asset={this.props.asset}
+        lang = {this.props.lang}
       />
     )
   }
@@ -157,9 +162,8 @@ class NormalTxForm extends React.Component {
     return (
         <form
           className={styles.container}
-          onSubmit={e => this.confirmedTransaction(e)}
+          onSubmit={e => this.confirmedTransaction(e, assetDecimal)}
           {...disableAutocomplete}
-          // onKeyDown={(e) => { this.props.handleKeyDown(e, handleSubmit(this.submitWithValidation), this.disableSubmit(this.props.fields)) }}
         >
           <div>
             <label className={styles.title}>{lang === 'zh' ? '从' : 'From'}</label>
@@ -218,21 +222,16 @@ class NormalTxForm extends React.Component {
           </div>
 
           <FormSection className={styles.submitSection}>
-            {error &&
+            {error && error.message !== 'PasswordWrong' &&
             <ErrorBanner
               title='Error submitting form'
               error={error} />}
 
             <div className={styles.submit}>
               <button type='submit' className='btn btn-primary'
-                      disabled={submitting || this.disableSubmit(this.props.fields)}
-              >
+                      disabled={submitting || this.disableSubmit(this.props.fields)}>
                 {submitLabel}
               </button>
-
-              {submitting &&
-              <SubmitIndicator />
-              }
             </div>
           </FormSection>
         </form>
@@ -280,7 +279,7 @@ export default BaseNew.connect(
       actions.app.hideModal,
       null,
       {
-        // dialog: true,
+        dialog: true,
         noCloseBtn: true
       }
     )),
@@ -300,7 +299,6 @@ export default BaseNew.connect(
     asyncValidate,
     asyncBlurFields: [ 'address'],
     validate,
-    destroyOnUnmount: false,
     touchOnChange: true,
     initialValues: {
       gasLevel: '1'
