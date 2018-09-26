@@ -76,10 +76,13 @@
   color: #747c89;
 }
 
-.main {
+.mainBox {
   border: 1px solid $border-color;
   padding: 20px 30px 10px;
   margin-bottom: $gutter-size;
+}
+
+.item{
   display: flex;
 
   >div:first-of-type{

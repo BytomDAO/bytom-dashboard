@@ -24,11 +24,13 @@ class NormalTxForm extends React.Component {
     super(props)
     this.connection = chainClient().connection
     this.state = {
-      estimateGas:null
+      estimateGas:null,
+      counter: 1
     }
 
     this.submitWithValidation = this.submitWithValidation.bind(this)
     this.disableSubmit = this.disableSubmit.bind(this)
+    this.addReceiverItem = this.addReceiverItem.bind(this)
   }
 
   disableSubmit(props) {
@@ -72,6 +74,20 @@ class NormalTxForm extends React.Component {
         lang = {this.props.lang}
       />
     )
+  }
+
+  addReceiverItem() {
+    const counter = this.state.counter
+    this.props.fields.receivers.addField({
+      id: counter
+    })
+    this.setState({
+      counter: counter+1
+    })
+  }
+
+  removeReceiverItem(index) {
+    this.props.fields.receivers.removeField(index)
   }
 
   estimateNormalTransactionGas() {
@@ -139,14 +155,14 @@ class NormalTxForm extends React.Component {
 
   render() {
     const {
-      fields: {accountId, accountAlias, assetId, assetAlias, address, amount, gasLevel},
+      fields: {accountId, accountAlias, assetId, assetAlias, receivers, gasLevel},
       error,
       submitting
     } = this.props
     const lang = this.props.lang;
-    [amount, accountAlias, accountId, assetAlias, assetId].forEach(key => {
-      key.onBlur = this.estimateNormalTransactionGas.bind(this)
-    })
+    // [amount, accountAlias, accountId, assetAlias, assetId].forEach(key => {
+    //   key.onBlur = this.estimateNormalTransactionGas.bind(this)
+    // })
 
     let submitLabel = lang === 'zh' ? '提交交易' : 'Submit transaction'
 
@@ -159,6 +175,8 @@ class NormalTxForm extends React.Component {
 
     const showBtmAmountUnit = (assetAlias.value === 'BTM' || assetId.value === btmID)
 
+    console.log(this.props)
+
     return (
         <form
           className={styles.container}
@@ -167,7 +185,7 @@ class NormalTxForm extends React.Component {
         >
           <div>
             <label className={styles.title}>{lang === 'zh' ? '从' : 'From'}</label>
-            <div className={styles.main}>
+            <div className={`${styles.mainBox} ${styles.item}`}>
               <ObjectSelectorField
                 key='account-selector-field'
                 keyIndex='normaltx-account'
@@ -197,20 +215,33 @@ class NormalTxForm extends React.Component {
             </div>
 
             <label className={styles.title}>{lang === 'zh' ? '至' : 'To'}</label>
-            <div className={styles.main}>
-              <TextField title={lang === 'zh' ? '地址' : 'Address'} fieldProps={{
-                ...address,
-                onBlur: (e) => {
-                  address.onBlur(e)
-                  this.estimateNormalTransactionGas()
-                },
-              }}/>
-              {!showBtmAmountUnit &&
-              <AmountInputMask title={lang === 'zh' ? '数量' : 'Amount'} fieldProps={amount} decimal={assetDecimal}
-              />}
-              {showBtmAmountUnit &&
-              <AmountUnitField title={lang === 'zh' ? '数量' : 'Amount'} fieldProps={amount}/>
-              }
+
+            <div className={styles.mainBox}>
+            {receivers.map((receiver, index) =>
+              <div
+                className={styles.item}
+                key={receiver.id.value}>
+                <TextField title={lang === 'zh' ? '地址' : 'Address'} fieldProps={{
+                  ...receiver.address,
+                  onBlur: (e) => {
+                    receiver.address.onBlur(e)
+                    this.estimateNormalTransactionGas()
+                  },
+                }}/>
+
+                {!showBtmAmountUnit &&
+                <AmountInputMask title={lang === 'zh' ? '数量' : 'Amount'} fieldProps={receiver.amount} decimal={assetDecimal}
+                />}
+                {showBtmAmountUnit &&
+                <AmountUnitField title={lang === 'zh' ? '数量' : 'Amount'} fieldProps={receiver.amount}/>
+                }
+                {index===0 ?
+                  <a href='#' className='btn btn-sm ' onClick={this.addReceiverItem}>+</a> :
+                  <a href='#' className='btn btn-sm btn-danger' onClick={() => this.removeReceiverItem(index)}>-</a>
+                }
+
+              </div>
+            )}
             </div>
 
             <label className={styles.title}>{lang === 'zh' ? '选择手续费' : 'Select Fee'}</label>
@@ -290,18 +321,24 @@ export default BaseNew.connect(
     fields: [
       'accountAlias',
       'accountId',
-      'amount',
       'assetAlias',
       'assetId',
+      'receivers[].id',
+      'receivers[].amount',
+      'receivers[].address',
       'gasLevel',
-      'address',
     ],
     asyncValidate,
-    asyncBlurFields: [ 'address'],
+    asyncBlurFields: [ 'receivers[].address'],
     validate,
     touchOnChange: true,
     initialValues: {
-      gasLevel: '1'
+      gasLevel: '1',
+      receivers:[{
+        id: 0,
+        amount:'',
+        address:''
+      }]
     },
   })(NormalTxForm)
 )
