@@ -1,7 +1,5 @@
 .mainContainer {
   background: $background-color;
-  display: flex;
-  flex-direction: row;
   padding: 0 $gutter-size;
   margin-top: $title-height;
 }
@@ -9,6 +7,12 @@
 .content {
   min-width: 400px;
   width: 55%;
+  margin: 0 auto;
+}
+
+.container{
+  max-width: 870px;
+  width: 100%;
   margin: 0 auto;
 }
 
@@ -50,6 +54,15 @@
 
 .btnGroup {
   margin-top: $gutter-size;
+  text-align: center;
+  button{
+    padding: 0 40px;
+    color: $text-color;
+    &.active{
+      background-color: $highlight-default;
+      color: white;
+    }
+  }
 }
 
 .title {
@@ -65,8 +78,19 @@
 
 .main {
   border: 1px solid $border-color;
-  padding: $gutter-size;
+  padding: 20px 30px 10px;
   margin-bottom: $gutter-size;
+  display: flex;
+
+  >div:first-of-type{
+    width: 60%;
+    min-width: 350px;
+  }
+
+  >div:last-of-type{
+    width: 40%;
+    margin-left: $gutter-size;
+  }
 }
 
 .balanceHint {

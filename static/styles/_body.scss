@@ -224,3 +224,79 @@ span.react-console-prompt {
 div.react-console-message-Error{
   color: $text-danger;
 }
+
+input[type=range] {
+  height: 34px;
+  -webkit-appearance: none;
+}
+input[type=range]:focus {
+  outline: none;
+}
+
+//Chrome
+input[type=range]::-webkit-slider-runnable-track {
+  height: 7px;
+  cursor: pointer;
+  animate: 0.2s;
+  background: $background-content-color;
+}
+input[type=range]::-webkit-slider-thumb {
+  height: 20px;
+  width: 20px;
+  border-radius: 15px;
+  background: $highlight-default;
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -6px;
+}
+input[type=range]:focus::-webkit-slider-runnable-track {
+  background: $background-content-color;
+}
+
+//Firefox
+input[type=range]::-moz-range-track {
+  height: 7px;
+  cursor: pointer;
+  animate: 0.2s;
+  background: $background-content-color;
+}
+input[type=range]::-moz-range-thumb {
+  border: none;
+  height: 20px;
+  width: 20px;
+  border-radius: 15px;
+  background: $highlight-default;
+  cursor: pointer;
+}
+
+//IE
+input[type=range]::-ms-track {
+  height: 7px;
+  cursor: pointer;
+  animate: 0.2s;
+  background: transparent;
+  border-color: transparent;
+  color: transparent;
+}
+input[type=range]::-ms-fill-lower {
+  background: $highlight-default;
+  border-radius: 2px;
+}
+input[type=range]::-ms-fill-upper {
+  background: $background-content-color;
+  border-radius: 2px;
+}
+input[type=range]::-ms-thumb {
+  margin-top: 1px;
+  height: 20px;
+  width: 20px;
+  border-radius: 15px;
+  background: $highlight-default;
+  cursor: pointer;
+}
+input[type=range]:focus::-ms-fill-lower {
+  background: $highlight-default;
+}
+input[type=range]:focus::-ms-fill-upper {
+  background: $background-content-color;
+}

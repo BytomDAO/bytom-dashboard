@@ -19,19 +19,7 @@ function preprocessTransaction(formParams) {
   }
 
   if (formParams.form === 'normalTx') {
-    let gasPrice = 0
-    switch (formParams.gas.type) {
-      case 'Fast':
-        gasPrice = formParams.state.estimateGas * 2
-        break
-      case 'Customize':
-        gasPrice = formParams.gas.price
-        break
-      case 'Standard':
-      default:
-        gasPrice = formParams.state.estimateGas * 1
-        break
-    }
+    const gasPrice = formParams.state.estimateGas * Number(formParams.gasLevel)
 
     builder.actions.push({
       accountAlias: formParams.accountAlias,
@@ -135,7 +123,7 @@ form.submitForm = (formParams) => function (dispatch) {
       })
       .then( result => {
         if(!result.data.checkResult){
-          throw new Error('Your password is wrong, please check your password.')
+          throw new Error('PasswordWrong')
         }
         return client.transactions.build(builderFunction)
       })

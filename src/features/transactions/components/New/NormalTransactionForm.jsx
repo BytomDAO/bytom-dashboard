@@ -7,34 +7,17 @@ import {
   AmountUnitField,
   AmountInputMask,
   ErrorBanner,
-  SubmitIndicator,
-  PasswordField
+  GasField
 } from 'features/shared/components'
 import {chainClient} from 'utility/environment'
 import {reduxForm} from 'redux-form'
 import React from 'react'
 import styles from './New.scss'
 import disableAutocomplete from 'utility/disableAutocomplete'
-import { normalizeBTMAmountUnit } from 'utility/buildInOutDisplay'
 import { btmID } from 'utility/environment'
+import actions from 'actions'
+import ConfirmModal from './ConfirmModal/ConfirmModal'
 
-const rangeOptions = [
-  {
-    label: 'Standard',
-    label_zh: '标准',
-    ratio: 1
-  },
-  {
-    label: 'Fast',
-    label_zh: '快速',
-    ratio: 2
-  },
-  {
-    label: 'Customize',
-    label_zh: '自定义',
-    value: ''
-  }
-]
 
 class NormalTxForm extends React.Component {
   constructor(props) {
@@ -48,42 +31,47 @@ class NormalTxForm extends React.Component {
     this.disableSubmit = this.disableSubmit.bind(this)
   }
 
-  componentDidMount() {
-    this.props.fields.gas.type.onChange(rangeOptions[0].label)
-    this.props.fields.gas.price.onChange(rangeOptions[0].value)
-  }
-
   disableSubmit(props) {
     const hasValue = target => {
       return !!(target && target.value)
     }
 
-    return !( (this.state.estimateGas || hasValue(props.gas.price))&&
+    return !( (this.state.estimateGas) &&
       (hasValue(props.accountId) || hasValue(props.accountAlias)) &&
       (hasValue(props.assetId) || hasValue(props.assetAlias)) &&
-      hasValue(props.address) && (hasValue(props.amount)) &&
-      hasValue(props.password)
+      hasValue(props.address) && (hasValue(props.amount))
     )
   }
 
   submitWithValidation(data) {
     return new Promise((resolve, reject) => {
       this.props.submitForm(Object.assign({}, data, {state: this.state, form: 'normalTx'}))
+        .then(() => {
+          this.props.closeModal()
+          this.props.destroyForm()
+        })
         .catch((err) => {
-          const response = {}
-
-          if (err.data) {
-            response.actions = []
-
-            err.data.forEach((error) => {
-              response.actions[error.data.actionIndex] = {type: error}
-            })
+          if(err.message !== 'PasswordWrong'){
+            this.props.closeModal()
           }
-
-          response['_error'] = err
-          return reject(response)
+          reject({_error: err})
         })
     })
+  }
+
+  confirmedTransaction(e, assetDecimal){
+    e.preventDefault()
+    this.props.showModal(
+      <ConfirmModal
+        cancel={this.props.closeModal}
+        onSubmit={this.submitWithValidation}
+        gas={this.state.estimateGas}
+        btmAmountUnit={this.props.btmAmountUnit}
+        assetDecimal={assetDecimal}
+        asset={this.props.asset}
+        lang = {this.props.lang}
+      />
+    )
   }
 
   estimateNormalTransactionGas() {
@@ -151,9 +139,8 @@ class NormalTxForm extends React.Component {
 
   render() {
     const {
-      fields: {accountId, accountAlias, assetId, assetAlias, address, amount, gas, password},
+      fields: {accountId, accountAlias, assetId, assetAlias, address, amount, gasLevel},
       error,
-      handleSubmit,
       submitting
     } = this.props
     const lang = this.props.lang;
@@ -163,12 +150,6 @@ class NormalTxForm extends React.Component {
 
     let submitLabel = lang === 'zh' ? '提交交易' : 'Submit transaction'
 
-    const gasOnChange = event => {
-      gas.type.onChange(event)
-
-      const range = rangeOptions.find(item => item.label === event.target.value)
-      gas.price.onChange(range.value)
-    }
     const assetDecimal = this.props.assetDecimal(this.props.fields) || 0
 
     const showAvailableBalance = (accountAlias.value || accountId.value) &&
@@ -180,117 +161,77 @@ class NormalTxForm extends React.Component {
 
     return (
         <form
-          onSubmit={handleSubmit(this.submitWithValidation)} {...disableAutocomplete}
-          onKeyDown={(e) => { this.props.handleKeyDown(e, handleSubmit(this.submitWithValidation), this.disableSubmit(this.props.fields)) }}>
-          <FormSection title={lang === 'zh' ? '简单交易' : 'Normal Trasaction'}>
+          className={styles.container}
+          onSubmit={e => this.confirmedTransaction(e, assetDecimal)}
+          {...disableAutocomplete}
+        >
+          <div>
+            <label className={styles.title}>{lang === 'zh' ? '从' : 'From'}</label>
+            <div className={styles.main}>
+              <ObjectSelectorField
+                key='account-selector-field'
+                keyIndex='normaltx-account'
+                lang={lang}
+                title={lang === 'zh' ? '账户' : 'Account'}
+                aliasField={Autocomplete.AccountAlias}
+                fieldProps={{
+                  id: accountId,
+                  alias: accountAlias
+                }}
+              />
               <div>
-                <label className={styles.title}>{lang === 'zh' ? '从' : 'From'}</label>
-                <div className={styles.main}>
-                  <ObjectSelectorField
-                    key='account-selector-field'
-                    keyIndex='normaltx-account'
-                    lang={lang}
-                    title={lang === 'zh' ? '账户' : 'Account'}
-                    aliasField={Autocomplete.AccountAlias}
-                    fieldProps={{
-                      id: accountId,
-                      alias: accountAlias
-                    }}
-                  />
-                  <ObjectSelectorField
-                    key='asset-selector-field'
-                    keyIndex='normaltx-asset'
-                    lang={lang}
-                    title={lang === 'zh' ? '资产' : 'Asset'}
-                    aliasField={Autocomplete.AssetAlias}
-                    fieldProps={{
-                      id: assetId,
-                      alias: assetAlias
-                    }}
-                  />
-                  {showAvailableBalance && availableBalance &&
-                  <small className={styles.balanceHint}>{lang === 'zh' ? '可用余额:' : 'Available balance:'} {availableBalance}</small>}
-                </div>
+                <ObjectSelectorField
+                  key='asset-selector-field'
+                  keyIndex='normaltx-asset'
+                  lang={lang}
+                  title={lang === 'zh' ? '资产' : 'Asset'}
+                  aliasField={Autocomplete.AssetAlias}
+                  fieldProps={{
+                    id: assetId,
+                    alias: assetAlias
+                  }}
+                />
+                {showAvailableBalance && availableBalance &&
+                <small className={styles.balanceHint}>{lang === 'zh' ? '可用余额:' : 'Available balance:'} {availableBalance}</small>}
               </div>
+            </div>
 
-              <div>
-                <label className={styles.title}>{lang === 'zh' ? '至' : 'To'}</label>
-                <div className={styles.main}>
-                  <TextField title={lang === 'zh' ? '地址' : 'Address'} fieldProps={{
-                    ...address,
-                    onBlur: (e) => {
-                      address.onBlur(e)
-                      this.estimateNormalTransactionGas()
-                    },
-                  }}/>
-                  {!showBtmAmountUnit &&
-                  <AmountInputMask title={lang === 'zh' ? '数量' : 'Amount'} fieldProps={amount} decimal={assetDecimal}
-                  />}
-                  {showBtmAmountUnit &&
-                  <AmountUnitField title={lang === 'zh' ? '数量' : 'Amount'} fieldProps={amount}/>
-                  }
-                </div>
-              </div>
+            <label className={styles.title}>{lang === 'zh' ? '至' : 'To'}</label>
+            <div className={styles.main}>
+              <TextField title={lang === 'zh' ? '地址' : 'Address'} fieldProps={{
+                ...address,
+                onBlur: (e) => {
+                  address.onBlur(e)
+                  this.estimateNormalTransactionGas()
+                },
+              }}/>
+              {!showBtmAmountUnit &&
+              <AmountInputMask title={lang === 'zh' ? '数量' : 'Amount'} fieldProps={amount} decimal={assetDecimal}
+              />}
+              {showBtmAmountUnit &&
+              <AmountUnitField title={lang === 'zh' ? '数量' : 'Amount'} fieldProps={amount}/>
+              }
+            </div>
 
-            <label className={styles.title}>Gas</label>
-            <table>
-              <tbody className={styles.optionsBtnContianer}>
-                {rangeOptions.map((option) =>
-                  <tr className={styles.optionsBtn}>
-                    <td className={styles.optionsLabel}>
-                      <label>
-                        <input type='radio'
-                               {...gas.type}
-                               onChange={gasOnChange}
-                               value={option.label}
-                               checked={option.label == gas.type.value}
-                        />
-                        {lang === 'zh' ? option.label_zh : option.label}
-                      </label>
-                    </td>
-                    <td>
-                      {
-                        option.label == gas.type.value && option.label !== 'Customize'
-                        && this.state.estimateGas && ((lang === 'zh' ? '估算' : 'estimated') + '   ' + normalizeBTMAmountUnit(btmID,
-                          option.ratio * this.state.estimateGas,
-                          this.props.btmAmountUnit))
-                      }
-                      {
-                        option.label === 'Customize' && gas.type.value === 'Customize' &&
-                        <div>
-                          <AmountUnitField
-                            autoFocus={true}
-                            fieldProps={gas.price}
-                            placeholder='Enter gas'/>
-                        </div>
-                      }
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-
-            <label className={styles.title}>{lang === 'zh' ? '密码' : 'Password'}</label>
-            <PasswordField
-              placeholder={lang === 'zh' ? '请输入密码' : 'Please enter the password'}
-              fieldProps={password}
+            <label className={styles.title}>{lang === 'zh' ? '选择手续费' : 'Select Fee'}</label>
+            <GasField
+              gas={this.state.estimateGas}
+              fieldProps={gasLevel}
+              btmAmountUnit={this.props.btmAmountUnit}
             />
-          </FormSection>
+          </div>
 
           <FormSection className={styles.submitSection}>
-            {error &&
+            {error && error.message !== 'PasswordWrong' &&
             <ErrorBanner
               title='Error submitting form'
               error={error} />}
 
             <div className={styles.submit}>
-              <button type='submit' className='btn btn-primary' disabled={submitting || this.disableSubmit(this.props.fields)}>
-                {submitLabel ||  ( lang === 'zh' ? '提交' : 'Submit' )}
+              <button type='submit' className='btn btn-primary'
+                      disabled={submitting || this.disableSubmit(this.props.fields)}>
+                {submitLabel}
               </button>
-
-              {submitting &&
-              <SubmitIndicator />
-              }
             </div>
           </FormSection>
         </form>
@@ -332,6 +273,16 @@ export default BaseNew.connect(
   BaseNew.mapStateToProps('transaction'),
   (dispatch) => ({
     showError: err => dispatch({type: 'ERROR', payload: err}),
+    closeModal: () => dispatch(actions.app.hideModal),
+    showModal: (body) => dispatch(actions.app.showModal(
+      body,
+      actions.app.hideModal,
+      null,
+      {
+        dialog: true,
+        noCloseBtn: true
+      }
+    )),
     ...BaseNew.mapDispatchToProps('transaction')(dispatch)
   }),
   reduxForm({
@@ -342,22 +293,17 @@ export default BaseNew.connect(
       'amount',
       'assetAlias',
       'assetId',
-      'gas',
-      'gas.type',
-      'gas.price',
+      'gasLevel',
       'address',
-      'submitAction',
-      'password'
     ],
     asyncValidate,
     asyncBlurFields: [ 'address'],
     validate,
     touchOnChange: true,
     initialValues: {
-      submitAction: 'submit',
+      gasLevel: '1'
     },
-  }
-  )(NormalTxForm)
+  })(NormalTxForm)
 )
 
 

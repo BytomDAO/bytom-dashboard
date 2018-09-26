@@ -28,7 +28,7 @@ class Modal extends React.Component {
     return(
       <div className={styles.main}>
         <div className={styles.backdrop} onClick={backdropAction}></div>
-        <div className={`${this.props.options.wide && styles.wide} ${boxStyle? styles.box: styles.content}`}>
+        <div className={`${this.props.options.wide && styles.wide ||''} ${boxStyle? styles.box: styles.content}`}>
           {
             boxStyle &&
               <div className={styles.title}>
