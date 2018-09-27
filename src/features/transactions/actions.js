@@ -20,6 +20,8 @@ function preprocessTransaction(formParams) {
 
   if (formParams.form === 'normalTx') {
     const gasPrice = formParams.state.estimateGas * Number(formParams.gasLevel)
+    const totalAmount = formParams.receivers.map(x => Number(x.amount)).reduce((prev, next) => prev + next)
+    const receivers = formParams.receivers
 
     builder.actions.push({
       accountAlias: formParams.accountAlias,
@@ -33,15 +35,18 @@ function preprocessTransaction(formParams) {
       accountId: formParams.accountId,
       assetAlias: formParams.assetAlias,
       assetId: formParams.assetId,
-      amount: formParams.amount,
+      amount: totalAmount,
       type: 'spend_account'
     })
-    builder.actions.push({
-      address: formParams.address,
-      assetAlias: formParams.assetAlias,
-      assetId: formParams.assetId,
-      amount: formParams.amount,
-      type: 'control_address'
+
+    receivers.forEach((receiver)=>{
+      builder.actions.push({
+        address: receiver.address,
+        assetAlias: formParams.assetAlias,
+        assetId: formParams.assetId,
+        amount: receiver.amount,
+        type: 'control_address'
+      })
     })
   }
 

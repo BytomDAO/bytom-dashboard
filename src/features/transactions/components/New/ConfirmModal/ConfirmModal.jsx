@@ -18,7 +18,7 @@ class ConfirmModal extends Component {
 
   render() {
     const {
-      fields: { accountId, accountAlias, assetId, assetAlias, address, amount, password, gasLevel },
+      fields: { accountId, accountAlias, assetId, assetAlias, receivers, password, gasLevel },
       handleSubmit,
       submitting,
       cancel,
@@ -31,8 +31,10 @@ class ConfirmModal extends Component {
 
     const fee = Number(gasLevel.value * gas)
 
+    const totalAmount = receivers.map(x => Number(x.amount.value)).reduce((prev, next) => prev + next)
+
     const  Total = (assetAlias.value ==='BTM' ||assetId.value === btmID)?
-      (Number(amount.value) + fee): amount.value
+      (totalAmount + fee): totalAmount
 
     let submitLabel = lang === 'zh' ? '提交交易' : 'Submit transaction'
 
@@ -63,15 +65,16 @@ class ConfirmModal extends Component {
               <td> <span>{accountAlias.value || accountId.value}</span></td>
             </tr>
 
-            <tr>
-              <td className={styles.colLabel}>To</td>
-              <td> <span>{address.value}</span> </td>
-            </tr>
 
-            <tr>
-              <td className={styles.colLabel}>{lang === 'zh'? '数量':'Amount'}</td>
-              <td> <code>{normalize(amount.value, asset)} {unit}</code> </td>
-            </tr>
+            {receivers.map((receiver) =>
+             [<tr>
+                <td className={styles.colLabel}>To</td>
+                <td> <span>{receiver.address.value}</span> </td>
+              </tr>,
+              <tr>
+                <td className={styles.colLabel}>{lang === 'zh'? '数量':'Amount'}</td>
+                <td> <code>{normalize(receiver.amount.value, asset)} {unit}</code> </td>
+              </tr>])}
 
             <tr>
               <td className={styles.colLabel}>{lang === 'zh'?'手续费':'Fee'}</td>
@@ -137,11 +140,11 @@ export default  reduxForm({
   fields:[
     'accountAlias',
     'accountId',
-    'amount',
     'assetAlias',
     'assetId',
+    'receivers[].amount',
+    'receivers[].address',
     'gasLevel',
-    'address',
     'password'
   ],
   destroyOnUnmount: false,
