@@ -92,35 +92,31 @@ class NormalTxForm extends React.Component {
 
   estimateNormalTransactionGas() {
     const transaction = this.props.fields
-    const address = transaction.address.value
-    const amount = transaction.amount.value
     const accountAlias = transaction.accountAlias.value
     const accountId = transaction.accountId.value
     const assetAlias = transaction.assetAlias.value
     const assetId = transaction.assetId.value
+    const receivers = transaction.receivers
+    const addresses = receivers.map(x => x.address.value)
+    const amounts = receivers.map(x => Number(x.amount.value))
 
     const noAccount = !accountAlias && !accountId
     const noAsset = !assetAlias && !assetId
 
-    if (!address || !amount || noAccount || noAsset) {
+    if ( addresses.includes('') || amounts.includes(0)|| noAccount || noAsset) {
       this.setState({estimateGas: null})
       return
     }
+
+    const totalAmount = amounts.reduce((prev, next) => prev + next)
 
     const spendAction = {
       accountAlias,
       accountId,
       assetAlias,
       assetId,
-      amount: Number(amount),
+      amount: totalAmount,
       type: 'spend_account'
-    }
-    const receiveAction = {
-      address,
-      assetAlias,
-      assetId,
-      amount: Number(amount),
-      type: 'control_address'
     }
 
     const gasAction = {
@@ -131,7 +127,19 @@ class NormalTxForm extends React.Component {
       type: 'spend_account'
     }
 
-    const actions = [spendAction, receiveAction, gasAction]
+    const actions = [spendAction, gasAction]
+    receivers.forEach((receiver)=>{
+      actions.push(
+        {
+          address: receiver.address.value,
+          assetAlias,
+          assetId,
+          amount:Number(receiver.amount.value),
+          type: 'control_address'
+        }
+      )
+    })
+
     const body = {actions, ttl: 1}
     this.connection.request('/build-transaction', body).then(resp => {
       if (resp.status === 'fail') {
@@ -160,9 +168,9 @@ class NormalTxForm extends React.Component {
       submitting
     } = this.props
     const lang = this.props.lang;
-    // [amount, accountAlias, accountId, assetAlias, assetId].forEach(key => {
-    //   key.onBlur = this.estimateNormalTransactionGas.bind(this)
-    // })
+    [accountAlias, accountId, assetAlias, assetId].forEach(key => {
+      key.onBlur = this.estimateNormalTransactionGas.bind(this)
+    })
 
     let submitLabel = lang === 'zh' ? '提交交易' : 'Submit transaction'
 
@@ -174,8 +182,6 @@ class NormalTxForm extends React.Component {
     const availableBalance = this.props.balanceAmount(this.props.fields, assetDecimal)
 
     const showBtmAmountUnit = (assetAlias.value === 'BTM' || assetId.value === btmID)
-
-    console.log(this.props)
 
     return (
         <form
@@ -282,20 +288,32 @@ const validate = (values, props) => {
 }
 
 const asyncValidate = (values) => {
-  return new Promise((resolve, reject) => {
-    const address = values.address
-    chainClient().accounts.validateAddresses(address)
-      .then(
-        (resp) => {
-          if(!resp.data.valid){
-            reject({ address: 'invalid address'})
-          }else {
-            resolve()
-          }
-        }
-      ).catch((err) => {
-        reject({ address: err })
-      })
+  const errors = []
+  const promises = []
+
+  values.receivers.forEach((receiver, idx) => {
+    const address = values.receivers[idx].address
+    if ( !address || address.length === 0)
+      promises.push(Promise.resolve())
+    else{
+      promises.push(
+        chainClient().accounts.validateAddresses(address)
+          .then(
+            (resp) => {
+              if (!resp.data.valid) {
+                errors[idx] = {address: 'invalid address'}
+              }
+              return {}
+            }
+          ))
+    }
+  })
+
+  return Promise.all(promises).then(() => {
+    if (errors.length > 0) throw {
+      receivers: errors
+    }
+    return {}
   })
 }
 
@@ -329,7 +347,7 @@ export default BaseNew.connect(
       'gasLevel',
     ],
     asyncValidate,
-    asyncBlurFields: [ 'receivers[].address'],
+    asyncBlurFields: ['receivers[].address'],
     validate,
     touchOnChange: true,
     initialValues: {
