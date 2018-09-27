@@ -82,12 +82,25 @@ class NormalTxForm extends React.Component {
       id: counter
     })
     this.setState({
-      counter: counter+1
+      counter: counter+1,
+      estimateGas: null
     })
   }
 
   removeReceiverItem(index) {
-    this.props.fields.receivers.removeField(index)
+    const receiver = this.props.fields.receivers
+    const promise = new Promise(function(resolve, reject) {
+      try {
+        receiver.removeField(index)
+        resolve()
+      } catch (err) {
+        reject(err)
+      }
+    })
+
+    promise.then(
+      () =>  this.estimateNormalTransactionGas()
+    )
   }
 
   estimateNormalTransactionGas() {
@@ -170,6 +183,9 @@ class NormalTxForm extends React.Component {
     const lang = this.props.lang;
     [accountAlias, accountId, assetAlias, assetId].forEach(key => {
       key.onBlur = this.estimateNormalTransactionGas.bind(this)
+    });
+    (receivers.map(receiver => receiver.amount)).forEach(amount =>{
+      amount.onBlur = this.estimateNormalTransactionGas.bind(this)
     })
 
     let submitLabel = lang === 'zh' ? '提交交易' : 'Submit transaction'
