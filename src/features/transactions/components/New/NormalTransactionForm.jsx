@@ -33,16 +33,8 @@ class NormalTxForm extends React.Component {
     this.addReceiverItem = this.addReceiverItem.bind(this)
   }
 
-  disableSubmit(props) {
-    const hasValue = target => {
-      return !!(target && target.value)
-    }
-
-    return !( (this.state.estimateGas) &&
-      (hasValue(props.accountId) || hasValue(props.accountAlias)) &&
-      (hasValue(props.assetId) || hasValue(props.assetAlias)) &&
-      hasValue(props.address) && (hasValue(props.amount))
-    )
+  disableSubmit() {
+    return !(this.state.estimateGas)
   }
 
   submitWithValidation(data) {
@@ -98,9 +90,7 @@ class NormalTxForm extends React.Component {
       }
     })
 
-    promise.then(
-      () =>  this.estimateNormalTransactionGas()
-    )
+    promise.then(() =>  this.estimateNormalTransactionGas())
   }
 
   estimateNormalTransactionGas() {
@@ -282,7 +272,7 @@ class NormalTxForm extends React.Component {
 
             <div className={styles.submit}>
               <button type='submit' className='btn btn-primary'
-                      disabled={submitting || this.disableSubmit(this.props.fields)}>
+                      disabled={submitting || this.disableSubmit()}>
                 {submitLabel}
               </button>
             </div>
