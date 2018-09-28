@@ -114,7 +114,7 @@ class AmountUnitField extends React.Component {
           />
 
 
-          <div className={`input-group-btn ${this.state.showDropdown && 'open'}`}>
+          <div className={`${styles.unit} input-group-btn ${this.state.showDropdown && 'open'}`}>
             <DropdownButton
               className={styles.dropdownButton}
               id='input-dropdown-addon'
