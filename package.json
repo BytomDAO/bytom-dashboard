@@ -30,7 +30,7 @@
     "prop-types": "^15.5.8",
     "react": "~15.5.0",
     "react-ace": "~3.5.0",
-    "react-autosuggest": "~6.0.4",
+    "react-autosuggest": "~9.4.2",
     "react-bootstrap": "~0.30.3",
     "react-dom": "~15.5.0",
     "react-markdown": "^2.5.0",
