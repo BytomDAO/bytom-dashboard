@@ -6,6 +6,7 @@ import {
   SubmitIndicator
 } from 'features/shared/components'
 import { btmID } from 'utility/environment'
+import { sum } from 'utility/math'
 import { normalizeBTMAmountUnit, converIntToDec } from 'utility/buildInOutDisplay'
 import styles from './ConfirmModal.scss'
 import { Link } from 'react-router'
@@ -31,7 +32,7 @@ class ConfirmModal extends Component {
 
     const fee = Number(gasLevel.value * gas)
 
-    const totalAmount = receivers.map(x => Number(x.amount.value)).reduce((prev, next) => prev + next)
+    const totalAmount = sum(receivers, 'amount.value')
 
     const  Total = (assetAlias.value ==='BTM' ||assetId.value === btmID)?
       (totalAmount + fee): totalAmount
@@ -48,8 +49,11 @@ class ConfirmModal extends Component {
       }
     }
 
-    const asset = assetAlias.value || (this.props.asset.find(i => i.id === assetId.value)).alias || assetId.value
-    const assetIdLink = assetId.value || (this.props.asset.find(i => i.alias === assetAlias.value)).id
+    const findAssetById = assetId.value && this.props.asset.find(i => i.id === assetId.value)
+    const findAssetByAlias = assetAlias.value && this.props.asset.find(i => i.alias === assetAlias.value)
+
+    const asset = assetAlias.value || ( findAssetById && findAssetById.alias ) || assetId.value
+    const assetIdLink = assetId.value || ( findAssetByAlias && findAssetByAlias.id )
 
     const unit =  <Link to={`/assets/${assetIdLink}`}  className={styles.unit} target='_blank'>
         {(asset !== btmID && asset !== 'BTM') && asset}
@@ -133,7 +137,6 @@ const validate = values => {
   }
   return errors
 }
-
 
 export default  reduxForm({
   form: 'NormalTransactionForm',

@@ -14,6 +14,8 @@ import React from 'react'
 import styles from './New.scss'
 import disableAutocomplete from 'utility/disableAutocomplete'
 import actions from 'actions'
+import { getAssetDecimal} from '../../transactions'
+
 
 class AdvancedTxForm extends React.Component {
   constructor(props) {
@@ -112,7 +114,7 @@ class AdvancedTxForm extends React.Component {
               assets={this.props.assets}
               remove={this.removeActionItem}
               lang={lang}
-              decimal={this.props.assetDecimal(action)}
+              decimal={getAssetDecimal(action, this.props.asset)}
             />)}
 
           <div className={`btn-group ${styles.addActionContainer} ${this.state.showDropdown && 'open'}`}>
@@ -243,21 +245,23 @@ const validate = (values, props) => {
   return errors
 }
 
+const mapDispatchToProps = (dispatch) => ({
+  ...BaseNew.mapDispatchToProps('transaction')(dispatch),
+  decode: (transaction) => dispatch( actions.transaction.decode(transaction)),
+  showJsonModal: (body) => dispatch(actions.app.showModal(
+    body,
+    actions.app.hideModal,
+    null,
+    { wide: true }
+  )),
+})
+
 export default BaseNew.connect(
   (state, ownProps) => ({
     ...BaseNew.mapStateToProps('transaction')(state, ownProps),
     decodedTx: state.transaction.decodedTx
   }),
-  (dispatch) => ({
-    ...BaseNew.mapDispatchToProps('transaction')(dispatch),
-    decode: (transaction) => dispatch( actions.transaction.decode(transaction)),
-    showJsonModal: (body) => dispatch(actions.app.showModal(
-      body,
-      actions.app.hideModal,
-      null,
-      { wide: true }
-    )),
-  }),
+  mapDispatchToProps,
   reduxForm({
     form: 'AdvancedTransactionForm',
     fields: [

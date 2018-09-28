@@ -17,7 +17,7 @@ import disableAutocomplete from 'utility/disableAutocomplete'
 import { btmID } from 'utility/environment'
 import actions from 'actions'
 import ConfirmModal from './ConfirmModal/ConfirmModal'
-
+import { balance , getAssetDecimal, normalTxActionBuilder} from '../../transactions'
 
 class NormalTxForm extends React.Component {
   constructor(props) {
@@ -84,10 +84,10 @@ class NormalTxForm extends React.Component {
     const promise = new Promise(function(resolve, reject) {
       try {
         receiver.removeField(index)
-        resolve()
       } catch (err) {
         reject(err)
       }
+      resolve()
     })
 
     promise.then(() =>  this.estimateNormalTransactionGas())
@@ -111,37 +111,7 @@ class NormalTxForm extends React.Component {
       return
     }
 
-    const totalAmount = amounts.reduce((prev, next) => prev + next)
-
-    const spendAction = {
-      accountAlias,
-      accountId,
-      assetAlias,
-      assetId,
-      amount: totalAmount,
-      type: 'spend_account'
-    }
-
-    const gasAction = {
-      accountAlias,
-      accountId,
-      assetAlias: 'BTM',
-      amount: Math.pow(10, 7),
-      type: 'spend_account'
-    }
-
-    const actions = [spendAction, gasAction]
-    receivers.forEach((receiver)=>{
-      actions.push(
-        {
-          address: receiver.address.value,
-          assetAlias,
-          assetId,
-          amount:Number(receiver.amount.value),
-          type: 'control_address'
-        }
-      )
-    })
+    const actions = normalTxActionBuilder(transaction, Math.pow(10, 7), 'amount.value' )
 
     const body = {actions, ttl: 1}
     this.connection.request('/build-transaction', body).then(resp => {
@@ -180,12 +150,12 @@ class NormalTxForm extends React.Component {
 
     let submitLabel = lang === 'zh' ? '提交交易' : 'Submit transaction'
 
-    const assetDecimal = this.props.assetDecimal(this.props.fields) || 0
+    const assetDecimal = getAssetDecimal(this.props.fields, this.props.asset) || 0
 
     const showAvailableBalance = (accountAlias.value || accountId.value) &&
       (assetAlias.value || assetId.value)
 
-    const availableBalance = this.props.balanceAmount(this.props.fields, assetDecimal)
+    const availableBalance = balance(this.props.fields, assetDecimal, this.props.balances, this.props.btmAmountUnit)
 
     const showBtmAmountUnit = (assetAlias.value === 'BTM' || assetId.value === btmID)
 
@@ -247,6 +217,7 @@ class NormalTxForm extends React.Component {
                 {showBtmAmountUnit &&
                 <AmountUnitField title={lang === 'zh' ? '数量' : 'Amount'} fieldProps={receiver.amount}/>
                 }
+
                 {index===0 ?
                   <a href='#' className='btn btn-sm ' onClick={this.addReceiverItem}>+</a> :
                   <a href='#' className='btn btn-sm btn-danger' onClick={() => this.removeReceiverItem(index)}>-</a>
@@ -323,23 +294,24 @@ const asyncValidate = (values) => {
   })
 }
 
+const mapDispatchToProps = (dispatch) => ({
+  showError: err => dispatch({type: 'ERROR', payload: err}),
+  closeModal: () => dispatch(actions.app.hideModal),
+  showModal: (body) => dispatch(actions.app.showModal(
+    body,
+    actions.app.hideModal,
+    null,
+    {
+      dialog: true,
+      noCloseBtn: true
+    }
+  )),
+  ...BaseNew.mapDispatchToProps('transaction')(dispatch)
+})
 
 export default BaseNew.connect(
   BaseNew.mapStateToProps('transaction'),
-  (dispatch) => ({
-    showError: err => dispatch({type: 'ERROR', payload: err}),
-    closeModal: () => dispatch(actions.app.hideModal),
-    showModal: (body) => dispatch(actions.app.showModal(
-      body,
-      actions.app.hideModal,
-      null,
-      {
-        dialog: true,
-        noCloseBtn: true
-      }
-    )),
-    ...BaseNew.mapDispatchToProps('transaction')(dispatch)
-  }),
+  mapDispatchToProps,
   reduxForm({
     form: 'NormalTransactionForm',
     fields: [

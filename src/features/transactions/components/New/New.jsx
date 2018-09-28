@@ -4,8 +4,6 @@ import { connect } from 'react-redux'
 import styles from './New.scss'
 import actions from 'actions'
 import componentClassNames from 'utility/componentClassNames'
-import { btmID } from 'utility/environment'
-import { normalizeBTMAmountUnit, converIntToDec } from 'utility/buildInOutDisplay'
 import Tutorial from 'features/tutorial/components/Tutorial'
 import NormalTxForm from './NormalTransactionForm'
 import AdvancedTxForm from './AdvancedTransactionForm'
@@ -50,10 +48,8 @@ class Form extends React.Component {
       const array = [
         'accountAlias',
         'accountId',
-        'amount',
         'assetAlias',
         'assetId',
-        'address',
         'password']
 
       for (let k in array){
@@ -62,7 +58,7 @@ class Form extends React.Component {
         }
       }
 
-      return true
+      return !(this.props.normalform['receivers'].length > 1)
     }else{
       return !(this.props.advform['actions'].length > 0 ||
       this.props.advform['signTransaction'] ||
@@ -82,48 +78,6 @@ class Form extends React.Component {
 
   render() {
     const lang = this.props.lang
-
-    const balanceAmount = (values, assetdecimal) => {
-      let balances = this.props.balances
-      let filteredBalances = balances
-      if (values.accountAlias.value) {
-        filteredBalances = filteredBalances.filter(balance => balance.accountAlias === values.accountAlias.value)
-      }
-      if (values.accountId.value) {
-        filteredBalances = filteredBalances.filter(balance => balance.accountId === values.accountId.value)
-      }
-      if (values.assetAlias.value) {
-        filteredBalances = filteredBalances.filter(balance => balance.assetAlias === values.assetAlias.value)
-      }
-      if (values.assetId.value) {
-        filteredBalances = filteredBalances.filter(balance => balance.assetId === values.assetId.value)
-      }
-
-      if(filteredBalances.length === 1){
-        if (filteredBalances[0].assetId === btmID){
-          return normalizeBTMAmountUnit(filteredBalances[0].assetId, filteredBalances[0].amount, this.props.btmAmountUnit)
-        }else if( assetdecimal ){
-          return converIntToDec(filteredBalances[0].amount, assetdecimal)
-        }else{
-          return filteredBalances[0].amount
-        }
-      }else {
-        return null
-      }
-    }
-
-    const assetDecimal = (values) => {
-      let asset = this.props.asset
-      let filteredAsset = asset
-      if (values.assetAlias.value) {
-        filteredAsset = filteredAsset.filter(asset => asset.alias === values.assetAlias.value)
-      }
-      if (values.assetId.value) {
-        filteredAsset = filteredAsset.filter(asset => asset.id === values.assetId.value)
-      }
-
-      return (filteredAsset.length === 1 && filteredAsset[0].definition && filteredAsset[0].id !== btmID ) ? filteredAsset[0].definition.decimals : null
-    }
 
     return (
       <div className={componentClassNames(this, 'flex-container')}>
@@ -151,8 +105,7 @@ class Form extends React.Component {
               lang={this.props.lang}
               btmAmountUnit={this.props.btmAmountUnit}
               asset={this.props.asset}
-              balanceAmount={balanceAmount}
-              assetDecimal={assetDecimal}
+              balances ={this.props.balances}
               handleKeyDown={this.handleKeyDown}
             /> }
 
@@ -161,8 +114,6 @@ class Form extends React.Component {
               lang={this.props.lang}
               btmAmountUnit={this.props.btmAmountUnit}
               asset={this.props.asset}
-              balanceAmount={balanceAmount}
-              assetDecimal={assetDecimal}
               handleKeyDown={this.handleKeyDown}
             />}
 
@@ -173,28 +124,32 @@ class Form extends React.Component {
   }
 }
 
-export default connect(
-  (state) => {
-    let balances = []
-    for (let key in state.balance.items) {
-      balances.push(state.balance.items[key])
-    }
+const mapStateToProps = (state) => {
+  let balances = []
+  for (let key in state.balance.items) {
+    balances.push(state.balance.items[key])
+  }
 
-    return {
-      autocompleteIsBalanceLoaded: state.balance.autocompleteIsLoaded,
-      autocompleteIsAssetLoaded: state.asset.autocompleteIsLoaded,
-      lang: state.core.lang,
-      btmAmountUnit: state.core.btmAmountUnit,
-      balances,
-      asset: Object.keys(state.asset.items).map(k => state.asset.items[k]),
-      normalform: getValues(state.form.NormalTransactionForm),
-      advform: getValues(state.form.AdvancedTransactionForm),
-    }
-  },
-  (dispatch) => ({
-    didLoadBalanceAutocomplete: () => dispatch(actions.balance.didLoadAutocomplete),
-    fetchBalanceAll: (cb) => dispatch(actions.balance.fetchAll(cb)),
-    didLoadAssetAutocomplete: () => dispatch(actions.asset.didLoadAutocomplete),
-    fetchAssetAll: (cb) => dispatch(actions.asset.fetchAll(cb)),
-  })
+  return {
+    autocompleteIsBalanceLoaded: state.balance.autocompleteIsLoaded,
+    autocompleteIsAssetLoaded: state.asset.autocompleteIsLoaded,
+    lang: state.core.lang,
+    btmAmountUnit: state.core.btmAmountUnit,
+    balances,
+    asset: Object.keys(state.asset.items).map(k => state.asset.items[k]),
+    normalform: getValues(state.form.NormalTransactionForm),
+    advform: getValues(state.form.AdvancedTransactionForm),
+  }
+}
+
+const mapDispatchToProps = (dispatch) => ({
+  didLoadBalanceAutocomplete: () => dispatch(actions.balance.didLoadAutocomplete),
+  fetchBalanceAll: (cb) => dispatch(actions.balance.fetchAll(cb)),
+  didLoadAssetAutocomplete: () => dispatch(actions.asset.didLoadAutocomplete),
+  fetchAssetAll: (cb) => dispatch(actions.asset.fetchAll(cb)),
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
 )(withRouter(Form))

@@ -3,6 +3,7 @@ import {chainClient} from 'utility/environment'
 import {parseNonblankJSON} from 'utility/string'
 import {push} from 'react-router-redux'
 import {baseCreateActions, baseListActions} from 'features/shared/actions'
+import { normalTxActionBuilder } from './transactions'
 
 const type = 'transaction'
 
@@ -20,34 +21,7 @@ function preprocessTransaction(formParams) {
 
   if (formParams.form === 'normalTx') {
     const gasPrice = formParams.state.estimateGas * Number(formParams.gasLevel)
-    const totalAmount = formParams.receivers.map(x => Number(x.amount)).reduce((prev, next) => prev + next)
-    const receivers = formParams.receivers
-
-    builder.actions.push({
-      accountAlias: formParams.accountAlias,
-      accountId: formParams.accountId,
-      assetAlias: 'BTM',
-      amount: Number(gasPrice),
-      type: 'spend_account'
-    })
-    builder.actions.push({
-      accountAlias: formParams.accountAlias,
-      accountId: formParams.accountId,
-      assetAlias: formParams.assetAlias,
-      assetId: formParams.assetId,
-      amount: totalAmount,
-      type: 'spend_account'
-    })
-
-    receivers.forEach((receiver)=>{
-      builder.actions.push({
-        address: receiver.address,
-        assetAlias: formParams.assetAlias,
-        assetId: formParams.assetId,
-        amount: receiver.amount,
-        type: 'control_address'
-      })
-    })
+    builder.actions = normalTxActionBuilder(formParams,  Number(gasPrice), 'amount')
   }
 
   if (builder.baseTransaction == '') {
