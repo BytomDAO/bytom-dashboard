@@ -2,12 +2,17 @@
   background: $background-color;
   padding: 0 $gutter-size;
   margin-top: $title-height;
+  display: flex;
+  flex-direction: row;
+}
+
+.center{
+  margin: 0 auto;
 }
 
 .content {
   min-width: 400px;
   width: 55%;
-  margin: 0 auto;
 }
 
 .container{
@@ -82,8 +87,20 @@
   margin-bottom: $gutter-size;
 }
 
+.tutorialItem{
+  display: flex;
+  position: relative;
+  flex-direction: column;
+
+  >div:first-of-type{
+    width: 60%;
+    min-width: 350px;
+  }
+}
+
 .item{
   display: flex;
+  position: relative;
 
   >div:first-of-type{
     width: 60%;
@@ -132,11 +149,15 @@
 
 .receiverBtn{
   position: absolute;
-  right: 33px;
+  right: -27px;
   margin-top: 32px;
   width: 25px;
   height: 25px;
   font-size: 22px;
   line-height: 20px;
   padding: 1px 5px 0px 5px;
+}
+
+.borderBottom{
+  border-bottom: 1px solid $border-color;
 }

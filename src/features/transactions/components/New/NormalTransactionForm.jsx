@@ -165,9 +165,9 @@ class NormalTxForm extends React.Component {
           onSubmit={e => this.confirmedTransaction(e, assetDecimal)}
           {...disableAutocomplete}
         >
-          <div>
+          <div className={styles.borderBottom}>
             <label className={styles.title}>{lang === 'zh' ? '从' : 'From'}</label>
-            <div className={`${styles.mainBox} ${styles.item}`}>
+            <div className={`${styles.mainBox} ${this.props.tutorialVisible? styles.tutorialItem: styles.item}`}>
               <ObjectSelectorField
                 key='account-selector-field'
                 keyIndex='normaltx-account'
@@ -201,7 +201,7 @@ class NormalTxForm extends React.Component {
             <div className={styles.mainBox}>
             {receivers.map((receiver, index) =>
               <div
-                className={styles.item}
+                className={this.props.tutorialVisible? styles.tutorialItem: styles.item}
                 key={receiver.id.value}>
                 <TextField title={lang === 'zh' ? '地址' : 'Address'} fieldProps={{
                   ...receiver.address,

@@ -85,37 +85,41 @@ class Form extends React.Component {
 
         <div className={`${styles.mainContainer} flex-container`}>
 
-          <div className={styles.btnGroup} >
-            <div className={'btn-group'} role='group'>
-              <button
-                className={`btn btn-default ${this.state.showAdvanceTx ? null : 'active'}`}
-                onClick={(e) => this.showForm(e, 'normal')}>
-                {lang === 'zh' ? '简单交易' : 'Normal'}
-                </button>
-              <button
-                className={`btn btn-default ${this.state.showAdvanceTx ? 'active' : null}`}
-                onClick={(e) => this.showForm(e, 'advanced')}>
-                {lang === 'zh' ? '高级交易' : 'Advanced'}
-                </button>
+          <div className={styles.center}>
+            <div className={styles.btnGroup} >
+              <div className={'btn-group'} role='group'>
+                <button
+                  className={`btn btn-default ${this.state.showAdvanceTx ? null : 'active'}`}
+                  onClick={(e) => this.showForm(e, 'normal')}>
+                  {lang === 'zh' ? '简单交易' : 'Normal'}
+                  </button>
+                <button
+                  className={`btn btn-default ${this.state.showAdvanceTx ? 'active' : null}`}
+                  onClick={(e) => this.showForm(e, 'advanced')}>
+                  {lang === 'zh' ? '高级交易' : 'Advanced'}
+                  </button>
+              </div>
             </div>
+
+              {!this.state.showAdvanceTx &&
+              <NormalTxForm
+                lang={this.props.lang}
+                btmAmountUnit={this.props.btmAmountUnit}
+                asset={this.props.asset}
+                balances ={this.props.balances}
+                handleKeyDown={this.handleKeyDown}
+                tutorialVisible={this.props.tutorialVisible}
+              /> }
+
+              {this.state.showAdvanceTx &&
+              <AdvancedTxForm
+                lang={this.props.lang}
+                btmAmountUnit={this.props.btmAmountUnit}
+                asset={this.props.asset}
+                handleKeyDown={this.handleKeyDown}
+              />}
           </div>
 
-            {!this.state.showAdvanceTx &&
-            <NormalTxForm
-              lang={this.props.lang}
-              btmAmountUnit={this.props.btmAmountUnit}
-              asset={this.props.asset}
-              balances ={this.props.balances}
-              handleKeyDown={this.handleKeyDown}
-            /> }
-
-            {this.state.showAdvanceTx &&
-            <AdvancedTxForm
-              lang={this.props.lang}
-              btmAmountUnit={this.props.btmAmountUnit}
-              asset={this.props.asset}
-              handleKeyDown={this.handleKeyDown}
-            />}
 
           <Tutorial types={['TutorialForm']} advTx={this.state.showAdvanceTx}/>
         </div>
@@ -139,6 +143,7 @@ const mapStateToProps = (state) => {
     asset: Object.keys(state.asset.items).map(k => state.asset.items[k]),
     normalform: getValues(state.form.NormalTransactionForm),
     advform: getValues(state.form.AdvancedTransactionForm),
+    tutorialVisible: !state.tutorial.location.isVisited
   }
 }
 
