@@ -219,8 +219,8 @@ class NormalTxForm extends React.Component {
                 }
 
                 {index===0 ?
-                  <a href='#' className='btn btn-sm ' onClick={this.addReceiverItem}>+</a> :
-                  <a href='#' className='btn btn-sm btn-danger' onClick={() => this.removeReceiverItem(index)}>-</a>
+                  <a href='#' className={styles.receiverBtn} onClick={this.addReceiverItem}>+</a> :
+                  <a href='#' className={`${styles.receiverBtn} text-danger`}onClick={() => this.removeReceiverItem(index)}>-</a>
                 }
 
               </div>
