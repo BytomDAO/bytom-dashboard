@@ -68,6 +68,9 @@ class ConfirmModal extends Component {
               <td className={styles.colLabel}>From</td>
               <td> <span>{accountAlias.value || accountId.value}</span></td>
             </tr>
+            <tr>
+              <td></td>
+            </tr>
 
 
             {receivers.map((receiver) =>
@@ -78,7 +81,11 @@ class ConfirmModal extends Component {
               <tr>
                 <td className={styles.colLabel}>{lang === 'zh'? '数量':'Amount'}</td>
                 <td> <code>{normalize(receiver.amount.value, asset)} {unit}</code> </td>
-              </tr>])}
+              </tr>,
+             <tr>
+               <td></td>
+             </tr>
+             ])}
 
             <tr>
               <td className={styles.colLabel}>{lang === 'zh'?'手续费':'Fee'}</td>
