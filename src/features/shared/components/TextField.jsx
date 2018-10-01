@@ -26,6 +26,7 @@ class TextField extends React.Component {
       <div className='form-group'>
         {this.props.title && <FieldLabel>{this.props.title}</FieldLabel>}
         <input className='form-control'
+               title={fieldProps.value||''}
           type={this.state.type}
           placeholder={this.props.placeholder}
           autoFocus={!!this.props.autoFocus}
