@@ -1,13 +1,3 @@
 .slider{
   width: 340px;
 }
-
-@for $i from 1 through 3 {
-  .gradient-#{$i}::-webkit-slider-runnable-track{
-    background:linear-gradient(to right, $highlight-default 0%, $highlight-default ($i/3)*100% ,#eee ($i/3)*100% , #eee) !important;
-  }
-
-  .gradient-#{$i}::-moz-range-track{
-    background:linear-gradient(to right, $highlight-default 0%, $highlight-default ($i/3)*100% ,#eee ($i/3)*100%, #eee) !important;
-  }
-}

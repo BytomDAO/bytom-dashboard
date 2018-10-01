@@ -238,11 +238,11 @@ input[type=range]::-webkit-slider-runnable-track {
   height: 7px;
   cursor: pointer;
   animate: 0.2s;
-  background: $background-content-color;
+  background: #e4e4e4;
 }
 input[type=range]::-webkit-slider-thumb {
-  height: 20px;
-  width: 20px;
+  height: 18px;
+  width: 18px;
   border-radius: 15px;
   background: $highlight-default;
   cursor: pointer;
@@ -250,7 +250,7 @@ input[type=range]::-webkit-slider-thumb {
   margin-top: -6px;
 }
 input[type=range]:focus::-webkit-slider-runnable-track {
-  background: $background-content-color;
+  background: #e4e4e4;
 }
 
 //Firefox
@@ -258,12 +258,12 @@ input[type=range]::-moz-range-track {
   height: 7px;
   cursor: pointer;
   animate: 0.2s;
-  background: $background-content-color;
+  background: #e4e4e4;
 }
 input[type=range]::-moz-range-thumb {
   border: none;
-  height: 20px;
-  width: 20px;
+  height: 18px;
+  width: 18px;
   border-radius: 15px;
   background: $highlight-default;
   cursor: pointer;
@@ -279,17 +279,17 @@ input[type=range]::-ms-track {
   color: transparent;
 }
 input[type=range]::-ms-fill-lower {
-  background: $highlight-default;
+  background: #e4e4e4;
   border-radius: 2px;
 }
 input[type=range]::-ms-fill-upper {
-  background: $background-content-color;
+  background: #e4e4e4;
   border-radius: 2px;
 }
 input[type=range]::-ms-thumb {
   margin-top: 1px;
-  height: 20px;
-  width: 20px;
+  height: 18px;
+  width: 18px;
   border-radius: 15px;
   background: $highlight-default;
   cursor: pointer;
@@ -298,5 +298,5 @@ input[type=range]:focus::-ms-fill-lower {
   background: $highlight-default;
 }
 input[type=range]:focus::-ms-fill-upper {
-  background: $background-content-color;
+  background: #e4e4e4;
 }

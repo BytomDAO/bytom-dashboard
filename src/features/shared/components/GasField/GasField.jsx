@@ -23,8 +23,8 @@ class GasField extends React.Component {
 
     return(
       <div className={`form-group ${styles.slider}`}>
-        {this.props.gas && <span>{normalizeBTMAmountUnit(btmID, fieldProps.value* this.props.gas, this.props.btmAmountUnit)}</span>}
-        <input className={fieldProps.value>0&&styles[`gradient-${fieldProps.value}`]}
+        <span>{normalizeBTMAmountUnit(btmID, fieldProps.value* this.props.gas, this.props.btmAmountUnit)}</span>
+        <input
                type='range'
                min={0}
                max={3}
