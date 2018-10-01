@@ -17,30 +17,24 @@ import disableAutocomplete from 'utility/disableAutocomplete'
 import { btmID } from 'utility/environment'
 import actions from 'actions'
 import ConfirmModal from './ConfirmModal/ConfirmModal'
-
+import { balance , getAssetDecimal, normalTxActionBuilder} from '../../transactions'
 
 class NormalTxForm extends React.Component {
   constructor(props) {
     super(props)
     this.connection = chainClient().connection
     this.state = {
-      estimateGas:null
+      estimateGas:null,
+      counter: 1
     }
 
     this.submitWithValidation = this.submitWithValidation.bind(this)
     this.disableSubmit = this.disableSubmit.bind(this)
+    this.addReceiverItem = this.addReceiverItem.bind(this)
   }
 
-  disableSubmit(props) {
-    const hasValue = target => {
-      return !!(target && target.value)
-    }
-
-    return !( (this.state.estimateGas) &&
-      (hasValue(props.accountId) || hasValue(props.accountAlias)) &&
-      (hasValue(props.assetId) || hasValue(props.assetAlias)) &&
-      hasValue(props.address) && (hasValue(props.amount))
-    )
+  disableSubmit() {
+    return !(this.state.estimateGas)
   }
 
   submitWithValidation(data) {
@@ -74,48 +68,51 @@ class NormalTxForm extends React.Component {
     )
   }
 
+  addReceiverItem() {
+    const counter = this.state.counter
+    this.props.fields.receivers.addField({
+      id: counter
+    })
+    this.setState({
+      counter: counter+1,
+      estimateGas: null
+    })
+  }
+
+  removeReceiverItem(index) {
+    const receiver = this.props.fields.receivers
+    const promise = new Promise(function(resolve, reject) {
+      try {
+        receiver.removeField(index)
+      } catch (err) {
+        reject(err)
+      }
+      resolve()
+    })
+
+    promise.then(() =>  this.estimateNormalTransactionGas())
+  }
+
   estimateNormalTransactionGas() {
     const transaction = this.props.fields
-    const address = transaction.address.value
-    const amount = transaction.amount.value
     const accountAlias = transaction.accountAlias.value
     const accountId = transaction.accountId.value
     const assetAlias = transaction.assetAlias.value
     const assetId = transaction.assetId.value
+    const receivers = transaction.receivers
+    const addresses = receivers.map(x => x.address.value)
+    const amounts = receivers.map(x => Number(x.amount.value))
 
     const noAccount = !accountAlias && !accountId
     const noAsset = !assetAlias && !assetId
 
-    if (!address || !amount || noAccount || noAsset) {
+    if ( addresses.includes('') || amounts.includes(0)|| noAccount || noAsset) {
       this.setState({estimateGas: null})
       return
     }
 
-    const spendAction = {
-      accountAlias,
-      accountId,
-      assetAlias,
-      assetId,
-      amount: Number(amount),
-      type: 'spend_account'
-    }
-    const receiveAction = {
-      address,
-      assetAlias,
-      assetId,
-      amount: Number(amount),
-      type: 'control_address'
-    }
+    const actions = normalTxActionBuilder(transaction, Math.pow(10, 7), 'amount.value' )
 
-    const gasAction = {
-      accountAlias,
-      accountId,
-      assetAlias: 'BTM',
-      amount: Math.pow(10, 7),
-      type: 'spend_account'
-    }
-
-    const actions = [spendAction, receiveAction, gasAction]
     const body = {actions, ttl: 1}
     this.connection.request('/build-transaction', body).then(resp => {
       if (resp.status === 'fail') {
@@ -139,23 +136,26 @@ class NormalTxForm extends React.Component {
 
   render() {
     const {
-      fields: {accountId, accountAlias, assetId, assetAlias, address, amount, gasLevel},
+      fields: {accountId, accountAlias, assetId, assetAlias, receivers, gasLevel},
       error,
       submitting
     } = this.props
     const lang = this.props.lang;
-    [amount, accountAlias, accountId, assetAlias, assetId].forEach(key => {
+    [accountAlias, accountId, assetAlias, assetId].forEach(key => {
       key.onBlur = this.estimateNormalTransactionGas.bind(this)
+    });
+    (receivers.map(receiver => receiver.amount)).forEach(amount =>{
+      amount.onBlur = this.estimateNormalTransactionGas.bind(this)
     })
 
     let submitLabel = lang === 'zh' ? '提交交易' : 'Submit transaction'
 
-    const assetDecimal = this.props.assetDecimal(this.props.fields) || 0
+    const assetDecimal = getAssetDecimal(this.props.fields, this.props.asset) || 0
 
     const showAvailableBalance = (accountAlias.value || accountId.value) &&
       (assetAlias.value || assetId.value)
 
-    const availableBalance = this.props.balanceAmount(this.props.fields, assetDecimal)
+    const availableBalance = balance(this.props.fields, assetDecimal, this.props.balances, this.props.btmAmountUnit)
 
     const showBtmAmountUnit = (assetAlias.value === 'BTM' || assetId.value === btmID)
 
@@ -165,9 +165,9 @@ class NormalTxForm extends React.Component {
           onSubmit={e => this.confirmedTransaction(e, assetDecimal)}
           {...disableAutocomplete}
         >
-          <div>
+          <div className={styles.borderBottom}>
             <label className={styles.title}>{lang === 'zh' ? '从' : 'From'}</label>
-            <div className={styles.main}>
+            <div className={`${styles.mainBox} ${this.props.tutorialVisible? styles.tutorialItem: styles.item}`}>
               <ObjectSelectorField
                 key='account-selector-field'
                 keyIndex='normaltx-account'
@@ -197,20 +197,34 @@ class NormalTxForm extends React.Component {
             </div>
 
             <label className={styles.title}>{lang === 'zh' ? '至' : 'To'}</label>
-            <div className={styles.main}>
-              <TextField title={lang === 'zh' ? '地址' : 'Address'} fieldProps={{
-                ...address,
-                onBlur: (e) => {
-                  address.onBlur(e)
-                  this.estimateNormalTransactionGas()
-                },
-              }}/>
-              {!showBtmAmountUnit &&
-              <AmountInputMask title={lang === 'zh' ? '数量' : 'Amount'} fieldProps={amount} decimal={assetDecimal}
-              />}
-              {showBtmAmountUnit &&
-              <AmountUnitField title={lang === 'zh' ? '数量' : 'Amount'} fieldProps={amount}/>
-              }
+
+            <div className={styles.mainBox}>
+            {receivers.map((receiver, index) =>
+              <div
+                className={this.props.tutorialVisible? styles.tutorialItem: styles.item}
+                key={receiver.id.value}>
+                <TextField title={lang === 'zh' ? '地址' : 'Address'} fieldProps={{
+                  ...receiver.address,
+                  onBlur: (e) => {
+                    receiver.address.onBlur(e)
+                    this.estimateNormalTransactionGas()
+                  },
+                }}/>
+
+                {!showBtmAmountUnit &&
+                <AmountInputMask title={lang === 'zh' ? '数量' : 'Amount'} fieldProps={receiver.amount} decimal={assetDecimal}
+                />}
+                {showBtmAmountUnit &&
+                <AmountUnitField title={lang === 'zh' ? '数量' : 'Amount'} fieldProps={receiver.amount}/>
+                }
+
+                {index===0 ?
+                  <a href='#' className={styles.receiverBtn} onClick={this.addReceiverItem}>+</a> :
+                  <a href='#' className={`${styles.receiverBtn} text-danger`}onClick={() => this.removeReceiverItem(index)}>-</a>
+                }
+
+              </div>
+            )}
             </div>
 
             <label className={styles.title}>{lang === 'zh' ? '选择手续费' : 'Select Fee'}</label>
@@ -229,7 +243,7 @@ class NormalTxForm extends React.Component {
 
             <div className={styles.submit}>
               <button type='submit' className='btn btn-primary'
-                      disabled={submitting || this.disableSubmit(this.props.fields)}>
+                      disabled={submitting || this.disableSubmit()}>
                 {submitLabel}
               </button>
             </div>
@@ -251,57 +265,76 @@ const validate = (values, props) => {
 }
 
 const asyncValidate = (values) => {
-  return new Promise((resolve, reject) => {
-    const address = values.address
-    chainClient().accounts.validateAddresses(address)
-      .then(
-        (resp) => {
-          if(!resp.data.valid){
-            reject({ address: 'invalid address'})
-          }else {
-            resolve()
-          }
-        }
-      ).catch((err) => {
-        reject({ address: err })
-      })
+  const errors = []
+  const promises = []
+
+  values.receivers.forEach((receiver, idx) => {
+    const address = values.receivers[idx].address
+    if ( !address || address.length === 0)
+      promises.push(Promise.resolve())
+    else{
+      promises.push(
+        chainClient().accounts.validateAddresses(address)
+          .then(
+            (resp) => {
+              if (!resp.data.valid) {
+                errors[idx] = {address: 'invalid address'}
+              }
+              return {}
+            }
+          ))
+    }
+  })
+
+  return Promise.all(promises).then(() => {
+    if (errors.length > 0) throw {
+      receivers: errors
+    }
+    return {}
   })
 }
 
+const mapDispatchToProps = (dispatch) => ({
+  showError: err => dispatch({type: 'ERROR', payload: err}),
+  closeModal: () => dispatch(actions.app.hideModal),
+  showModal: (body) => dispatch(actions.app.showModal(
+    body,
+    actions.app.hideModal,
+    null,
+    {
+      dialog: true,
+      noCloseBtn: true
+    }
+  )),
+  ...BaseNew.mapDispatchToProps('transaction')(dispatch)
+})
 
 export default BaseNew.connect(
   BaseNew.mapStateToProps('transaction'),
-  (dispatch) => ({
-    showError: err => dispatch({type: 'ERROR', payload: err}),
-    closeModal: () => dispatch(actions.app.hideModal),
-    showModal: (body) => dispatch(actions.app.showModal(
-      body,
-      actions.app.hideModal,
-      null,
-      {
-        dialog: true,
-        noCloseBtn: true
-      }
-    )),
-    ...BaseNew.mapDispatchToProps('transaction')(dispatch)
-  }),
+  mapDispatchToProps,
   reduxForm({
     form: 'NormalTransactionForm',
     fields: [
       'accountAlias',
       'accountId',
-      'amount',
       'assetAlias',
       'assetId',
+      'receivers[].id',
+      'receivers[].amount',
+      'receivers[].address',
       'gasLevel',
-      'address',
     ],
     asyncValidate,
-    asyncBlurFields: [ 'address'],
+    asyncBlurFields: ['receivers[].address'],
     validate,
     touchOnChange: true,
     initialValues: {
-      gasLevel: '1'
+      gasLevel: '1',
+      receivers:[{
+        id: 0,
+        amount:'',
+        address:''
+      }]
     },
   })(NormalTxForm)
 )

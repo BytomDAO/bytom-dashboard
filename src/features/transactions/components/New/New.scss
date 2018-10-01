@@ -2,12 +2,18 @@
   background: $background-color;
   padding: 0 $gutter-size;
   margin-top: $title-height;
+  display: flex;
+  flex-direction: row;
+}
+
+.center{
+  margin: 0 auto;
+  width: 100%;
 }
 
 .content {
   min-width: 400px;
   width: 55%;
-  margin: 0 auto;
 }
 
 .container{
@@ -76,19 +82,33 @@
   color: #747c89;
 }
 
-.main {
+.mainBox {
   border: 1px solid $border-color;
   padding: 20px 30px 10px;
   margin-bottom: $gutter-size;
+}
+
+.tutorialItem{
   display: flex;
+  position: relative;
+  flex-direction: column;
 
   >div:first-of-type{
     width: 60%;
     min-width: 350px;
   }
+}
+
+.item{
+  display: flex;
+  position: relative;
+
+  >div:first-of-type{
+    width: 50%;
+  }
 
   >div:last-of-type{
-    width: 40%;
+    width: 50%;
     margin-left: $gutter-size;
   }
 }
@@ -125,4 +145,19 @@
 .optionsLabel {
   vertical-align: top;
   width: 150px;
+}
+
+.receiverBtn{
+  position: absolute;
+  right: -29px;
+  margin-top: 32px;
+  width: 25px;
+  height: 25px;
+  font-size: 22px;
+  line-height: 20px;
+  padding: 1px 5px 0px 5px;
+}
+
+.borderBottom{
+  border-bottom: 1px solid $border-color;
 }

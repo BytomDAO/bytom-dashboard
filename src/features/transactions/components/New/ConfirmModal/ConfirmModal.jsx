@@ -6,6 +6,7 @@ import {
   SubmitIndicator
 } from 'features/shared/components'
 import { btmID } from 'utility/environment'
+import { sum } from 'utility/math'
 import { normalizeBTMAmountUnit, converIntToDec } from 'utility/buildInOutDisplay'
 import styles from './ConfirmModal.scss'
 import { Link } from 'react-router'
@@ -18,7 +19,7 @@ class ConfirmModal extends Component {
 
   render() {
     const {
-      fields: { accountId, accountAlias, assetId, assetAlias, address, amount, password, gasLevel },
+      fields: { accountId, accountAlias, assetId, assetAlias, receivers, password, gasLevel },
       handleSubmit,
       submitting,
       cancel,
@@ -31,8 +32,10 @@ class ConfirmModal extends Component {
 
     const fee = Number(gasLevel.value * gas)
 
+    const totalAmount = sum(receivers, 'amount.value')
+
     const  Total = (assetAlias.value ==='BTM' ||assetId.value === btmID)?
-      (Number(amount.value) + fee): amount.value
+      (totalAmount + fee): totalAmount
 
     let submitLabel = lang === 'zh' ? '提交交易' : 'Submit transaction'
 
@@ -46,8 +49,11 @@ class ConfirmModal extends Component {
       }
     }
 
-    const asset = assetAlias.value || (this.props.asset.find(i => i.id === assetId.value)).alias || assetId.value
-    const assetIdLink = assetId.value || (this.props.asset.find(i => i.alias === assetAlias.value)).id
+    const findAssetById = assetId.value && this.props.asset.find(i => i.id === assetId.value)
+    const findAssetByAlias = assetAlias.value && this.props.asset.find(i => i.alias === assetAlias.value)
+
+    const asset = assetAlias.value || ( findAssetById && findAssetById.alias ) || assetId.value
+    const assetIdLink = assetId.value || ( findAssetByAlias && findAssetByAlias.id )
 
     const unit =  <Link to={`/assets/${assetIdLink}`}  className={styles.unit} target='_blank'>
         {(asset !== btmID && asset !== 'BTM') && asset}
@@ -62,16 +68,24 @@ class ConfirmModal extends Component {
               <td className={styles.colLabel}>From</td>
               <td> <span>{accountAlias.value || accountId.value}</span></td>
             </tr>
-
             <tr>
-              <td className={styles.colLabel}>To</td>
-              <td> <span>{address.value}</span> </td>
+              <td></td>
             </tr>
 
-            <tr>
-              <td className={styles.colLabel}>{lang === 'zh'? '数量':'Amount'}</td>
-              <td> <code>{normalize(amount.value, asset)} {unit}</code> </td>
-            </tr>
+
+            {receivers.map((receiver) =>
+             [<tr>
+                <td className={styles.colLabel}>To</td>
+                <td> <span>{receiver.address.value}</span> </td>
+              </tr>,
+              <tr>
+                <td className={styles.colLabel}>{lang === 'zh'? '数量':'Amount'}</td>
+                <td> <code>{normalize(receiver.amount.value, asset)} {unit}</code> </td>
+              </tr>,
+             <tr>
+               <td></td>
+             </tr>
+             ])}
 
             <tr>
               <td className={styles.colLabel}>{lang === 'zh'?'手续费':'Fee'}</td>
@@ -131,17 +145,16 @@ const validate = values => {
   return errors
 }
 
-
 export default  reduxForm({
   form: 'NormalTransactionForm',
   fields:[
     'accountAlias',
     'accountId',
-    'amount',
     'assetAlias',
     'assetId',
+    'receivers[].amount',
+    'receivers[].address',
     'gasLevel',
-    'address',
     'password'
   ],
   destroyOnUnmount: false,

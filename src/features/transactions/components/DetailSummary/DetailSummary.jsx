@@ -84,6 +84,7 @@ class DetailSummary extends React.Component {
         const account = asset[accountId]
         if (!account) return
 
+        const assetAlias = asset.alias ==='BTM'? this.props.btmAmountUnit: asset.alias
         if (accountId !== 'external') {
           if(account['spend']> account['control'] && account['spend'] > 0){
             const amount = account['spend']- account['control']
@@ -91,7 +92,7 @@ class DetailSummary extends React.Component {
             items.push({
               type: type,
               amount: asset.decimals? converIntToDec(amount, asset.decimals) : normalizeBtmAmountUnit(assetId, amount, this.props.btmAmountUnit),
-              asset: asset.alias ? asset.alias : <code className={styles.rawId}>{assetId}</code>,
+              asset: assetAlias ? assetAlias : <code className={styles.rawId}>{assetId}</code>,
               assetId: assetId,
               account: account.alias ? account.alias : <code className={styles.rawId}>{accountId}</code>,
               accountId: accountId,
@@ -104,7 +105,7 @@ class DetailSummary extends React.Component {
             items.push({
               type: type,
               amount: asset.decimals? converIntToDec(amount, asset.decimals) : normalizeBtmAmountUnit(assetId, amount, this.props.btmAmountUnit),
-              asset: asset.alias ? asset.alias : <code className={styles.rawId}>{assetId}</code>,
+              asset: assetAlias ? assetAlias : <code className={styles.rawId}>{assetId}</code>,
               assetId: assetId,
               account: account.alias ? account.alias : <code className={styles.rawId}>{accountId}</code>,
               accountId: accountId,
