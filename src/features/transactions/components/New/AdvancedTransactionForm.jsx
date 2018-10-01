@@ -155,6 +155,8 @@ class AdvancedTxForm extends React.Component {
               decode={this.props.decode}
               transaction={this.props.decodedTx}
               showJsonModal={this.props.showJsonModal}
+              asset={this.props.asset}
+              btmAmountUnit = {this.props.btmAmountUnit}
             />
 
             <FieldLabel>{lang === 'zh' ? '交易构建类型' : 'Transaction Build Type'}</FieldLabel>

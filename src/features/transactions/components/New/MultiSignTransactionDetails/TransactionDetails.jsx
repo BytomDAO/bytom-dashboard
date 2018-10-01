@@ -4,6 +4,7 @@ import { FieldLabel } from 'features/shared/components'
 import disableAutocomplete from 'utility/disableAutocomplete'
 import styles from './TransactionDetails.scss'
 import { Connection } from 'sdk'
+import Modal from './Modal'
 
 const TEXT_FIELD_PROPS = [
   'value',
@@ -23,7 +24,14 @@ class TransactionDetails extends React.Component {
     e.preventDefault()
     const rawTransaction = Connection.camelize(JSON.parse(json)).rawTransaction
     this.props.decode(rawTransaction).then(() => {
-      this.props.showJsonModal(<pre>{JSON.stringify(this.props.transaction, null, 2)}</pre>)
+      this.props.showJsonModal(
+        <Modal
+          transaction={this.props.transaction}
+          btmAmountUnit={this.props.btmAmountUnit}
+          lang ={this.props.lang}
+          asset={this.props.asset}
+        />
+      )
     })
   }
 
