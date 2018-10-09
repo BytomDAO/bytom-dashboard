@@ -34,7 +34,7 @@ class Show extends BaseShow {
       item.confirmations = confirmation
 
       const btmOutput = item.outputs.reduce((sum, output) => {
-        if (output.type === 'control' && output.assetId === btmID) {
+        if ((output.type === 'control' || output.type === 'retire')&& output.assetId === btmID) {
           sum += output.amount
         }
         return sum
