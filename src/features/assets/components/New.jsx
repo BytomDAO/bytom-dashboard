@@ -52,7 +52,7 @@ class Form extends React.Component {
 }
 
 const validate = (values,props) => {
-  const errors = {}
+  const errors = { xpubs:{} }
   const lang = props.lang
 
   const jsonFields = ['definition']
@@ -62,6 +62,12 @@ const validate = (values,props) => {
   })
 
   if (!values.alias) { errors.alias = ( lang === 'zh' ? '资产别名是必须项' :'Asset alias is required' ) }
+
+  values.xpubs.forEach((xpub, index) => {
+    if (!values.xpubs[index].value) {
+      errors.xpubs[index] = {...errors.xpubs[index], value: ( lang === 'zh' ? '请输入或选择密钥' : 'Please provide keys' )}
+    }
+  })
 
   return errors
 }
