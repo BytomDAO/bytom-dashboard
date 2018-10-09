@@ -60,12 +60,16 @@ export default {
       return chainClient().accessTokens.create({
         id: body.guardData.id,
       }).then(tokenResp =>{
-        dispatch({ type: 'CREATED_TOKEN_WITH_GRANT', tokenResp })
-        dispatch(push({
-          pathname: '/access-control',
-          search: '?type=token',
-          state: {preserveFlash: true},
-        }))
+        if(tokenResp.status === 'success'){
+          dispatch({ type: 'CREATED_TOKEN_WITH_GRANT', tokenResp })
+          dispatch(push({
+            pathname: '/access-control',
+            search: '?type=token',
+            state: {preserveFlash: true},
+          }))
+        }else{
+          throw new Error(tokenResp.errorDetail)
+        }
       }
       ).catch(err => { throw {_error: err} })
     }
