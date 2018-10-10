@@ -220,7 +220,7 @@ class NormalTxForm extends React.Component {
 
                 {index===0 ?
                   <a href='#' className={styles.receiverBtn} onClick={this.addReceiverItem}>+</a> :
-                  <a href='#' className={`${styles.receiverBtn} text-danger`}onClick={() => this.removeReceiverItem(index)}>-</a>
+                  <a href='#' className={`${styles.receiverBtn} text-danger`} onClick={()=> this.removeReceiverItem(index)}>-</a>
                 }
 
               </div>
@@ -228,11 +228,16 @@ class NormalTxForm extends React.Component {
             </div>
 
             <label className={styles.title}>{lang === 'zh' ? '选择手续费' : 'Select Fee'}</label>
-            <GasField
-              gas={this.state.estimateGas}
-              fieldProps={gasLevel}
-              btmAmountUnit={this.props.btmAmountUnit}
-            />
+            <div className={styles.txFeeBox}>
+              <GasField
+                gas={this.state.estimateGas}
+                fieldProps={gasLevel}
+                btmAmountUnit={this.props.btmAmountUnit}
+              />
+              <span className={styles.feeDescription}> {lang ==='zh'?
+                '交易所需手续费， 你的交易将会在2.5分钟之后完成。':
+                'This is the money that might be used to process this transaction. Your transaction will be mined usually within 2.5 minutes.'}</span>
+            </div>
           </div>
 
           <FormSection className={styles.submitSection}>
