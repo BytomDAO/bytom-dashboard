@@ -87,8 +87,26 @@ class DetailSummary extends React.Component {
         const assetAlias = asset.alias ==='BTM'? this.props.btmAmountUnit: asset.alias
         if (accountId !== 'external') {
           if(account['spend']> account['control'] && account['spend'] > 0){
-            const amount = account['spend']- account['control']
-            const type = asset.retire >= amount? 'retire': 'sent'
+            let type,
+              amount = account['spend']- account['control']
+
+            if(asset.retire === 0 ){
+              type = 'sent'
+            }else if(asset.retire >= amount ){
+              type = 'retire'
+            }else {
+              type = 'retire'
+              const gas = amount - asset.retire
+              amount = asset.retire
+              items.push({
+                type: 'sent',
+                amount: normalizeBtmAmountUnit(assetId, gas, this.props.btmAmountUnit),
+                asset: assetAlias ? assetAlias : <code className={styles.rawId}>{assetId}</code>,
+                assetId: assetId,
+                account: account.alias ? account.alias : <code className={styles.rawId}>{accountId}</code>,
+                accountId: accountId,
+              })
+            }
             items.push({
               type: type,
               amount: asset.decimals? converIntToDec(amount, asset.decimals) : normalizeBtmAmountUnit(assetId, amount, this.props.btmAmountUnit),
