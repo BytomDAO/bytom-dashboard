@@ -7,7 +7,7 @@ import actions from 'actions'
 import Tutorial from 'features/tutorial/components/Tutorial'
 import TutorialHeader from 'features/tutorial/components/TutorialHeader/TutorialHeader'
 import { Navigation, SecondaryNavigation } from '../'
-import { withNamespaces, Trans } from 'react-i18next'
+import { withNamespaces } from 'react-i18next'
 
 class Main extends React.Component {
 
@@ -33,7 +33,7 @@ class Main extends React.Component {
   render() {
     let logo = require('images/logo-bytom-white.svg')
 
-    const { i18n ,lng, version } = this.props
+    const { t, i18n , version } = this.props
 
     const changeLanguage = (lng) => {
       i18n.changeLanguage(lng)
@@ -60,7 +60,7 @@ class Main extends React.Component {
                   className={styles.languages}
                   noCaret
                 >
-                  {lng === 'zh' ? '中' : 'EN'}
+                  {t('language')}
                 </Dropdown.Toggle>
                 <Dropdown.Menu
                   className={styles.languagesMenu}
@@ -82,7 +82,7 @@ class Main extends React.Component {
 
             <div className={styles.version}>
               <span>
-                {lng==='zh'?'版本号':'Version'}: {version}
+                {t('commonWords.version')}: {version}
               </span>
             </div>
 
@@ -107,18 +107,11 @@ export default withNamespaces('translations') (connect(
   (state) => ({
     canLogOut: state.core.requireClientToken,
     version:state.core.version,
-    lang: state.core.lang,
     connected: true,
     showDropwdown: state.app.dropdownState == 'open',
   }),
   (dispatch) => ({
     toggleDropdown: () => dispatch(actions.app.toggleDropdown),
     closeDropdown: () => dispatch(actions.app.closeDropdown),
-    setLang: (event) => {
-      dispatch({
-        type: 'UPDATE_CORE_LANGUAGE',
-        lang: event
-      })
-    }
   })
 )(Main))

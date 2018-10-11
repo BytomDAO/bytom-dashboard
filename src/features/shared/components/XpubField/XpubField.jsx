@@ -3,18 +3,9 @@ import styles from './XpubField.scss'
 import { SelectField, FieldLabel, TextField } from '../'
 import { connect } from 'react-redux'
 import actions from 'features/mockhsm/actions'
+import {withNamespaces} from 'react-i18next'
 
-const methodOptions = {
-  mockhsm: 'Use existing key',
-  // generate: 'Generate new MockHSM key',
-  provide: 'Provide existing xpub',
-}
-
-const methodOptionsZh = {
-  mockhsm: '使用已有的密钥',
-  // generate: 'Generate new MockHSM key',
-  provide: '提供已有的扩展公钥',
-}
+const methodOptions = ['mockhsm', 'provide']
 
 class XpubField extends React.Component {
   constructor(props) {
@@ -35,7 +26,7 @@ class XpubField extends React.Component {
       })
     }
 
-    this.props.typeProps.onChange(Object.keys(methodOptions)[0])
+    this.props.typeProps.onChange(methodOptions[0])
   }
 
   render() {
@@ -43,8 +34,8 @@ class XpubField extends React.Component {
       typeProps,
       valueProps,
       mockhsmKeys,
+      t
     } = this.props
-    const lang = this.props.lang
 
     const typeOnChange = event => {
       const value = typeProps.onChange(event).value
@@ -62,12 +53,11 @@ class XpubField extends React.Component {
         autoFocus={this.state.autofocusInput}
         valueKey='xpub'
         labelKey='label'
-        lang={lang}
         fieldProps={{...valueProps, onChange: valueOnChange}} />,
       'provide': <TextField
         autoFocus={this.state.autofocusInput}
         fieldProps={{...valueProps, onChange: valueOnChange}}
-        placeholder={ lang === 'zh' ? '输入扩展公钥' : 'Enter xpub' } />,
+        placeholder={ t('xpub.providePlaceholder') } />,
       'generate': <TextField
         autoFocus={this.state.autofocusInput}
         fieldProps={{...valueProps, onChange: valueOnChange}}
@@ -76,11 +66,11 @@ class XpubField extends React.Component {
 
     return (
       <div className={styles.main}>
-        <FieldLabel>{ lang === 'zh' ? '密钥' :'Key '}{this.props.index + 1}</FieldLabel>
+        <FieldLabel>{t('form.key')}{this.props.index + 1}</FieldLabel>
 
         <table className={styles.options}>
           <tbody>
-            {Object.keys(methodOptions).map((key) =>
+            {methodOptions.map((key) =>
               <tr key={`key-${this.props.index}-option-${key}`}>
                 <td className={styles.label}>
                   <label>
@@ -91,7 +81,7 @@ class XpubField extends React.Component {
                       checked={key == typeProps.value}
                       value={key}
                     />
-                    { lang === 'zh' ? methodOptionsZh[key] : methodOptions[key]}
+                    { t('xpub.methodOptions', { returnObjects: true })[key]}
                   </label>
                 </td>
 
@@ -131,11 +121,10 @@ export default connect(
     return {
       autocompleteIsLoaded: state.key.autocompleteIsLoaded,
       mockhsmKeys: keys,
-      lang: state.core.lang
     }
   },
   (dispatch) => ({
     didLoadAutocomplete: () => dispatch(actions.didLoadAutocomplete),
     fetchAll: (cb) => dispatch(actions.fetchAll(cb)),
   })
-)(XpubField)
+)(withNamespaces('translations')(XpubField))

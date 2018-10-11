@@ -1,28 +1,22 @@
 import React from 'react'
 import { BaseList, TableList } from 'features/shared/components'
 import ListItem from './ListItem'
+import { withNamespaces } from 'react-i18next'
 
 const type = 'asset'
 
-const mapStateToProps = (state) => {
-  let titles
-  if(state.core.lang === 'zh'){
-    titles = ['资产别名','资产ID']
-  }else{
-    titles = ['Asset Alias', 'Asset ID']
-  }
-
+const mapStateToProps = (state, props) => {
   return {
     ...BaseList.mapStateToProps(type, ListItem, {
       wrapperComponent: TableList,
       wrapperProps: {
-        titles: titles
+        titles: props.t('asset.formTitle', { returnObjects: true })
       }
     })(state)
   }
 }
 
-export default BaseList.connect(
+export default withNamespaces('translations') (BaseList.connect(
   mapStateToProps,
   BaseList.mapDispatchToProps(type)
-)
+))

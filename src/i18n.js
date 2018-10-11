@@ -21,11 +21,10 @@ i18n.use(LanguageDetector).init({
   ns: ['translations'],
   defaultNS: 'translations',
 
-  keySeparator: false, // we use content as keys
-
   interpolation: {
     escapeValue: false, // not needed for react!!
-    formatSeparator: ','
+    prefix: '__',
+    suffix: '__'
   },
 
   react: {
