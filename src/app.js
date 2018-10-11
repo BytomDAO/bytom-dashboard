@@ -5,6 +5,8 @@ import React from 'react'
 import { render } from 'react-dom'
 import Root from 'Root'
 import configureStore from 'configureStore'
+import { I18nextProvider } from 'react-i18next'
+import i18n from './i18n'
 
 // Set favicon
 let faviconPath = require('!!file?name=favicon.ico!../static/images/favicon.png')
@@ -17,6 +19,8 @@ document.getElementsByTagName('head')[0].appendChild(favicon)
 // Start app
 export const store = configureStore()
 render(
-	<Root store={store}/>,
+	<I18nextProvider i18n={i18n}>
+		<Root store={store}/>
+    </I18nextProvider>,
 	document.getElementById('root')
 )
