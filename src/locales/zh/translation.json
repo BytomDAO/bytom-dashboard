@@ -1,0 +1,39 @@
+{
+  "language": "中",
+  "asset":{
+    "asset": "资产",
+    "xpubs":"扩展公钥 __id__",
+    "assetPub":"资产公钥",
+    "formTitle": ["资产别名","资产ID"],
+    "new":"新建资产",
+    "information":"资产信息",
+    "keyAndSign":"密钥和签名",
+    "quorumHint":"所需的签名数",
+    "aliasError":"资产别名是必须项",
+    "keysError":"请输入或选择密钥",
+    "editAlias":"编辑资产别名",
+    "alias":"资产别名",
+    "aliasPlaceholder":"请输入资产别名"
+  },
+  "commonWords": {
+    "version": "版本号",
+    "viewDetails":"查看详情"
+  },
+  "form":{
+    "detail": "详情",
+    "alias": "别名",
+    "definition": "定义",
+    "xpubs": "扩展公钥数",
+    "quorum": "签名数",
+    "index":"索引",
+    "keys": "密钥数",
+    "key": "密钥"
+  },
+  "xpub":{
+    "methodOptions" : {
+      "mockhsm": "使用已有的密钥",
+      "provide": "提供已有的扩展公钥"
+    },
+    "providePlaceholder": "输入扩展公钥"
+  }
+}

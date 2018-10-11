@@ -1,0 +1,39 @@
+{
+  "language": "EN",
+  "asset":{
+    "asset": "Asset",
+    "xpubs":"xpub __id__",
+    "assetPub":"Asset Pubkey",
+    "formTitle": ["Asset Alias", "Asset ID"],
+    "new":"New asset",
+    "information":"Asset Information",
+    "keyAndSign":"Keys and Signing",
+    "quorumHint":"Number of signatures required to issue",
+    "aliasError":"Asset alias is required",
+    "keysError":"Please provide keys",
+    "editAlias":"Edit asset alias",
+    "alias":"Asset Alias",
+    "aliasPlaceholder":"Please entered asset alias"
+  },
+  "commonWords": {
+    "version": "Version",
+    "viewDetails":"View details"
+  },
+  "form":{
+    "detail": "Details",
+    "alias": "Alias",
+    "definition": "Definition",
+    "xpubs": "xpubs",
+    "quorum": "Quorum",
+    "index":"Index",
+    "keys": "Keys",
+    "key": "Key"
+  },
+  "xpub":{
+    "methodOptions" : {
+      "mockhsm": "Use existing key",
+      "provide": "Provide existing xpub"
+    },
+    "providePlaceholder": "Enter xpub"
+  }
+}
