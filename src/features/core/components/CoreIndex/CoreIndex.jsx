@@ -56,7 +56,6 @@ class CoreIndex extends React.Component {
     this.props.showModal(
       <ConsoleSection
         cmd={this.props.cmd}
-        lang={this.props.core.lang}
       />
     )
   }

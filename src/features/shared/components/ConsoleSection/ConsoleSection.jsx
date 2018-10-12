@@ -4,6 +4,7 @@ import styles  from './ConsoleSection.scss'
 import commandList from './command.json'
 import ListItem from './ListItem/ListItem'
 import disableAutocomplete from 'utility/disableAutocomplete'
+import {withNamespaces, Trans} from 'react-i18next'
 
 class ConsoleSection extends React.Component {
   constructor(props) {
@@ -81,7 +82,7 @@ class ConsoleSection extends React.Component {
   }
 
   render() {
-    const lang = this.props.lang
+    const t = this.props.t
     let taskList = this.state.data.map(function(listItem) {
       return (
         <ListItem
@@ -95,18 +96,14 @@ class ConsoleSection extends React.Component {
           className={styles.reactConsoleContainer}
           ref={(el) => { this.messagesContainer = el }}
         >
-          <p>
-            {lang === 'zh' ?
-              '欢迎来到Bytom Core API 命令行。':
-            'Welcome to the Bytom Core API console.'}<br/>
-            {lang === 'zh' ? '输入':'Type' }<code>help</code>  {lang === 'zh' ?'查看所有可用命令行。':'for an overview of available commands.'}
-          </p>
+          <Trans i18nKey='console.message' parent='p'>
+            Welcome to the Bytom Core API console.<br/> Type <code>help</code> for an overview of available commands
+          </Trans>
           <p className='text-danger'>
             <strong>
-              {lang === 'zh' ? '注意' : 'WARNING'}:
-            </strong> {lang === 'zh' ?
-            '骗子可能会让你在此输入命令，以盗取你的钱包内容。 如果你没有了解命令所带来的后果，请不要在此输入命令。':
-            'Scammers have been active, telling users to type commands here, stealing their wallet contents. Do not use this console without fully understanding the ramification of a command.'}
+              {t('console.warning')}:
+            </strong>
+            {t('console.warningMessage')}
           </p>
           {taskList}
         </div>
@@ -118,10 +115,10 @@ class ConsoleSection extends React.Component {
                 type='text'
                 autoFocus='autofocus'
                 onKeyDown={(event) => this.keyDownEvent(event)}
-                placeholder={ lang === 'zh' ? '输入 \"help\" 查看所有可用的命令' : 'Enter "help" for an overview of available commands' } />
+                placeholder={t('console.placeholder')} />
             </span>
             <button type='submit' className={'btn btn-primary'} tabIndex='-1'>
-              > { lang === 'zh' ? '输入' : 'Enter' }
+              > { t('form.enter') }
             </button>
           </form>
         </div>
@@ -130,4 +127,4 @@ class ConsoleSection extends React.Component {
   }
 }
 
-export default ConsoleSection
+export default  withNamespaces('translations') (ConsoleSection)

@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import styles from './Modal.scss'
 import actions from 'actions'
+import {withNamespaces} from 'react-i18next'
 
 class Modal extends React.Component {
   render() {
@@ -10,9 +11,9 @@ class Modal extends React.Component {
       isShowing,
       body,
       acceptAction,
-      cancelAction
+      cancelAction,
+      t
     } = this.props
-    const lang = this.props.lang
 
     if (!isShowing) return null
 
@@ -32,13 +33,13 @@ class Modal extends React.Component {
           {
             boxStyle &&
               <div className={styles.title}>
-                <p>{ lang === 'zh' ? '命令行' : 'Console'}</p>
+                <p>{ t('console.title')}</p>
                 <button className={`btn ${styles.close}`} onClick={accept}>X</button>
               </div>
           }
           {body}
           {!noCloseBtn && <button className={`btn btn-${this.props.options.danger ? 'danger' : 'primary'} ${styles.accept}`} onClick={accept}>
-            { lang === 'zh' ?  '关闭' : 'OK' }</button>}
+            { t('form.ok') }</button>}
           {!noCloseBtn && cancel && <button className={`btn btn-link ${styles.cancel}`} onClick={cancel}>Cancel</button>}
         </div>
       </div>
@@ -52,9 +53,8 @@ const mapStateToProps = (state) => ({
   acceptAction: state.app.modal.accept,
   cancelAction: state.app.modal.cancel,
   options: state.app.modal.options,
-  lang: state.core.lang
 })
 
 // NOTE: ommitting a function for `mapDispatchToProps` passes `dispatch` as a
 // prop to the component
-export default connect(mapStateToProps)(Modal)
+export default connect(mapStateToProps)(withNamespaces('translations')(Modal))

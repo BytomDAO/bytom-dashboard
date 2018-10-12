@@ -30,7 +30,9 @@
     "index":"索引",
     "keys": "密钥数",
     "key": "密钥",
-    "selectPlaceholder": "请选择..."
+    "selectPlaceholder": "请选择...",
+    "enter":"输入",
+    "ok":"关闭"
   },
   "xpub":{
     "methodOptions" : {
@@ -67,5 +69,15 @@
     "highestBlock":"最高高度",
     "networkId":"网络ID",
     "coreStatus":"核心状态"
+  },
+  "console":{
+    "title":"命令行",
+    "message":"欢迎来到Bytom Core API 命令行。<1/> 输入<2>help</2> 查看所有可用命令行。",
+    "warning":"注意",
+    "warningMessage":"骗子可能会让你在此输入命令，以盗取你的钱包内容。 如果你没有了解命令所带来的后果，请不要在此输入命令。",
+    "placeholder":"输入 \"help\" 查看所有可用的命令"
+  },
+  "key":{
+    "formTitle":["别名","主公钥"]
   }
 }
