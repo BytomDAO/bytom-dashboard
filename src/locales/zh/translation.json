@@ -1,5 +1,6 @@
 {
   "language": "中",
+  "languageFull": "中文",
   "asset":{
     "asset": "资产",
     "xpubs":"扩展公钥 __id__",
@@ -17,7 +18,8 @@
   },
   "commonWords": {
     "version": "版本号",
-    "viewDetails":"查看详情"
+    "viewDetails":"查看详情",
+    "language":"语言"
   },
   "form":{
     "detail": "详情",
@@ -27,7 +29,8 @@
     "quorum": "签名数",
     "index":"索引",
     "keys": "密钥数",
-    "key": "密钥"
+    "key": "密钥",
+    "selectPlaceholder": "请选择..."
   },
   "xpub":{
     "methodOptions" : {
@@ -35,5 +38,34 @@
       "provide": "提供已有的扩展公钥"
     },
     "providePlaceholder": "输入扩展公钥"
+  },
+  "sync":{
+    "status":"同步状态",
+    "peer":"连接数",
+    "synchronizing":"区块同步中...",
+    "synced":"同步完成",
+    "disconnect":"同步中断"
+  },
+  "coreIndex":{
+    "configuration":"配置",
+    "version":"核心版本号",
+    "advanced":"高级导航选项",
+    "mining":"挖矿",
+    "unit":"比原数量单位显示",
+    "networkStatus":"网络状态",
+    "listening":"节点监听",
+    "connect": "连接",
+    "disConnect": "断开",
+    "syncStatus":"网络同步",
+    "synchronizing":"同步中",
+    "synced":"同步完成",
+    "miningStatus":"挖矿状态",
+    "miningRuning":"运行",
+    "miningStopped":"停止",
+    "peer":"连接数",
+    "currentBlock":"当前高度",
+    "highestBlock":"最高高度",
+    "networkId":"网络ID",
+    "coreStatus":"核心状态"
   }
 }

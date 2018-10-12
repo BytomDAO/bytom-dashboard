@@ -1,5 +1,6 @@
 {
   "language": "EN",
+  "languageFull": "English",
   "asset":{
     "asset": "Asset",
     "xpubs":"xpub __id__",
@@ -17,7 +18,8 @@
   },
   "commonWords": {
     "version": "Version",
-    "viewDetails":"View details"
+    "viewDetails":"View details",
+    "language":"Language"
   },
   "form":{
     "detail": "Details",
@@ -27,7 +29,8 @@
     "quorum": "Quorum",
     "index":"Index",
     "keys": "Keys",
-    "key": "Key"
+    "key": "Key",
+    "selectPlaceholder": "Select one..."
   },
   "xpub":{
     "methodOptions" : {
@@ -35,5 +38,34 @@
       "provide": "Provide existing xpub"
     },
     "providePlaceholder": "Enter xpub"
+  },
+  "sync":{
+    "status":"Sync Status",
+    "peer":"Peer Count",
+    "synchronizing":"Synchronizing...",
+    "synced":"Fully synced",
+    "disconnect":"Disconnect"
+  },
+  "coreIndex":{
+    "configuration":"Configuration",
+    "version":"Core Versions",
+    "advanced":"Advanced",
+    "mining":"Mining",
+    "unit":"Unit to show amount in",
+    "networkStatus":"Network status",
+    "listening":"Peer Listening",
+    "connect": "true",
+    "disConnect": "false",
+    "syncStatus":"Syncing",
+    "synchronizing":"true",
+    "synced":"false",
+    "miningStatus":"Mining",
+    "miningRuning":"true",
+    "miningStopped":"false",
+    "peer":"Peer Count",
+    "currentBlock":"Current Block",
+    "highestBlock":"Highest Block",
+    "networkId":"Network Id",
+    "coreStatus":"Core Status"
   }
 }
