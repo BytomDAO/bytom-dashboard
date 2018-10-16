@@ -1,9 +1,10 @@
 import React from 'react'
 import styles from './Pagination.scss'
+import {withNamespaces} from 'react-i18next'
 
 class Pagination extends React.Component {
   render() {
-    const lang = this.props.lang
+    const t = this.props.t
     const prevClass = `${styles.button} ${this.props.currentPage > 1 ? '' : styles.disabled}`
     const nextClass = `${styles.button} ${this.props.isLastPage ? styles.disabled : ''}`
     const nextPage = () => this.props.pushList(this.props.currentFilter, this.props.currentPage + 1)
@@ -16,7 +17,7 @@ class Pagination extends React.Component {
             &larr;
           </a>
         </li>
-        <li className={styles.label}>{lang ==='zh'? '页面' :'Page'} {this.props.currentPage}</li>
+        <li className={styles.label}>{t('commonWords.page')} {this.props.currentPage}</li>
         <li>
           <a className={nextClass} onClick={nextPage}>
             &rarr;
@@ -34,4 +35,4 @@ Pagination.propTypes = {
   currentFilter: React.PropTypes.object,
 }
 
-export default Pagination
+export default withNamespaces('translations') (Pagination)

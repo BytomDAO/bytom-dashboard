@@ -1,6 +1,7 @@
 import React from 'react'
 import { BaseNew, FormContainer, FormSection, TextField, PasswordField } from 'features/shared/components'
 import { reduxForm } from 'redux-form'
+import {withNamespaces} from 'react-i18next'
 
 class New extends React.Component {
   constructor(props) {
@@ -27,22 +28,22 @@ class New extends React.Component {
       fields: { alias, password, confirmPassword, accountAlias },
       error,
       handleSubmit,
-      submitting
+      submitting,
+      t
     } = this.props
-    const lang = this.props.lang
 
     return(
       <FormContainer
         error={error}
-        label={ lang === 'zh' ? '新建密钥' :'New key'}
+        label={ t('key.new')}
         onSubmit={handleSubmit(this.submitWithErrors)}
         submitting={submitting}
-        lang={lang}>
+      >
 
-        <FormSection title={ lang === 'zh' ? '密钥信息' : 'Key Information' }>
-          <TextField title={ lang === 'zh' ? '别名' : 'Alias'} placeholder={ lang === 'zh' ? '请输入密钥别名...' :'Please enter key alias...'} fieldProps={alias} autoFocus={true} />
-          <PasswordField title={ lang === 'zh' ? '密码' : 'Password'}  placeholder={ lang === 'zh' ? '请输入密码...' : 'Please enter your password...'} fieldProps={password} autoFocus={false} />
-          <PasswordField title={ lang === 'zh' ? '重复密码' : 'Repeat Password'} placeholder={ lang === 'zh' ? '请重复输入密码...' : 'Please repeat your password'} fieldProps={confirmPassword} autoFocus={false} />
+        <FormSection title={ t('key.info') }>
+          <TextField title={t('form.alias')} placeholder={ t('key.aliasPlaceHolder')} fieldProps={alias} autoFocus={true} />
+          <PasswordField title={ t('key.password')}  placeholder={ t('key.passwordPlaceholder')} fieldProps={password} autoFocus={false} />
+          <PasswordField title={ t('key.repeatPassword')} placeholder={ t('key.repeatPasswordPlaceholder')} fieldProps={confirmPassword} autoFocus={false} />
         </FormSection>
       </FormContainer>
     )
@@ -50,7 +51,7 @@ class New extends React.Component {
 }
 
 const fields = [ 'alias', 'password', 'confirmPassword', 'accountAlias' ]
-export default BaseNew.connect(
+export default withNamespaces('translations') (BaseNew.connect(
   BaseNew.mapStateToProps('key'),
   BaseNew.mapDispatchToProps('key'),
   reduxForm({
@@ -58,21 +59,21 @@ export default BaseNew.connect(
     fields,
     validate: (values, props) => {
       const errors = {}
-      const lang = props.lang
+      const t = props.t
 
       if (!values.alias) {
-        errors.alias = ( lang === 'zh' ? '密钥别名是必须项' :'Key alias is required' )
+        errors.alias = ( t('key.aliasRequired') )
       }
       if (!values.password) {
-        errors.password = ( lang === 'zh' ? '密码是必须项' : 'Password is required' )
+        errors.password = ( t('key.passwordRequired') )
       }else if( values.password.length < 5 ) {
-        errors.password = ( lang === 'zh' ? '请输入至少五位数的密码' : 'Please enter at least 5 characters password.' )
+        errors.password = ( t('key.reset.newPWarning'))
       }
       if ( values.password !== values.confirmPassword ) {
-        errors.confirmPassword = ( lang === 'zh' ? '请重复输入你刚刚输入的密码' : 'Please match the repeat password.' )
+        errors.confirmPassword = ( t('key.reset.repeatPWarning'))
       }
 
       return errors
     }
   })(New)
-)
+))

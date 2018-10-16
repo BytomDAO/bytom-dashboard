@@ -18,6 +18,7 @@ import { btmID } from 'utility/environment'
 import actions from 'actions'
 import ConfirmModal from './ConfirmModal/ConfirmModal'
 import { balance , getAssetDecimal, normalTxActionBuilder} from '../../transactions'
+import {withNamespaces} from 'react-i18next'
 
 class NormalTxForm extends React.Component {
   constructor(props) {
@@ -63,7 +64,6 @@ class NormalTxForm extends React.Component {
         btmAmountUnit={this.props.btmAmountUnit}
         assetDecimal={assetDecimal}
         asset={this.props.asset}
-        lang = {this.props.lang}
       />
     )
   }
@@ -140,7 +140,7 @@ class NormalTxForm extends React.Component {
       error,
       submitting
     } = this.props
-    const lang = this.props.lang;
+    const t = this.props.t;
     [accountAlias, accountId, assetAlias, assetId].forEach(key => {
       key.onBlur = this.estimateNormalTransactionGas.bind(this)
     });
@@ -148,7 +148,7 @@ class NormalTxForm extends React.Component {
       amount.onBlur = this.estimateNormalTransactionGas.bind(this)
     })
 
-    let submitLabel = lang === 'zh' ? '提交交易' : 'Submit transaction'
+    let submitLabel = t('transaction.new.submit')
 
     const assetDecimal = getAssetDecimal(this.props.fields, this.props.asset) || 0
 
@@ -166,13 +166,12 @@ class NormalTxForm extends React.Component {
           {...disableAutocomplete}
         >
           <div className={styles.borderBottom}>
-            <label className={styles.title}>{lang === 'zh' ? '从' : 'From'}</label>
+            <label className={styles.title}>{t('transaction.normal.from')}</label>
             <div className={`${styles.mainBox} ${this.props.tutorialVisible? styles.tutorialItem: styles.item}`}>
               <ObjectSelectorField
                 key='account-selector-field'
                 keyIndex='normaltx-account'
-                lang={lang}
-                title={lang === 'zh' ? '账户' : 'Account'}
+                title={t('form.account')}
                 aliasField={Autocomplete.AccountAlias}
                 fieldProps={{
                   id: accountId,
@@ -183,8 +182,7 @@ class NormalTxForm extends React.Component {
                 <ObjectSelectorField
                   key='asset-selector-field'
                   keyIndex='normaltx-asset'
-                  lang={lang}
-                  title={lang === 'zh' ? '资产' : 'Asset'}
+                  title={ t('form.asset')}
                   aliasField={Autocomplete.AssetAlias}
                   fieldProps={{
                     id: assetId,
@@ -192,18 +190,18 @@ class NormalTxForm extends React.Component {
                   }}
                 />
                 {showAvailableBalance && availableBalance &&
-                <small className={styles.balanceHint}>{lang === 'zh' ? '可用余额:' : 'Available balance:'} {availableBalance}</small>}
+                <small className={styles.balanceHint}>{t('transaction.normal.availableBalance')} {availableBalance}</small>}
               </div>
             </div>
 
-            <label className={styles.title}>{lang === 'zh' ? '至' : 'To'}</label>
+            <label className={styles.title}>{t('transaction.normal.to')}</label>
 
             <div className={styles.mainBox}>
             {receivers.map((receiver, index) =>
               <div
                 className={this.props.tutorialVisible? styles.tutorialItem: styles.item}
                 key={receiver.id.value}>
-                <TextField title={lang === 'zh' ? '地址' : 'Address'} fieldProps={{
+                <TextField title={t('form.address')} fieldProps={{
                   ...receiver.address,
                   onBlur: (e) => {
                     receiver.address.onBlur(e)
@@ -212,10 +210,10 @@ class NormalTxForm extends React.Component {
                 }}/>
 
                 {!showBtmAmountUnit &&
-                <AmountInputMask title={lang === 'zh' ? '数量' : 'Amount'} fieldProps={receiver.amount} decimal={assetDecimal}
+                <AmountInputMask title={t('form.amount')} fieldProps={receiver.amount} decimal={assetDecimal}
                 />}
                 {showBtmAmountUnit &&
-                <AmountUnitField title={lang === 'zh' ? '数量' : 'Amount'} fieldProps={receiver.amount}/>
+                <AmountUnitField title={t('form.amount')} fieldProps={receiver.amount}/>
                 }
 
                 {index===0 ?
@@ -227,23 +225,21 @@ class NormalTxForm extends React.Component {
             )}
             </div>
 
-            <label className={styles.title}>{lang === 'zh' ? '选择手续费' : 'Select Fee'}</label>
+            <label className={styles.title}>{t('transaction.normal.selectFee')}</label>
             <div className={styles.txFeeBox}>
               <GasField
                 gas={this.state.estimateGas}
                 fieldProps={gasLevel}
                 btmAmountUnit={this.props.btmAmountUnit}
               />
-              <span className={styles.feeDescription}> {lang ==='zh'?
-                '交易所需手续费， 你的交易将会在2.5分钟之后完成。':
-                'This is the money that might be used to process this transaction. Your transaction will be mined usually within 2.5 minutes.'}</span>
+              <span className={styles.feeDescription}> {t('transaction.normal.feeDescription')}</span>
             </div>
           </div>
 
           <FormSection className={styles.submitSection}>
             {error && error.message !== 'PasswordWrong' &&
             <ErrorBanner
-              title='Error submitting form'
+              title={t('form.errorTitle')}
               error={error} />}
 
             <div className={styles.submit}>
@@ -260,11 +256,11 @@ class NormalTxForm extends React.Component {
 
 const validate = (values, props) => {
   const errors = {gas: {}}
-  const lang = props.lang
+  const t = props.t
 
   // Numerical
   if (values.amount && !/^\d+(\.\d+)?$/i.test(values.amount)) {
-    errors.amount = ( lang === 'zh' ? '请输入数字' : 'Invalid amount type' )
+    errors.amount = ( t('errorMessage.amountError') )
   }
   return errors
 }
@@ -314,7 +310,7 @@ const mapDispatchToProps = (dispatch) => ({
   ...BaseNew.mapDispatchToProps('transaction')(dispatch)
 })
 
-export default BaseNew.connect(
+export default withNamespaces('translations') (BaseNew.connect(
   BaseNew.mapStateToProps('transaction'),
   mapDispatchToProps,
   reduxForm({
@@ -342,6 +338,4 @@ export default BaseNew.connect(
       }]
     },
   })(NormalTxForm)
-)
-
-
+))

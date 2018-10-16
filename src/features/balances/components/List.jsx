@@ -4,6 +4,7 @@ import ListItem from './ListItem'
 import React from 'react'
 import actions from 'actions'
 import RescanDialog from './RescanDialog/RescanDialog'
+import {withNamespaces} from 'react-i18next'
 
 const type = 'balance'
 
@@ -35,7 +36,6 @@ class List extends React.Component {
     this.props.showModal(
       <RescanDialog
         // now={now}
-        lang={this.props.lang}
         closeModal = {this.props.closeModal()}
       />
     )
@@ -44,7 +44,7 @@ class List extends React.Component {
   render() {
     const ItemList = BaseList.ItemList
     const newButton = <button key='showRescan' className='btn btn-primary' onClick={() => this.rescanWallet()}>
-      {this.props.lang === 'zh' ? '重新扫描' : 'Rescan'}
+      {this.props.t('balances.rescan')}
     </button>
     return <div>
       <ItemList
@@ -85,5 +85,5 @@ const mapDispatchToProps = ( dispatch ) => ({
 export default BaseList.connect(
   newStateToProps,
   mapDispatchToProps,
-  List
+  withNamespaces('translations')(List)
 )

@@ -18,7 +18,7 @@ class Show extends BaseShow {
 
   render() {
     const item = this.props.item
-    const lang = this.props.lang
+    const t = this.props.t
     const btmAmountUnit = this.props.btmAmountUnit
 
     let view
@@ -46,7 +46,7 @@ class Show extends BaseShow {
 
       const unconfirmedItem = (item.blockHeight === 0 && item.blockId === '0000000000000000000000000000000000000000000000000000000000000000')
 
-      const status = (!item.statusFail)? (lang === 'zh' ? '成功' : 'Succeed'): (lang === 'zh' ? '失败' : 'Failed')
+      const status = (!item.statusFail)? t('form.succeed'): t('form.failed')
 
       const getInout = (inout) =>{
         let resultoutput = {}
@@ -88,7 +88,7 @@ class Show extends BaseShow {
 
 
       const title = <span>
-        {lang === 'zh' ? '交易' : 'Transaction '}
+        {t('transaction.transaction')}
         &nbsp;<code>{item.id}</code>
       </span>
 
@@ -97,41 +97,41 @@ class Show extends BaseShow {
 
         <PageContent>
           <Section
-            title={lang === 'zh' ? '概括' : 'Summary'}
+            title={t('form.summary')}
             actions={[
               <RawJsonButton key='raw-json' item={item} />
             ]}>
-            <Summary transaction={item} lang={lang} btmAmountUnit={btmAmountUnit}/>
+            <Summary transaction={item}  btmAmountUnit={btmAmountUnit}/>
           </Section>
 
           <KeyValueTable
-            title={lang === 'zh' ? '详情' : 'Details'}
+            title={t('form.detail')}
             items={[
               {label: 'ID', value: item.id},
-              {label: (lang === 'zh' ? '时间戳' : 'Timestamp'), value:  unconfirmedItem ? '-' : moment.unix(item.timestamp).format()},
-              {label: (lang === 'zh' ? '区块ID' : 'Block ID'), value: unconfirmedItem? '-' : item.blockId},
-              {label: (lang === 'zh' ? '区块高度': 'Block Height'), value: unconfirmedItem?
-                  (lang === 'zh' ? '未知 ':'Unknown')+'(0 confirmation)':
-                  (item.blockHeight + `(${confirmation} confirmation${confirmation > 1 ? 's' : ''})`)},
-              {label: (lang === 'zh' ? '位置' : 'Position'), value: unconfirmedItem? '-' :item.position},
+              {label: t('form.timestamp'), value:  unconfirmedItem ? '-' : moment.unix(item.timestamp).format()},
+              {label: t('form.blockId'), value: unconfirmedItem? '-' : item.blockId},
+              {label: t('form.blockHeight'), value: unconfirmedItem?
+                  t('transaction.unconfirmedItem'):
+                  t('transaction.confirmation', {count: item.blockHeight})},
+              {label: t('form.position'), value: unconfirmedItem? '-' :item.position},
               {label: 'Gas', value: gas},
-              {label: (lang === 'zh' ? '交易状态': 'Transaction status'), value: status}
+              {label: t('form.txStatus'), value: status}
             ]}
           />
 
           {inputs.map((input, index) =>
             <KeyValueTable
               key={index}
-              title={index == 0 ? lang === 'zh' ? '输入' : 'Inputs' : ''}
-              items={buildTxInputDisplay(input, btmAmountUnit, lang)}
+              title={index == 0 ? t('form.input') : ''}
+              items={buildTxInputDisplay(input, btmAmountUnit, t)}
             />
           )}
 
           {outputs.map((output, index) =>
             <KeyValueTable
               key={index}
-              title={index == 0 ? lang === 'zh' ? '输出' : 'Outputs' : ''}
-              items={buildTxOutputDisplay(output, btmAmountUnit, lang)}
+              title={index == 0 ?t('form.output') : ''}
+              items={buildTxOutputDisplay(output, btmAmountUnit, t)}
             />
           )}
         </PageContent>
@@ -146,10 +146,10 @@ class Show extends BaseShow {
 
 import { actions } from 'features/transactions'
 import { connect } from 'react-redux'
+import {withNamespaces} from 'react-i18next'
 
 const mapStateToProps = (state, ownProps) => ({
   item: state.transaction.items[ownProps.params.id],
-  lang: state.core.lang,
   btmAmountUnit: state.core.btmAmountUnit,
   highestBlock: state.core.coreData && state.core.coreData.highestBlock
 })
@@ -161,4 +161,4 @@ const mapDispatchToProps = ( dispatch ) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Show)
+)(withNamespaces('translations')(Show))

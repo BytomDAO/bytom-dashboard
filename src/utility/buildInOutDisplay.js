@@ -1,64 +1,34 @@
 import { btmID } from './environment'
 
-const mappings = {
-  id: 'ID',
-  type: 'Type',
-  purpose: 'Purpose',
-  transactionId: 'Transaction ID',
-  position: 'Position',
-  assetId: 'Asset ID',
-  assetAlias: 'Asset Alias',
-  asset: 'Asset',
-  assetDefinition: 'Asset Definition',
-  assetTags: 'Asset Tags',
-  assetIsLocal: 'Asset Is Local?',
-  amount: 'Amount',
-  accountId: 'Account ID',
-  accountAlias: 'Account Alias',
-  account: 'Account',
-  accountTags: 'Account Tags',
-  controlProgram: 'Control Program',
-  address: 'Address',
-  programIndex: 'Program Index',
-  spentOutputId: 'Spent Output ID',
-  refData: 'Reference Data',
-  sourceId: 'Source ID',
-  sourcePos: 'Source Position',
-  issuanceProgram: 'Issuance Program',
-  isLocal: 'Local?',
-  referenceData: 'Reference Data',
-  change: 'Change'
-}
-
-const mappings_ZH = {
-  id: 'ID',
-  type: '类型',
-  purpose: 'Purpose',
-  transactionId: '交易ID',
-  position: '位置',
-  asset: '资产',
-  assetId: '资产ID',
-  assetAlias: '资产别名',
-  assetDefinition: '资产定义',
-  assetTags: 'Asset Tags',
-  assetIsLocal: 'Asset Is Local?',
-  amount: '数量',
-  account: '账户',
-  accountId: '账户ID',
-  accountAlias: '账户别名',
-  accountTags: 'Account Tags',
-  controlProgram: '合约程序',
-  address: '地址',
-  programIndex: '程序索引',
-  spentOutputId: '花费输出ID',
-  refData: 'Reference Data',
-  sourceId: '源ID',
-  sourcePos: '源位置',
-  issuanceProgram: '资产发布程序',
-  isLocal: 'Local?',
-  referenceData: 'Reference Data',
-  change: '找零'
-}
+const balanceFields = [
+  'id' ,
+  'type' ,
+  'purpose' ,
+  'transactionId' ,
+  'position' ,
+  'assetId' ,
+  'assetAlias' ,
+  'asset' ,
+  'assetDefinition' ,
+  'assetTags' ,
+  'assetIsLocal' ,
+  'amount' ,
+  'accountId' ,
+  'accountAlias' ,
+  'account' ,
+  'accountTags' ,
+  'controlProgram' ,
+  'address' ,
+  'programIndex' ,
+  'spentOutputId' ,
+  'refData' ,
+  'sourceId' ,
+  'sourcePos' ,
+  'issuanceProgram' ,
+  'isLocal' ,
+  'referenceData' ,
+  'change'
+]
 
 const txInputFields = [
   'type',
@@ -103,9 +73,7 @@ const unspentFields = [
   'change',
 ]
 
-const balanceFields = Object.keys(mappings)
-
-const buildDisplay = (item, fields, btmAmountUnit, lang) => {
+const buildDisplay = (item, fields, btmAmountUnit, t) => {
   const details = []
   const decimals = (item.assetDefinition && item.assetDefinition.decimals && item.assetId !== btmID)?
     item.assetDefinition.decimals: null
@@ -113,23 +81,23 @@ const buildDisplay = (item, fields, btmAmountUnit, lang) => {
     if (item.hasOwnProperty(key)) {
       if(key === 'amount'){
         details.push({
-          label: ( lang === 'zh'? mappings_ZH[key]: mappings[key] ),
+          label: t(`form.${key}`),
           value: decimals? formatIntNumToPosDecimal(item[key], decimals) :normalizeGlobalBTMAmount(item['assetId'], item[key], btmAmountUnit)
         })
       }else if(key === 'asset' && item.assetId !=='0000000000000000000000000000000000000000000000000000000000000000'){
         details.push({
-          label: ( lang === 'zh'? mappings_ZH[key]: mappings[key] ),
+          label:  t(`form.${key}`),
           value: item[key],
           link: `/assets/${item.assetId}`
         })
       }else if(key === 'account'){
         details.push({
-          label: ( lang === 'zh'? mappings_ZH[key]: mappings[key] ),
+          label:  t(`form.${key}`),
           value: item[key],
           link: `/accounts/${item.accountId}`
         })
       }else{
-        details.push({label: ( lang === 'zh'? mappings_ZH[key]: mappings[key] ), value: item[key]})
+        details.push({label:  t(`form.${key}`), value: item[key]})
       }
     }
   })
@@ -262,15 +230,15 @@ export function converIntToDec(int, deciPoint){
   return formatIntNumToPosDecimal(int, deciPoint)
 }
 
-export function buildTxInputDisplay(input, btmAmountUnit, lang) {
-  return buildDisplay(input, txInputFields, btmAmountUnit, lang)
+export function buildTxInputDisplay(input, btmAmountUnit, t) {
+  return buildDisplay(input, txInputFields, btmAmountUnit, t)
 }
 
-export function buildTxOutputDisplay(output, btmAmountUnit, lang) {
-  return buildDisplay(output, txOutputFields, btmAmountUnit, lang)
+export function buildTxOutputDisplay(output, btmAmountUnit, t) {
+  return buildDisplay(output, txOutputFields, btmAmountUnit, t)
 }
 
-export function buildUnspentDisplay(output, btmAmountUnit, lang) {
+export function buildUnspentDisplay(output, btmAmountUnit, t) {
   const normalized = {
     amount: output.amount,
     accountId: output.accountId,
@@ -283,10 +251,10 @@ export function buildUnspentDisplay(output, btmAmountUnit, lang) {
     sourcePos: output.sourcePos,
     change: output.change + ''
   }
-  return buildDisplay(normalized, unspentFields, btmAmountUnit, lang)
+  return buildDisplay(normalized, unspentFields, btmAmountUnit, t)
 }
 
-export function buildBalanceDisplay(balance, btmAmountUnit, lang) {
+export function buildBalanceDisplay(balance, btmAmountUnit, t) {
   let amount = (balance.assetDefinition && balance.assetDefinition.decimals && balance.assetId !== btmID)?
     formatIntNumToPosDecimal(balance.amount, balance.assetDefinition.decimals): balance.amount
   return buildDisplay({
@@ -294,5 +262,5 @@ export function buildBalanceDisplay(balance, btmAmountUnit, lang) {
     assetId: balance.assetId,
     assetAlias: balance.assetAlias,
     accountAlias: balance.accountAlias
-  }, balanceFields, btmAmountUnit, lang)
+  }, balanceFields, btmAmountUnit, t)
 }

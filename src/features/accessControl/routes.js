@@ -21,8 +21,7 @@ export default (store) => {
 
   const routes = makeRoutes(store, 'accessControl', AccessControlList, null, null, {
     path: 'access-control',
-    name: 'Access control',
-    name_zh: '访问控制'
+    name: 'accessControl'
   })
 
   routes.indexRoute.onEnter = (nextState, replace) => {

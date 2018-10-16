@@ -5,6 +5,7 @@ import styles from './Backup.scss'
 import {connect} from 'react-redux'
 import {chainClient} from 'utility/environment'
 import actions from 'actions'
+import {withNamespaces} from 'react-i18next'
 
 class Backup extends React.Component {
   constructor(props) {
@@ -64,13 +65,13 @@ class Backup extends React.Component {
   }
 
   render() {
-    const lang = this.props.core.lang
+    const t = this.props.t
 
     const newButton = <button className={`btn btn-primary btn-lg ${styles.submit}`} onClick={this.backup.bind(this)}>
-      {lang === 'zh' ? '下载备份' : 'Download Backup'}
+      {t('backup.download')}
     </button>
     const restoreButton = <button className={`btn btn-primary btn-lg ${styles.submit}`} onClick={this.restore.bind(this)}>
-      {lang === 'zh' ? '选择备份文件' : 'Select Restore File'}
+      {t('backup.selectFile')}
     </button>
     // const rescanButton = <button className={`btn btn-primary btn-lg ${styles.submit}`}  onClick={() => this.props.rescan()}>
     //   {lang === 'zh' ? '重新扫描' : 'Rescan'}
@@ -78,7 +79,7 @@ class Backup extends React.Component {
 
     return (
       <div className='flex-container'>
-        <PageTitle title={lang === 'zh' ? '备份与恢复' : 'Backup and Restore'}/>
+        <PageTitle title={t('backup.title')}/>
         <PageContent>
 
           <div onChange={e => this.setValue(e)}>
@@ -90,11 +91,9 @@ class Backup extends React.Component {
                          name='type'
                          value='backup'/>
                   <div className={`${styles.choice} ${styles.backup} `}>
-                    <span className={styles.choice_title}>{lang === 'zh' ?'备份':'Back Up'}</span>
+                    <span className={styles.choice_title}>{t('backup.backup')}</span>
                     <p>
-                      {lang === 'zh' ?
-                        '这个选项备份所有本地数据，包括账户，资产和余额。 请妥善保管你的备份文件。' :
-                      'This option will back up all data stored in this core, including blockchain data, accounts, assets and balances.'}
+                      {t('backup.backupDescription')}
                     </p>
                   </div>
                 </label>
@@ -107,13 +106,9 @@ class Backup extends React.Component {
                          name='type'
                          value='restore' />
                   <div className={`${styles.choice} ${styles.restore}`}>
-                    <span className={styles.choice_title}>{lang === 'zh' ?'恢复':'Restore'}</span>
+                    <span className={styles.choice_title}>{t('backup.restore')}</span>
                     <p>
-                      {
-                        lang === 'zh' ?
-                        '这个选项将从文件中恢复钱包数据。 如果你的钱包余额显示不正确，请点击扫描钱包的按钮。' :
-                        'This option will restore the wallet data form a file. You might need to rescan your wallet, if you balance is not up to date.'
-                      }
+                      {t('backup.restoreDescription')}
                     </p>
                   </div>
                 </label>
@@ -161,4 +156,4 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Backup)
+)( withNamespaces('translations') (Backup) )

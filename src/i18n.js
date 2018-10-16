@@ -2,7 +2,7 @@ import i18n from 'i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
 
 import transaction_zh from './locales/zh/translation.json'
-import transaction_en from './locales/en/transaltion.json'
+import transaction_en from './locales/en/translation.json'
 
 i18n.use(LanguageDetector).init({
   // we init with resources
@@ -29,6 +29,7 @@ i18n.use(LanguageDetector).init({
 
   react: {
     wait: true,
+    bindStore: false
   }
 })
 

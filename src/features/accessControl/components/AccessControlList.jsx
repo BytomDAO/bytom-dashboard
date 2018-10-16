@@ -5,6 +5,7 @@ import { TableList, PageTitle, PageContent } from 'features/shared/components'
 import { push, replace } from 'react-router-redux'
 import actions from 'features/accessControl/actions'
 import styles from './AccessControlList.scss'
+import {withNamespaces} from 'react-i18next'
 
 class AccessControlList extends React.Component {
   render() {
@@ -12,9 +13,9 @@ class AccessControlList extends React.Component {
       beginEditing: this.props.beginEditing,
       delete: this.props.delete,
     }
-    const lang = this.props.lang
-    const tokenList = <TableList titles={ lang==='zh'? ['令牌名称', '令牌']: ['Token Name', 'Token']}>
-      {(this.props.tokens).map(item => <GrantListItem key={item.id} item={item} lang={lang} {...itemProps} />)}
+    const t = this.props.t
+    const tokenList = <TableList titles={ t('token.formTitle',  { returnObjects: true } )}>
+      {(this.props.tokens).map(item => <GrantListItem key={item.id} item={item} {...itemProps} />)}
     </TableList>
 
     // const certList = <TableList titles={['Certificate', 'Policies']}>
@@ -22,7 +23,7 @@ class AccessControlList extends React.Component {
     // </TableList>
 
     return (<div>
-      <PageTitle title={ lang==='zh'? '访问控制' : 'Access control'} />
+      <PageTitle title={ t('token.accessToken') } />
 
       <PageContent>
         <div className={`btn-group ${styles.btnGroup}`} role='group'>
@@ -43,7 +44,7 @@ class AccessControlList extends React.Component {
           <button
             className={`btn btn-primary ${styles.newBtn}`}
             onClick={this.props.showTokenCreate}>
-            + {lang === 'zh' ? '新建令牌' : 'New token'}
+            + {t('token.new')}
           </button>
 
           {tokenList}
@@ -75,7 +76,6 @@ const mapStateToProps = (state, ownProps) => {
     certificatesSelected,
     tokensButtonStyle: tokensSelected && styles.active,
     certificatesButtonStyle: certificatesSelected && styles.active,
-    lang: state.core.lang
   }
 }
 
@@ -91,4 +91,4 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(AccessControlList)
+)(withNamespaces('translations') (AccessControlList))

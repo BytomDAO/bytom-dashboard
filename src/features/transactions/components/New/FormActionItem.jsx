@@ -2,6 +2,7 @@ import React from 'react'
 import { ErrorBanner, HiddenField, Autocomplete, JsonField, TextField, ObjectSelectorField, AmountUnitField, AmountInputMask } from 'features/shared/components'
 import styles from './FormActionItem.scss'
 import { btmID } from 'utility/environment'
+import {withNamespaces} from 'react-i18next'
 
 const ISSUE_KEY = 'issue'
 const SPEND_ACCOUNT_KEY = 'spend_account'
@@ -31,7 +32,7 @@ const visibleFields = {
   [TRANSACTION_REFERENCE_DATA]: {},
 }
 
-export default class ActionItem extends React.Component {
+class ActionItem extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -71,7 +72,7 @@ export default class ActionItem extends React.Component {
       this.props.remove(this.props.index)
     }
 
-    const lang = this.props.lang
+    const t = this.props.t
     const btmAmounUnitVisible = (assetAlias.value === 'BTM' ||
       assetId.value === btmID )
 
@@ -86,7 +87,7 @@ export default class ActionItem extends React.Component {
 
         <div className={styles.header}>
           <label className={styles.title}>{actionLabels[type.value]}</label>
-          <a href='#' className='btn btn-sm btn-danger' onClick={remove}>{ lang === 'zh' ? '删除' : 'Remove' }</a>
+          <a href='#' className='btn btn-sm btn-danger' onClick={remove}>{ t('commonWords.remove') }</a>
         </div>
 
         {type.error && <ErrorBanner message={type.error} />}
@@ -94,8 +95,7 @@ export default class ActionItem extends React.Component {
         {visible.account &&
           <ObjectSelectorField
             keyIndex='advtx-account'
-            lang={lang}
-            title={ lang === 'zh' ? '账户' : 'Account' }
+            title={ t('form.account') }
             aliasField={Autocomplete.AccountAlias}
             fieldProps={{
               id: accountId,
@@ -106,7 +106,7 @@ export default class ActionItem extends React.Component {
         {visible.receiver &&
           <JsonField title='Receiver' fieldProps={receiver} />}
 
-        {visible.address && <TextField title={ lang === 'zh' ? '地址' :'Address'} fieldProps={address} />}
+        {visible.address && <TextField title={ t('form.address' )} fieldProps={address} />}
 
         {visible.outputId &&
           <TextField title='Output ID' fieldProps={outputId} />}
@@ -114,8 +114,7 @@ export default class ActionItem extends React.Component {
         {visible.asset &&
           <ObjectSelectorField
             keyIndex='advtx-asset'
-            title={ lang === 'zh' ? '资产' :'Asset'}
-            lang={lang}
+            title={ t('form.asset')}
             aliasField={Autocomplete.AssetAlias}
             fieldProps={{
               id: assetId,
@@ -124,13 +123,13 @@ export default class ActionItem extends React.Component {
           />}
 
         {visible.amount && !btmAmounUnitVisible &&
-          <AmountInputMask title={ lang === 'zh' ? '数量' :'Amount' } fieldProps={amount} decimal={decimal} />}
+          <AmountInputMask title={ t('form.amount') } fieldProps={amount} decimal={decimal} />}
 
         {visible.amount && btmAmounUnitVisible &&
-          <AmountUnitField title={ lang === 'zh' ? '数量' :'Amount' } fieldProps={amount} />}
+          <AmountUnitField title={ t('form.amount') } fieldProps={amount} />}
 
         {visible.password && false &&
-          <TextField title={lang === 'zh' ? '密码' :'Password'} placeholder={lang === 'zh' ? '密码' :'Password'} fieldProps={password} autoFocus={false} type={'password'} />
+          <TextField title={t('key.password')} placeholder={t('key.password')} fieldProps={password} autoFocus={false} type={'password'} />
         }
 
         {false && this.state.referenceDataOpen &&
@@ -145,3 +144,5 @@ export default class ActionItem extends React.Component {
     )
   }
 }
+
+export default withNamespaces('translations') (ActionItem)

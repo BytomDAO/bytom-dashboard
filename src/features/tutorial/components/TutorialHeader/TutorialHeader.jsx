@@ -1,5 +1,6 @@
 import React from 'react'
 import styles from './TutorialHeader.scss'
+import { capitalize } from 'utility/string'
 
 class TutorialHeader extends React.Component {
   constructor(props) {
@@ -15,7 +16,7 @@ class TutorialHeader extends React.Component {
   }
 
   render() {
-    const lang = this.props.lang
+    const t = this.props.t
     if(this.props.isVisited){
       return(
         <div>
@@ -25,10 +26,10 @@ class TutorialHeader extends React.Component {
     }else {
       return( <div className={`${styles.main} ${!this.props.isVisited && styles.collapsed}`} ref={element => this.tutorialContainer = element}>
         <div className={styles.header}>
-          {this.props.content && (lang === 'zh'?this.props.content.title_zh:this.props.content.title) }
+          {this.props.content && capitalize(t(`crumbName.${this.props.content.title}`)) }
           <div className={styles.skip}>
             {!this.props.isVisited &&
-            <a onClick={this.props.dismissTutorial}>{lang === 'zh'? '关闭' : 'close'}</a>}
+            <a onClick={this.props.dismissTutorial}>{ t('commonWords.close')}</a>}
           </div>
         </div>
         {!this.props.isVisited && this.props.children}
@@ -38,13 +39,13 @@ class TutorialHeader extends React.Component {
 }
 
 import { connect } from 'react-redux'
+import {withNamespaces} from 'react-i18next'
 
 const mapStateToProps = (state) => ({
   visitedLocation: state.tutorial.location.visited,
   isVisited: state.tutorial.location.isVisited,
   content: state.tutorial.content,
   tutorial: state.tutorial,
-  lang:state.core.lang
 })
 
 const mapDispatchToProps = ( dispatch ) => ({
@@ -54,4 +55,4 @@ const mapDispatchToProps = ( dispatch ) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(TutorialHeader)
+)( withNamespaces('translations') (TutorialHeader) )

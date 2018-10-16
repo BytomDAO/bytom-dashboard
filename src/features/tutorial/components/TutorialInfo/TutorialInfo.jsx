@@ -1,10 +1,11 @@
 import React from 'react'
 import styles from './TutorialInfo.scss'
+import {withNamespaces} from 'react-i18next'
 
 class TutorialInfo extends React.Component {
 
   render() {
-    const content = this.props.lang ==='zh' ? this.props.content_zh: this.props.content
+    const content = this.props.t(`tutorial.content.${this.props.title}`, { returnObjects: true } )
     let objectImage
     try {
       objectImage = require(`images/empty/${this.props.image}.svg`)
@@ -39,4 +40,4 @@ class TutorialInfo extends React.Component {
   }
 }
 
-export default TutorialInfo
+export default  withNamespaces('translations')  (TutorialInfo)

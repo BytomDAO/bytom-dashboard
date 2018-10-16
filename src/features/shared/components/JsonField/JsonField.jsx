@@ -6,6 +6,7 @@ import { FieldLabel } from 'features/shared/components'
 
 import 'brace/mode/json'
 import 'brace/theme/github'
+import {withNamespaces} from 'react-i18next'
 
 class JsonField extends React.Component {
   constructor(props) {
@@ -14,8 +15,8 @@ class JsonField extends React.Component {
   }
 
   render() {
-    const lang = this.props.lang
-    const hint = this.props.hint ||  lang === 'zh' ? '内容必须表示为JSON对象' : 'Contents must be represented as a JSON object'
+    const t = this.props.t
+    const hint = this.props.hint || t('errorMessage.jsonObjectError')
     const fieldProps = this.props.fieldProps
     const displayProps = {
       mode: 'json',
@@ -65,7 +66,7 @@ class JsonField extends React.Component {
         {showError &&
           <span className={`help-block ${styles.errorBlock}`}>
             {fieldProps.error}:
-            {syntaxError && ` ${syntaxError.text} on row ${syntaxError.row + 1}`}
+            {syntaxError && t('errorMessage.jsonRowError', {error: syntaxError.text, row: syntaxError.row})}
           </span>}
         {!showError && <span className='help-block'>{hint}</span>}
       </div>
@@ -82,4 +83,4 @@ JsonField.validator = value => {
   return null
 }
 
-export default JsonField
+export default withNamespaces('translations') ( JsonField )

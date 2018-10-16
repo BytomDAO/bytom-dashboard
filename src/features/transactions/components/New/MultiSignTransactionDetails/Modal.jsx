@@ -3,8 +3,9 @@ import { btmID } from 'utility/environment'
 import { FieldLabel } from 'features/shared/components'
 import styles from './TransactionDetails.scss'
 import { normalizeGlobalBTMAmount , converIntToDec } from 'utility/buildInOutDisplay'
+import {withNamespaces} from 'react-i18next'
 
-export default class Modal extends React.Component {
+class Modal extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -55,7 +56,7 @@ export default class Modal extends React.Component {
   render() {
     const item = this.props.transaction
     const btmAmountUnit = this.props.btmAmountUnit
-    const lang = this.props.lang
+    const t = this.props.t
 
     let view = <div></div>
     if (item.length !== 0) {
@@ -67,38 +68,38 @@ export default class Modal extends React.Component {
           <table key={index} className={styles.table}>
             <tbody>
               <tr>
-                <td className={styles.colLabel}> {lang === 'zh' ? '类型' : 'Type'}</td>
+                <td className={styles.colLabel}> { t('form.type') }</td>
                 <td><code>{inout.type}</code></td>
               </tr>
               <tr>
-                <td className={styles.colLabel}> {lang === 'zh' ? '地址' : 'Address'}</td>
+                <td className={styles.colLabel}> {t('form.address')}</td>
                 <td><code>{inout.address}</code></td>
               </tr>
               <tr>
-                <td className={styles.colLabel}> {lang === 'zh' ? '数量' : 'Amount'}</td>
+                <td className={styles.colLabel}> { t('form.amount') }</td>
                 <td><code>{inout.amount}</code></td>
               </tr>
               <tr>
-                <td className={styles.colLabel}> {lang === 'zh' ? '资产' : 'Asset'}</td>
+                <td className={styles.colLabel}> { t('form.asset') }</td>
                 <td><code>{inout.assetAlias}</code></td>
               </tr>
               <tr>
-                <td className={styles.colLabel}> {lang === 'zh' ? '合约程序' : 'Control Program'}</td>
+                <td className={styles.colLabel}> { t('form.controlProgram') }</td>
                 <td><code>{inout.controlProgram}</code></td>
               </tr>
             </tbody>
           </table>))
 
       view = (<div>
-        <FieldLabel>{lang === 'zh' ? '交易内容' : 'Transaction Content'}</FieldLabel>
+        <FieldLabel>{t('transaction.advance.transactionContent')}</FieldLabel>
         <div className={styles.main}>
           <div className={styles.txID}>
-            <label>{lang === 'zh' ? '详情' : 'Summary'}</label>
+            <label>{t('form.summary')}</label>
             <table key={'txsummary'} className={styles.table}>
               <tbody>
                 <tr>
                   <td className={styles.colLabel}>
-                    {lang === 'zh' ? '交易ID' : 'Transaction ID'}
+                    {t('form.transactionId')}
                   </td>
                   <td>
                     <code>{item.txId}</code>
@@ -112,9 +113,9 @@ export default class Modal extends React.Component {
             </table>
           </div>
           <div>
-            <label>{lang === 'zh' ? '输入' : 'Input'}</label>
+            <label>{t('form.input')}</label>
             {table(inputs)}
-            <label>{lang === 'zh' ? '输出' : 'Output'}</label>
+            <label>{t('form.output')}</label>
             {table(outputs)}
           </div>
         </div>
@@ -129,12 +130,12 @@ export default class Modal extends React.Component {
               <button
                 className={`btn btn-default ${this.state.showJson ? null : 'active'}`}
                 onClick={(e) => this.showForm(e, 'normal')}>
-                {lang === 'zh' ? '普通展示' : 'Normal View'}
+                {t('transaction.advance.normalView')}
               </button>
               <button
                 className={`btn btn-default ${this.state.showJson ? 'active' : null}`}
                 onClick={(e) => this.showForm(e, 'json')}>
-                {lang === 'zh' ? 'Json格式' : 'Json View'}
+                {t('transaction.advance.jsonView')}
               </button>
             </div>
           </div>
@@ -146,3 +147,5 @@ export default class Modal extends React.Component {
     }
   }
 }
+
+export default withNamespaces('translations') (Modal)

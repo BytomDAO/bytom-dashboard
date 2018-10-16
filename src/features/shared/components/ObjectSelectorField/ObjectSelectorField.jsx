@@ -2,6 +2,7 @@ import React from 'react'
 import styles from './ObjectSelectorField.scss'
 import { DropdownButton, MenuItem } from 'react-bootstrap'
 import { FieldLabel } from 'features/shared/components'
+import {withNamespaces} from 'react-i18next'
 
 const ALIAS_SELECTED = 'Alias'
 const ID_SELECTED = 'ID'
@@ -44,8 +45,8 @@ class ObjectSelectorField extends React.Component {
       this.props.fieldProps.id.onChange('')
     }
 
-    const lang = this.props.lang
-    const alias_title = ( lang === 'zh' ? '别名' : ALIAS_SELECTED )
+    const t = this.props.t
+    const alias_title = t('form.alias')
 
     const idProps = Object.assign({...this.props.fieldProps.id}, {onChange: idOnChange})
     const aliasProps = Object.assign({...this.props.fieldProps.alias}, {onChange: aliasOnChange})
@@ -63,7 +64,7 @@ class ObjectSelectorField extends React.Component {
               title={(this.state.selected === ALIAS_SELECTED)? alias_title: this.state.selected}
               onSelect={this.select}
             >
-              <MenuItem eventKey={ALIAS_SELECTED}>{ lang === 'zh' ? '别名' : 'Alias'}</MenuItem>
+              <MenuItem eventKey={ALIAS_SELECTED}>{ t('form.alias') }</MenuItem>
               <MenuItem eventKey={ID_SELECTED}>ID</MenuItem>
             </DropdownButton>
           </div>
@@ -77,7 +78,7 @@ class ObjectSelectorField extends React.Component {
           {this.state.selected == ALIAS_SELECTED &&
             <this.props.aliasField
               className={styles.aliasFieldGroupItem}
-              placeholder={ lang === 'zh' ? `输入${this.props.title.toLowerCase()}别名...` : `Start typing ${this.props.title.toLowerCase()} alias...`}
+              placeholder={  t('form.objectField.aliasPlaceholder' , {title: this.props.title.toLowerCase()}) }
               fieldProps={aliasProps} />}
 
         </div>
@@ -87,4 +88,4 @@ class ObjectSelectorField extends React.Component {
   }
 }
 
-export default ObjectSelectorField
+export default withNamespaces('translations') (ObjectSelectorField)

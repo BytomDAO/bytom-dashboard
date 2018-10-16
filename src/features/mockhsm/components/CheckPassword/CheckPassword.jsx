@@ -37,7 +37,6 @@ class CheckPassword extends Component {
       return <NotFound />
     }
     const item = this.props.item
-    const lang = this.props.lang
 
     if (!item) {
       return <div>Loading...</div>
@@ -49,10 +48,11 @@ class CheckPassword extends Component {
       fields: { password },
       error,
       handleSubmit,
+      t
     } = this.props
 
     const title = <span>
-      {lang === 'zh' ? '密码校验' : 'Try Password'}
+      {t('key.tryPassword')}
       <code>{item.alias}</code>
     </span>
 
@@ -62,13 +62,12 @@ class CheckPassword extends Component {
         success={success}
         label={title}
         onSubmit={handleSubmit(value => this.submitWithErrors(value, item.xpub))}
-        submitLabel= { lang === 'zh' ? '密码校验' : 'Try Password' }
-        lang={lang}>
+        submitLabel= {t('key.tryPassword')}>
 
         <FormSection>
           <PasswordField
-            title = { lang === 'zh' ? '密码' : 'Password' }
-            placeholder={ lang === 'zh' ? '请输入校验密码' : 'Please entered the password that you need to check.' }
+            title = { t('key.password') }
+            placeholder={ t('key.tryPPlaceholder') }
             fieldProps={password}
             />
         </FormSection>
@@ -79,10 +78,10 @@ class CheckPassword extends Component {
 
 import {connect} from 'react-redux'
 import actions from 'actions'
+import {withNamespaces} from 'react-i18next'
 
 const mapStateToProps = (state, ownProps) => ({
   item: state.key.items[ownProps.params.id],
-  lang: state.core.lang,
   successMsg: state.key.success
 })
 
@@ -97,4 +96,4 @@ export default connect(
 )(reduxForm({
   form: 'CheckPassword',
   fields: ['password'],
-})(CheckPassword))
+})(withNamespaces('translations')(CheckPassword)))

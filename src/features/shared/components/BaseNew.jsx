@@ -3,7 +3,6 @@ import actions from 'actions'
 
 export const mapStateToProps = ( type ) => (  state  ) => ({
   type: type,
-  lang: state.core.lang
 })
 
 export const mapDispatchToProps = (type) => (dispatch) => ({

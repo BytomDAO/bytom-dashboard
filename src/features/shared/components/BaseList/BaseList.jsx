@@ -6,34 +6,20 @@ import {UTXOpageSize, pageSize} from 'utility/environment'
 import componentClassNames from 'utility/componentClassNames'
 import { PageContent, PageTitle, Pagination } from '../'
 import EmptyList from './EmptyList'
+import {withNamespaces} from 'react-i18next'
 
 class ItemList extends React.Component {
   render() {
     const label = this.props.label || pluralize(humanize(this.props.type))
+    const type = this.props.type
     const actions = [...(this.props.actions || [])]
-    const lang = this.props.lang
+    const t = this.props.t
 
-    const labelTitleMap = {
-      transactions: lang === 'zh' ? '交易' : 'Transactions',
-      accounts: lang === 'zh' ? '账户' : 'Accounts',
-      assets: lang === 'zh' ? '资产' : 'Assets',
-      balances: lang === 'zh' ? '余额' : 'Balances',
-      'unspent outputs': 'UTXO',
-      Keys: lang === 'zh' ? '密钥' : 'Keys'
-    }
-    const objectNameZh = {
-      transactions: '交易' ,
-      accounts: '账户',
-      assets: '资产',
-      balances: '余额' ,
-      'unspent outputs': '未完成输出',
-      Keys: '密钥'
-    }
-    const objectName = lang === 'zh' ? objectNameZh[label] :label.slice(0,-1)
-    const title = labelTitleMap[label] || capitalize(label)
+    const objectName = humanize(t(`crumbName.${type.toLowerCase()}` ))
+    const title = capitalize(t(`crumbName.${type.toLowerCase()}` ) || label)
 
     const newButton = <button key='showCreate' className='btn btn-primary' onClick={this.props.showCreate}>
-      + {lang === 'zh' ? '新建' : 'New'}
+      + {t('crumbName.new')}
     </button>
     if (!this.props.skipCreate) {
       actions.push(newButton)
@@ -61,7 +47,7 @@ class ItemList extends React.Component {
             showFirstTimeFlow={this.props.showFirstTimeFlow}
             skipCreate={this.props.skipCreate}
             loadedOnce={this.props.loadedOnce}
-            lang={lang} />
+            />
 
         </div>
       )
@@ -71,14 +57,12 @@ class ItemList extends React.Component {
         currentFilter={this.props.currentFilter}
         isLastPage={this.props.isLastPage}
         pushList={this.props.pushList}
-        lang={this.props.lang}
       />
 
       const items = this.props.items.map((item) =>
         <this.props.listItemComponent
           key={item.id}
           item={item}
-          lang={this.props.lang}
           btmAmountUnit={this.props.btmAmountUnit}
           {...this.props.itemActions}/>)
 
@@ -132,7 +116,6 @@ export const mapStateToProps = (type, itemComponent, additionalProps = {}) => (s
     isLastPage: isLastPage,
     currentPage: currentPage,
 
-    lang: state.core.lang,
     btmAmountUnit: state.core.btmAmountUnit,
 
     listItemComponent: itemComponent,
@@ -153,7 +136,7 @@ export const mapDispatchToProps = (type) => (dispatch) => {
 export const connect = (state, dispatch, component = ItemList) => reduxConnect(
   state,
   dispatch
-)(component)
+)(withNamespaces('translations')(component))
 
 export default {
   mapStateToProps,

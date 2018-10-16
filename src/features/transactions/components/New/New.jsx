@@ -9,6 +9,7 @@ import NormalTxForm from './NormalTransactionForm'
 import AdvancedTxForm from './AdvancedTransactionForm'
 import { withRouter } from 'react-router'
 import {getValues} from 'redux-form'
+import {withNamespaces} from 'react-i18next'
 
 class Form extends React.Component {
   constructor(props) {
@@ -32,7 +33,7 @@ class Form extends React.Component {
     }
     this.props.router.setRouteLeaveHook(this.props.route, (nextLocation) => {
       if (!(this.handleFormEmpty() || nextLocation.state || nextLocation.pathname.startsWith('/transactions/generated/')))
-        return this.props.lang === 'zh'? '交易表格有未完成内容，你确定要离开么？' : 'Your work is not saved! Are you sure you want to leave?'
+        return this.props.t('transaction.new.unsaveWarning')
     })
   }
 
@@ -70,18 +71,18 @@ class Form extends React.Component {
     e.preventDefault()
     const showAdTx = (type === 'advanced')
     if ( this.state.showAdvanceTx === showAdTx ||
-      ( !this.handleFormEmpty() && !window.confirm(this.props.lang === 'zh'? '交易表格有未完成内容，你确定要离开么？' :'Your work is not saved! Are you sure you want to leave?') )){
+      ( !this.handleFormEmpty() && !window.confirm(this.props.t('transaction.new.unsaveWarning')) )){
       return
     }
     this.setState({ showAdvanceTx: showAdTx })
   }
 
   render() {
-    const lang = this.props.lang
+    const t = this.props.t
 
     return (
       <div className={componentClassNames(this, 'flex-container')}>
-        <PageTitle title={lang === 'zh' ? '新建交易' : 'New transaction'} />
+        <PageTitle title={t('transaction.new.new')} />
 
         <div className={`${styles.mainContainer} flex-container`}>
 
@@ -91,19 +92,18 @@ class Form extends React.Component {
                 <button
                   className={`btn btn-default ${this.state.showAdvanceTx ? null : 'active'}`}
                   onClick={(e) => this.showForm(e, 'normal')}>
-                  {lang === 'zh' ? '简单交易' : 'Normal'}
+                  {t('transaction.new.normal')}
                   </button>
                 <button
                   className={`btn btn-default ${this.state.showAdvanceTx ? 'active' : null}`}
                   onClick={(e) => this.showForm(e, 'advanced')}>
-                  {lang === 'zh' ? '高级交易' : 'Advanced'}
+                  {t('transaction.new.advanced')}
                   </button>
               </div>
             </div>
 
               {!this.state.showAdvanceTx &&
               <NormalTxForm
-                lang={this.props.lang}
                 btmAmountUnit={this.props.btmAmountUnit}
                 asset={this.props.asset}
                 balances ={this.props.balances}
@@ -113,7 +113,6 @@ class Form extends React.Component {
 
               {this.state.showAdvanceTx &&
               <AdvancedTxForm
-                lang={this.props.lang}
                 btmAmountUnit={this.props.btmAmountUnit}
                 asset={this.props.asset}
                 handleKeyDown={this.handleKeyDown}
@@ -137,7 +136,6 @@ const mapStateToProps = (state) => {
   return {
     autocompleteIsBalanceLoaded: state.balance.autocompleteIsLoaded,
     autocompleteIsAssetLoaded: state.asset.autocompleteIsLoaded,
-    lang: state.core.lang,
     btmAmountUnit: state.core.btmAmountUnit,
     balances,
     asset: Object.keys(state.asset.items).map(k => state.asset.items[k]),
@@ -157,4 +155,4 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withRouter(Form))
+)( withNamespaces('translations')  (withRouter(Form)) )

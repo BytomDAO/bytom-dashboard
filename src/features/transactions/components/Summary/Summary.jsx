@@ -3,6 +3,7 @@ import { Link } from 'react-router'
 import { converIntToDec } from 'utility/buildInOutDisplay'
 import { btmID } from 'utility/environment'
 import styles from './Summary.scss'
+import {withNamespaces} from 'react-i18next'
 
 const INOUT_TYPES = {
   issue: 'Issue',
@@ -57,7 +58,7 @@ class Summary extends React.Component {
     const inouts = this.props.transaction.inputs.concat(this.props.transaction.outputs)
     const summary = this.normalizeInouts(inouts)
     const items = []
-    const lang = this.props.lang
+    const t = this.props.t
 
     const normalizeBtmAmountUnit = (assetID, amount, btmAmountUnit) => {
       //normalize BTM Amount
@@ -132,20 +133,20 @@ class Summary extends React.Component {
             {
               isCoinbase && <td className={styles.colAction}>
                 Coinbase
-                {!mature && <small className={styles.immature}>{ lang === 'zh' ? '未成熟' : 'immature' }</small>}
+                {!mature && <small className={styles.immature}>{ t('transaction.type.immature') }</small>}
               </td>
             }
-            <td className={styles.colLabel}>{ lang === 'zh' ? '数量' : 'amount' }</td>
+            <td className={styles.colLabel}>{ t('form.amount') }</td>
             <td className={styles.colAmount}>
               <code className={styles.amount}>{item.amount}</code>
             </td>
-            <td className={styles.colLabel}>{ lang === 'zh' ? '资产' : 'asset' }</td>
+            <td className={styles.colLabel}>{ t('form.asset') }</td>
             <td className={styles.colAccount}>
               <Link to={`/assets/${item.assetId}`}>
                 {item.asset}
               </Link>
             </td>
-            <td className={styles.colLabel}>{item.account && ( lang === 'zh' ? '账户' : 'account')}</td>
+            <td className={styles.colLabel}>{item.account && t('form.account')}</td>
             <td className={styles.colAccount}>
               {item.accountId && <Link to={`/accounts/${item.accountId}`}>
                 {item.account}
@@ -159,4 +160,4 @@ class Summary extends React.Component {
   }
 }
 
-export default Summary
+export default withNamespaces('translations') (Summary)

@@ -204,14 +204,6 @@ export const btmAmountUnit = (state = 'BTM' , action) => {
   return state
 }
 
-const defaultLang = window.navigator.language.startsWith('zh') ? 'zh' : 'en'
-const lang = (state = defaultLang, action) => {
-  if (action.type === 'UPDATE_CORE_LANGUAGE') {
-    return action.lang || ''
-  }
-  return state
-}
-
 const mingStatus = (state = false, action) => {
   if (action.type == 'UPDATE_CORE_INFO') {
     return action.param.data.mining
@@ -294,6 +286,5 @@ export default combineReducers({
   update,
   validToken,
   version,
-  lang,
   btmAmountUnit
 })

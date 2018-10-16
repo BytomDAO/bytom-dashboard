@@ -5,10 +5,11 @@ import disableAutocomplete from 'utility/disableAutocomplete'
 
 import styles from './FormContainer.scss'
 import Tutorial from 'features/tutorial/components/Tutorial'
+import {withNamespaces} from 'react-i18next'
 
 class FormContainer extends React.Component {
   render() {
-    const lang = this.props.lang
+    const t = this.props.t
     return(
       <div className={componentClassNames(this, 'flex-container')}>
         <PageTitle title={this.props.label} />
@@ -21,7 +22,7 @@ class FormContainer extends React.Component {
               <FormSection className={styles.submitSection}>
                 {this.props.error &&
                   <ErrorBanner
-                    title='Error submitting form'
+                    title={ t('form.errorTitle')}
                     error={this.props.error} />}
 
                 {this.props.success &&
@@ -31,7 +32,7 @@ class FormContainer extends React.Component {
 
                 <div className={styles.submit}>
                   <button type='submit' className='btn btn-primary' disabled={this.props.submitting || this.props.disabled}>
-                    {this.props.submitLabel ||  ( lang === 'zh' ? '提交' : 'Submit' )}
+                    {this.props.submitLabel ||  (t('form.submit'))}
                   </button>
 
                   {this.props.showSubmitIndicator && this.props.submitting &&
@@ -48,4 +49,4 @@ class FormContainer extends React.Component {
   }
 }
 
-export default FormContainer
+export default withNamespaces('translations') (FormContainer)

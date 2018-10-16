@@ -8,6 +8,7 @@ import makeRoutes from 'routes'
 import actions from 'actions'
 import styles from './PageTitle.scss'
 import componentClassNames from 'utility/componentClassNames'
+import {withNamespaces} from 'react-i18next'
 
 class PageTitle extends React.Component {
 
@@ -52,11 +53,10 @@ class PageTitle extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
   const routes = makeRoutes()
   const pathname = state.routing.locationBeforeTransitions.pathname
   const breadcrumbs = []
-  const lang = state.core.lang
 
   let currentRoutes = routes.childRoutes
   let currentPath = []
@@ -70,12 +70,8 @@ const mapStateToProps = (state) => {
       currentPath.push(component)
 
       if (!match.skipBreadcrumb) {
-        let crumbName =  match.name || humanize(component)
-        if( lang === 'zh' &&  match.name_zh ){
-          crumbName = match.name_zh
-        }
         breadcrumbs.push({
-          name: crumbName ,
+          name: ownProps.t(`crumbName.${match.name}`) || humanize(component) ,
           path: currentPath.join('/')
         })
       }
@@ -90,10 +86,10 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(
+export default withNamespaces('translations')(connect(
   mapStateToProps,
   (dispatch) => ({
     markFlashDisplayed: (key) => dispatch(actions.app.displayedFlash(key)),
     dismissFlash: (key) => dispatch(actions.app.dismissFlash(key)),
   })
-)(PageTitle)
+)(PageTitle))

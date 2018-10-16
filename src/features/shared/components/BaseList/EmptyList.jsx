@@ -2,10 +2,11 @@ import React from 'react'
 import styles from './EmptyList.scss'
 import componentClassNames from 'utility/componentClassNames'
 import { docsRoot } from 'utility/environment'
+import {withNamespaces} from 'react-i18next'
 
 class EmptyList extends React.Component {
   render() {
-    const lang =this.props.lang
+    const t =this.props.t
     let emptyImage
 
     try {
@@ -14,11 +15,11 @@ class EmptyList extends React.Component {
 
     let emptyBlock
     if (!this.props.loadedOnce) {
-      emptyBlock = <span>{lang === 'zh' ? '加载中': 'LOADING'}…</span>
+      emptyBlock = <span>{t('emptyList.loading')}…</span>
     } else if (this.props.showFirstTimeFlow) {
       emptyBlock = <div>
         <span className={`${styles.emptyLabel} ${styles.noResultsLabel}`}>
-          {lang === 'zh' ? `没有${this.props.objectName}记录`: `There are no ${this.props.objectName}s`}
+          {t('emptyList.noRecord', {objectName: this.props.objectName})}
         </span>
       </div>
     }
@@ -45,4 +46,4 @@ EmptyList.propTypes = {
   showFirstTimeFlow: React.PropTypes.bool
 }
 
-export default EmptyList
+export default withNamespaces('translations') (EmptyList)

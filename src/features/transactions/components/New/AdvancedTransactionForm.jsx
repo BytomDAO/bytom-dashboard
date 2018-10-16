@@ -15,6 +15,7 @@ import styles from './New.scss'
 import disableAutocomplete from 'utility/disableAutocomplete'
 import actions from 'actions'
 import { getAssetDecimal} from '../../transactions'
+import {withNamespaces} from 'react-i18next'
 
 
 class AdvancedTxForm extends React.Component {
@@ -89,12 +90,12 @@ class AdvancedTxForm extends React.Component {
       handleSubmit,
       submitting
     } = this.props
-    const lang = this.props.lang
+    const t = this.props.t
 
-    let submitLabel = lang === 'zh' ? '提交交易' : 'Submit transaction'
+    let submitLabel = t('transaction.new.submit')
     const hasBaseTransaction = ((signTransaction.value || '').trim()).length > 0
     if (submitAction.value == 'generate' && !hasBaseTransaction) {
-      submitLabel = lang === 'zh' ? '生成交易JSON' : 'Generate transaction JSON'
+      submitLabel = t('transaction.advance.generateJson')
     }
 
     return (
@@ -113,7 +114,6 @@ class AdvancedTxForm extends React.Component {
               accounts={this.props.accounts}
               assets={this.props.assets}
               remove={this.removeActionItem}
-              lang={lang}
               decimal={getAssetDecimal(action, this.props.asset)}
             />)}
 
@@ -141,16 +141,15 @@ class AdvancedTxForm extends React.Component {
                this.setState({showAdvanced: true})
              }}
           >
-            {lang === 'zh' ? '显示高级选项' : 'Show advanced options'}
+          {t('transaction.advance.showAdvanced')}
           </a>
         </FormSection>
         }
 
         {this.state.showAdvanced &&
-        <FormSection title={lang === 'zh' ? '高级选项' : 'Advanced Options'}>
+        <FormSection title={t('transaction.advance.option')}>
           <div>
             <TransactionDetails
-              lang={lang}
               fieldProps={signTransaction}
               decode={this.props.decode}
               transaction={this.props.decodedTx}
@@ -159,7 +158,7 @@ class AdvancedTxForm extends React.Component {
               btmAmountUnit = {this.props.btmAmountUnit}
             />
 
-            <FieldLabel>{lang === 'zh' ? '交易构建类型' : 'Transaction Build Type'}</FieldLabel>
+            <FieldLabel>{t('transaction.advance.buildType')}</FieldLabel>
             <table className={styles.submitTable}>
               <tbody>
               <tr>
@@ -167,11 +166,10 @@ class AdvancedTxForm extends React.Component {
                            checked={submitAction.value == 'submit'}/></td>
                 <td>
                   <label
-                    htmlFor='submit_action_submit'>{lang === 'zh' ? '向区块链提交交易' : 'Submit transaction to blockchain'}</label>
+                    htmlFor='submit_action_submit'>{ t('transaction.advance.submitToBlockchain')}</label>
                   <br/>
                   <label htmlFor='submit_action_submit' className={styles.submitDescription}>
-                    {lang === 'zh' ? '此次交易将通过密钥签名然后提交到区块链。' :
-                      'This transaction will be signed by the key and submitted to the blockchain.'}
+                    {t('transaction.advance.submitLabel')}
                   </label>
                 </td>
               </tr>
@@ -179,12 +177,10 @@ class AdvancedTxForm extends React.Component {
                 <td><input id='submit_action_generate' type='radio' {...submitAction} value='generate'
                            checked={submitAction.value == 'generate'}/></td>
                 <td>
-                  <label htmlFor='submit_action_generate'>{lang === 'zh' ? '需要更多签名' : 'Need more signature'}</label>
+                  <label htmlFor='submit_action_generate'>{ t('transaction.advance.needMoreSign')}</label>
                   <br/>
                   <label htmlFor='submit_action_generate' className={styles.submitDescription}>
-                    {lang === 'zh' ? '这些actions将通过密钥签名然后作为一个交易 JSON 字符串返回。 作为多签交易的输入，这个JSON字符串需要更多的签名数据。' :
-                      'These actions will be signed by the Key and returned as a transaction JSON string, ' +
-                      'which should be used to sign transaction in a multi-sign spend.'}
+                    {t('transaction.advance.needMoreSignDescription')}
                   </label>
                 </td>
               </tr>
@@ -194,9 +190,9 @@ class AdvancedTxForm extends React.Component {
         </FormSection>}
 
         {(actions.length > 0 || this.state.showAdvanced) && <FormSection>
-            <label className={styles.title}>{lang === 'zh' ? '密码' : 'Password'}</label>
+            <label className={styles.title}>{t('key.password')}</label>
             <PasswordField
-              placeholder={lang === 'zh' ? '请输入密码' : 'Please enter the password'}
+              placeholder={t('key.passwordPlaceholder')}
               fieldProps={password}
             />
           </FormSection>}
@@ -204,12 +200,12 @@ class AdvancedTxForm extends React.Component {
           <FormSection className={styles.submitSection}>
             {error &&
             <ErrorBanner
-              title='Error submitting form'
+              title={t('form.errorTitle')}
               error={error} />}
 
             <div className={styles.submit}>
               <button type='submit' className='btn btn-primary' disabled={submitting || this.disableSubmit(actions)}>
-                {submitLabel ||  ( lang === 'zh' ? '提交' : 'Submit' )}
+                {submitLabel ||  t('form.submit')}
               </button>
 
               { submitting &&
@@ -224,7 +220,7 @@ class AdvancedTxForm extends React.Component {
 
 const validate = (values, props) => {
   const errors = {actions: {}}
-  const lang = props.lang
+  const t = props.t
 
   // Base transaction
   let baseTx = (values.signTransaction || '').trim()
@@ -232,7 +228,7 @@ const validate = (values, props) => {
     JSON.parse(baseTx)
   } catch (e) {
     if (baseTx && e) {
-      errors.signTransaction = ( lang === 'zh' ? '请使用JSON字符来签名交易' : 'To sign transaction must be a JSON string.' )
+      errors.signTransaction = t('errorMessage.jsonError')
     }
   }
 
@@ -241,7 +237,7 @@ const validate = (values, props) => {
   values.actions.forEach((action, index) => {
     numError = (!/^\d+(\.\d+)?$/i.test(values.actions[index].amount))
     if (numError) {
-      errors.actions[index] = {...errors.actions[index], amount: ( lang === 'zh' ? '请输入数字' : 'Invalid amount type' )}
+      errors.actions[index] = {...errors.actions[index], amount: t('errorMessage.amountError')}
     }
   })
   return errors
@@ -258,7 +254,7 @@ const mapDispatchToProps = (dispatch) => ({
   )),
 })
 
-export default BaseNew.connect(
+export default withNamespaces('translations') (BaseNew.connect(
   (state, ownProps) => ({
     ...BaseNew.mapStateToProps('transaction')(state, ownProps),
     decodedTx: state.transaction.decodedTx
@@ -288,6 +284,6 @@ export default BaseNew.connect(
     },
   }
   )(AdvancedTxForm)
-)
+))
 
 

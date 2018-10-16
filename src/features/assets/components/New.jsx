@@ -39,7 +39,7 @@ class Form extends React.Component {
           <JsonField title={ t('form.definition') } fieldProps={definition}/>
         </FormSection>
 
-        <FormSection title={t('asset.keyAndSign')}>
+        <FormSection title={t('form.keyAndSign')}>
           <KeyConfiguration
             xpubs={xpubs}
             quorum={quorum}

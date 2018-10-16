@@ -3,6 +3,7 @@ import { ProgressBar } from 'react-bootstrap'
 import styles from './RescanDialog.scss'
 import actions from 'actions'
 import {connect} from 'react-redux'
+import {withNamespaces} from 'react-i18next'
 
 class RescanDialog extends React.Component {
   constructor(props) {
@@ -39,10 +40,10 @@ class RescanDialog extends React.Component {
 
   render() {
     const now = this.state.now
-    const lang = this.props.lang
-    const success = (lang === 'zh' ? '扫描成功':'Success')
-    const start = (lang === 'zh' ? '扫描开始...':'Starting...')
-    const rescan = (lang === 'zh' ? '扫描中...':'Rescanning...')
+    const t = this.props.t
+    const success = t('balances.status.success')
+    const start = t('balances.status.start')
+    const rescan = t('balances.status.rescan')
     return (
       <div>
         <h2 className={styles.title}>
@@ -53,15 +54,15 @@ class RescanDialog extends React.Component {
         </h2>
         { now === 100?
           <pre className={styles.infoContainer}>
-            <p>{lang === 'zh' ? '已经成功扫描资产余额。' :'Successfully rescanned spent outputs.'}</p>
+            <p>{ t('balances.status.successMsg') }</p>
           </pre>
           :
           (now === 0?
             (<pre className={styles.infoContainer}>
-              <p>{lang === 'zh' ? '扫描正在启动...' : 'Rescan is starting...'}</p>
+              <p>{ t('balances.status.startMsg') }</p>
             </pre>):
             (<pre className={styles.infoContainer}>
-              <p>{lang === 'zh' ? '钱包正在扫描中...' : 'Wallet Rescanning...'}</p>
+              <p>{ t('balances.status.rescanMsg') }</p>
               <ProgressBar now={now} />
              </pre>))
 
@@ -73,7 +74,7 @@ class RescanDialog extends React.Component {
             onClick={() => this.props.closeModal()}
             disabled={ now!==100 }
           >
-            {lang === 'zh' ? '确定' : 'OK'}
+            {t('form.ok')}
           </button>
         </div>
       </div>
@@ -96,4 +97,4 @@ const mapDispatchToProps = ( dispatch ) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)( RescanDialog)
+)( withNamespaces('translations') (RescanDialog))

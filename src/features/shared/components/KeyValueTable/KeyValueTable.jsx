@@ -3,6 +3,7 @@ import styles from './KeyValueTable.scss'
 import {Section} from 'features/shared/components'
 import {Link} from 'react-router'
 import {size, sample, isArray, isObject, toPairs} from 'lodash'
+import {withNamespaces} from 'react-i18next'
 
 class KeyValueTable extends React.Component {
   shouldUsePre(item) {
@@ -45,7 +46,7 @@ class KeyValueTable extends React.Component {
   }
 
   render() {
-    const lang = this.props.lang
+    const t = this.props.t
     return (
       <Section
         title={this.props.title}
@@ -58,10 +59,10 @@ class KeyValueTable extends React.Component {
               <td className={styles.value}>{this.renderValue(item)}
                 {item.editUrl && <Link to={item.editUrl} className={styles.edit}>
                   <span
-                    className={`${styles.pencil} glyphicon glyphicon-pencil`}></span>{lang === 'zh' ? '编辑' : 'Edit'}
+                    className={`${styles.pencil} glyphicon glyphicon-pencil`}></span>{t('form.edit')}
                 </Link>}
                 {item.program && <button  onClick={item.program} className={`${styles.detail} ${styles.edit} btn btn-link`}>
-                  { lang === 'zh' ? '合约程序': 'Program' }
+                  { t('commonWords.program')}
                 </button>}
               </td>
             </tr>
@@ -73,4 +74,4 @@ class KeyValueTable extends React.Component {
   }
 }
 
-export default KeyValueTable
+export default  withNamespaces('translations') (KeyValueTable)
