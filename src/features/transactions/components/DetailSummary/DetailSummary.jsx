@@ -3,13 +3,7 @@ import { Link } from 'react-router'
 import { converIntToDec } from 'utility/buildInOutDisplay'
 import { btmID } from 'utility/environment'
 import styles from './DetailSummary.scss'
-
-const INOUT_TYPES_ZH = {
-  issue: '创建资产',
-  sent: '支出',
-  received: '收入',
-  retire: '销毁资产',
-}
+import {withNamespaces} from 'react-i18next'
 
 class DetailSummary extends React.Component {
   normalizeInouts(inouts) {
@@ -58,7 +52,7 @@ class DetailSummary extends React.Component {
     const summary = this.normalizeInouts(inouts)
 
     const items = []
-    const lang = this.props.lang
+    const t = this.props.t
 
     const normalizeBtmAmountUnit = (assetID, amount, btmAmountUnit) => {
       //normalize BTM Amount
@@ -147,13 +141,13 @@ class DetailSummary extends React.Component {
             {/*<td className={styles.colLabel}><img src={require(`images/transactions/${isCoinbase?'coinbase':item.type}.svg`)}/></td>*/}
             {
               !isCoinbase && <td className={styles.colAction}>
-                <img src={require(`images/transactions/${item.type}.svg`)}/> {lang==='zh'? INOUT_TYPES_ZH[item.type] : item.type}
+                <img src={require(`images/transactions/${item.type}.svg`)}/> {t(`transaction.type.${item.type}`)}
                 </td>
             }
             {
               isCoinbase && <td className={styles.colAction}>
-                <img src={require('images/transactions/coinbase.svg')}/> {lang==='zh'? '挖矿收入':'coinbase'}
-                {!mature && <small className={styles.immature}>{ lang === 'zh' ? '未成熟' : 'immature' }</small>}
+                <img src={require('images/transactions/coinbase.svg')}/> {t('transaction.type.coinbase')}
+                {!mature && <small className={styles.immature}>{ t('transaction.type.immature') }</small>}
               </td>
             }
 
@@ -180,4 +174,4 @@ class DetailSummary extends React.Component {
   }
 }
 
-export default DetailSummary
+export default withNamespaces('translations') ( DetailSummary )

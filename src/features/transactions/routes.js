@@ -14,8 +14,7 @@ export default (store) => {
           path: 'generated/:id',
           component: GeneratedTxHex,
         },
-      ],
-      name_zh: '交易'
+      ]
     }
   )
 }

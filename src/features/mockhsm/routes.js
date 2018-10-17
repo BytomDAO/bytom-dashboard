@@ -12,4 +12,4 @@ export default (store) => makeRoutes(store, 'key', List, New, Show,
         path: ':id/check-password',
         component: CheckPassword,
       },
-    ],skipFilter: true, name: 'Keys', name_zh:'密钥' })
+    ],skipFilter: true, name: 'key' })

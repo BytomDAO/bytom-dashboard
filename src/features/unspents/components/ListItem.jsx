@@ -1,6 +1,7 @@
 import React from 'react'
 import { KeyValueTable, RawJsonButton, } from 'features/shared/components'
 import { buildUnspentDisplay } from 'utility/buildInOutDisplay'
+import {withNamespaces} from 'react-i18next'
 
 class ListItem extends React.Component {
   render() {
@@ -13,8 +14,8 @@ class ListItem extends React.Component {
             actions={[
               <RawJsonButton key='raw-json' item={this.props.item} />
             ]}
-            items={buildUnspentDisplay(this.props.item, this.props.btmAmountUnit, this.props.lang)} />)
+            items={buildUnspentDisplay(this.props.item, this.props.btmAmountUnit, this.props.t)} />)
   }
 }
 
-export default ListItem
+export default withNamespaces('translations') (ListItem)

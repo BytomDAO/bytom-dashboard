@@ -1,6 +1,7 @@
 import React from 'react'
 import { BaseNew, FormContainer, FormSection, JsonField, KeyConfiguration, TextField } from 'features/shared/components'
 import { reduxForm } from 'redux-form'
+import {withNamespaces} from 'react-i18next'
 
 class Form extends React.Component {
   constructor(props) {
@@ -21,29 +22,27 @@ class Form extends React.Component {
       fields: { alias, xpubs, quorum },
       error,
       handleSubmit,
-      submitting
+      submitting,
+      t
     } = this.props
-    const lang = this.props.lang
 
     return(
       <FormContainer
         error={error}
-        label={ lang === 'zh' ? '新建账户' : 'New account' }
+        label={ t('account.new.newAccount') }
         onSubmit={handleSubmit(this.submitWithErrors)}
         submitting={submitting}
-        lang={lang}
       >
 
-        <FormSection title={ lang === 'zh' ? '账户信息' : 'Account Information' }>
-          <TextField title={ lang === 'zh' ? '别名':'Alias'} placeholder={ lang === 'zh' ? '别名':'Alias'} fieldProps={alias} autoFocus={true} />
+        <FormSection title={ t('account.new.information') }>
+          <TextField title={ t('form.alias')} placeholder={  t('form.alias')} fieldProps={alias} autoFocus={true} />
         </FormSection>
 
-        <FormSection title={ lang === 'zh' ? '密钥和签名' : 'Keys and Signing' }>
+        <FormSection title={ t('form.keyAndSign')}>
           <KeyConfiguration
             xpubs={xpubs}
             quorum={quorum}
-            quorumHint={ lang === 'zh' ? '传输所需的密钥数' : 'Number of keys required for transfer' }
-            lang={lang}
+            quorumHint={t('account.new.quorumHint')}
           />
         </FormSection>
       </FormContainer>
@@ -53,16 +52,16 @@ class Form extends React.Component {
 
 const validate = ( values, props ) => {
   const errors = { xpubs:{} }
-  const lang = props.lang
+  const t = props.t
 
   const tagError = JsonField.validator(values.tags)
   if (tagError) { errors.tags = tagError }
 
-  if (!values.alias) { errors.alias = ( lang === 'zh' ? '账户别名是必须项' : 'Account alias is required' ) }
+  if (!values.alias) { errors.alias = ( t('account.new.aliasWarning')) }
 
   values.xpubs.forEach((xpub, index) => {
     if (!values.xpubs[index].value) {
-      errors.xpubs[index] = {...errors.xpubs[index], value: ( lang === 'zh' ? '请输入或选择密钥' : 'Please provide keys' )}
+      errors.xpubs[index] = {...errors.xpubs[index], value: ( t('account.new.keyWarning'))}
     }
   })
 
@@ -76,7 +75,7 @@ const fields = [
   'quorum'
 ]
 
-export default BaseNew.connect(
+export default withNamespaces('translations')( BaseNew.connect(
   BaseNew.mapStateToProps('account'),
   BaseNew.mapDispatchToProps('account'),
   reduxForm({
@@ -87,4 +86,4 @@ export default BaseNew.connect(
       quorum: 1,
     }
   })(Form)
-)
+))

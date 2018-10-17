@@ -7,16 +7,16 @@ import {
   RawJsonButton,
 } from 'features/shared/components'
 import componentClassNames from 'utility/componentClassNames'
+import { withNamespaces } from 'react-i18next'
 
 class AssetShow extends BaseShow {
   render() {
-    const item = this.props.item
-    const lang = this.props.lang
+    const { item, t } = this.props
 
     let view
     if (item) {
       const title = <span>
-        { lang === 'zh' ? '资产' :'Asset ' }
+        { t('asset.asset') }
         <code>{item.alias ? item.alias :item.id}</code>
       </span>
 
@@ -27,7 +27,7 @@ class AssetShow extends BaseShow {
           <KeyValueTable
             id={item.id}
             object='asset'
-            title={ lang === 'zh' ? '详情' : 'Details' }
+            title={t('form.detail')}
             actions={[
               // <button key='show-circulation' className='btn btn-link' onClick={this.props.showCirculation.bind(this, item)}>
               //  Circulation
@@ -36,23 +36,21 @@ class AssetShow extends BaseShow {
             ]}
             items={[
               {label: 'ID', value: item.id},
-              {label: ( lang === 'zh' ? '别名' : 'Alias' ), value: item.alias, editUrl: item.alias === 'BTM' ? null : `/assets/${item.id}/alias`},
-              {label: ( lang === 'zh' ? '定义' : 'Definition'), value: item.definition},
-              {label: ( lang === 'zh' ? '扩展公钥数' : 'xpubs' ), value: (item.xpubs || []).length},
-              {label: ( lang === 'zh' ? '签名数' : 'Quorum' ), value: item.quorum},
+              {label: t('form.alias'), value: item.alias, editUrl: item.alias === 'BTM' ? null : `/assets/${item.id}/alias`},
+              {label: t('form.definition'), value: item.definition},
+              {label: t('form.xpubs'), value: (item.xpubs || []).length},
+              {label: t('form.quorum'), value: item.quorum},
             ]}
-            lang={lang}
           />
 
           {(item.xpubs || []).map((key, index) =>
             <KeyValueTable
               key={index}
-              title={lang === 'zh' ? `扩展公钥 ${index + 1}` :`xpub ${index + 1}`}
+              title={t('asset.xpubs', {id: index + 1})}
               items={[
-                {label: ( lang === 'zh' ? '索引' : 'Index' ), value: index},
-                {label: ( lang === 'zh' ? '资产公钥' : 'Asset Pubkey') , value: key},
+                {label: t('form.index') , value: index},
+                {label: t('asset.assetPub') , value: key},
               ]}
-              lang={lang}
             />
           )}
         </PageContent>
@@ -69,7 +67,6 @@ import actions from 'actions'
 
 const mapStateToProps = (state, ownProps) => ({
   item: state.asset.items[ownProps.params.id],
-  lang: state.core.lang
 })
 
 const mapDispatchToProps = ( dispatch ) => ({
@@ -85,7 +82,7 @@ const mapDispatchToProps = ( dispatch ) => ({
 })
 
 
-export default connect(
+export default withNamespaces('translations') ( connect(
   mapStateToProps,
   mapDispatchToProps
-)(AssetShow)
+)(AssetShow))

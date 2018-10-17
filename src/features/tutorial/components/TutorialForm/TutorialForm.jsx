@@ -1,10 +1,12 @@
 import React from 'react'
 import styles from './TutorialForm.scss'
+import {withNamespaces} from 'react-i18next'
 
 class TutorialForm extends React.Component {
   render() {
-    const content_normal = this.props.lang ==='zh' ? this.props.content_zh: this.props.content
-    const content_adv = this.props.lang ==='zh' ? this.props.content_ad_zh: this.props.content_ad
+    const t = this.props.t
+    const content_normal = t(`tutorial.content.${this.props.title}`, { returnObjects: true } )
+    const content_adv =  t(`tutorial.content.${this.props.title}_ad`, { returnObjects: true } )
 
     let content = this.props.advTx? content_adv: content_normal
     return (
@@ -47,4 +49,4 @@ class TutorialForm extends React.Component {
   }
 }
 
-export default TutorialForm
+export default withNamespaces('translations') (TutorialForm)

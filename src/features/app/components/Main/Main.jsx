@@ -7,6 +7,7 @@ import actions from 'actions'
 import Tutorial from 'features/tutorial/components/Tutorial'
 import TutorialHeader from 'features/tutorial/components/TutorialHeader/TutorialHeader'
 import { Navigation, SecondaryNavigation } from '../'
+import { withNamespaces } from 'react-i18next'
 
 class Main extends React.Component {
 
@@ -32,8 +33,11 @@ class Main extends React.Component {
   render() {
     let logo = require('images/logo-bytom-white.svg')
 
-    const version = this.props.version
-    const lang = this.props.lang
+    const { t, i18n , version } = this.props
+
+    const changeLanguage = (lng) => {
+      i18n.changeLanguage(lng)
+    }
 
     return (
       <div className={styles.main}
@@ -50,13 +54,13 @@ class Main extends React.Component {
                 bsSize='xsmall'
                 className={styles.languagesContainer}
                 pullRight
-                onSelect={this.props.setLang}
+                onSelect={changeLanguage}
               >
                 <Dropdown.Toggle
                   className={styles.languages}
                   noCaret
                 >
-                  {lang === 'zh' ? '中' : 'EN'}
+                  {t('language')}
                 </Dropdown.Toggle>
                 <Dropdown.Menu
                   className={styles.languagesMenu}
@@ -78,7 +82,7 @@ class Main extends React.Component {
 
             <div className={styles.version}>
               <span>
-                {lang==='zh'?'版本号':'Version'}: {version}
+                {t('commonWords.version')}: {version}
               </span>
             </div>
 
@@ -99,22 +103,15 @@ class Main extends React.Component {
   }
 }
 
-export default connect(
+export default withNamespaces('translations') (connect(
   (state) => ({
     canLogOut: state.core.requireClientToken,
     version:state.core.version,
-    lang: state.core.lang,
     connected: true,
     showDropwdown: state.app.dropdownState == 'open',
   }),
   (dispatch) => ({
     toggleDropdown: () => dispatch(actions.app.toggleDropdown),
     closeDropdown: () => dispatch(actions.app.closeDropdown),
-    setLang: (event) => {
-      dispatch({
-        type: 'UPDATE_CORE_LANGUAGE',
-        lang: event
-      })
-    }
   })
-)(Main)
+)(Main))

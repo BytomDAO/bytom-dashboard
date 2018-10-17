@@ -4,11 +4,12 @@ import PropTypes from 'prop-types'
 // import EditPolicies from './EditPolicies'
 // import { isArray } from 'lodash'
 import styles from './GrantListItem.scss'
+import {withNamespaces} from 'react-i18next'
 
 class GrantListItem extends React.Component {
   render() {
     const item = this.props.item
-    const lang = this.props.lang
+    const t = this.props.t
 
     // let desc
     // if (isAccessToken(item)) {
@@ -42,7 +43,7 @@ class GrantListItem extends React.Component {
           {/*</button>*/}
 
           <button className='btn btn-link' onClick={this.props.delete.bind(this, item)}>
-            { lang==='zh'? '删除' : 'Delete' }
+            { t('form.delete') }
           </button>
         </td>}
         {/*{item.isEditing && <td colSpan='2'>*/}
@@ -58,4 +59,4 @@ GrantListItem.propTypes = {
   delete: PropTypes.func,
 }
 
-export default GrantListItem
+export default withNamespaces('translations') (GrantListItem)

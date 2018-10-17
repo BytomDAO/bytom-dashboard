@@ -3,6 +3,7 @@ import { BaseNew, FormContainer, FormSection, TextField, CheckboxField } from 'f
 import { policyOptions } from 'features/accessControl/constants'
 import { reduxForm } from 'redux-form'
 import actions from 'features/accessControl/actions'
+import {withNamespaces} from 'react-i18next'
 
 class NewToken extends React.Component {
   constructor(props) {
@@ -25,18 +26,18 @@ class NewToken extends React.Component {
       handleSubmit,
       submitting
     } = this.props
-    const lang = this.props.lang
+    const t = this.props.t
 
     return(
       <FormContainer
         error={error}
-        label={ lang === 'zh' ? '新建访问令牌' : 'New access token' }
+        label={ t('token.newAccessToken') }
         onSubmit={handleSubmit(this.submitWithErrors)}
         submitting={submitting}
-        lang={lang}>
+        >
 
-        <FormSection title={ lang === 'zh' ? '令牌信息' : 'Token information' }>
-          <TextField title={ lang === 'zh' ? '令牌名称' : 'Token Name'} fieldProps={guardData.id} autoFocus={true} />
+        <FormSection title={ t('token.info') }>
+          <TextField title={ t('token.name') } fieldProps={guardData.id} autoFocus={true} />
         </FormSection>
       </FormContainer>
     )
@@ -47,7 +48,7 @@ const mapDispatchToProps = (dispatch) => ({
   submitForm: (data) => dispatch(actions.submitTokenForm(data))
 })
 
-export default BaseNew.connect(
+export default  withNamespaces('translations') (BaseNew.connect(
   BaseNew.mapStateToProps('accessControl'),
   mapDispatchToProps,
   reduxForm({
@@ -60,13 +61,13 @@ export default BaseNew.connect(
     ),
     validate: (values, props) => {
       const errors = {}
-      const lang = props.lang
+      const t = props.t
 
       if (!values.guardData.id) {
-        errors.guardData = {id: ( lang === 'zh' ? '令牌名称是必须项' : 'Token name is required' )}
+        errors.guardData = {id: t('errorMessage.tokenError')}
       }
 
       return errors
     }
   })(NewToken)
-)
+))

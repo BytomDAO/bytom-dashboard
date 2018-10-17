@@ -10,7 +10,7 @@ export default combineReducers({
   autocompleteIsLoaded: reducers.autocompleteIsLoadedReducer(type),
   success: (state = '', action) => {
     if (action.type == 'KEY_PASSWORD_SUCCESS') {
-      return 'Your key password is correct.'
+      return 'F_BTM002'
     }
     if(action.type == 'redux-form/CHANGE'){
       return ''

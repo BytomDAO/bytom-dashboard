@@ -17,7 +17,6 @@ class Tutorial extends React.Component {
       <div>
         {this.props.content && tutorialOpen && (tutorialTypes.includes(this.props.content['component'])) &&
           <TutorialComponent
-            lang={this.props.lang}
             advTx={this.props.advTx}
             {...this.props.content}
           />}
@@ -31,7 +30,6 @@ import { connect } from 'react-redux'
 const mapStateToProps = (state) => ({
   content: state.tutorial.content,
   tutorial: state.tutorial,
-  lang: state.core.lang
 })
 
 export default connect(

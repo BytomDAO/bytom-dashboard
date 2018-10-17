@@ -1,6 +1,7 @@
 import React from 'react'
 import { BaseUpdate, FormContainer, FormSection, NotFound, TextField } from 'features/shared/components'
 import { reduxForm } from 'redux-form'
+import {withNamespaces} from 'react-i18next'
 
 class Form extends React.Component {
   constructor(props) {
@@ -26,9 +27,8 @@ class Form extends React.Component {
   }
 
   render() {
-    const lang = this.props.lang
     if (this.state.notFound) {
-      return <NotFound lang={lang}/>
+      return <NotFound />
     }
     const item = this.props.item
 
@@ -40,11 +40,12 @@ class Form extends React.Component {
       fields: { alias },
       error,
       handleSubmit,
-      submitting
+      submitting,
+      t
     } = this.props
 
     const title = <span>
-      {lang === 'zh' ? '编辑资产别名' : 'Edit asset alias '}
+      {t('asset.editAlias')}
       <code>{item.alias ? item.alias :item.id}</code>
     </span>
 
@@ -53,11 +54,11 @@ class Form extends React.Component {
       label={title}
       onSubmit={handleSubmit(this.submitWithErrors)}
       submitting={submitting}
-      lang={lang}>
+      >
 
-      <FormSection title={lang === 'zh' ? '资产别名' : 'Asset Alias' }>
+      <FormSection title={t('asset.alias') }>
         <TextField
-          placeholder={ lang === 'zh' ? '请输入资产别名' : 'Please entered asset alias' }
+          placeholder={ t('asset.aliasPlaceholder')}
           fieldProps={alias}
           type= 'text'
         />
@@ -68,7 +69,6 @@ class Form extends React.Component {
 
 const mapStateToProps = (state, ownProps) => ({
   item: state.asset.items[ownProps.params.id],
-  lang: state.core.lang
 })
 
 const initialValues = (state, ownProps) => {
@@ -88,8 +88,8 @@ const updateForm = reduxForm({
   fields: ['alias'],
 }, initialValues)(Form)
 
-export default BaseUpdate.connect(
+export default withNamespaces('translations') (BaseUpdate.connect(
   mapStateToProps,
   BaseUpdate.mapDispatchToProps('asset'),
   updateForm
-)
+))

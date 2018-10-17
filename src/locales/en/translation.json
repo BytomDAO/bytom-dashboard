@@ -1,0 +1,615 @@
+{
+  "language": "EN",
+  "languageFull": "English",
+  "asset":{
+    "asset": "Asset",
+    "xpubs":"xpub __id__",
+    "assetPub":"Asset Pubkey",
+    "formTitle": ["Asset Alias", "Asset ID"],
+    "new":"New asset",
+    "information":"Asset Information",
+    "quorumHint":"Number of signatures required to issue",
+    "aliasError":"Asset alias is required",
+    "keysError":"Please provide keys",
+    "editAlias":"Edit asset alias",
+    "alias":"Asset Alias",
+    "aliasPlaceholder":"Please entered asset alias"
+  },
+  "commonWords": {
+    "version": "Version",
+    "viewDetails":"View details",
+    "language":"Language",
+    "program":"Program",
+    "remove":"Remove",
+    "page":"Page",
+    "close":"Close",
+    "errorCode":"Error Code:",
+    "requestId":"Request ID:"
+  },
+  "crumbName":{
+    "transaction": "transactions",
+    "asset": "assets",
+    "key":"keys",
+    "account":"accounts",
+    "unspent": "Unspent outputs",
+    "balance":"balances",
+    "accessControl":"Access control",
+    "new":"New",
+    "update":" update available",
+    "coreData":"core data",
+    "services":"services",
+    "advanced":"advanced",
+    "help":"help",
+    "doc":"Documentation",
+    "developer":"Developer",
+    "equity":"Equity Contract",
+    "settings":"settings",
+    "coreStatus":"Core status",
+    "logout":"Log Out",
+    "backupRestore":"Backup and Restore",
+    "newTx":"Create a new transaction",
+    "newAccount":"Create an account",
+    "newKey":"Create a key",
+    "newToken":"Create an access token",
+    "newAsset":"Create an asset",
+    "resetPassword":"Reset password"
+  },
+  "form":{
+    "detail": "Details",
+    "alias": "Alias",
+    "definition": "Definition",
+    "xpubs": "xpubs",
+    "quorum": "Quorum",
+    "index":"Index",
+    "keys": "Keys",
+    "key": "Key",
+    "keyAlias":"Key Alias",
+    "keyAndSign":"Keys and Signing",
+    "selectPlaceholder": "Select one...",
+    "enter":"Enter",
+    "ok":"OK",
+    "delete":"Delete",
+    "cancel":"Cancel",
+    "more": "More",
+    "required":"Required",
+    "submit":"Submit",
+    "edit":"Edit",
+    "succeed":"Succeed",
+    "failed":"Failed",
+    "summary":"Summary",
+    "timestamp":"Timestamp",
+    "blockId":"Block ID",
+    "blockHeight":"Block Height",
+    "position":"Position",
+    "txStatus":"Transaction status",
+    "input":"Inputs",
+    "output":"Outputs",
+    "id": "ID",
+    "type": "Type",
+    "purpose": "Purpose",
+    "transactionId": "Transaction ID",
+    "assetId": "Asset ID",
+    "assetAlias": "Asset Alias",
+    "asset": "Asset",
+    "assetDefinition": "Asset Definition",
+    "assetTags": "Asset Tags",
+    "assetIsLocal": "Asset Is Local?",
+    "amount": "Amount",
+    "accountId": "Account ID",
+    "accountAlias": "Account Alias",
+    "account": "Account",
+    "accountTags": "Account Tags",
+    "controlProgram": "Control Program",
+    "address": "Address",
+    "programIndex": "Program Index",
+    "spentOutputId": "Spent Output ID",
+    "refData": "Reference Data",
+    "sourceId": "Source ID",
+    "sourcePos": "Source Position",
+    "issuanceProgram": "Issuance Program",
+    "isLocal": "Local?",
+    "referenceData": "Reference Data",
+    "change": "Change",
+    "errorTitle":"Error submitting form",
+    "fee":"Fee",
+    "successTitle":"Success",
+    "objectField":{
+      "aliasPlaceholder":"Start typing __title__ alias..."
+    }
+  },
+  "xpub":{
+    "methodOptions" : {
+      "mockhsm": "Use existing key",
+      "provide": "Provide existing xpub"
+    },
+    "providePlaceholder": "Enter xpub"
+  },
+  "sync":{
+    "status":"Sync Status",
+    "peer":"Peer Count",
+    "synchronizing":"Synchronizing...",
+    "synced":"Fully synced",
+    "disconnect":"Disconnect"
+  },
+  "coreIndex":{
+    "configuration":"Configuration",
+    "version":"Core Versions",
+    "advanced":"Advanced",
+    "mining":"Mining",
+    "unit":"Unit to show amount in",
+    "networkStatus":"Network status",
+    "listening":"Peer Listening",
+    "connect": "true",
+    "disConnect": "false",
+    "syncStatus":"Syncing",
+    "synchronizing":"true",
+    "synced":"false",
+    "miningStatus":"Mining",
+    "miningRuning":"true",
+    "miningStopped":"false",
+    "peer":"Peer Count",
+    "currentBlock":"Current Block",
+    "highestBlock":"Highest Block",
+    "networkId":"Network Id",
+    "coreStatus":"Core Status"
+  },
+  "console":{
+    "title":"Console",
+    "message":"Welcome to the Bytom Core API console.<1/> Type <2>help</2> for an overview of available commands",
+    "warning":"WARNING",
+    "warningMessage":"Scammers have been active, telling users to type commands here, stealing their wallet contents. Do not use this console without fully understanding the ramification of a command.",
+    "placeholder":"Enter \"help\" for an overview of available commands"
+  },
+  "key":{
+    "keys":"Keys",
+    "xpub":"xpub",
+    "formTitle":["Alias", "xpub"],
+    "reset":{
+      "title":"Reset key password",
+      "label":"Reset the password",
+      "oldPassword":"Old Password",
+      "oldPPlaceholder":"Please entered the old password.",
+      "newPassword":"New Password",
+      "newPasswordPlaceholder":"Please entered the new password.",
+      "repeatPassword":"Repeat Password",
+      "repeatPasswordPlaceholder":"Please repeated the new password.",
+      "newPWarning":"Please enter at least 5 characters password.",
+      "repeatPWarning":"Please match the repeat password."
+    },
+    "new":"New key",
+    "info":"Key Information",
+    "aliasPlaceHolder":"Please enter key alias...",
+    "password":"Password",
+    "passwordPlaceholder":"Please enter your password...",
+    "repeatPassword":"Repeat Password",
+    "repeatPasswordPlaceholder":"Please repeat your password",
+    "aliasRequired":"Key alias is required",
+    "passwordRequired":"Password is required",
+    "tryPassword":"Try Password",
+    "resetPassword":"Reset Password",
+    "tryPPlaceholder":"Please entered the password that you need to check."
+  },
+  "account":{
+    "account":"Account",
+    "formTitle":["Account Alias", "Account ID"],
+    "accountXpub":"Account Xpub",
+    "keyIndex":"Key Index",
+    "address":"Addresses",
+    "xpubs":"XPUB __id__",
+    "changeAddress":"Addresses for Change",
+    "newAddress":"Create address",
+    "copyAddress":"Copy this address to use in a transaction:",
+    "copyProgram":"Copy this control program to use in a transaction:",
+    "copyClipboard":"Copy to clipboard",
+    "new":{
+      "newAccount":"New account",
+      "information":"Account Information",
+      "quorumHint":"Number of keys required for transfer",
+      "aliasWarning":"Account alias is required",
+      "keyWarning":"Please provide keys"
+    }
+  },
+  "transaction":{
+    "transaction":"Transaction",
+    "unconfirmedTx":"unconfirmed transaction",
+    "id":"Tx ID:",
+    "confirmed":"confirmed",
+    "contractStatus":"Contract Execution Status",
+    "confirmation":"__count__ confirmation",
+    "confirmation_plural":"__count__ confirmations",
+    "unconfirmedItem":"Unknown (0 confirmation)",
+    "type":{
+      "issue":"issue",
+      "sent":"sent",
+      "received":"received",
+      "retire":"retire",
+      "coinbase":"coinbase",
+      "immature":"immature"
+    },
+    "new":{
+      "unsaveWarning":"Your work is not saved! Are you sure you want to leave?",
+      "new":"New transaction",
+      "normal":"Normal",
+      "submit":"Submit transaction",
+      "advanced" :"Advanced"
+    },
+    "normal":{
+      "from":"From",
+      "availableBalance":"Available balance:",
+      "to": "To",
+      "selectFee":"Select Fee",
+      "feeDescription":"This is the money that might be used to process this transaction. Your transaction will be mined usually within 2.5 minutes.",
+      "confirmation":"Confirm Transaction",
+      "total": "Total"
+    },
+    "advance":{
+      "generateJson":"Generate transaction JSON",
+      "showAdvanced":"Show advanced options",
+      "option":"Advanced Options",
+      "buildType":"Transaction Build Type",
+      "submitToBlockchain":"Submit transaction to blockchain",
+      "submitLabel": "This transaction will be signed by the key and submitted to the blockchain.",
+      "needMoreSign":"Need more signature",
+      "needMoreSignDescription":"These actions will be signed by the Key and returned as a transaction JSON string, which should be used to sign transaction in a multi-sign spend.",
+      "toSignTransaction":"To sign transaction",
+      "signPlaceholder":"Paste transaction hex here...",
+      "showDetails":"Show transaction details",
+      "transactionContent":"Transaction Content",
+      "normalView":"Normal View",
+      "jsonView":"Json View"
+    }
+  },
+  "balances":{
+    "rescan":"Rescan",
+    "status":{
+      "success":"Success",
+      "start":"Starting...",
+      "rescan":"Rescanning...",
+      "successMsg":"Successfully rescanned spent outputs.",
+      "startMsg":"Rescan is starting...",
+      "rescanMsg":"Wallet Rescanning..."
+    }
+  },
+  "errorMessage":{
+    "password": "Your password is wrong, please check your password.",
+    "amountError":"Invalid amount type",
+    "addressError": "Invalid address",
+    "jsonError":"To sign transaction must be a JSON string.",
+    "tokenError":"Token name is required",
+    "jsonObjectError":"Contents must be represented as a JSON object",
+    "jsonRowError":" __error__ on row __row__`",
+    "parseError":"Error parsing JSON"
+  },
+  "emptyList":{
+    "loading":"LOADING",
+    "noRecord":"There are no __objectName__"
+  },
+  "token":{
+    "accessToken":"Access control",
+    "formTitle":["Token Name", "Token"],
+    "new":"New token",
+    "newAccessToken":"New access token",
+    "info":"Token information",
+    "name":"Token Name"
+  },
+  "init":{
+    "title":"Init your account and key",
+    "keyPassword":"Key Password",
+    "repeatKeyPassword":"Repeat your key password",
+    "register":"Register",
+    "restoreWallet":"Restore wallet",
+    "restore":"Restore",
+    "restoreLabel":"Click the button, and select the backup file",
+    "accountPlaceholder":"Please enter the account alias...",
+    "keyPlaceholder":"Please enter the key alias...",
+    "passwordPlaceholder":"Please enter the key password...",
+    "repeatPlaceHolder":"Please repeat the key password...",
+    "errorTitle":"Error in initialization"
+  },
+  "backup":{
+    "title":"Backup and Restore",
+    "backup":"Back Up",
+    "backupDescription":"This option will back up all data stored in this core, including blockchain data, accounts, assets and balances.",
+    "restore":"Restore",
+    "restoreDescription":"This option will restore the wallet data form a file. You might need to rescan your wallet, if you balance is not up to date.",
+    "download":"Download Backup",
+    "selectFile":"Select Restore File"
+  },
+  "notFound":{
+    "title":"Not Found",
+    "word":"We couldn't find the page you were looking for."
+  },
+  "tutorial":{
+    "content":{
+      "transaction":[
+        "A transaction provides the amount of the asset either spend out from your account or come in to your account. In your transaction, the total amount of assets spent was equal to the total amount of assets controlled (received) plus the gas cost of transactions fee. SPEND Actions represent what comes in the transactions, while CONTROL Actions represent what comes out. Any combination of actions can be added to a single advanced transaction, as long as what goes in bigger than what comes out. Note that the differences of which become the amount of transactions fee."
+      ],
+      "key": [
+        "Cryptographic private keys are the primary authorization mechanism on a blockchain. They control both the issuance and transfer of asset units. An asset or account will define one or more keys required for issuance or transfers."
+      ],
+      "account":[
+        "An account is an object in Bytom that tracks ownership of assets on a blockchain by creating and tracking control programs. The account object does not exist on the blockchain - it is local to this Bytom. Only the control programs created in the account are visible on the blockchain."
+      ],
+      "asset":[
+        "An asset is a type of value that can be issued on a blockchain. All units of an asset are fungible and can be transacted directly between parties without the involvement of the issuer."
+      ],
+      "balance":[
+        "The balance shows the amount and the type of asset that a local Bytom account possess."
+      ],
+      "coreStatus":[
+        "The core status shows the blockchain network status and the local setting."
+      ],
+      "accessControl":[
+        "Access token is used for remote authorizations. An access token is required to connect a remote Bytom Core."
+      ],
+      "unspent":[
+        "Each new transaction in the blockchain consumes some unspent outputs and creates others. An output is considered unspent when it has not yet been used as an input to a new transaction. All asset units on a blockchain exist in the unspent output set."
+      ],
+      "backupRestore":[
+        "Backup and Restore the wallet information will be stored in a txt format. It’s important to keep your backup files in a safe place."
+      ],
+      "newTx":{
+        "header": "Normal Transactions",
+        "steps": [
+          {
+            "title": "Fill in the account \"Alias\" or \"ID\"",
+            "description": [
+              "The account that you wished to spend from."
+            ]
+          },
+          {
+            "title": "Fill in the asset \"Alias\" or \"ID\"",
+            "description": [
+              "The asset type that you wished to spend."
+            ]
+          },
+          {
+            "title": "Paste the \"Address\"",
+            "description": [
+              "The address that you wish to send amount of asset to."
+            ]
+          },
+          {
+            "title": "Fill in the amount of the asset"
+          },
+          {
+            "title": "Choose the gas",
+            "description": [
+              "Choose the gas (tx. fees) that you want to spend for this transaction."
+            ]
+          },
+          {
+            "title":"Fill in the Key password",
+            "description":[
+              "Fill in the key password when account created. Note：please use advanced transaction for multi-sign."
+            ]
+          },
+          {
+            "title": "Click the \"Submit transaction\" button"
+          }
+        ]
+      },
+      "newTx_ad":{
+        "header": "Advanced Transactions",
+        "steps": [
+          {
+            "title": "Click the \"Add action\" button",
+            "description":[
+              "Select \"Spend from account\" to add a new spend action."
+            ]
+          },
+          {
+            "title": "Fill in the spend action",
+            "description": [
+              {
+                "index": 0,
+                "line": "Enter the account alias, "
+              },
+              {
+                "line": "the asset alias "
+              },
+              {
+                "line": "and the spend amount."
+              }
+            ]
+          },
+          {
+            "title": "Click the \"Add action\" button",
+            "description":[
+              "Select \"Control with address\" to add a new control action."
+            ]
+          },
+          {
+            "title": "Fill in the control action",
+            "description": [
+              {
+                "index": 1,
+                "line": "Paste the address, "
+              },
+              {
+                "line": "fill in the asset alias"
+              },
+              {
+                "line": "and the received amount."
+              }
+            ]
+          },
+          {
+            "title":"Fill in the Key password",
+            "description":[
+              "The key password when account created. Please use the \"show advanced options\" for multi-sign."
+            ]
+          },
+          {
+            "title": "Click the \"Submit transaction\" button"
+          }
+        ]
+      },
+      "newAccount": {
+        "header": "New account",
+        "steps": [
+          {
+            "title": "Type name for account alias (ex. \"alice\")",
+            "description": [
+              "An alias is a friendly label used to distinguish between accounts."
+            ]
+          },
+          {
+            "title": "Select \"Use existing keys\" or \"Provide existing xpub\" under \"Keys and Signing\"",
+            "description": [
+              "Choose an existing key alias or enter an existing xpub."
+            ]
+          },
+          {
+            "title": "Click the \"Submit\" button"
+          }
+        ]
+      },
+      "newAsset": {
+        "header": "New asset",
+        "steps": [
+          {
+            "title": "Enter an alias for your asset (ex. \"gold\")",
+            "description": [
+              "An alias is a friendly label used to distinguish between assets."
+            ]
+          },
+          {
+            "title": "Select \"Use existing a key\" or \"Provide existing xpub\" under \"Keys and Signing\"",
+            "description": [
+              "Choose an existing key alias or enter an existing xpub."
+            ]
+          },
+          {
+            "title": "Click the \"Submit\" button"
+          }
+        ]
+      },
+      "newKey": {
+        "header": "New key",
+        "steps": [
+          {
+            "title": "Enter an alias for your key (ex. \"goldkey\")",
+            "description": [
+              "An alias is a friendly label used to distinguish between keys."
+            ]
+          },
+          {
+            "title": "Enter and repeat the password for your key",
+            "description": [
+              "It's important to memorize the password for your key and keep it somewhere safe. Bytom doesn't provide any lost and found. "
+            ]
+          },
+          {
+            "title": "Click the \"Submit\" button"
+          }
+        ]
+      },
+      "resetPassword": {
+        "header": "Reset password",
+        "steps": [
+          {
+            "title": "Enter the original password for your key"
+          },
+          {
+            "title": "Enter and repeat the new password for your key",
+            "description": [
+              "It's important to memorize the password for your key and keep it somewhere safe. Bytom doesn't provide any lost and found. "
+            ]
+          },
+          {
+            "title": "Click the \"Reset the Password\" button"
+          }
+        ]
+      },
+      "newToken": {
+        "header": "Create an access token",
+        "steps": [
+          {
+            "title": "Enter alias for the access token"
+          },
+          {
+            "title": "Click the \"Submit\" button"
+          }
+        ]
+      }
+    }
+  },
+  "message":{
+    "CREATED_ASSET":"Asset has been created successfully.",
+    "CREATED_ACCOUNT": "Account has been created successfully.",
+    "CREATED_TRANSACTION": "Transaction has been submitted successfully.",
+    "CREATED_KEY": "Key has been created successfully.",
+    "RESET_PASSWORD_KEY": "Key password has been reset successfully.",
+    "CREATE_REGISTER_ACCOUNT": "Default account and key have been initialized successfully.",
+    "RESTORE_SUCCESS":"Wallet restore successfully",
+    "UPDATED_ASSET":"Updated asset alias."
+  },
+  "btmError":{
+    "BTM000": "Bytom API Error",
+    "BTM001": "Request timed out",
+    "BTM002": "Invalid request body",
+    "BTM103": "A peer core is operating on a different blockchain network",
+    "BTM200": "Quorum must be greater than 1 and less than or equal to the length of xpubs",
+    "BTM201": "Invalid xpub format",
+    "BTM202": "At least one xpub is required",
+    "BTM203":  "Root XPubs cannot contain the same key more than once",
+    "BTM700":  "Funds of account are insufficient",
+    "BTM701":  "Available funds of account are immature",
+    "BTM702":  "Available UTXOs of account have been reserved",
+    "BTM703":  "Not found UTXO with given hash",
+    "BTM704":  "Invalid action type",
+    "BTM705":  "Invalid action object",
+    "BTM706":  "Invalid action construction",
+    "BTM707":  "One or more fields are missing",
+    "BTM708":  "Invalid asset amount",
+    "BTM709":  "Not found account",
+    "BTM710":  "Not found asset",
+    "BTM730": "Invalid transaction version",
+    "BTM731": "Invalid transaction size",
+    "BTM732": "Invalid transaction time range",
+    "BTM733":  "Not standard transaction",
+    "BTM734":  "Invalid coinbase transaction",
+    "BTM735":  "Invalid coinbase assetID",
+    "BTM736":  "Invalid coinbase arbitrary size",
+    "BTM737":  "No results in the transaction",
+    "BTM738":  "Mismatched assetID",
+    "BTM739":  "Mismatched value source/dest position",
+    "BTM740":  "Mismatched reference",
+    "BTM741":  "Mismatched value",
+    "BTM742":  "Missing required field",
+    "BTM743":  "No source for value",
+    "BTM744":  "Arithmetic overflow/underflow",
+    "BTM745":  "Invalid source or destination position",
+    "BTM746":  "Unbalanced asset amount between input and output",
+    "BTM747":  "Gas credit has been spent",
+    "BTM748":  "Gas usage calculate got a math error",
+    "BTM760": "Alt stack underflow",
+    "BTM761":  "Bad value",
+    "BTM762":  "Wrong context",
+    "BTM763":  "Data stack underflow",
+    "BTM764":  "Disallowed opcode",
+    "BTM765":  "Division by zero",
+    "BTM766":  "False result for executing VM",
+    "BTM767":  "Program size exceeds max int32",
+    "BTM768":  "Arithmetic range error",
+    "BTM769":  "RETURN executed",
+    "BTM770":  "Run limit exceeded because the BTM Fee is insufficient",
+    "BTM771":  "Unexpected end of program",
+    "BTM772":  "Unrecognized token",
+    "BTM773":  "Unexpected error",
+    "BTM774":  "Unsupported VM because the version of VM is mismatched",
+    "BTM775":  "VERIFY failed",
+    "BTM800": "Key Alias already exists",
+    "BTM801": "Invalid after in query",
+    "BTM802":  "Key not found or wrong password",
+    "BTM803":  "Requested key aliases exceeds limit",
+    "BTM804": "Could not decrypt key with given passphrase",
+    "BTM860": "Request could not be authenticated",
+    "F_BTM000":"Your Password is wrong",
+    "F_BTM001":"Unable to reset the key password.",
+    "F_BTM002":"Your key password is correct.",
+    "F_BTM003":"Your account has multiple keys, please use advanced transactions.",
+    "F_BTM100": "Signature failed."
+  }
+}

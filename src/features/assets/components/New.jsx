@@ -1,6 +1,7 @@
 import React from 'react'
 import { BaseNew, FormContainer, FormSection, JsonField, KeyConfiguration, TextField } from 'features/shared/components'
 import { reduxForm } from 'redux-form'
+import {withNamespaces} from 'react-i18next'
 
 class Form extends React.Component {
   constructor(props) {
@@ -18,32 +19,31 @@ class Form extends React.Component {
 
   render() {
     const {
-      fields: { alias, tags, definition, xpubs, quorum },
+      fields: { alias, definition, xpubs, quorum },
       error,
       handleSubmit,
-      submitting
+      submitting,
+      t
     } = this.props
-    const lang = this.props.lang
 
     return(
       <FormContainer
         error={error}
-        label= { lang === 'zh' ? '新建资产' : 'New asset' }
+        label= { t('asset.new') }
         onSubmit={handleSubmit(this.submitWithErrors)}
         submitting={submitting}
-        lang={lang}>
+        >
 
-        <FormSection title={ lang === 'zh' ? '资产信息' : 'Asset Information'}>
-          <TextField title={ lang === 'zh' ? '别名' : 'Alias'} placeholder={ lang === 'zh' ? '别名' : 'Alias'} fieldProps={alias} autoFocus={true} />
-          <JsonField title={ lang === 'zh' ? '定义' : 'Definition' } fieldProps={definition} lang={lang}/>
+        <FormSection title={t('asset.information')}>
+          <TextField title={t('form.alias')} placeholder={t('form.alias')} fieldProps={alias} autoFocus={true} />
+          <JsonField title={ t('form.definition') } fieldProps={definition}/>
         </FormSection>
 
-        <FormSection title={ lang === 'zh' ? '密钥和签名' :'Keys and Signing' }>
+        <FormSection title={t('form.keyAndSign')}>
           <KeyConfiguration
-            lang={lang}
             xpubs={xpubs}
             quorum={quorum}
-            quorumHint={ lang === 'zh' ? '所需的签名数' : 'Number of signatures required to issue' } />
+            quorumHint={t('asset.quorumHint')} />
         </FormSection>
 
       </FormContainer>
@@ -51,9 +51,9 @@ class Form extends React.Component {
   }
 }
 
-const validate = (values,props) => {
+const validate = (values, props) => {
   const errors = { xpubs:{} }
-  const lang = props.lang
+  const t = props.t
 
   const jsonFields = ['definition']
   jsonFields.forEach(key => {
@@ -61,11 +61,11 @@ const validate = (values,props) => {
     if (fieldError) { errors[key] = fieldError }
   })
 
-  if (!values.alias) { errors.alias = ( lang === 'zh' ? '资产别名是必须项' :'Asset alias is required' ) }
+  if (!values.alias) { errors.alias = t('asset.aliasError')  }
 
   values.xpubs.forEach((xpub, index) => {
     if (!values.xpubs[index].value) {
-      errors.xpubs[index] = {...errors.xpubs[index], value: ( lang === 'zh' ? '请输入或选择密钥' : 'Please provide keys' )}
+      errors.xpubs[index] = {...errors.xpubs[index], value: t('asset.keysError')}
     }
   })
 
@@ -79,7 +79,7 @@ const fields = [
   'xpubs[].type',
   'quorum'
 ]
-export default BaseNew.connect(
+export default withNamespaces('translations') ( BaseNew.connect(
   BaseNew.mapStateToProps('asset'),
   BaseNew.mapDispatchToProps('asset'),
   reduxForm({
@@ -91,4 +91,4 @@ export default BaseNew.connect(
       quorum: 1,
     }
   })(Form)
-)
+))

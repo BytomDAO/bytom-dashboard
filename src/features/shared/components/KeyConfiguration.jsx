@@ -1,5 +1,6 @@
 import React from 'react'
 import { SelectField, XpubField } from 'features/shared/components'
+import {withNamespaces} from 'react-i18next'
 
 const rangeOptions = [1,2,3,4,5,6].map(val => ({label: val, value: val}))
 
@@ -13,7 +14,8 @@ class KeyConfiguration extends React.Component {
     const {
       quorum,
       quorumHint,
-      xpubs
+      xpubs,
+      t
     } = this.props
 
     // Override onChange here rather than in a redux-form normalizer because
@@ -50,12 +52,11 @@ class KeyConfiguration extends React.Component {
     }
 
     const quorumOptions = rangeOptions.slice(0, this.state.keys)
-    const lang = this.props.lang
 
     return(
       <div>
         <SelectField options={rangeOptions}
-          title={ lang === 'zh' ? '密钥数' : 'Keys' }
+          title={ t('form.keys') }
           skipEmpty={true}
           fieldProps={{
             value: this.state.keys,
@@ -63,7 +64,7 @@ class KeyConfiguration extends React.Component {
           }} />
 
         <SelectField options={quorumOptions}
-          title={ lang === 'zh' ? '签名数' : 'Quorum' }
+          title={ t('form.quorum') }
           skipEmpty={true}
           hint={quorumHint}
           fieldProps={{
@@ -77,11 +78,10 @@ class KeyConfiguration extends React.Component {
             index={index}
             typeProps={xpub.type}
             valueProps={xpub.value}
-            lang={lang}
           />)}
       </div>
     )
   }
 }
 
-export default KeyConfiguration
+export default withNamespaces('translations') (KeyConfiguration)

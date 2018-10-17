@@ -1,10 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router'
+import {withNamespaces} from 'react-i18next'
 
 class ListItem extends React.Component {
   render() {
     const item = this.props.item
-    const lang = this.props.lang
+    const t = this.props.t
 
     return(
       <tr>
@@ -12,7 +13,7 @@ class ListItem extends React.Component {
         <td><code>{item.id}</code></td>
         <td>
           <Link to={`/accounts/${item.id}`}>
-            {lang === 'zh' ? '查看详情' : 'View details'} →
+            {t('commonWords.viewDetails')} →
           </Link>
         </td>
       </tr>
@@ -20,4 +21,4 @@ class ListItem extends React.Component {
   }
 }
 
-export default ListItem
+export default withNamespaces('translations') (ListItem)

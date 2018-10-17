@@ -2,6 +2,7 @@ import React from 'react'
 import FieldLabel from './FieldLabel/FieldLabel'
 import pick from 'lodash/pick'
 import ReactMarkdown from 'react-markdown'
+import {withNamespaces} from 'react-i18next'
 
 const SELECT_FIELD_PROPS = [
   'value',
@@ -12,9 +13,9 @@ const SELECT_FIELD_PROPS = [
 
 class SelectField extends React.Component {
   render() {
-    const lang = this.props.lang
+    const t = this.props.t
     const options = this.props.options
-    const emptyLabel = this.props.emptyLabel || ((lang === 'zh') ? '请选择...' : 'Select one...')
+    const emptyLabel = this.props.emptyLabel || (t('form.selectPlaceholder'))
     const valueKey = this.props.valueKey || 'value'
     const labelKey = this.props.labelKey || 'label'
 
@@ -42,4 +43,4 @@ class SelectField extends React.Component {
   }
 }
 
-export default SelectField
+export default withNamespaces('translations') (SelectField)

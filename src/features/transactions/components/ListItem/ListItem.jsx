@@ -4,11 +4,13 @@ import { DetailSummary } from 'features/transactions/components'
 import { RelativeTime } from 'features/shared/components'
 import styles from './ListItem.scss'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
+import {withNamespaces} from 'react-i18next'
 
 class ListItem extends React.Component {
   render() {
     const item = this.props.item
-    const lang = this.props.lang
+    const t = this.props.t
+    // const confirmation = item.highest - item.blockHeight + 1
     const confirmation = item.highest - item.blockHeight + 1
     item.confirmations = confirmation
 
@@ -17,13 +19,13 @@ class ListItem extends React.Component {
     const unconfirmedTx = item.blockHeight === 0 && item.blockHash === '0000000000000000000000000000000000000000000000000000000000000000'
 
     const confirmView =(confirmation<=6?
-        [confirmation, (lang === 'zh' ? ' 确认数' :` confirmation${confirmation>1?'s':''}`)]
+        t('transaction.confirmation', {count: confirmation})
       :
-      (lang === 'zh' ? '已确认': 'confirmed'))
+      t('transaction.confirmed'))
 
     const tooltip = (
       <Tooltip id='tooltip'>
-        {lang === 'zh' ? '合约运行状态' : 'Contract Execution Status'}
+        {t('transaction.contractStatus')}
       </Tooltip>
     )
 
@@ -35,13 +37,13 @@ class ListItem extends React.Component {
       <div className={styles.main}>
         <div className={styles.titleBar}>
           <div className={styles.title}>
-            <label>{lang === 'zh' ? '交易ID:' : 'Tx ID:'}</label>
+            <label>{t('transaction.id')}</label>
             &nbsp;<code>{item.id}</code>&nbsp;
 
             {!isCoinbase && <span className={`${styles.confirmation} ${unconfirmedTx ? 'text-danger' : null}`}>
               {
                 unconfirmedTx ?
-                  (lang === 'zh' ? '未确认交易' : 'unconfirmed Transaction') :
+                  t('transaction.unconfirmedTx') :
                   [confirmView, icon]
               }
             </span>
@@ -53,15 +55,15 @@ class ListItem extends React.Component {
             </span>}
 
           <Link className={styles.viewLink} to={`/transactions/${item.id}`}>
-            {lang === 'zh' ? '查看详情' : 'View details'}
+            {t('commonWords.viewDetails')}
           </Link>
         </div>
 
-        <DetailSummary transaction={item} lang={lang} btmAmountUnit={this.props.btmAmountUnit}/>
+        <DetailSummary transaction={item} btmAmountUnit={this.props.btmAmountUnit}/>
 
       </div>
     )
   }
 }
 
-export default ListItem
+export default withNamespaces('translations') (ListItem)

@@ -5,6 +5,7 @@ import disableAutocomplete from 'utility/disableAutocomplete'
 import styles from './TransactionDetails.scss'
 import { Connection } from 'sdk'
 import Modal from './Modal'
+import {withNamespaces} from 'react-i18next'
 
 const TEXT_FIELD_PROPS = [
   'value',
@@ -28,7 +29,6 @@ class TransactionDetails extends React.Component {
         <Modal
           transaction={this.props.transaction}
           btmAmountUnit={this.props.btmAmountUnit}
-          lang ={this.props.lang}
           asset={this.props.asset}
         />
       )
@@ -39,14 +39,14 @@ class TransactionDetails extends React.Component {
     const fieldProps = pick(this.props.fieldProps, TEXT_FIELD_PROPS)
     const {touched, error} = this.props.fieldProps
 
-    const lang = this.props.lang
+    const t = this.props.t
 
     return(
       <div className='form-group'>
-        <FieldLabel>{lang === 'zh' ? '带签名交易' : 'To sign transaction'}</FieldLabel>
+        <FieldLabel>{t('transaction.advance.toSignTransaction')}</FieldLabel>
         <input className='form-control'
                type='text'
-               placeholder={lang === 'zh' ? '在这里复制交易 HEX ...' : 'Paste transaction hex here...'}
+               placeholder={t('transaction.advance.signPlaceholder')}
                autoFocus={true}
                {...disableAutocomplete}
                {...fieldProps} />
@@ -55,11 +55,11 @@ class TransactionDetails extends React.Component {
         {this.props.hint && <span className='help-block'>{this.props.hint}</span>}
           <button className={`btn btn-link ${styles.btn}`}
                   onClick={(e) => this.showDetailTransactions(e, fieldProps.value)}>
-            {lang === 'zh' ? '展示交易内容':'Show transaction details'}
+            {t('transaction.advance.showDetails')}
           </button>
       </div>
     )
   }
 }
 
-export default TransactionDetails
+export default withNamespaces('translations') (TransactionDetails)

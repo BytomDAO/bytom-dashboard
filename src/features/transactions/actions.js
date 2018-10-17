@@ -95,7 +95,7 @@ form.submitForm = (formParams) => function (dispatch) {
     return client.accounts.query(accountInfo)
       .then( resp => {
         if(resp.data[0].xpubs.length > 1){
-          throw new Error('Your account has multiple keys, please use advanced transactions.')
+          throw {code: 'F_BTM003'}
         }
         const body = Object.assign({}, {xpub: resp.data[0].xpubs[0], password: formParams.password})
         return client.mockHsm.keys.checkPassword(body)
@@ -112,7 +112,7 @@ form.submitForm = (formParams) => function (dispatch) {
       })
       .then(signed => {
         if(!signed.data.signComplete){
-          throw new Error('Signature failed.')
+          throw {code: 'F_BTM100'}
         }
         return client.transactions.submit(signed.data.transaction.rawTransaction)
       })

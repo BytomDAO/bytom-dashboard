@@ -45,36 +45,36 @@ class AccountShow extends BaseShow {
   }
 
   createAddress() {
-    const lang = this.props.lang
+    const t = this.props.t
     this.props.createAddress({
       account_alias: this.props.item.alias
     }).then(({data}) => {
       this.listAddress()
       this.props.showModal(<div>
-        <p>{lang === 'zh' ? '拷贝这个地址以用于交易中：' : 'Copy this address to use in a transaction:'}</p>
-        <CopyableBlock value={data.address} lang={lang}/>
+        <p>{t('account.copyAddress')}</p>
+        <CopyableBlock value={data.address}/>
       </div>)
     })
   }
 
   showProgram(program){
-    const lang = this.props.lang
+    const t = this.props.t
     this.props.showModal(
       <div>
-        <p>{lang === 'zh' ? '拷贝这个合约程序以用于交易中：' : 'Copy this control program to use in a transaction:'}</p>
-        <CopyableBlock value={program} lang={lang}/>
+        <p>{t('account.copyProgram')}</p>
+        <CopyableBlock value={program}/>
       </div>
     )
   }
 
   render() {
     const item = this.props.item
-    const lang = this.props.lang
+    const t = this.props.t
 
     let view
     if (item) {
       const title = <span>
-        {lang === 'zh' ? '账户' : 'Account '}
+        {t('account.account')}
         <code>{item.alias ? item.alias : item.id}</code>
       </span>
 
@@ -83,7 +83,7 @@ class AccountShow extends BaseShow {
           title={title}
           actions={[
             <button className='btn btn-link' onClick={this.createAddress}>
-              {lang === 'zh' ? '新建地址' : 'Create address'}
+              {t('account.newAddress')}
             </button>,
           ]}
         />
@@ -92,7 +92,7 @@ class AccountShow extends BaseShow {
           <KeyValueTable
             id={item.id}
             object='account'
-            title={lang === 'zh' ? '详情' : 'Details'}
+            title={t('form.detail')}
             actions={[
               // TODO: add back first 2 buttons
               // <button key='show-txs' className='btn btn-link' onClick={this.props.showTransactions.bind(this, item)}>Transactions</button>,
@@ -101,28 +101,25 @@ class AccountShow extends BaseShow {
             ]}
             items={[
               {label: 'ID', value: item.id},
-              {label: (lang === 'zh' ? '别名' : 'Alias'), value: item.alias},
-              {label: (lang === 'zh' ? '扩展公钥数' : 'xpubs'), value: (item.xpubs || []).length},
-              {label: (lang === 'zh' ? '签名数' : 'Quorum') , value: item.quorum},
+              {label: t('form.alias'), value: item.alias},
+              {label: t('form.xpubs'), value: (item.xpubs || []).length},
+              {label: t('form.quorum') , value: item.quorum},
             ]}
-            lang={lang}
           />
 
           {(item.xpubs || []).map((key, index) =>
             <KeyValueTable
               key={index}
-              title={lang === 'zh' ? `扩展公钥 ${index + 1}` :`XPUB ${index + 1}`}
+              title={t('account.xpubs', {id: index + 1})}
               items={[
-                {label: (lang === 'zh' ? '账户公钥' :'Account Xpub'), value: key},
-                {label: (lang === 'zh' ? '密钥索引' : 'Key Index'), value: item.keyIndex},
+                {label: t('account.accountXpub'), value: key},
+                {label: t('account.keyIndex'), value: item.keyIndex},
               ]}
-              lang={lang}
             />
           )}
 
           {(this.state.addresses || []).length > 0 &&
-          <KeyValueTable title={lang === 'zh' ? '地址' : 'Addresses'}
-                         lang={lang}
+          <KeyValueTable title={t('account.address')}
                          items={this.state.addresses.map((item, index) => ({
                            label: index,
                            value: item.address,
@@ -131,8 +128,7 @@ class AccountShow extends BaseShow {
           }
 
           {(this.state.changeAddresses || []).length > 0 &&
-          <KeyValueTable title={lang === 'zh' ? '找零地址' : 'Addresses for Change'}
-                         lang={lang}
+          <KeyValueTable title={t('account.changeAddress')}
                          items={this.state.changeAddresses.map((item, index) => ({
                            label: index,
                            value: item.address,
@@ -150,10 +146,10 @@ class AccountShow extends BaseShow {
 
 import {connect} from 'react-redux'
 import actions from 'actions'
+import {withNamespaces} from 'react-i18next'
 
 const mapStateToProps = (state, ownProps) => ({
   item: state.account.items[ownProps.params.id],
-  lang: state.core.lang
 })
 
 const mapDispatchToProps = (dispatch) => ({
@@ -183,7 +179,7 @@ const mapDispatchToProps = (dispatch) => ({
   listAddress: actions.account.listAddresses
 })
 
-export default connect(
+export default withNamespaces('translations') (connect(
   mapStateToProps,
   mapDispatchToProps
-)(AccountShow)
+)(AccountShow))

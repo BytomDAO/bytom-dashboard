@@ -34,8 +34,7 @@ class ResetPassword extends Component {
     if (this.state.notFound) {
       return <NotFound />
     }
-    const item = this.props.item
-    const lang = this.props.lang
+    const { item, t } = this.props
 
     if (!item) {
       return <div>Loading...</div>
@@ -49,7 +48,7 @@ class ResetPassword extends Component {
     } = this.props
 
     const title = <span>
-      {lang === 'zh' ? '重置密钥密码 ' : 'Reset key password '}
+      {t('key.reset.title')}
       <code>{item.alias}</code>
     </span>
 
@@ -59,23 +58,23 @@ class ResetPassword extends Component {
         label={title}
         onSubmit={handleSubmit(value => this.submitWithErrors(value, item.xpub))}
         submitting={submitting}
-        submitLabel= { lang === 'zh' ? '重置密码' : 'Reset the password' }
-        lang={lang}>
+        submitLabel= { t('key.reset.label')}
+        >
 
-        <FormSection title= {lang === 'zh' ? '重置密码' : 'Reset password' }>
+        <FormSection title= { t('key.reset.label')}>
           <PasswordField
-            title = { lang === 'zh' ? '原始密码' : 'Old Password' }
-            placeholder={ lang === 'zh' ? '请输入原始密码' : 'Please entered the old password.' }
+            title = {t('key.reset.oldPassword')}
+            placeholder={t('key.reset.oldPPlaceholder')}
             fieldProps={oldPassword}
             />
           <PasswordField
-            title = { lang === 'zh' ? '新密码' : 'New Password' }
-            placeholder={ lang === 'zh' ? '请输入新密码' : 'Please entered the new password.' }
+            title = { t('key.reset.newPassword') }
+            placeholder={ t('key.reset.newPasswordPlaceholder') }
             fieldProps={newPassword}
             />
           <PasswordField
-            title = { lang === 'zh' ? '重复新密码' : 'Repeat Password' }
-            placeholder={ lang === 'zh' ? '请重复输入新密码' : 'Please repeated the new password.' }
+            title = { t('key.reset.repeatPassword') }
+            placeholder={ t('key.reset.repeatPasswordPlaceholder') }
             fieldProps={repeatPassword}
             />
         </FormSection>
@@ -86,30 +85,30 @@ class ResetPassword extends Component {
 
 const validate = (values, props) => {
   const errors = {}
-  const lang = props.lang
+  const t = props.t
 
   if (!values.oldPassword) {
-    errors.oldPassword = ( lang === 'zh' ? '必须项' : 'Required' )
+    errors.oldPassword = ( t('form.required'))
   }
 
   if (!values.newPassword) {
-    errors.newPassword = ( lang === 'zh' ? '必须项' : 'Required' )
+    errors.newPassword = (  t('form.required'))
   }else if(values.newPassword.length < 5){
-    errors.newPassword = ( lang === 'zh' ? '请输入至少5位数的密码' :  'Please enter at least 5 characters password.' )
+    errors.newPassword = ( t('key.reset.newPWarning'))
   }
 
   if ( values.newPassword !== values.repeatPassword ) {
-    errors.repeatPassword = ( lang === 'zh' ? '请重复输入刚刚所输入的密码' :  'Please match the repeat password.' )
+    errors.repeatPassword = ( t('key.reset.repeatPWarning') )
   }
   return errors
 }
 
 import {connect} from 'react-redux'
 import actions from 'actions'
+import {withNamespaces} from 'react-i18next'
 
 const mapStateToProps = (state, ownProps) => ({
   item: state.key.items[ownProps.params.id],
-  lang: state.core.lang
 })
 
 const mapDispatchToProps = ( dispatch ) => ({
@@ -117,11 +116,11 @@ const mapDispatchToProps = ( dispatch ) => ({
   submitReset: (params) => dispatch(actions.key.submitResetForm(params))
 })
 
-export default connect(
+export default  withNamespaces('translations') (connect(
   mapStateToProps,
   mapDispatchToProps
 )(reduxForm({
   form: 'ResetPassword',
   fields: ['oldPassword', 'newPassword', 'repeatPassword' ],
   validate
-})(ResetPassword))
+})(ResetPassword)))

@@ -10,6 +10,7 @@ import { sum } from 'utility/math'
 import { normalizeBTMAmountUnit, converIntToDec } from 'utility/buildInOutDisplay'
 import styles from './ConfirmModal.scss'
 import { Link } from 'react-router'
+import {withNamespaces} from 'react-i18next'
 
 
 class ConfirmModal extends Component {
@@ -25,7 +26,7 @@ class ConfirmModal extends Component {
       cancel,
       error,
       gas,
-      lang,
+      t,
       btmAmountUnit,
       assetDecimal
     } = this.props
@@ -37,7 +38,7 @@ class ConfirmModal extends Component {
     const  Total = (assetAlias.value ==='BTM' ||assetId.value === btmID)?
       (totalAmount + fee): totalAmount
 
-    let submitLabel = lang === 'zh' ? '提交交易' : 'Submit transaction'
+    let submitLabel = t('transaction.new.submit')
 
     const normalize = (value, asset) => {
       if (asset === btmID || asset === 'BTM'){
@@ -61,7 +62,7 @@ class ConfirmModal extends Component {
 
     return (
       <div>
-        <h3>{lang ==='zh'?'确认交易':'Confirm Transaction'}</h3>
+        <h3>{ t('transaction.normal.confirmation') }</h3>
         <table className={styles.table}>
           <tbody>
             <tr>
@@ -79,7 +80,7 @@ class ConfirmModal extends Component {
                 <td> <span>{receiver.address.value}</span> </td>
               </tr>,
               <tr>
-                <td className={styles.colLabel}>{lang === 'zh'? '数量':'Amount'}</td>
+                <td className={styles.colLabel}>{t('form.amount')}</td>
                 <td> <code>{normalize(receiver.amount.value, asset)} {unit}</code> </td>
               </tr>,
              <tr>
@@ -88,12 +89,12 @@ class ConfirmModal extends Component {
              ])}
 
             <tr>
-              <td className={styles.colLabel}>{lang === 'zh'?'手续费':'Fee'}</td>
+              <td className={styles.colLabel}>{t('form.fee')}</td>
               <td> <code>{normalizeBTMAmountUnit(btmID, fee, btmAmountUnit)}</code> </td>
             </tr>
 
             <tr>
-              <td className={styles.colLabel}>{lang === 'zh'? '交易总数' :'Total'}</td>
+              <td className={styles.colLabel}>{t('transaction.normal.total')}</td>
               <td> <code>{normalize(Total, asset)} {unit}</code> </td>
             </tr>
           </tbody>
@@ -103,17 +104,17 @@ class ConfirmModal extends Component {
 
         <form onSubmit={handleSubmit}>
           <div>
-            <label>{lang === 'zh' ? '密码' : 'Password'}</label>
+            <label>{t('key.password')}</label>
             <PasswordField
-              placeholder={lang === 'zh' ? '请输入密码' : 'Please enter the password'}
+              placeholder={t('key.passwordPlaceholder')}
               fieldProps={password}
             />
           </div>
 
           {error && error.message === 'PasswordWrong' &&
           <ErrorBanner
-            title='Error submitting form'
-            error='Your password is wrong, please check your password.' />}
+            title={t('form.errorTitle')}
+            error={t('errorMessage.password')} />}
 
           <div className={styles.btnGroup}>
             <div>
@@ -127,7 +128,7 @@ class ConfirmModal extends Component {
               }
             </div>
             <button type='button'  className='btn btn-default' onClick={cancel}>
-              <i/> {lang ==='zh'? '返回' :'Cancel'}
+              <i/> {t('form.cancel')}
             </button>
           </div>
         </form>
@@ -145,7 +146,7 @@ const validate = values => {
   return errors
 }
 
-export default  reduxForm({
+export default  withNamespaces('translations') (reduxForm({
   form: 'NormalTransactionForm',
   fields:[
     'accountAlias',
@@ -159,4 +160,4 @@ export default  reduxForm({
   ],
   destroyOnUnmount: false,
   validate
-})(ConfirmModal)
+})(ConfirmModal))
