@@ -51,7 +51,7 @@ const registerKey = (data) => {
     return chainClient().mockHsm.keys.create(keyData)
       .then((resp) => {
         if (resp.status === 'fail') {
-          throw new Error(resp.msg)
+          throw resp
         }
 
         if (typeof data.accountAlias == 'string')  data.accountAlias = data.accountAlias.trim()
@@ -63,7 +63,7 @@ const registerKey = (data) => {
         chainClient().accounts.create(accountData)
           .then((resp) => {
             if (resp.status === 'fail') {
-              throw new Error(resp.msg)
+              throw resp
             }
 
             if(resp.status === 'success') {

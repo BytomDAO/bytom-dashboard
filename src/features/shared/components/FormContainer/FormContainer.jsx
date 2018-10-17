@@ -27,7 +27,7 @@ class FormContainer extends React.Component {
 
                 {this.props.success &&
                   <ErrorBanner
-                    title='Success'
+                    title={t('form.successTitle')}
                     success={this.props.success} />}
 
                 <div className={styles.submit}>

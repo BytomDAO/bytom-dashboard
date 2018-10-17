@@ -54,7 +54,7 @@ export default function(type, options = {}) {
         return promise.then(() => clientApi.create(data)
           .then((resp) => {
             if (resp.status === 'fail') {
-              throw new Error(resp.msg)
+              throw resp
             }
 
             dispatch(created(resp))

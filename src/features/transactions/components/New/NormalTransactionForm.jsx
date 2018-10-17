@@ -103,6 +103,8 @@ class NormalTxForm extends React.Component {
     const addresses = receivers.map(x => x.address.value)
     const amounts = receivers.map(x => Number(x.amount.value))
 
+    const {t, i18n} = this.props
+
     const noAccount = !accountAlias && !accountId
     const noAsset = !assetAlias && !assetId
 
@@ -117,7 +119,8 @@ class NormalTxForm extends React.Component {
     this.connection.request('/build-transaction', body).then(resp => {
       if (resp.status === 'fail') {
         this.setState({estimateGas: null})
-        this.props.showError(new Error(resp.msg))
+        const errorMsg =  resp.code && i18n.exists(`btmError.${resp.code}`) && t(`btmError.${resp.code}`) || resp.msg
+        this.props.showError(new Error(errorMsg))
         return
       }
 
@@ -126,7 +129,8 @@ class NormalTxForm extends React.Component {
       }).then(resp => {
         if (resp.status === 'fail') {
           this.setState({estimateGas: null})
-          this.props.showError(new Error(resp.msg))
+          const errorMsg =  resp.code && i18n.exists(`btmError.${resp.code}`) && t(`btmError.${resp.code}`) || resp.msg
+          this.props.showError(new Error(errorMsg))
           return
         }
         this.setState({estimateGas: Math.ceil(resp.data.totalNeu/100000)*100000})
@@ -265,7 +269,7 @@ const validate = (values, props) => {
   return errors
 }
 
-const asyncValidate = (values) => {
+const asyncValidate = (values, dispatch, props) => {
   const errors = []
   const promises = []
 
@@ -279,7 +283,7 @@ const asyncValidate = (values) => {
           .then(
             (resp) => {
               if (!resp.data.valid) {
-                errors[idx] = {address: 'invalid address'}
+                errors[idx] = {address: props.t('errorMessage.addressError')}
               }
               return {}
             }

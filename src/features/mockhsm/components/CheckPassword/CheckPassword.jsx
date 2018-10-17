@@ -20,7 +20,7 @@ class CheckPassword extends Component {
         .then(() =>
           resolve()
         )
-        .catch((err) => reject({_error: err.message}))
+        .catch((err) => reject({_error: err}))
     })
   }
 
@@ -42,7 +42,6 @@ class CheckPassword extends Component {
       return <div>Loading...</div>
     }
 
-    const success = this.props.successMsg
 
     const {
       fields: { password },
@@ -50,6 +49,8 @@ class CheckPassword extends Component {
       handleSubmit,
       t
     } = this.props
+
+    const success = this.props.successCode && t(`btmError.${this.props.successCode}`)
 
     const title = <span>
       {t('key.tryPassword')}
@@ -82,7 +83,7 @@ import {withNamespaces} from 'react-i18next'
 
 const mapStateToProps = (state, ownProps) => ({
   item: state.key.items[ownProps.params.id],
-  successMsg: state.key.success
+  successCode: state.key.success
 })
 
 const mapDispatchToProps = ( dispatch ) => ({

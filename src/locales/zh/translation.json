@@ -112,6 +112,7 @@
     "change": "找零",
     "errorTitle":"表格提交错误",
     "fee":"手续费",
+    "successTitle":"成功",
     "objectField":{
       "aliasPlaceholder":"输入__title__别名..."
     }
@@ -585,6 +586,11 @@
     "BTM802":  "密钥不存在或者密码错误",
     "BTM803":  "Requested key aliases exceeds limit",
     "BTM804":  "无法根据提供的密码进行解密",
-    "BTM860":  "请求没有经过认证。一般由Access Token造成"
+    "BTM860":  "请求没有经过认证。一般由Access Token造成",
+    "F_BTM000":"账户对应的密码错误",
+    "F_BTM001":"重置密钥失败",
+    "F_BTM002":"你的密钥密码是正确的。",
+    "F_BTM003":"发送账户为多签账户,请使用高级交易",
+    "F_BTM100":"签名失败。"
   }
 }

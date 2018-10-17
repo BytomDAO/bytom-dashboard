@@ -112,6 +112,7 @@
     "change": "Change",
     "errorTitle":"Error submitting form",
     "fee":"Fee",
+    "successTitle":"Success",
     "objectField":{
       "aliasPlaceholder":"Start typing __title__ alias..."
     }
@@ -604,6 +605,11 @@
     "BTM802":  "Key not found or wrong password",
     "BTM803":  "Requested key aliases exceeds limit",
     "BTM804": "Could not decrypt key with given passphrase",
-    "BTM860": "Request could not be authenticated"
+    "BTM860": "Request could not be authenticated",
+    "F_BTM000":"Your Password is wrong",
+    "F_BTM001":"Unable to reset the key password.",
+    "F_BTM002":"Your key password is correct.",
+    "F_BTM003":"Your account has multiple keys, please use advanced transactions.",
+    "F_BTM100": "Signature failed."
   }
 }

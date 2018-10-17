@@ -19,9 +19,9 @@ class Flash extends React.Component {
       const item = props.messages[key]
       if (!item.displayed) {
         this.props.markFlashDisplayed(key)
-        // setTimeout(() => {
-        //   this.props.dismissFlash(key)
-        // }, 5000)
+        setTimeout(() => {
+          this.props.dismissFlash(key)
+        }, 5000)
       }
     })
   }
@@ -31,9 +31,9 @@ class Flash extends React.Component {
       const item = nextProps.messages[key]
       if (!item.displayed) {
         this.props.markFlashDisplayed(key)
-        // setTimeout(() => {
-        //   this.props.dismissFlash(key)
-        // }, 5000)
+        setTimeout(() => {
+          this.props.dismissFlash(key)
+        }, 5000)
       }
     })
   }

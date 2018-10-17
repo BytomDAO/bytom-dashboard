@@ -28,8 +28,7 @@ const resetPassword = {
             }
           }))
         }else{
-          let msg = 'Unable to reset the key password.'
-          throw new Error(msg)
+          throw {code: 'F_BTM001'}
         }
       }))
     }
@@ -40,9 +39,9 @@ const checkPassword = (data) => (dispatch) => {
   return clientApi().checkPassword(data)
     .then((resp) => {
       if(resp.status === 'fail'){
-        throw new Error(resp.msg)
+        throw resp
       }else if(!resp.data.checkResult){
-        throw new Error('Your Password is wrong')
+        throw {code: 'F_BTM000'}
       }
       dispatch({ type: 'KEY_PASSWORD_SUCCESS'})
     })
