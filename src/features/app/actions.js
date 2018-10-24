@@ -19,6 +19,17 @@ const actions = {
       dispatch({ type: 'CLOSE_DROPDOWN' })
     }
   },
+  showInitialization: () => {
+    return (dispatch, getState) => {
+      // Need a default here, since locationBeforeTransitions gets cleared
+      // during logout.
+      let pathname = (getState().routing.locationBeforeTransitions || {}).pathname
+
+      if (pathname !== 'initialization') {
+        dispatch(push('/initialization'))
+      }
+    }
+  },
   showConfiguration: () => {
     return (dispatch, getState) => {
       // Need a default here, since locationBeforeTransitions gets cleared

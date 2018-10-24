@@ -1,0 +1,48 @@
+.main {
+  background: $background-inverse-color;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding-top: 50px;
+  display: block;
+  overflow: auto;
+}
+
+.choice {
+  margin-left: 10px;
+}
+
+.image {
+  width: 150px;
+  position: absolute;
+  top: calc(50px);
+  left: calc(50% - 75px);
+}
+
+.title{
+  text-align: center;
+  color: white;
+}
+
+.switch {
+  display: flex;
+  justify-content: space-around;
+
+  margin-top: 10px;
+}
+
+.formWarpper {
+  display: flex;
+  justify-content: space-around;
+
+  margin-top: 30px;
+}
+
+.form {
+  background: $background-color;
+  border-radius: $border-radius-standard;
+  width: 500px;
+  padding: 30px;
+}

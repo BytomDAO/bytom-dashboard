@@ -1,7 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import actions from 'actions'
-import { Main, Config, Login, Loading, Register ,Modal } from './'
+import { Main, Config, Login, Loading, Init, Register, Modal } from './'
+import { Initialization } from 'features/initialization/components/index'
 import moment from 'moment'
 import { withI18n } from 'react-i18next'
 
@@ -21,20 +22,20 @@ class Container extends React.Component {
       authOk,
       configKnown,
       configured,
-      location
+      location,
+      accountInit
     } = props
 
     if (!authOk || !configKnown) {
       return
     }
 
-    if (configured) {
-      if (location.pathname === '/' ||
-          location.pathname.indexOf('configuration') >= 0) {
+    if (accountInit|| this.state.noAccountItem) {
+      if (location.pathname === '/' ) {
         this.props.showRoot()
       }
     } else {
-      this.props.showConfiguration()
+      this.props.showInitialization()
     }
   }
 
@@ -87,7 +88,7 @@ class Container extends React.Component {
     } else if (!this.props.configured) {
       layout = <Config>{this.props.children}</Config>
     } else if (!this.props.accountInit && this.state.noAccountItem){
-      layout = <Register>{this.props.children}</Register>
+      layout = <Config>{this.props.children}</Config>
     } else{
       layout = <Main>{this.props.children}</Main>
     }
@@ -118,7 +119,7 @@ export default connect(
   (dispatch) => ({
     fetchInfo: options => dispatch(actions.core.fetchCoreInfo(options)),
     showRoot: () => dispatch(actions.app.showRoot),
-    showConfiguration: () => dispatch(actions.app.showConfiguration()),
+    showInitialization: () => dispatch(actions.app.showInitialization()),
     fetchAccountItem: () => dispatch(actions.account.fetchItems())
   })
 )( withI18n() (Container) )
