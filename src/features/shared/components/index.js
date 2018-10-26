@@ -11,6 +11,7 @@ import ConsoleSection from './ConsoleSection/ConsoleSection'
 import EmptyContent from './EmptyContent/EmptyContent'
 import ErrorBanner from './ErrorBanner/ErrorBanner'
 import FieldLabel from './FieldLabel/FieldLabel'
+import FileField from './FileField'
 import Flash from './Flash/Flash'
 import FormContainer from './FormContainer/FormContainer'
 import FormSection from './FormSection/FormSection'
@@ -31,9 +32,12 @@ import RoutingContainer from './RoutingContainer'
 import SearchBar from './SearchBar/SearchBar'
 import Section from './Section/Section'
 import SelectField from './SelectField'
+import Step from './Stepper/Step'
+import StepList from './Stepper/StepList'
 import SubmitIndicator from './SubmitIndicator/SubmitIndicator'
 import TableList from './TableList/TableList'
 import TextField from './TextField'
+import TextareaField from './TextareaField'
 import XpubField from './XpubField/XpubField'
 
 export {
@@ -50,6 +54,7 @@ export {
   EmptyContent,
   ErrorBanner,
   FieldLabel,
+  FileField,
   Flash,
   FormContainer,
   FormSection,
@@ -70,8 +75,11 @@ export {
   SearchBar,
   Section,
   SelectField,
+  Step,
+  StepList,
   SubmitIndicator,
   TableList,
   TextField,
+  TextareaField,
   XpubField,
 }
