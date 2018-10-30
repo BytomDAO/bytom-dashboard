@@ -74,9 +74,46 @@ const restoreKeystore = (data) => {
   }
 }
 
+const restoreMnemonic = (data) => {
+  return (dispatch) => {
+    if (typeof data.keyAlias == 'string')  data.keyAlias = data.keyAlias.trim()
+    if (typeof data.mnemonic == 'string') data.mnemonic = data.mnemonic.trim()
+
+    const keyData = {
+      'alias': data.keyAlias,
+      'password': data.password,
+      'mnemonic': data.mnemonic
+    }
+
+    return chainClient().mockHsm.keys.create(keyData)
+      .then((resp) => {
+        if (resp.status === 'fail') {
+          throw resp
+        }
+        console.log('success')
+      })
+      .catch((err) => {
+        if (!err.status) {
+          throw err
+        }
+      })
+  }
+}
+
+const initSucceeded = () => (dispatch) => {
+  dispatch(push({
+    pathname: '/transactions',
+    state: {
+      preserveFlash: true
+    }
+  }))
+}
+
 let actions = {
+  initSucceeded,
   registerKey,
-  restoreKeystore
+  restoreKeystore,
+  restoreMnemonic
 }
 
 export default actions
