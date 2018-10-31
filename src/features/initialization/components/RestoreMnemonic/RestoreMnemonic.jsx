@@ -1,12 +1,12 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {ErrorBanner, TextField, PasswordField} from 'features/shared/components'
+import {ErrorBanner, PasswordField, TextField, TextareaField} from 'features/shared/components'
 import actions from 'actions'
-import styles from './Register.scss'
 import {reduxForm} from 'redux-form'
 import {withNamespaces} from 'react-i18next'
+import { Link } from 'react-router'
 
-class Register extends React.Component {
+class RestoreMnemonic extends React.Component {
   constructor(props) {
     super(props)
     this.submitWithErrors = this.submitWithErrors.bind(this)
@@ -14,8 +14,8 @@ class Register extends React.Component {
 
   submitWithErrors(data) {
     return new Promise((resolve, reject) => {
-      this.props.registerKey(data)
-        .catch((err) => reject({_error: err.message}))
+      this.props.restoreMnemonic(data)
+        .catch((err) => reject({_error: err}))
     })
   }
 
@@ -23,22 +23,24 @@ class Register extends React.Component {
     const t = this.props.t
 
     const {
-      fields: {keyAlias, password, repeatPassword, accountAlias},
+      fields: {mnemonic, keyAlias, password, confirmPassword},
       error,
       handleSubmit,
       submitting
     } = this.props
 
+
     return (
-      <div className={styles.main}>
+      <div >
         <div>
-          <h2 className={styles.title}>{t('init.title')}</h2>
-          <div className={styles.formWarpper}>
-            <form className={styles.form} onSubmit={handleSubmit(this.submitWithErrors)}>
-              <TextField
-                title={t('form.accountAlias')}
-                placeholder={t('init.accountPlaceholder')}
-                fieldProps={accountAlias} />
+          <h2 >{t('init.restoreWallet')}</h2>
+          <div>
+            <form onSubmit={handleSubmit(this.submitWithErrors)}>
+
+              <TextareaField
+                title={'mnemonic'}
+                fieldProps={mnemonic}
+              />
               <TextField
                 title={t('form.keyAlias')}
                 placeholder={t('init.keyPlaceholder')}
@@ -50,7 +52,7 @@ class Register extends React.Component {
               <PasswordField
                 title={t('init.repeatKeyPassword')}
                 placeholder={t('init.repeatPlaceHolder')}
-                fieldProps={repeatPassword} />
+                fieldProps={confirmPassword} />
 
               {error &&
               <ErrorBanner
@@ -58,8 +60,12 @@ class Register extends React.Component {
                 error={error}/>}
 
               <button type='submit' className='btn btn-primary' disabled={submitting}>
-                {t('init.register')}
+                {t('init.restore')}
               </button>
+              <Link to='/initialization/restore'>
+                cancel
+              </Link>
+
             </form>
           </div>
         </div>
@@ -72,6 +78,9 @@ const validate = (values, props) => {
   const errors = {}
   const t = props.t
 
+  if (!values.mnemonic) {
+    errors.mnemonic = 'random'
+  }
   if (!values.keyAlias) {
     errors.keyAlias = t('key.aliasRequired')
   }
@@ -80,23 +89,26 @@ const validate = (values, props) => {
   } else if (values.password.length < 5) {
     errors.password = ( t('key.reset.newPWarning') )
   }
-  if (values.password !== values.repeatPassword) {
-    errors.repeatPassword = ( t('key.reset.repeatPWarning') )
-  }
-  if (!values.accountAlias) {
-    errors.accountAlias = ( t('account.new.aliasWarning') )
+  if (values.password !== values.confirmPassword) {
+    errors.confirmPassword = ( t('key.reset.repeatPWarning') )
   }
 
   return errors
 }
 
+
 export default withNamespaces('translations')( connect(
   () => ({}),
   (dispatch) => ({
-    registerKey: (token) => dispatch(actions.initialization.registerKey(token))
+    restoreMnemonic: (token) => dispatch(actions.initialization.restoreMnemonic(token)),
   })
 )(reduxForm({
-  form: 'initDefaultPassword',
-  fields: ['keyAlias', 'password', 'repeatPassword', 'accountAlias'],
+  form: 'restoreMnemonic',
+  fields: [
+    'mnemonic',
+    'keyAlias',
+    'password',
+    'confirmPassword',
+  ],
   validate
-})(Register)))
+})(RestoreMnemonic)))
