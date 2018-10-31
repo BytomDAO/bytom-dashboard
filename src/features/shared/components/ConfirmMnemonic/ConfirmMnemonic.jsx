@@ -66,10 +66,11 @@ class ConfirmMnemonic extends React.Component {
         {seedWords.map((seedWord) => {
           return ( seedWord.show ?
             <div key={seedWord.index} className='seedWord'>{seedWord.word}</div> :
-            <SingletonField
+            (words[counter]? <SingletonField
               key={seedWord.index}
               fieldProps={ words[counter++].value }
-            />)
+            /> : null)
+          )
         })}
 
         {error&& <ErrorBanner error={error} />}
