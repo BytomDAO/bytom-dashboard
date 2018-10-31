@@ -1,8 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import actions from 'actions'
-import { Main, Config, Login, Loading, Init, Register, Modal } from './'
-import { Initialization } from 'features/initialization/components/index'
+import { Main, Config, Login, Loading, Modal } from './'
 import moment from 'moment'
 import { withI18n } from 'react-i18next'
 
@@ -30,8 +29,8 @@ class Container extends React.Component {
       return
     }
 
-    if (accountInit|| this.state.noAccountItem) {
-      if (location.pathname === '/' ) {
+    if (accountInit || !this.state.noAccountItem) {
+      if (location.pathname === '/'|| location.pathname.indexOf('initialization') >= 0) {
         this.props.showRoot()
       }
     } else {
@@ -40,9 +39,10 @@ class Container extends React.Component {
   }
 
   componentDidMount() {
-    this.props.fetchAccountItem().then(resp => {
+    this.props.fetchKeyItem().then(resp => {
       if (resp.data.length == 0) {
         this.setState({noAccountItem: true})
+        this.redirectRoot(this.props)
       }
     })
     if(this.props.lng === 'zh'){
@@ -61,8 +61,7 @@ class Container extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.authOk != this.props.authOk ||
-        nextProps.configKnown != this.props.configKnown ||
+    if (nextProps.accountInit != this.props.accountInit ||
         nextProps.configured != this.props.configured ||
         nextProps.location.pathname != this.props.location.pathname) {
       this.redirectRoot(nextProps)
@@ -113,13 +112,12 @@ export default connect(
     authOk: !state.core.requireClientToken || state.core.validToken,
     configKnown: true,
     configured: true,
-    onTestnet: state.core.onTestnet,
     accountInit: state.core.accountInit,
   }),
   (dispatch) => ({
     fetchInfo: options => dispatch(actions.core.fetchCoreInfo(options)),
     showRoot: () => dispatch(actions.app.showRoot),
     showInitialization: () => dispatch(actions.app.showInitialization()),
-    fetchAccountItem: () => dispatch(actions.account.fetchItems())
+    fetchKeyItem: () => dispatch(actions.key.fetchItems())
   })
 )( withI18n() (Container) )

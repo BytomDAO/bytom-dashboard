@@ -63,7 +63,7 @@ const restoreKeystore = (data) => {
               reject(resp)
             }
             resolve()
-            console.log('success')
+            dispatch(initSucceeded())
           })
           .catch((err) => {
             reject(err) })
@@ -90,7 +90,7 @@ const restoreMnemonic = (data) => {
         if (resp.status === 'fail') {
           throw resp
         }
-        console.log('success')
+        dispatch(initSucceeded())
       })
       .catch((err) => {
         if (!err.status) {
@@ -101,6 +101,7 @@ const restoreMnemonic = (data) => {
 }
 
 const initSucceeded = () => (dispatch) => {
+  dispatch({type: 'CREATE_REGISTER_ACCOUNT'})
   dispatch(push({
     pathname: '/transactions',
     state: {

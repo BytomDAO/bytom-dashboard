@@ -25,7 +25,7 @@ const actions = {
       // during logout.
       let pathname = (getState().routing.locationBeforeTransitions || {}).pathname
 
-      if (pathname !== 'initialization') {
+      if (!(pathname.indexOf('initialization') >= 0)) {
         dispatch(push('/initialization'))
       }
     }

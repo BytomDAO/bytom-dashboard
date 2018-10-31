@@ -13,9 +13,9 @@ class Index extends React.Component {
         <Link to='/initialization/register'>
           Create Wallet
         </Link>
-        <button>
+        <Link to='/initialization/restore'>
           Restore Wallet
-        </button>
+        </Link>
       </div>
     )
   }

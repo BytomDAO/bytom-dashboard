@@ -4,6 +4,7 @@ import {ErrorBanner, FileField} from 'features/shared/components'
 import actions from 'actions'
 import {reduxForm} from 'redux-form'
 import {withNamespaces} from 'react-i18next'
+import { Link } from 'react-router'
 
 class RestoreKeystore extends React.Component {
   constructor(props) {
@@ -49,6 +50,10 @@ class RestoreKeystore extends React.Component {
               <button type='submit' className='btn btn-primary' disabled={submitting}>
                 {t('init.restore')}
               </button>
+
+              <Link to='/initialization/restore'>
+                cancel
+              </Link>
 
             </form>
           </div>

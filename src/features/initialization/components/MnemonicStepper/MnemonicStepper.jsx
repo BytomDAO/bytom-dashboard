@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import actions from 'actions'
 import { Step, StepList, ConfirmMnemonic, Mnemonic } from 'features/shared/components'
+import {Skip} from '../'
 
 class MnemonicStepper extends React.Component {
   constructor(props) {
@@ -11,6 +12,9 @@ class MnemonicStepper extends React.Component {
   render() {
     return (
       <StepList>
+        <Step>
+          <Skip/>
+        </Step>
         <Step>
           <Mnemonic
             mnemonic={this.props.mnemonic}

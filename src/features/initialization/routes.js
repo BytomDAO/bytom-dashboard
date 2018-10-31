@@ -1,5 +1,5 @@
 import { RoutingContainer } from 'features/shared/components'
-import { Index, Register } from './components'
+import { Index, Register, Restore, RestoreMnemonic, RestoreKeystore, MnemonicStepper } from './components'
 
 export default {
   path: 'initialization',
@@ -9,6 +9,22 @@ export default {
     {
       path: 'register',
       component: Register
+    },
+    {
+      path: 'mnemonic',
+      component: MnemonicStepper
+    },
+    {
+      path: 'restore',
+      component: Restore
+    },
+    {
+      path: 'restoreMnemonic',
+      component: RestoreMnemonic
+    },
+    {
+      path: 'restoreKeystore',
+      component: RestoreKeystore
     }
   ]
 }
