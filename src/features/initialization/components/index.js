@@ -1,8 +1,8 @@
 import Index from './Index/Index'
 import Register from './Register/Register'
 import MnemonicStepper from './MnemonicStepper/MnemonicStepper'
-import RestoreMnemonic from './RestoreMnemonic/RestoreMnemonic'
-import RestoreKeystore from './RestoreKeystore/RestoreKeystore'
+import Mnemonic from './Mnemonic/Mnemonic'
+import Keystore from './Keystore/Keystore'
 import Skip from './Skip/Skip'
 import Restore from './Restore/Resotre'
 
@@ -10,8 +10,8 @@ export {
   Index,
   Register,
   Restore,
-  RestoreMnemonic,
-  RestoreKeystore,
+  Mnemonic,
+  Keystore,
   MnemonicStepper,
   Skip
 }

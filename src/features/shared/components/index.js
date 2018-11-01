@@ -30,6 +30,8 @@ import Pagination from './Pagination/Pagination'
 import PasswordField from './PasswordField/PasswordField'
 import RawJsonButton from './RawJsonButton'
 import RelativeTime from './RelativeTime'
+import RestoreKeystore from './RestoreKeystore/RestoreKeystore'
+import RestoreMnemonic from './RestoreMnemonic/RestoreMnemonic'
 import RoutingContainer from './RoutingContainer'
 import SearchBar from './SearchBar/SearchBar'
 import Section from './Section/Section'
@@ -76,6 +78,8 @@ export {
   PasswordField,
   RawJsonButton,
   RelativeTime,
+  RestoreKeystore,
+  RestoreMnemonic,
   RoutingContainer,
   SearchBar,
   Section,

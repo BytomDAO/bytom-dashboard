@@ -14,7 +14,7 @@ class RestoreMnemonic extends React.Component {
 
   submitWithErrors(data) {
     return new Promise((resolve, reject) => {
-      this.props.restoreMnemonic(data)
+      this.props.restoreMnemonic(data, this.props.success)
         .catch((err) => reject({_error: err}))
     })
   }
@@ -31,7 +31,6 @@ class RestoreMnemonic extends React.Component {
 
 
     return (
-      <div >
         <div>
           <h2 >{t('init.restoreWallet')}</h2>
           <div>
@@ -62,14 +61,10 @@ class RestoreMnemonic extends React.Component {
               <button type='submit' className='btn btn-primary' disabled={submitting}>
                 {t('init.restore')}
               </button>
-              <Link to='/initialization/restore'>
-                cancel
-              </Link>
 
             </form>
           </div>
         </div>
-      </div>
     )
   }
 }
@@ -100,7 +95,7 @@ const validate = (values, props) => {
 export default withNamespaces('translations')( connect(
   () => ({}),
   (dispatch) => ({
-    restoreMnemonic: (token) => dispatch(actions.initialization.restoreMnemonic(token)),
+    restoreMnemonic: (token, success) => dispatch(actions.initialization.restoreMnemonic(token, success)),
   })
 )(reduxForm({
   form: 'restoreMnemonic',

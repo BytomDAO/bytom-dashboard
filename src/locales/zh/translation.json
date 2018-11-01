@@ -309,10 +309,13 @@
     "title":"备份与恢复",
     "backup":"备份",
     "backupDescription":"这个选项备份所有本地数据，包括账户，资产和余额。 请妥善保管你的备份文件。",
-    "restore":"恢复",
-    "restoreDescription":"这个选项将从文件中恢复钱包数据。 如果你的钱包余额显示不正确，请点击扫描钱包的按钮。",
+    "restoreKeystore":"从文件恢复",
+    "restoreKeystoreDescription":"这个选项将从文件中恢复钱包数据。 如果你的钱包余额显示不正确，请点击扫描钱包的按钮。",
+    "restoreMnemonic":"通过助记词恢复",
+    "restoreMnemonicDescription":"这个选项将通过助记词恢复密钥相关的数据。 如果你的钱包余额显示不正确，请点击扫描钱包的按钮。",
     "download":"下载备份",
-    "selectFile":"选择备份文件"
+    "selectFile":"选择备份文件",
+    "restore":"恢复"
   },
   "notFound":{
     "title":"页面找不到",

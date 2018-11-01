@@ -35,20 +35,16 @@ const registerKey = (data) => {
             }
           })
           .catch((err) => {
-            if (!err.status) {
-              throw err
-            }
+            throw err
           })
       })
       .catch((err) => {
-        if (!err.status) {
-          throw err
-        }
+        throw err
       })
   }
 }
 
-const restoreKeystore = (data) => {
+const restoreKeystore = (data, success) => {
   return (dispatch) => {
     const file = data.file
 
@@ -60,21 +56,22 @@ const restoreKeystore = (data) => {
         return chainClient().backUp.restore(result)
           .then(resp => {
             if (resp.status === 'fail') {
-              reject(resp)
+              throw resp
             }
             resolve()
-            dispatch(initSucceeded())
+            dispatch(success)
           })
           .catch((err) => {
             reject(err) })
       }
+
       fileReader.readAsText(file, 'UTF-8')
       fileReader.onerror = function(error) { reject(error) }
     })
   }
 }
 
-const restoreMnemonic = (data) => {
+const restoreMnemonic = (data, success) => {
   return (dispatch) => {
     if (typeof data.keyAlias == 'string')  data.keyAlias = data.keyAlias.trim()
     if (typeof data.mnemonic == 'string') data.mnemonic = data.mnemonic.trim()
@@ -90,12 +87,10 @@ const restoreMnemonic = (data) => {
         if (resp.status === 'fail') {
           throw resp
         }
-        dispatch(initSucceeded())
+        dispatch(success)
       })
       .catch((err) => {
-        if (!err.status) {
-          throw err
-        }
+        throw err
       })
   }
 }

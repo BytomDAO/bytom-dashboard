@@ -4,7 +4,6 @@ import {ErrorBanner, FileField} from 'features/shared/components'
 import actions from 'actions'
 import {reduxForm} from 'redux-form'
 import {withNamespaces} from 'react-i18next'
-import { Link } from 'react-router'
 
 class RestoreKeystore extends React.Component {
   constructor(props) {
@@ -14,7 +13,7 @@ class RestoreKeystore extends React.Component {
 
   submitWithErrors(data) {
     return new Promise((resolve, reject) => {
-      this.props.restoreKeystore(data)
+      this.props.restoreKeystore(data, this.props.success)
         .catch((err) => reject({_error: err}))
     })
   }
@@ -51,10 +50,6 @@ class RestoreKeystore extends React.Component {
                 {t('init.restore')}
               </button>
 
-              <Link to='/initialization/restore'>
-                cancel
-              </Link>
-
             </form>
           </div>
         </div>
@@ -67,7 +62,7 @@ class RestoreKeystore extends React.Component {
 export default withNamespaces('translations')( connect(
   () => ({}),
   (dispatch) => ({
-    restoreKeystore: (token) => dispatch(actions.initialization.restoreKeystore(token)),
+    restoreKeystore: (token, success) => dispatch(actions.initialization.restoreKeystore(token, success)),
   })
 )(reduxForm({
   form: 'restoreKeystore',
