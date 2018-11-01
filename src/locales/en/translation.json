@@ -304,7 +304,9 @@
     "keyPlaceholder":"Please enter the key alias...",
     "passwordPlaceholder":"Please enter the key password...",
     "repeatPlaceHolder":"Please repeat the key password...",
-    "errorTitle":"Error in initialization"
+    "errorTitle":"Error in initialization",
+    "mnemonic":"mnemonic",
+    "mnemonicRequire":"Mnemonic is Required"
   },
   "backup":{
     "title":"Backup and Restore",

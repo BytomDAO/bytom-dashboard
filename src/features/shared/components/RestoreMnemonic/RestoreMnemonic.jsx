@@ -37,7 +37,7 @@ class RestoreMnemonic extends React.Component {
             <form onSubmit={handleSubmit(this.submitWithErrors)}>
 
               <TextareaField
-                title={'mnemonic'}
+                title={t('init.mnemonic')}
                 fieldProps={mnemonic}
               />
               <TextField
@@ -74,7 +74,7 @@ const validate = (values, props) => {
   const t = props.t
 
   if (!values.mnemonic) {
-    errors.mnemonic = 'random'
+    errors.mnemonic = t('init.mnemonicRequire')
   }
   if (!values.keyAlias) {
     errors.keyAlias = t('key.aliasRequired')

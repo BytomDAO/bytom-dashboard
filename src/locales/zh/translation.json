@@ -303,7 +303,9 @@
     "keyPlaceholder":"请输入密钥别名...",
     "passwordPlaceholder":"请输入密钥密码...",
     "repeatPlaceHolder":"请重复输入密钥密码...",
-    "errorTitle":"初始化错误"
+    "errorTitle":"初始化错误",
+    "mnemonic":"助记词",
+    "mnemonicRequire":"助记词是必须项"
   },
   "backup":{
     "title":"备份与恢复",
