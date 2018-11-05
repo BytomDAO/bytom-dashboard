@@ -22,7 +22,7 @@ class SingletonField extends React.Component {
     return(
       <div className={touched && error &&'has-error'}>
         <input
-          className='form-control'
+          className={`form-control ${this.props.className}`}
           autoFocus={!!this.props.autoFocus}
           {...disableAutocomplete}
           {...fieldProps} />

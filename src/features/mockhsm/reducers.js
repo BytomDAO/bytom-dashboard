@@ -17,4 +17,10 @@ export default combineReducers({
     }
     return state
   },
+  mnemonic: (state = [], action) => {
+    if (action.type == 'NEW_KEY') {
+      return action.data
+    }
+    return state
+  },
 })

@@ -1,6 +1,7 @@
 import React from 'react'
 import { ErrorBanner, SingletonField} from 'features/shared/components'
 import {reduxForm} from 'redux-form'
+import style from './ConfirmMnemonic.scss'
 
 class ConfirmMnemonic extends React.Component {
   constructor(props) {
@@ -63,19 +64,27 @@ class ConfirmMnemonic extends React.Component {
       <form  onSubmit={handleSubmit(this.submitWithValidation)}>
         <h2>Enter your wallet recover phrase</h2>
         <p>Confirm that you backup your Recovery phrase by filling in the missing words:</p>
-        {seedWords.map((seedWord) => {
-          return ( seedWord.show ?
-            <div key={seedWord.index} className='seedWord'>{seedWord.word}</div> :
-            (words[counter]? <SingletonField
-              key={seedWord.index}
-              fieldProps={ words[counter++].value }
-            /> : null)
-          )
-        })}
+        <div className={style.seedArea}>
+          {seedWords.map((seedWord) => {
+            return ( seedWord.show ?
+              <div key={seedWord.index} className={`${style.seed} ${style.seedWord}`}>{seedWord.word}</div> :
+              (words[counter]? <SingletonField
+                className={style.seedWord}
+                key={seedWord.index}
+                fieldProps={ words[counter++].value }
+              /> : null)
+            )
+          })}
+        </div>
 
         {error&& <ErrorBanner error={error} />}
 
-        <button type='submit' disabled={submitting}>submit</button>
+        <button
+          className={`btn btn-primary ${style.submit}`}
+          type='submit'
+          disabled={submitting}>
+          submit
+        </button>
 
       </form>
     )

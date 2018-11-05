@@ -1,4 +1,5 @@
 import React from 'react'
+import styles from './stepper.scss'
 
 class Step extends React.Component {
 
@@ -7,7 +8,6 @@ class Step extends React.Component {
       isActive,
       displayPrevious,
       displayNext,
-      displaySubmit,
       component,
       children,
     } = this.props
@@ -17,13 +17,13 @@ class Step extends React.Component {
     return (
       <div>
           {component ? React.createElement(component) : children}
-          <Previous
-            isActive={displayPrevious}
-            goToPreviousStep={() => this.props.goToPreviousStep()}
-          />
           <Next
             isActive={displayNext}
             goToNextStep={() => this.props.goToNextStep()}
+          />
+          <Previous
+            isActive={displayPrevious}
+            goToPreviousStep={() => this.props.goToPreviousStep()}
           />
       </div>
     )
@@ -37,8 +37,10 @@ class Next extends React.Component {
     if (isActive === false) return null
 
     return (
-      <button onClick={() => this.props.goToNextStep()}>
-        Next
+      <button
+        className='btn btn-default'
+        onClick={() => this.props.goToNextStep()}>
+        Continue
       </button>
     )
   }
@@ -51,30 +53,13 @@ class Previous extends React.Component {
     if (isActive === false) return null
 
     return (
-      <button onClick={() => this.props.goToPreviousStep()}>
-        Previous
-      </button>
+      <a
+        className= {styles.marginLeft}
+        onClick={() => this.props.goToPreviousStep()}>
+        Cancel
+      </a>
     )
   }
 }
-
-class Submit extends React.Component {
-
-  render() {
-    const { isActive } = this.props
-    if (isActive === false) return null
-
-    return (
-      <button
-        type='submit'
-        onClick={() => this.props.submit()}
-      >
-        { this.props.submitLabel || 'Submit' }
-      </button>
-    )
-
-  }
-}
-
 
 export default Step

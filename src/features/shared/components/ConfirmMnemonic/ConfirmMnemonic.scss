@@ -1,0 +1,23 @@
+.submit{
+  float: left;
+}
+
+.seed{
+  user-select: none;
+  background-color: #48566e;
+  border-radius: 3px;
+  color: #fff;
+}
+
+.seedWord{
+  width: 100px;
+  height: 23px;
+  margin: 5px;
+  text-align: center;
+}
+
+.seedArea{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}

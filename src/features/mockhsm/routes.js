@@ -1,4 +1,4 @@
-import { List, New, Show, ResetPassword, CheckPassword } from './components'
+import { List, New, Show, ResetPassword, CheckPassword, MnemonicStepper } from './components'
 import { makeRoutes } from 'features/shared'
 
 export default (store) => makeRoutes(store, 'key', List, New, Show,
@@ -12,4 +12,8 @@ export default (store) => makeRoutes(store, 'key', List, New, Show,
         path: ':id/check-password',
         component: CheckPassword,
       },
+      {
+        path: 'mnemonic',
+        component: MnemonicStepper
+      }
     ],skipFilter: true, name: 'key' })

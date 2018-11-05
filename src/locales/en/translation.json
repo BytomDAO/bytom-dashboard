@@ -312,7 +312,7 @@
     "title":"Backup and Restore",
     "backup":"Back Up",
     "backupDescription":"This option will back up all data stored in this core, including blockchain data, accounts, assets and balances.",
-    "restoreKeystore":"Restore by File",
+    "restoreKeystore":"Restore from File",
     "restoreKeystoreDescription":"This option will restore the wallet data form a file. You might need to rescan your wallet, if you balance is not up to date.",
     "restoreMnemonic":"Restore by Mnemonic",
     "restoreMnemonicDescription":"This option will restore the key related data by mnemonic. You might need to rescan your wallet, if you balance is not up to date.",
