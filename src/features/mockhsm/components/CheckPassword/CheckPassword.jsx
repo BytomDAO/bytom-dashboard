@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import { reduxForm } from 'redux-form'
 
-import { FormContainer, FormSection, PasswordField} from 'features/shared/components'
+import {NotFound, FormContainer, FormSection, PasswordField} from 'features/shared/components'
 
 class CheckPassword extends Component {
   constructor(props) {
