@@ -305,7 +305,10 @@
     "repeatPlaceHolder":"请重复输入密钥密码...",
     "errorTitle":"初始化错误",
     "mnemonic":"助记词",
-    "mnemonicRequire":"助记词是必须项"
+    "mnemonicRequire":"助记词是必须项",
+    "create": "新建钱包",
+    "createDescription":"这个选项将生成默认的挖矿账户和默认密钥。 助记词将会在此生成，您可以选择保留助记词或者跳过。 注意： 助记词只生成一次， 请将密码，助记词妥善保存",
+    "welcome":"欢迎来到__network__"
   },
   "backup":{
     "title":"备份与恢复",

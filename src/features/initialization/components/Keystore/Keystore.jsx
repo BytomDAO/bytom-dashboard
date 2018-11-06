@@ -16,7 +16,7 @@ class Keystore extends React.Component {
     return (
       <div >
         <RestoreKeystore success={this.props.success}/>
-        <Link to='/initialization/restore'>
+        <Link to='/initialization/'>
           cancel
         </Link>
 

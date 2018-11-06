@@ -15,7 +15,7 @@ class Mnemonic extends React.Component {
     return (
       <div >
         <RestoreMnemonic success={this.props.success}/>
-        <Link to='/initialization/restore'>
+        <Link to='/initialization/'>
           cancel
         </Link>
       </div>

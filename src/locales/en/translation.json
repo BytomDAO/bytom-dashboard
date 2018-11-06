@@ -306,7 +306,10 @@
     "repeatPlaceHolder":"Please repeat the key password...",
     "errorTitle":"Error in initialization",
     "mnemonic":"mnemonic",
-    "mnemonicRequire":"Mnemonic is Required"
+    "mnemonicRequire":"Mnemonic is Required",
+    "create": "Create Wallet",
+    "createDescription":"This option will create a default account, key password and give you a option to keep you mnemonic.  Warning: key seed words will display only once, it's important to remember your password.",
+    "welcome":"Welcome to Bytom __network__"
   },
   "backup":{
     "title":"Backup and Restore",

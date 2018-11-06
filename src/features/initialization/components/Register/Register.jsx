@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {ErrorBanner, TextField, PasswordField} from 'features/shared/components'
 import actions from 'actions'
+import { Link } from 'react-router'
 import styles from './Register.scss'
 import {reduxForm} from 'redux-form'
 import {withNamespaces} from 'react-i18next'
@@ -60,6 +61,9 @@ class Register extends React.Component {
               <button type='submit' className='btn btn-primary' disabled={submitting}>
                 {t('init.register')}
               </button>
+              <Link to='/initialization/'>
+                cancel
+              </Link>
             </form>
           </div>
         </div>
