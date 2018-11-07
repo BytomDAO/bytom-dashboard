@@ -86,8 +86,21 @@ const restoreMnemonic = (data, success) => {
       .then((resp) => {
         if (resp.status === 'fail') {
           throw resp
+        }else{
+          return chainClient().backUp.recovery({
+            xpub: resp.data.xpub
+          })
+            .then((resp) => {
+              if (resp.status === 'fail') {
+                throw resp
+              }
+
+              dispatch(success)
+            })
+            .catch((err) => {
+              throw err
+            })
         }
-        dispatch(success)
       })
       .catch((err) => {
         throw err
