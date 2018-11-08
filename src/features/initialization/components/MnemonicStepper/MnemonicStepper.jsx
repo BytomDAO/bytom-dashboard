@@ -2,7 +2,8 @@ import React from 'react'
 import {connect} from 'react-redux'
 import actions from 'actions'
 import { Step, StepList, ConfirmMnemonic, Mnemonic } from 'features/shared/components'
-import {Skip} from '../'
+import styles from './MnemonicStepper.scss'
+import {withNamespaces} from 'react-i18next'
 
 class MnemonicStepper extends React.Component {
   constructor(props) {
@@ -10,25 +11,36 @@ class MnemonicStepper extends React.Component {
   }
 
   render() {
+    const t = this.props.t
     return (
-      <StepList>
-        <Step>
-          <Skip/>
-        </Step>
-        <Step>
-          <Mnemonic
-            mnemonic={this.props.mnemonic}
-          />
-        </Step>
-
-        <Step>
-          <ConfirmMnemonic
-            mnemonic={this.props.mnemonic}
-            succeeded={this.props.succeeded}
-          />
-
-        </Step>
-      </StepList>
+      <div className={styles.main}>
+        <div>
+          <h2 className={styles.title}>{t('init.mnemonic')}</h2>
+          <div className={styles.formWarpper}>
+            <div className={styles.form}>
+              <StepList>
+                <Step>
+                  <Mnemonic
+                    mnemonic={this.props.mnemonic}
+                  />
+                  <button
+                    className={'btn btn-link'}
+                    onClick={() => this.props.succeeded()}
+                  >
+                    skip
+                  </button>
+                </Step>
+                <Step>
+                  <ConfirmMnemonic
+                    mnemonic={this.props.mnemonic}
+                    succeeded={this.props.succeeded}
+                  />
+                </Step>
+              </StepList>
+            </div>
+          </div>
+        </div>
+      </div>
     )
   }
 }
@@ -43,7 +55,7 @@ const mapDispatchToProps = ( dispatch ) => ({
   succeeded: () => dispatch(actions.initialization.initSucceeded()),
 })
 
-export default connect(
+export default withNamespaces('translations') (connect(
   mapStateToProps,
   mapDispatchToProps
-)(MnemonicStepper)
+)(MnemonicStepper))

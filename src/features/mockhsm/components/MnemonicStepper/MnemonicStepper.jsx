@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import actions from 'actions'
 import { NotFound, Step, StepList, ConfirmMnemonic, Mnemonic, PageContent, PageTitle } from 'features/shared/components'
-import {Skip} from '../'
+import componentClassNames from 'utility/componentClassNames'
 import styles from './MnemonicStepper.scss'
 
 class MnemonicStepper extends React.Component {
@@ -16,36 +16,33 @@ class MnemonicStepper extends React.Component {
     }
 
     return (
-      <div>
+      <div className={componentClassNames(this, 'flex-container')}>
         <PageTitle title={'Mnemonic'} />
 
-        <PageContent>
-          <div className={styles.main}>
-            <StepList>
-              <Step>
-                <Skip/>
-                <button className={`btn btn-primary ${styles.marginRight}`}
-                        onClick={() => this.props.succeeded()}
-                >
-                  skip
-                </button>
-              </Step>
-              <Step>
-                <Mnemonic
-                  mnemonic={this.props.mnemonic}
-                />
-              </Step>
+          <div className={`${styles.main} flex-container`}>
+            <div className={styles.content}>
+              <StepList>
+                <Step>
+                  <Mnemonic
+                    mnemonic={this.props.mnemonic}
+                  />
+                  <button className={`btn btn-default ${styles.marginLeft}`}
+                          onClick={() => this.props.succeeded()}
+                  >
+                    skip
+                  </button>
+                </Step>
 
-              <Step>
-                <ConfirmMnemonic
-                  mnemonic={this.props.mnemonic}
-                  succeeded={this.props.succeeded}
-                />
+                <Step>
+                  <ConfirmMnemonic
+                    mnemonic={this.props.mnemonic}
+                    succeeded={this.props.succeeded}
+                  />
 
-              </Step>
-            </StepList>
+                </Step>
+              </StepList>
+            </div>
           </div>
-        </PageContent>
       </div>
     )
   }

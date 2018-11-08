@@ -38,7 +38,7 @@ class Next extends React.Component {
 
     return (
       <button
-        className='btn btn-default'
+        className={`btn btn-primary ${styles.floatLeft}`}
         onClick={() => this.props.goToNextStep()}>
         Continue
       </button>
@@ -54,7 +54,7 @@ class Previous extends React.Component {
 
     return (
       <a
-        className= {styles.marginLeft}
+        className={`btn btn-link ${styles.marginLeft}`}
         onClick={() => this.props.goToPreviousStep()}>
         Cancel
       </a>

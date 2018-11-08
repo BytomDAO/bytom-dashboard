@@ -14,19 +14,22 @@ class Mnemonic extends React.Component {
     const {mnemonicArray} = this.state
     return (
      <div>
-       <h2>Mnemonic</h2>
+       <div className={styles.flexContainer}>
+         <h4>Mnemonic</h4>
+         <button
+           className='btn btn-link'
+           onClick={() => copyToClipboard(this.props.mnemonic)}
+         >
+           <img className={styles.copy} src={require('images/copy.svg')}/>
+         </button>
+       </div>
        <p>Write down the following seed and save it in a secure location.</p>
-       <div>
+       <div className={`${styles.flexContainer} ${styles.seedArea}`}>
+
          {
            mnemonicArray.map((seedWord) =>
              <div className={styles.seed}>{seedWord}</div>)
          }
-         <button
-           className={`btn btn-primary ${styles.copy}`}
-           onClick={() => copyToClipboard(this.props.mnemonic)}
-         >
-           Copy to clipboard
-         </button>
        </div>
 
      </div>

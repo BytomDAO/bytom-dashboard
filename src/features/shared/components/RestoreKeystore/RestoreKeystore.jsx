@@ -4,6 +4,7 @@ import {ErrorBanner, FileField} from 'features/shared/components'
 import actions from 'actions'
 import {reduxForm} from 'redux-form'
 import {withNamespaces} from 'react-i18next'
+import style from './RestoreKeystore.scss'
 
 class RestoreKeystore extends React.Component {
   constructor(props) {
@@ -32,7 +33,7 @@ class RestoreKeystore extends React.Component {
     return (
       <div >
         <div>
-          <h2 >{t('init.restoreWallet')}</h2>
+          <h4 >{t('init.restoreWallet')}</h4>
           <div>
             <form onSubmit={handleSubmit(this.submitWithErrors)}>
               <p>{t('init.restoreLabel')}</p>
@@ -46,7 +47,7 @@ class RestoreKeystore extends React.Component {
                 title={t('init.errorTitle')}
                 error={error}/>}
 
-              <button type='submit' className='btn btn-primary' disabled={submitting}>
+              <button type='submit' className={`btn btn-primary ${style.submitButton}`} disabled={submitting}>
                 {t('init.restore')}
               </button>
 

@@ -62,7 +62,7 @@ class ConfirmMnemonic extends React.Component {
 
     return (
       <form  onSubmit={handleSubmit(this.submitWithValidation)}>
-        <h2>Enter your wallet recover phrase</h2>
+        <h4>Enter your wallet recover phrase</h4>
         <p>Confirm that you backup your Recovery phrase by filling in the missing words:</p>
         <div className={style.seedArea}>
           {seedWords.map((seedWord) => {

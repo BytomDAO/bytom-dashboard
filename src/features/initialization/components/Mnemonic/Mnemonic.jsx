@@ -4,6 +4,7 @@ import {withNamespaces} from 'react-i18next'
 import { Link } from 'react-router'
 import {connect} from 'react-redux'
 import actions from 'actions'
+import styles from '../FormIndex.scss'
 
 class Mnemonic extends React.Component {
   constructor(props) {
@@ -13,11 +14,20 @@ class Mnemonic extends React.Component {
   render() {
     const t = this.props.t
     return (
-      <div >
-        <RestoreMnemonic success={this.props.success}/>
-        <Link to='/initialization/'>
-          cancel
-        </Link>
+      <div className={styles.main}>
+        <div>
+          <h2 className={styles.title}>{t('backup.restoreMnemonic')}</h2>
+          <div className={styles.formWarpper}>
+            <div className={styles.form}>
+              <RestoreMnemonic success={this.props.success}/>
+              <Link
+                className='btn btn-link'
+                to='/initialization/'>
+                cancel
+              </Link>
+            </div>
+          </div>
+        </div>
       </div>
     )
   }

@@ -1,10 +1,20 @@
-.main{
-  background-color: $background-color;
-  border: 1px solid $border-color;
-  padding: $gutter-size;
-  word-wrap: break-word;
+.main {
+  background: $background-color;
+  display: flex;
+  flex-direction: row;
+  padding: 0 $gutter-size;
+  margin-top: $title-height;
 }
 
-.marginRight{
-  margin-right: $gutter-size/2;
+.content {
+  min-width: 400px;
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+  padding: $gutter-size;
+}
+
+
+.marginLeft{
+  margin-left: $gutter-size/2;
 }

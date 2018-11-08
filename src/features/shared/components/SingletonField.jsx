@@ -20,9 +20,9 @@ class SingletonField extends React.Component {
     const {touched, error} = this.props.fieldProps
 
     return(
-      <div className={touched && error &&'has-error'}>
+      <div className={` ${this.props.className} ${touched && error &&'has-error'}`}>
         <input
-          className={`form-control ${this.props.className}`}
+          className='form-control'
           autoFocus={!!this.props.autoFocus}
           {...disableAutocomplete}
           {...fieldProps} />

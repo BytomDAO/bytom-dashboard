@@ -4,7 +4,7 @@ import {ErrorBanner, PasswordField, TextField, TextareaField} from 'features/sha
 import actions from 'actions'
 import {reduxForm} from 'redux-form'
 import {withNamespaces} from 'react-i18next'
-import { Link } from 'react-router'
+import style from './RestoreMnemonic.scss'
 
 class RestoreMnemonic extends React.Component {
   constructor(props) {
@@ -32,7 +32,7 @@ class RestoreMnemonic extends React.Component {
 
     return (
         <div>
-          <h2 >{t('init.restoreWallet')}</h2>
+          <h4>{t('init.restoreWallet')}</h4>
           <div>
             <form onSubmit={handleSubmit(this.submitWithErrors)}>
 
@@ -58,7 +58,7 @@ class RestoreMnemonic extends React.Component {
                 title={t('init.errorTitle')}
                 error={error}/>}
 
-              <button type='submit' className='btn btn-primary' disabled={submitting}>
+              <button type='submit' className={`btn btn-primary ${style.submitButton}`} disabled={submitting}>
                 {t('init.restore')}
               </button>
 
