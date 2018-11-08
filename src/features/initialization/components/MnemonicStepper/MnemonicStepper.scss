@@ -10,27 +10,9 @@
   overflow: auto;
 }
 
-.choice {
-  margin-left: 10px;
-}
-
-.image {
-  width: 150px;
-  position: absolute;
-  top: calc(50px);
-  left: calc(50% - 75px);
-}
-
 .title{
   text-align: center;
   color: white;
-}
-
-.switch {
-  display: flex;
-  justify-content: space-around;
-
-  margin-top: 10px;
 }
 
 .formWarpper {
@@ -43,6 +25,7 @@
 .form {
   background: $background-color;
   border-radius: $border-radius-standard;
-  width: 500px;
+  width: 850px;
   padding: 30px;
+  padding-bottom: $gutter-size*1.25;
 }

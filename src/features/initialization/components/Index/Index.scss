@@ -1,0 +1,155 @@
+.main {
+  background: $background-inverse-color;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding-top: 50px;
+  display: block;
+  overflow: auto;
+}
+
+.title {
+  font-size: $font-size-h2;
+  font-weight: normal;
+  margin-top: $gutter-size;
+  margin-bottom: $gutter-size;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.choices {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  > div {
+    width: 30%;
+    min-height: 100%;
+  }
+}
+
+.choice_wrapper {
+  display: flex;
+  min-height: 100%;
+
+  > label {
+    display: flex;
+    min-height:100%;
+    font-weight: normal;
+  }
+}
+
+.choice_radio_button {
+  position: absolute;
+  visibility: hidden;
+}
+
+.choice {
+  border: 1px solid $table-border-color;
+  border-radius: $border-radius-base;
+  cursor: pointer;
+  min-height: 100%;
+  padding: 20px $grid-gutter-width;
+  padding-top: 110px;
+  text-align: center;
+
+  background-repeat: no-repeat;
+  background-position: center 25px;
+  background-size: 90px 90px;
+
+  &:hover {
+    background-color: $background-emphasis-color;
+  }
+
+  &.disabled {
+    cursor: default;
+    background-color: $background-emphasis-color;
+    opacity: 0.75;
+
+    .choice_title {
+      color: $text-light-color;
+    }
+  }
+
+  p {
+    line-height: 1.4;
+  }
+
+  svg {
+    display: block;
+    margin: 0 auto;
+    width: 80px;
+    height: 80px;
+  }
+
+  .choice_title{
+    display: block;
+    font-size: $font-size-section-title;
+    margin: 12px 0;
+    color: $text-strong-color;
+    font-weight: 600;
+  }
+}
+
+.backup {
+  background-image: url('images/backup/backup.svg')
+}
+
+.restore {
+  background-image: url('images/backup/restore.svg')
+}
+
+input[type=radio]:checked ~ .choice {
+  strong {
+    color: $text-danger;
+  }
+
+  &:hover {
+    background-color: $background-color;
+  }
+
+  &.backup {
+    background-image: url('images/backup/backup-active.svg')
+  }
+
+  &.restore {
+    background-image: url('images/backup/restore-active.svg')
+  }
+
+  .choice_title {
+    color: $brand-primary;
+  }
+
+  svg {
+    polygon {
+      stroke: $brand-primary;
+      fill: transparentize($brand-primary, 0.85);
+    }
+
+    rect, path {
+      fill: $brand-primary
+    }
+  }
+}
+
+.submitWrapper {
+  display: block;
+  margin-top: 30px;
+}
+
+.submit {
+  display: block;
+  width: 100%;
+  margin-top: $gutter-size;
+  padding:5px 0px;
+}
+
+.infoLink {
+  position: relative;
+  left: 4px;
+  top: 1px;
+  color:$text-light-color;
+}
+

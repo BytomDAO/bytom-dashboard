@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 18 18">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+      }
+
+      .cls-2 {
+        clip-path: url(#clip-path);
+      }
+
+      .cls-3 {
+        fill: #20252d;
+      }
+    </style>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_3774" data-name="Rectangle 3774" class="cls-1" width="18" height="18" transform="translate(61 117)"/>
+    </clipPath>
+  </defs>
+  <g id="copy" class="cls-2" transform="translate(-61 -117)">
+    <path id="Subtraction_47" data-name="Subtraction 47" class="cls-3" d="M-4797.6,2096H-4808v-10.4h1.3v9.1h9.1v1.3Zm2.6-2.6h-10.4V2083h6.5l3.9,3.965v6.434Zm-9.1-9.1v7.8h7.8v-3.9h-3.9v-3.9Zm5.051-.043v2.916h2.723Z" transform="translate(4871.5 -1963.5)"/>
+  </g>
+</svg>

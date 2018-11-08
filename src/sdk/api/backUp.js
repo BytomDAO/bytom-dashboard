@@ -12,6 +12,11 @@ const backUp = (client) => {
       cb
     ),
 
+    recovery: (opts = {}, cb) => shared.tryCallback(
+      client.request('/recovery-wallet', opts),
+      cb
+    ),
+
     rescan: (cb) => shared.tryCallback(
       client.request('/rescan-wallet'),
       cb

@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import actions from 'actions'
-import { Main, Config, Login, Loading, Register ,Modal } from './'
+import { Main, Config, Login, Loading, Modal } from './'
 import moment from 'moment'
 import { withI18n } from 'react-i18next'
 
@@ -21,27 +21,28 @@ class Container extends React.Component {
       authOk,
       configKnown,
       configured,
-      location
+      location,
+      accountInit
     } = props
 
     if (!authOk || !configKnown) {
       return
     }
 
-    if (configured) {
-      if (location.pathname === '/' ||
-          location.pathname.indexOf('configuration') >= 0) {
+    if (accountInit || !this.state.noAccountItem) {
+      if (location.pathname === '/'|| location.pathname.indexOf('initialization') >= 0) {
         this.props.showRoot()
       }
     } else {
-      this.props.showConfiguration()
+      this.props.showInitialization()
     }
   }
 
   componentDidMount() {
-    this.props.fetchAccountItem().then(resp => {
+    this.props.fetchKeyItem().then(resp => {
       if (resp.data.length == 0) {
         this.setState({noAccountItem: true})
+        this.redirectRoot(this.props)
       }
     })
     if(this.props.lng === 'zh'){
@@ -60,8 +61,7 @@ class Container extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.authOk != this.props.authOk ||
-        nextProps.configKnown != this.props.configKnown ||
+    if (nextProps.accountInit != this.props.accountInit ||
         nextProps.configured != this.props.configured ||
         nextProps.location.pathname != this.props.location.pathname) {
       this.redirectRoot(nextProps)
@@ -87,7 +87,7 @@ class Container extends React.Component {
     } else if (!this.props.configured) {
       layout = <Config>{this.props.children}</Config>
     } else if (!this.props.accountInit && this.state.noAccountItem){
-      layout = <Register>{this.props.children}</Register>
+      layout = <Config>{this.props.children}</Config>
     } else{
       layout = <Main>{this.props.children}</Main>
     }
@@ -112,13 +112,12 @@ export default connect(
     authOk: !state.core.requireClientToken || state.core.validToken,
     configKnown: true,
     configured: true,
-    onTestnet: state.core.onTestnet,
     accountInit: state.core.accountInit,
   }),
   (dispatch) => ({
     fetchInfo: options => dispatch(actions.core.fetchCoreInfo(options)),
     showRoot: () => dispatch(actions.app.showRoot),
-    showConfiguration: () => dispatch(actions.app.showConfiguration()),
-    fetchAccountItem: () => dispatch(actions.account.fetchItems())
+    showInitialization: () => dispatch(actions.app.showInitialization()),
+    fetchKeyItem: () => dispatch(actions.key.fetchItems())
   })
 )( withI18n() (Container) )

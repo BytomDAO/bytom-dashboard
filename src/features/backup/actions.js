@@ -1,21 +1,32 @@
 import { chainClient } from 'utility/environment'
 
 let actions = {
-  restore: (backupData) => {
-    return (dispatch) => {
-      return chainClient().backUp.restore(backupData)
-        .then(resp => {
-          if (resp.status === 'fail') {
-            dispatch({type: 'ERROR', payload: { 'message': resp.msg}})
-          }else {
-            dispatch({type: 'RESTORE_SUCCESS'})
-          }
-        })
-        .catch(err => {
-          dispatch({type: 'ERROR', payload: err})
-        })
-    }
+  backup:()=>{
+    return chainClient().backUp.backup()
+      .then(resp => {
+        const date = new Date()
+        const dateStr = date.toLocaleDateString().split(' ')[0]
+        const timestamp = date.getTime()
+        const fileName = ['bytom-wallet-backup-', dateStr, timestamp].join('-')
+
+        let element = document.createElement('a')
+        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(resp.data)))
+        element.setAttribute('download', fileName)
+        element.style.display = 'none'
+        document.body.appendChild(element)
+        element.click()
+
+        document.body.removeChild(element)
+      })
+      .catch(err => { throw {_error: err} })
   },
+
+  success: ()=>{
+    return (dispatch) => {
+      dispatch( { type: 'HIDE_MODAL' })
+      dispatch({type: 'RESTORE_SUCCESS'})
+    }
+  }
 
 }
 

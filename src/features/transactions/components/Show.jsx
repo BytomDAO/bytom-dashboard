@@ -13,6 +13,8 @@ import { Summary } from './'
 import { buildTxInputDisplay, buildTxOutputDisplay } from 'utility/buildInOutDisplay'
 import { btmID } from 'utility/environment'
 import moment from 'moment/moment'
+import BigNumber from 'bignumber.js'
+
 
 class Show extends BaseShow {
 
@@ -26,7 +28,7 @@ class Show extends BaseShow {
       const confirmation = this.props.highestBlock - item.blockHeight + 1
       const btmInput = item.inputs.reduce((sum, input) => {
         if (input.type === 'spend' && input.assetId === btmID) {
-          sum += input.amount
+          sum = BigNumber(input.amount).plus(sum)
         }
         return sum
       }, 0)
@@ -35,12 +37,12 @@ class Show extends BaseShow {
 
       const btmOutput = item.outputs.reduce((sum, output) => {
         if ((output.type === 'control' || output.type === 'retire')&& output.assetId === btmID) {
-          sum += output.amount
+          sum = BigNumber(output.amount).plus(sum)
         }
         return sum
       }, 0)
 
-      const gasAmount = btmInput > 0 ? btmInput - btmOutput : 0
+      const gasAmount = btmInput > 0 ? btmInput.minus(btmOutput) : 0
 
       const gas = normalizeGlobalBTMAmount(btmID, gasAmount, btmAmountUnit)
 

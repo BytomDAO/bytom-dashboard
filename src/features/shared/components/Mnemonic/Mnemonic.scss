@@ -1,0 +1,27 @@
+.seed{
+  user-select: none;
+  width: 121px;
+  height: 36px;
+  background-color: #F8F8F8;
+  border: 1px solid $border-color;
+  border-radius: 3px;
+  color: $text-strong-color;
+  margin: 5px 10px 5px 0;
+  padding: 6px 0px;
+  float: left;
+  text-align: center;
+}
+
+.copy{
+  width: 18px;
+  margin-bottom: 3px;
+}
+
+.flexContainer{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.seedArea{
+  margin-bottom : $gutter-size/2;
+}

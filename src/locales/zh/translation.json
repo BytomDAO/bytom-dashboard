@@ -24,7 +24,9 @@
     "page":"页面",
     "close":"关闭",
     "errorCode":"错误代码：",
-    "requestId":"请求ID："
+    "requestId":"请求ID：",
+    "cancel": "返回",
+    "continue":"继续"
   },
   "crumbName":{
     "transaction": "交易",
@@ -303,16 +305,33 @@
     "keyPlaceholder":"请输入密钥别名...",
     "passwordPlaceholder":"请输入密钥密码...",
     "repeatPlaceHolder":"请重复输入密钥密码...",
-    "errorTitle":"初始化错误"
+    "errorTitle":"初始化错误",
+    "mnemonic":"助记词",
+    "mnemonicRequire":"助记词是必须项",
+    "create": "新建钱包",
+    "createDescription":"这个选项将生成默认的挖矿账户和默认密钥。 助记词将会在此生成，您可以选择保留助记词或者跳过。 注意： 助记词只生成一次， 请将密码，助记词妥善保存",
+    "welcome":"欢迎来到__network__"
   },
   "backup":{
     "title":"备份与恢复",
     "backup":"备份",
     "backupDescription":"这个选项备份所有本地数据，包括账户，资产和余额。 请妥善保管你的备份文件。",
-    "restore":"恢复",
-    "restoreDescription":"这个选项将从文件中恢复钱包数据。 如果你的钱包余额显示不正确，请点击扫描钱包的按钮。",
+    "restoreKeystore":"从Keystore文件恢复",
+    "restoreKeystoreDescription":"这个选项将从文件中恢复钱包数据。 如果你的钱包余额显示不正确，请点击扫描钱包的按钮。",
+    "restoreMnemonic":"通过助记词恢复",
+    "restoreMnemonicDescription":"这个选项将通过助记词恢复密钥相关的数据。 如果你的钱包余额显示不正确，请点击扫描钱包的按钮。",
     "download":"下载备份",
-    "selectFile":"选择备份文件"
+    "selectFile":"选择备份文件",
+    "restore":"恢复"
+  },
+  "mnemonic":{
+    "backup":"备份助记词",
+    "backupMessage":"助记词用于恢复密钥相关的信息。 请将它准确的抄写到纸上，并存放在的安全的地方。",
+    "continue":"我已抄写助记词",
+    "skip": "跳过备份",
+    "confirmTitle":"请重复输入钱包助记词",
+    "confirm": "验证助记词",
+    "confirmMessage":"填写缺失的文字以验证你已经抄写下助记词。"
   },
   "notFound":{
     "title":"页面找不到",

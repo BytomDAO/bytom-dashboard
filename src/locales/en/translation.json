@@ -24,7 +24,9 @@
     "page":"Page",
     "close":"Close",
     "errorCode":"Error Code:",
-    "requestId":"Request ID:"
+    "requestId":"Request ID:",
+    "cancel": "Cancel",
+    "continue":"Continue"
   },
   "crumbName":{
     "transaction": "transactions",
@@ -304,16 +306,33 @@
     "keyPlaceholder":"Please enter the key alias...",
     "passwordPlaceholder":"Please enter the key password...",
     "repeatPlaceHolder":"Please repeat the key password...",
-    "errorTitle":"Error in initialization"
+    "errorTitle":"Error in initialization",
+    "mnemonic":"mnemonic",
+    "mnemonicRequire":"Mnemonic is Required",
+    "create": "Create Wallet",
+    "createDescription":"This option will create a default account, key password and give you a option to keep you mnemonic.  Warning: key seed words will display only once, it's important to remember your password.",
+    "welcome":"Welcome to Bytom __network__"
   },
   "backup":{
     "title":"Backup and Restore",
     "backup":"Back Up",
     "backupDescription":"This option will back up all data stored in this core, including blockchain data, accounts, assets and balances.",
-    "restore":"Restore",
-    "restoreDescription":"This option will restore the wallet data form a file. You might need to rescan your wallet, if you balance is not up to date.",
+    "restoreKeystore":"Restore from Keystore File",
+    "restoreKeystoreDescription":"This option will restore the wallet data form a file. You might need to rescan your wallet, if you balance is not up to date.",
+    "restoreMnemonic":"Restore by Mnemonic",
+    "restoreMnemonicDescription":"This option will restore the key related data by mnemonic. You might need to rescan your wallet, if you balance is not up to date.",
     "download":"Download Backup",
-    "selectFile":"Select Restore File"
+    "selectFile":"Select Restore File",
+    "restore":"Restore"
+  },
+  "mnemonic":{
+    "backup":"Backup Seed",
+    "backupMessage":"Mnemonic used to restore the key related information. Please write down the following seed and save it in a secure location.",
+    "continue":"I have written down the seed",
+    "skip": "Skip the backup",
+    "confirmTitle":"Enter your wallet recover phrase",
+    "confirm": "Confirm Seed",
+    "confirmMessage":"Confirm that you backed up your Mnemonic by filling the missing words."
   },
   "notFound":{
     "title":"Not Found",

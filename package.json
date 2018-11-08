@@ -19,6 +19,7 @@
   ],
   "dependencies": {
     "babel-polyfill": "~6.16.0",
+    "bignumber.js": "^7.2.1",
     "bootstrap-sass": "~3.3.7",
     "btoa": "^1.1.2",
     "classnames": "~2.2.5",
