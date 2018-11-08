@@ -2,6 +2,7 @@ import React from 'react'
 import { ErrorBanner, SingletonField} from 'features/shared/components'
 import {reduxForm} from 'redux-form'
 import style from './ConfirmMnemonic.scss'
+import {withNamespaces} from 'react-i18next'
 
 class ConfirmMnemonic extends React.Component {
   constructor(props) {
@@ -54,7 +55,8 @@ class ConfirmMnemonic extends React.Component {
       fields: {words},
       error,
       handleSubmit,
-      submitting
+      submitting,
+      t
     } = this.props
 
     const { seedWords } = this.state
@@ -62,8 +64,8 @@ class ConfirmMnemonic extends React.Component {
 
     return (
       <form  onSubmit={handleSubmit(this.submitWithValidation)}>
-        <h4>Enter your wallet recover phrase</h4>
-        <p>Confirm that you backup your Recovery phrase by filling in the missing words:</p>
+        <h4>{t('mnemonic.confirmTitle')}</h4>
+        <p>{t('mnemonic.confirmMessage')}</p>
         <div className={style.seedArea}>
           {seedWords.map((seedWord) => {
             return ( seedWord.show ?
@@ -83,7 +85,7 @@ class ConfirmMnemonic extends React.Component {
           className={`btn btn-primary ${style.submit}`}
           type='submit'
           disabled={submitting}>
-          submit
+          {t('mnemonic.confirm')}
         </button>
 
       </form>
@@ -107,7 +109,7 @@ const validate = (values, props) => {
   return errors
 }
 
-export default (reduxForm({
+export default  withNamespaces('translations') (reduxForm({
   form: 'MnemonicInit',
   fields: [
     'words[].value',

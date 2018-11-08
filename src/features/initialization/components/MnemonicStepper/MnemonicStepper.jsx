@@ -15,11 +15,13 @@ class MnemonicStepper extends React.Component {
     return (
       <div className={styles.main}>
         <div>
-          <h2 className={styles.title}>{t('init.mnemonic')}</h2>
+          <h2 className={styles.title}>{t('mnemonic.backup')}</h2>
           <div className={styles.formWarpper}>
             <div className={styles.form}>
               <StepList>
-                <Step>
+                <Step
+                  nextL={t('mnemonic.continue')}
+                >
                   <Mnemonic
                     mnemonic={this.props.mnemonic}
                   />
@@ -27,7 +29,7 @@ class MnemonicStepper extends React.Component {
                     className={'btn btn-link'}
                     onClick={() => this.props.succeeded()}
                   >
-                    skip
+                    {t('mnemonic.skip')}
                   </button>
                 </Step>
                 <Step>

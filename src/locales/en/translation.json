@@ -24,7 +24,9 @@
     "page":"Page",
     "close":"Close",
     "errorCode":"Error Code:",
-    "requestId":"Request ID:"
+    "requestId":"Request ID:",
+    "cancel": "Cancel",
+    "continue":"Continue"
   },
   "crumbName":{
     "transaction": "transactions",
@@ -322,6 +324,15 @@
     "download":"Download Backup",
     "selectFile":"Select Restore File",
     "restore":"Restore"
+  },
+  "mnemonic":{
+    "backup":"Backup Seed",
+    "backupMessage":"Mnemonic used to restore the key related information. Please write down the following seed and save it in a secure location.",
+    "continue":"I have written down the seed",
+    "skip": "Skip the backup",
+    "confirmTitle":"Enter your wallet recover phrase",
+    "confirm": "Confirm Seed",
+    "confirmMessage":"Confirm that you backed up your Mnemonic by filling the missing words."
   },
   "notFound":{
     "title":"Not Found",

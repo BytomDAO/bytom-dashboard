@@ -12,9 +12,7 @@
 }
 
 .seedWord{
-  //width: 130px;
-  min-width: 120px;
-  flex: 1 1 15%;
+  width: 121px;
   height: 36px;
   margin: 5px 10px 5px 0;
   text-align: center;
@@ -22,7 +20,6 @@
 
 .seedArea{
   display: flex;
-  //flex-direction: row;
   flex-wrap: wrap;
   margin-bottom: $gutter-size/2;
 }

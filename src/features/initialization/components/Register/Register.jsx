@@ -64,7 +64,7 @@ class Register extends React.Component {
               <Link
                 className='btn btn-link'
                 to='/initialization/'>
-                cancel
+                {t('commonWords.cancel')}
               </Link>
             </form>
           </div>

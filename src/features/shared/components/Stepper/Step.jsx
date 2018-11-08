@@ -1,5 +1,6 @@
 import React from 'react'
 import styles from './stepper.scss'
+import {withNamespaces} from 'react-i18next'
 
 class Step extends React.Component {
 
@@ -10,6 +11,9 @@ class Step extends React.Component {
       displayNext,
       component,
       children,
+      t,
+      nextL,
+      prevL
     } = this.props
 
     if(isActive === false) return null
@@ -18,10 +22,12 @@ class Step extends React.Component {
       <div>
           {component ? React.createElement(component) : children}
           <Next
+            label={nextL || t('commonWords.continue')}
             isActive={displayNext}
             goToNextStep={() => this.props.goToNextStep()}
           />
           <Previous
+            label={prevL || t('commonWords.cancel')}
             isActive={displayPrevious}
             goToPreviousStep={() => this.props.goToPreviousStep()}
           />
@@ -33,14 +39,14 @@ class Step extends React.Component {
 class Next extends React.Component {
 
   render() {
-    const { isActive } = this.props
+    const { isActive, label } = this.props
     if (isActive === false) return null
 
     return (
       <button
         className={`btn btn-primary ${styles.floatLeft}`}
         onClick={() => this.props.goToNextStep()}>
-        Continue
+        {label}
       </button>
     )
   }
@@ -49,17 +55,17 @@ class Next extends React.Component {
 class Previous extends React.Component {
 
   render() {
-    const { isActive } = this.props
+    const { isActive, label } = this.props
     if (isActive === false) return null
 
     return (
       <a
         className={`btn btn-link ${styles.marginLeft}`}
         onClick={() => this.props.goToPreviousStep()}>
-        Cancel
+        {label}
       </a>
     )
   }
 }
 
-export default Step
+export default withNamespaces('translations') (Step)

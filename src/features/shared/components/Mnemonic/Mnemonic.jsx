@@ -1,6 +1,7 @@
 import React from 'react'
 import { copyToClipboard } from 'utility/clipboard'
 import styles from './Mnemonic.scss'
+import {withNamespaces} from 'react-i18next'
 
 class Mnemonic extends React.Component {
   constructor(props) {
@@ -11,11 +12,12 @@ class Mnemonic extends React.Component {
   }
 
   render() {
+    const t = this.props.t
     const {mnemonicArray} = this.state
     return (
      <div>
        <div className={styles.flexContainer}>
-         <h4>Mnemonic</h4>
+         <h4>{t('init.mnemonic')}</h4>
          <button
            className='btn btn-link'
            onClick={() => copyToClipboard(this.props.mnemonic)}
@@ -23,7 +25,7 @@ class Mnemonic extends React.Component {
            <img className={styles.copy} src={require('images/copy.svg')}/>
          </button>
        </div>
-       <p>Write down the following seed and save it in a secure location.</p>
+       <p>{t('mnemonic.backupMessage')}</p>
        <div className={`${styles.flexContainer} ${styles.seedArea}`}>
 
          {
@@ -37,4 +39,4 @@ class Mnemonic extends React.Component {
   }
 }
 
-export default Mnemonic
+export default withNamespaces('translations') (Mnemonic)

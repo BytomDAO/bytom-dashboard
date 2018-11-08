@@ -24,7 +24,9 @@
     "page":"页面",
     "close":"关闭",
     "errorCode":"错误代码：",
-    "requestId":"请求ID："
+    "requestId":"请求ID：",
+    "cancel": "返回",
+    "continue":"继续"
   },
   "crumbName":{
     "transaction": "交易",
@@ -321,6 +323,15 @@
     "download":"下载备份",
     "selectFile":"选择备份文件",
     "restore":"恢复"
+  },
+  "mnemonic":{
+    "backup":"备份助记词",
+    "backupMessage":"助记词用于恢复密钥相关的信息。 请将它准确的抄写到纸上，并存放在的安全的地方。",
+    "continue":"我已抄写助记词",
+    "skip": "跳过备份",
+    "confirmTitle":"请重复输入钱包助记词",
+    "confirm": "验证助记词",
+    "confirmMessage":"填写缺失的文字以验证你已经抄写下助记词。"
   },
   "notFound":{
     "title":"页面找不到",
