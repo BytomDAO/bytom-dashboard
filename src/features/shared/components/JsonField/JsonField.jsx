@@ -52,6 +52,11 @@ class JsonField extends React.Component {
     const editorStyles = [styles.editorWrapper]
     if (showError) { editorStyles.push(styles.editorError) }
 
+    const aceOnBlur = (onBlur) => (event, editor) => {
+      const value = editor.getValue()
+      onBlur(value)
+    }
+
     return (
       <div className='form-group'>
         {this.props.title && <FieldLabel>{this.props.title}</FieldLabel>}
@@ -59,6 +64,7 @@ class JsonField extends React.Component {
           <AceEditor
             {...fieldProps}
             {...displayProps}
+            onBlur={aceOnBlur(fieldProps.onBlur)}
             onLoad={onLoad}
           />
         </div>
