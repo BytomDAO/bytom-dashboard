@@ -1,5 +1,5 @@
 import React from 'react'
-import { BaseUpdate, FormContainer, FormSection, TextField, NotFound } from 'features/shared/components'
+import { BaseUpdate, FormContainer, FormSection, NotFound, TextField } from 'features/shared/components'
 import { reduxForm } from 'redux-form'
 import {withNamespaces} from 'react-i18next'
 
@@ -20,7 +20,7 @@ class Form extends React.Component {
 
   componentDidMount() {
     this.props.fetchItem(this.props.params.id).then(resp => {
-      if (resp.data.length == 0) {
+      if (resp.status == 'fail') {
         this.setState({notFound: true})
       }
     })
@@ -45,21 +45,20 @@ class Form extends React.Component {
     } = this.props
 
     const title = <span>
-      {t('account.editAlias')}
+      {t('key.editAlias')}
       <code>{item.alias ? item.alias :item.id}</code>
     </span>
-
 
     return <FormContainer
       error={error}
       label={title}
       onSubmit={handleSubmit(this.submitWithErrors)}
       submitting={submitting}
-    >
+      >
 
-      <FormSection title={t('account.alias') }>
+      <FormSection title={t('key.alias') }>
         <TextField
-          placeholder={ t('account.aliasPlaceholder')}
+          placeholder={ t('key.aliasPlaceHolder')}
           fieldProps={alias}
           type= 'text'
         />
@@ -69,16 +68,15 @@ class Form extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  item: state.account.items[ownProps.params.id],
+  item: state.key.items[ownProps.params.id],
 })
 
 const initialValues = (state, ownProps) => {
-  const item = state.account.items[ownProps.params.id]
+  const item = state.key.items[ownProps.params.id]
   if (item) {
-    const tags = Object.keys(item.tags || {}).length === 0 ? '{\n\t\n}' : JSON.stringify(item.tags || {}, null, 1)
     return {
       initialValues: {
-        tags: tags
+        alias: item.alias
       }
     }
   }
@@ -86,12 +84,12 @@ const initialValues = (state, ownProps) => {
 }
 
 const updateForm = reduxForm({
-  form: 'updateAccountForm',
-  fields: ['alias']
+  form: 'updateKeyForm',
+  fields: ['alias'],
 }, initialValues)(Form)
 
 export default withNamespaces('translations') (BaseUpdate.connect(
   mapStateToProps,
-  BaseUpdate.mapDispatchToProps('account'),
+  BaseUpdate.mapDispatchToProps('key'),
   updateForm
 ))

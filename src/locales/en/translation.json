@@ -189,7 +189,9 @@
     "passwordRequired":"Password is required",
     "tryPassword":"Try Password",
     "resetPassword":"Reset Password",
-    "tryPPlaceholder":"Please entered the password that you need to check."
+    "tryPPlaceholder":"Please entered the password that you need to check.",
+    "editAlias":"Edit key alias",
+    "alias":"Key Alias"
   },
   "account":{
     "account":"Account",
@@ -209,7 +211,10 @@
       "quorumHint":"Number of keys required for transfer",
       "aliasWarning":"Account alias is required",
       "keyWarning":"Please provide keys"
-    }
+    },
+    "editAlias":"Edit account alias",
+    "alias":"Account Alias",
+    "aliasPlaceholder":"Please entered account alias"
   },
   "transaction":{
     "transaction":"Transaction",

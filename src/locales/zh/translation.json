@@ -189,7 +189,9 @@
     "passwordRequired":"密码是必须项",
     "tryPassword":"密码校验",
     "resetPassword":"重置密码",
-    "tryPPlaceholder":"请输入校验密码"
+    "tryPPlaceholder":"请输入校验密码",
+    "editAlias":"编辑密钥别名",
+    "alias":"密钥别名"
   },
   "account":{
     "account":"账户",
@@ -209,7 +211,10 @@
       "quorumHint":"传输所需的密钥数",
       "aliasWarning":"账户别名是必须项",
       "keyWarning":"请输入或选择密钥"
-    }
+    },
+    "editAlias":"编辑账户别名",
+    "alias":"账户别名",
+    "aliasPlaceholder":"请输入账户别名"
   },
   "transaction":{
     "transaction":"交易",

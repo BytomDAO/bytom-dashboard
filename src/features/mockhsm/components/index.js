@@ -4,6 +4,7 @@ import MnemonicStepper from './MnemonicStepper/MnemonicStepper'
 import Show from './Show'
 import ResetPassword from './ResetPassword/ResetPassword'
 import CheckPassword from './CheckPassword/CheckPassword'
+import KeyUpdate from './KeyUpdate'
 
 export {
   List,
@@ -12,4 +13,5 @@ export {
   Show,
   ResetPassword,
   CheckPassword,
+  KeyUpdate
 }
