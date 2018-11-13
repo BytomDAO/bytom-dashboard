@@ -22,6 +22,8 @@ const mockHsmKeysAPI = (client) => {
 
     resetPassword: (params) =>  client.request('/reset-key-password', params),
 
+    updateAlias: (params) =>  client.request('/update-key-alias', params),
+
     checkPassword:  (params) =>  client.request('/check-key-password', params),
 
     queryAll: (params, processor, cb) => shared.queryAll(client, 'mockHsm.keys', params, processor, cb),
