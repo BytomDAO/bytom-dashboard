@@ -3,7 +3,7 @@ const shared = require('../shared')
 const backUp = (client) => {
   return {
     backup: (cb) => shared.tryCallback(
-      client.request('/backup-wallet'),
+      client.request('/backup-wallet', {}, true),
       cb
     ),
 
