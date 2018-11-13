@@ -53,10 +53,10 @@ class TransactionDetails extends React.Component {
 
         {touched && error && <span className='text-danger'><strong>{error}</strong></span>}
         {this.props.hint && <span className='help-block'>{this.props.hint}</span>}
-          <button className={`btn btn-link ${styles.btn}`}
+          <a className={`btn btn-link ${styles.btn}`}
                   onClick={(e) => this.showDetailTransactions(e, fieldProps.value)}>
             {t('transaction.advance.showDetails')}
-          </button>
+          </a>
       </div>
     )
   }
