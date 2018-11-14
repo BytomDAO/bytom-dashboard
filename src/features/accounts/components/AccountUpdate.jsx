@@ -75,10 +75,9 @@ const mapStateToProps = (state, ownProps) => ({
 const initialValues = (state, ownProps) => {
   const item = state.account.items[ownProps.params.id]
   if (item) {
-    const tags = Object.keys(item.tags || {}).length === 0 ? '{\n\t\n}' : JSON.stringify(item.tags || {}, null, 1)
     return {
       initialValues: {
-        tags: tags
+        alias: item.alias
       }
     }
   }
