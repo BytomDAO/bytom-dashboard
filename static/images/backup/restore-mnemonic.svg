@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 180 180">
+  <defs>
+    <style>
+      .cls-1 {
+        clip-path: url(#clip-restore_Mneminic_words);
+      }
+
+      .cls-2 {
+        fill: #f2f2f2;
+      }
+
+      .cls-2, .cls-3, .cls-5, .cls-6, .cls-7 {
+        fill-rule: evenodd;
+      }
+
+      .cls-3, .cls-8 {
+        fill: #a3a9b8;
+      }
+
+      .cls-4, .cls-6 {
+        fill: #f7f7f7;
+      }
+
+      .cls-5 {
+        fill: #00bda9;
+      }
+
+      .cls-7 {
+        fill: #fff;
+      }
+
+      .cls-9 {
+        fill: none;
+      }
+    </style>
+    <clipPath id="clip-restore_Mneminic_words">
+      <rect width="180" height="180"/>
+    </clipPath>
+  </defs>
+  <g id="restore_Mneminic_words" data-name="restore Mneminic words" class="cls-1">
+    <g id="Group_3090" data-name="Group 3090">
+      <path id="Path_5222" data-name="Path 5222" class="cls-2" d="M76.352-87.606l-72.746,42,72.746,42,72.746-42Z" transform="translate(14.394 177.833)"/>
+      <path id="Path_5223" data-name="Path 5223" class="cls-3" d="M149.1-45.606l-72.746,42-72.746-42,72.746-42Zm-137.493,0L76.352-8.224,141.1-45.606,76.352-82.987Z" transform="translate(14.394 177.833)"/>
+      <path id="Union_134" data-name="Union 134" class="cls-4" d="M-219.359-1572.983-174.3-1599l6.928,4-45.061,26.016Zm-17.32-10L-207.206-1600l6.928,4-29.473,17.016Zm-17.32-10L-236.651-1603l6.928,4-17.348,10.017Z" transform="translate(301.431 1726.203)"/>
+      <path id="Path_5230" data-name="Path 5230" class="cls-5" d="M65.959-129.606l-31.177,18-31.177-18,31.177-18Zm-54.354,0,23.177,13.382,23.177-13.382L34.783-142.987Z" transform="translate(14.394 177.833)"/>
+      <path id="Path_5231" data-name="Path 5231" class="cls-6" d="M34.783-147.606l-31.177,18,31.177,18,31.177-18Z" transform="translate(14.394 177.833)"/>
+      <path id="Path_5235" data-name="Path 5235" class="cls-7" d="M76.337-171.614l-31.177,18,31.177,18,31.177-18Z" transform="translate(14.394 177.833)"/>
+      <path id="Path_5239" data-name="Path 5239" class="cls-7" d="M76.337-123.614l-31.177,18,31.177,18,31.177-18Z" transform="translate(14.394 177.833)"/>
+      <path id="Path_5243" data-name="Path 5243" class="cls-6" d="M117.907-147.614l-31.177,18,31.177,18,31.177-18Z" transform="translate(14.394 177.833)"/>
+      <path id="Union_135" data-name="Union 135" class="cls-8" d="M-212.445-1537l31.177-18,31.177,18-31.177,18Zm8,0,23.177,13.382L-158.091-1537l-23.177-13.38ZM-254-1560.992l31.177-18,31.177,18-31.177,18Zm8,0,23.177,13.381,23.177-13.381-23.177-13.381Zm75.124-.008,31.177-18,31.177,18-31.177,18Zm8,0,23.177,13.38,23.178-13.38-23.178-13.381Zm-49.569-24,31.177-18,31.177,18-31.177,18Zm8,0,23.177,13.381L-158.091-1585l-23.177-13.381Z" transform="translate(272 1609.219)"/>
+      <rect id="Rectangle_3739" data-name="Rectangle 3739" class="cls-9" width="180" height="180"/>
+    </g>
+  </g>
+</svg>

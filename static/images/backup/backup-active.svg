@@ -6,22 +6,26 @@
       }
 
       .cls-2 {
-        fill: #b9f4ee;
-      }
-
-      .cls-2, .cls-3, .cls-4, .cls-5 {
-        fill-rule: evenodd;
+        fill: none;
       }
 
       .cls-3 {
-        fill: #00bfaa;
+        fill: #b9f4ee;
+      }
+
+      .cls-3, .cls-4, .cls-5, .cls-6 {
+        fill-rule: evenodd;
       }
 
       .cls-4 {
-        fill: #d0faf6;
+        fill: #00bfaa;
       }
 
       .cls-5 {
+        fill: #d0faf6;
+      }
+
+      .cls-6 {
         fill: #eafdfb;
       }
     </style>
@@ -30,11 +34,16 @@
     </clipPath>
   </defs>
   <g id="backup-active" class="cls-1">
-    <path id="路径_4790" data-name="路径 4790" class="cls-2" d="M75.6-87.606,3.606-46.041,75.6-4.476l71.993-41.565Z" transform="translate(14.394 177.736)"/>
-    <path id="路径_4791" data-name="路径 4791" class="cls-3" d="M147.591-46.041,75.6-4.476,3.606-46.041,75.6-87.606Zm-136.068,0L75.6-9.047l64.076-36.994L75.6-83.035Z" transform="translate(14.394 177.736)"/>
-    <path id="路径_4792" data-name="路径 4792" class="cls-4" d="M75.6-131.606,3.606-90.041,75.6-48.476l71.993-41.565Z" transform="translate(14.394 178.192)"/>
-    <path id="路径_4793" data-name="路径 4793" class="cls-3" d="M147.591-90.041,75.6-48.476,3.606-90.041,75.6-131.606Zm-136.068,0L75.6-53.047l64.076-36.994L75.6-127.035Z" transform="translate(14.394 178.192)"/>
-    <path id="路径_4794" data-name="路径 4794" class="cls-5" d="M75.6-171.606,3.606-130.041,75.6-88.476l71.993-41.565Z" transform="translate(14.394 178.606)"/>
-    <path id="路径_4795" data-name="路径 4795" class="cls-3" d="M147.591-130.041,75.6-88.476,3.606-130.041,75.6-171.606Zm-136.068,0L75.6-93.047l64.076-36.994L75.6-167.035Z" transform="translate(14.394 178.606)"/>
+    <g id="backup-active-2" data-name="backup-active">
+      <rect id="Rectangle_3739" data-name="Rectangle 3739" class="cls-2" width="180" height="180"/>
+      <g id="Group_2526" data-name="Group 2526">
+        <path id="Path_4790" data-name="Path 4790" class="cls-3" d="M75.6-87.606,3.606-46.041,75.6-4.476l71.993-41.565Z" transform="translate(14.394 177.736)"/>
+        <path id="Path_4791" data-name="Path 4791" class="cls-4" d="M147.591-46.041,75.6-4.476,3.606-46.041,75.6-87.606Zm-136.068,0L75.6-9.047l64.076-36.994L75.6-83.035Z" transform="translate(14.394 177.736)"/>
+        <path id="Path_4792" data-name="Path 4792" class="cls-5" d="M75.6-131.606,3.606-90.041,75.6-48.476l71.993-41.565Z" transform="translate(14.394 178.192)"/>
+        <path id="Path_4793" data-name="Path 4793" class="cls-4" d="M147.591-90.041,75.6-48.476,3.606-90.041,75.6-131.606Zm-136.068,0L75.6-53.047l64.076-36.994L75.6-127.035Z" transform="translate(14.394 178.192)"/>
+        <path id="Path_4794" data-name="Path 4794" class="cls-6" d="M75.6-171.606,3.606-130.041,75.6-88.476l71.993-41.565Z" transform="translate(14.394 178.606)"/>
+        <path id="Path_4795" data-name="Path 4795" class="cls-4" d="M147.591-130.041,75.6-88.476,3.606-130.041,75.6-171.606Zm-136.068,0L75.6-93.047l64.076-36.994L75.6-167.035Z" transform="translate(14.394 178.606)"/>
+      </g>
+    </g>
   </g>
 </svg>

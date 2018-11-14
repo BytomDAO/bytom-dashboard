@@ -57,7 +57,7 @@ class Index extends React.Component {
                      type='radio'
                      name='type'
                      value='restoreKeystore' />
-              <div className={`${styles.choice} ${styles.restore}`}>
+              <div className={`${styles.choice} ${styles.restoreKeystore}`}>
                 <span className={styles.choice_title}>{t('backup.restoreKeystore')}</span>
                 <p>
                   {t('backup.restoreKeystoreDescription')}
@@ -72,7 +72,7 @@ class Index extends React.Component {
                      type='radio'
                      name='type'
                      value='restoreMnemonic' />
-              <div className={`${styles.choice} ${styles.restore}`}>
+              <div className={`${styles.choice} ${styles.restoreMnemonic}`}>
                 <span className={styles.choice_title}>{t('backup.restoreMnemonic')}</span>
                 <p>
                   {t('backup.restoreMnemonicDescription')}

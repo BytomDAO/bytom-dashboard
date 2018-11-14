@@ -97,8 +97,12 @@
   background-image: url('images/backup/backup.svg')
 }
 
-.restore {
-  background-image: url('images/backup/restore.svg')
+.restoreKeystore {
+  background-image: url('images/backup/restore-keystore.svg')
+}
+
+.restoreMnemonic {
+  background-image: url('images/backup/restore-mnemonic.svg')
 }
 
 input[type=radio]:checked ~ .choice {
@@ -114,8 +118,12 @@ input[type=radio]:checked ~ .choice {
     background-image: url('images/backup/backup-active.svg')
   }
 
-  &.restore {
-    background-image: url('images/backup/restore-active.svg')
+  &.restoreKeystore {
+    background-image: url('images/backup/restore-keystore-active.svg')
+  }
+
+  &.restoreMnemonic {
+    background-image: url('images/backup/restore-mnemonic-active.svg')
   }
 
   .choice_title {
