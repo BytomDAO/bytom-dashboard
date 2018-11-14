@@ -567,7 +567,9 @@
     "RESET_PASSWORD_KEY": "Key password has been reset successfully.",
     "CREATE_REGISTER_ACCOUNT": "Default account and key have been initialized successfully.",
     "RESTORE_SUCCESS":"Wallet restore successfully",
-    "UPDATED_ASSET":"Updated asset alias."
+    "UPDATED_ASSET":"Updated asset alias.",
+    "UPDATED_ACCOUNT":"Updated account alias.",
+    "UPDATED_KEY":"Updated key alias."
   },
   "btmError":{
     "BTM000": "Bytom API Error",

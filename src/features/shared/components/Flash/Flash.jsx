@@ -1,17 +1,6 @@
 import React from 'react'
 import styles from './Flash.scss'
 
-const messageLabel =[
-  'CREATED_ASSET',
-  'CREATED_ACCOUNT',
-  'CREATED_TRANSACTION',
-  'CREATED_KEY',
-  'RESET_PASSWORD_KEY',
-  'CREATE_REGISTER_ACCOUNT',
-  'RESTORE_SUCCESS',
-  'UPDATED_ASSET'
-]
-
 class Flash extends React.Component {
   constructor(props) {
     super(props)
@@ -44,7 +33,7 @@ class Flash extends React.Component {
       return null
     }
 
-    const t = this.props.t
+    const {t} = this.props
     const messages = []
     // Flash messages are stored in an objecty key with a random UUID. If
     // multiple messages are displayed, we rely on the browser maintaining
@@ -52,8 +41,8 @@ class Flash extends React.Component {
     // were created.
     Object.keys(this.props.messages).forEach(key => {
       const item = this.props.messages[key]
-      const messageKey = (messageLabel).filter(key => key === item.message)
-      const messageContent =  messageKey.length === 0?  item.message:  <p>{t(`message.${messageKey}`)}</p>
+      const messageContent = t([`message.${item.message}`, item.message])
+
       messages.push(
         <div className={`${styles.alert} ${styles[item.type]} ${styles.main}`} key={key}>
           <div className={styles.content}>

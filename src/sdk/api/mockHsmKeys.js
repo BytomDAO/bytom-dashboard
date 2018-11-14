@@ -22,7 +22,13 @@ const mockHsmKeysAPI = (client) => {
 
     resetPassword: (params) =>  client.request('/reset-key-password', params),
 
-    updateAlias: (params) =>  client.request('/update-key-alias', params),
+    updateAlias: (params, cb) => {
+      const finalParams = {
+        xpub: params.id,
+        new_alias: params.alias
+      }
+      return shared.singletonBatchRequest(client, '/update-key-alias', finalParams, cb)
+    },
 
     checkPassword:  (params) =>  client.request('/check-key-password', params),
 

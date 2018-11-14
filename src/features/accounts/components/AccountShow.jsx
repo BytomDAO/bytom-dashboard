@@ -101,7 +101,7 @@ class AccountShow extends BaseShow {
             ]}
             items={[
               {label: 'ID', value: item.id},
-              {label: t('form.alias'), value: item.alias},
+              {label: t('form.alias'), value: item.alias, editUrl: `/accounts/${item.id}/alias`},
               {label: t('form.xpubs'), value: (item.xpubs || []).length},
               {label: t('form.quorum') , value: item.quorum},
             ]}

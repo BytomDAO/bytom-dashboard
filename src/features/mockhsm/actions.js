@@ -33,29 +33,6 @@ create.submitForm = (data) => function (dispatch) {
     })
 }
 
-update.submitUpdateForm = (data, xpub) => {
-  let promise = Promise.resolve()
-
-  return function(dispatch) {
-    return promise.then(() => clientApi().updateAlias({
-      xpub: xpub,
-      newAlias: data.alias,
-    }).then((resp) => {
-      if (resp.status === 'fail') {
-        throw resp
-      }
-      dispatch(update.updated())
-
-      dispatch(push({
-        pathname: `/${type}s/${xpub}`,
-        state: {
-          preserveFlash: true
-        }
-      }))
-    }))
-  }
-}
-
 const resetPassword = {
   submitResetForm: (params) => {
     let promise = Promise.resolve()

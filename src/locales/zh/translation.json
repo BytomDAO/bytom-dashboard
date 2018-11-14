@@ -548,7 +548,9 @@
     "RESET_PASSWORD_KEY": "密钥密码已经重置成功。",
     "CREATE_REGISTER_ACCOUNT": "默认账户和密钥已经初始化成功。",
     "RESTORE_SUCCESS":"钱包已经成功恢复。",
-    "UPDATED_ASSET":"资产别名更改成功。"
+    "UPDATED_ASSET":"资产别名更改成功。",
+    "UPDATED_ACCOUNT":"账户别名更改成功。",
+    "UPDATED_KEY":"密钥别名更改成功。"
   },
   "btmError":{
     "BTM000": "非比原标准错误",
