@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { RestoreKeystore, RestoreMnemonic, PageContent, PageTitle } from 'features/shared/components'
+import { RestoreKeystore, RestoreMnemonic, PageContent, PageTitle, ErrorBanner} from 'features/shared/components'
 import styles from './Backup.scss'
 import actions from 'actions'
 import {withNamespaces} from 'react-i18next'
@@ -9,11 +9,13 @@ class Backup extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      value: null
+      value: null,
+      error: null
     }
 
     this.mnemonicPopup = this.mnemonicPopup.bind(this)
     this.keystorePopup = this.keystorePopup.bind(this)
+    this.submitWithValidation = this.submitWithValidation.bind(this)
   }
 
   setValue(event) {
@@ -36,12 +38,26 @@ class Backup extends React.Component {
     )
   }
 
-  render() {
-    const {
-      t,
-    } = this.props
+  submitWithValidation() {
+    this.props.backup()
+      .then(()=>{
+        this.setState({
+          error: null
+        })
+      })
+      .catch((err) => {
+        this.setState({
+          error: err
+        })
+      })
+  }
 
-    const newButton = <button className={`btn btn-primary btn-lg ${styles.submit}`} onClick={() => this.props.backup()}>
+  render() {
+    const {t} = this.props
+
+    const {error} = this.state
+
+    const newButton = <button className={`btn btn-primary btn-lg ${styles.submit}`} onClick={() => this.submitWithValidation()}>
       {t('backup.download')}
     </button>
     const restoreKeystoreButton = <button className={`btn btn-primary btn-lg ${styles.submit}`} onClick={this.keystorePopup}>
@@ -109,7 +125,8 @@ class Backup extends React.Component {
               <div>
                 {
                   this.state.value === 'backup'
-                  &&<span className={styles.submitWrapper}>{newButton}</span>
+                  &&[<div className={styles.submitWrapper}>{error && <ErrorBanner error={error} />}</div>,
+                    <span className={styles.submitWrapper}>{newButton}</span>]
                 }
               </div>
 
@@ -128,6 +145,7 @@ class Backup extends React.Component {
                 }
               </div>
             </div>
+
           </div>
 
         </PageContent>
@@ -154,4 +172,4 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)( withNamespaces('translations') (Backup) )
+)(withNamespaces('translations') (Backup))
