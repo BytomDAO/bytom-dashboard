@@ -39,7 +39,7 @@ class Show extends BaseShow {
               <Link key='reset-password-btn' className='btn btn-link' to={`/keys/${item.id}/reset-password`}>{t('key.resetPassword')}</Link>
             ]}
             items={[
-              {label: t('form.alias'), value: item.alias},
+              {label: t('form.alias'), value: item.alias, editUrl: `/keys/${item.id}/alias`},
               {label: t('key.xpub'), value: item.xpub},
             ]}
           />

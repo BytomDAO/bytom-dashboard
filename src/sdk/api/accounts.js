@@ -15,6 +15,14 @@ const accountsAPI = (client) => {
 
     updateTagsBatch: (params, cb) => shared.batchRequest(client, '/update-account-tags', params, cb),
 
+    updateAlias: (params, cb) => {
+      const finalParams = {
+        account_id: params.id,
+        new_alias: params.alias
+      }
+      return shared.singletonBatchRequest(client, '/update-account-alias', finalParams, cb)
+    },
+
     query: (params, cb) => shared.query(client, 'accounts', '/list-accounts', params, {cb}),
 
     queryAll: (params, processor, cb) => shared.queryAll(client, 'accounts', params, processor, cb),

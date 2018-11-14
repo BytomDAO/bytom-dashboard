@@ -1,4 +1,4 @@
-import { baseListActions, baseCreateActions } from 'features/shared/actions'
+import { baseListActions, baseCreateActions, baseUpdateActions } from 'features/shared/actions'
 import { chainClient } from 'utility/environment'
 import {push} from 'react-router-redux'
 
@@ -10,6 +10,11 @@ const list = baseListActions(type, {
   clientApi,
 })
 const create = baseCreateActions(type, {
+  className: 'Key',
+  clientApi,
+})
+
+const update = baseUpdateActions(type, {
   className: 'Key',
   clientApi,
 })
@@ -88,6 +93,7 @@ const createSuccess = ()=> (dispatch) =>{
 export default {
   ...create,
   ...list,
+  ...update,
   ...resetPassword,
   checkPassword,
   createExport,
