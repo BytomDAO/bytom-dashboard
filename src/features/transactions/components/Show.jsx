@@ -113,8 +113,7 @@ class Show extends BaseShow {
               {label: t('form.timestamp'), value:  unconfirmedItem ? '-' : moment.unix(item.timestamp).format()},
               {label: t('form.blockId'), value: unconfirmedItem? '-' : item.blockId},
               {label: t('form.blockHeight'), value: unconfirmedItem?
-                  t('transaction.unconfirmedItem'):
-                  t('transaction.confirmation', {count: item.blockHeight})},
+                  t('transaction.unconfirmedItem'): item.blockHeight },
               {label: t('form.position'), value: unconfirmedItem? '-' :item.position},
               {label: 'Gas', value: gas},
               {label: t('form.txStatus'), value: status}
