@@ -39,7 +39,6 @@ update.submitUpdateForm = (data, xpub) => {
   return function(dispatch) {
     return promise.then(() => clientApi().updateAlias({
       xpub: xpub,
-      password: data.password,
       newAlias: data.alias,
     }).then((resp) => {
       if (resp.status === 'fail') {

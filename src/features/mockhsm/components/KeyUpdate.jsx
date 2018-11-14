@@ -1,5 +1,5 @@
 import React from 'react'
-import { BaseUpdate, FormContainer, FormSection, NotFound, TextField, PasswordField } from 'features/shared/components'
+import { BaseUpdate, FormContainer, FormSection, NotFound, TextField } from 'features/shared/components'
 import { reduxForm } from 'redux-form'
 import {withNamespaces} from 'react-i18next'
 
@@ -37,7 +37,7 @@ class Form extends React.Component {
     }
 
     const {
-      fields: { password, alias },
+      fields: { alias },
       error,
       handleSubmit,
       submitting,
@@ -63,11 +63,6 @@ class Form extends React.Component {
           fieldProps={alias}
           type= 'text'
         />
-        <PasswordField
-          title = {t('key.password')}
-          placeholder={t('key.passwordPlaceholder')}
-          fieldProps={password}
-        />
       </FormSection>
     </FormContainer>
   }
@@ -91,7 +86,7 @@ const initialValues = (state, ownProps) => {
 
 const updateForm = reduxForm({
   form: 'updateKeyForm',
-  fields: ['password','alias'],
+  fields: ['alias'],
 }, initialValues)(Form)
 
 export default withNamespaces('translations') (BaseUpdate.connect(
