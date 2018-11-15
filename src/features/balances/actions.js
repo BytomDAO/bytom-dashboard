@@ -1,5 +1,6 @@
 import { baseListActions } from 'features/shared/actions'
 import { chainClient } from 'utility/environment'
+import {push} from 'react-router-redux'
 
 const updateInfo = (param) => ({type: 'UPDATE_WALLET_INFO', param})
 
@@ -28,6 +29,7 @@ const walletInfo = () => {
         } else {
           if (info.data.bestBlockHeight === info.data.walletHeight) {
             dispatch({type: 'STOP_RESCAN'})
+            dispatch( push('/balances') )
           }else{
             dispatch(updateInfo(info.data))
           }

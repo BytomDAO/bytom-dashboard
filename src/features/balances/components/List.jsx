@@ -10,32 +10,8 @@ const type = 'balance'
 
 class List extends React.Component {
   rescanWallet(){
-    // this.props.rescan()
-
-    // debugger
-    // if (this.props.rescanning) {
-    //   window.setTimeout(this.props.info(), 1000)
-    // }
-
-    // let progressInstance = (<ProgressBar now={now} />)
-    // let now = 0
-    //
-    // this.setStat = () => {
-    //   if (this.props.rescanning) {
-    //     this.props.info()
-    //     now = this.props.rescanProgress.bestBlockHeight? this.props.rescanProgress.walletHeight/ this.props.rescanProgress.bestBlockHeight :0
-    //     setTimeout(this.setStat, 1000)
-    //   }else{
-    //     this.props.info()
-    //     console.log('successfully rescan')
-    //   }
-    // }
-
-    // this.setStat()
-
     this.props.showModal(
       <RescanDialog
-        // now={now}
         closeModal = {this.props.closeModal()}
       />
     )
