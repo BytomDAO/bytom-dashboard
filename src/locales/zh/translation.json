@@ -550,7 +550,8 @@
     "RESTORE_SUCCESS":"钱包已经成功恢复。",
     "UPDATED_ASSET":"资产别名更改成功。",
     "UPDATED_ACCOUNT":"账户别名更改成功。",
-    "UPDATED_KEY":"密钥别名更改成功。"
+    "UPDATED_KEY":"密钥别名更改成功。",
+    "CREATED_TOKEN_WITH_GRANT":"访问令牌创建成功。"
   },
   "btmError":{
     "BTM000": "非比原标准错误",
