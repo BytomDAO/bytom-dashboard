@@ -88,7 +88,7 @@ const restoreMnemonic = (data, success) => {
           throw resp
         }else{
           return chainClient().backUp.recovery({
-            xpub: resp.data.xpub
+            xpubs: [resp.data.xpub]
           })
             .then((resp) => {
               if (resp.status === 'fail') {
