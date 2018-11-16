@@ -63,7 +63,7 @@ class ConfirmMnemonic extends React.Component {
     let counter = 0
 
     return (
-      <form  onSubmit={handleSubmit(this.submitWithValidation)}>
+      <form className={style.container} onSubmit={handleSubmit(this.submitWithValidation)}>
         <h4>{t('mnemonic.confirmTitle')}</h4>
         <p>{t('mnemonic.confirmMessage')}</p>
         <div className={style.seedArea}>

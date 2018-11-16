@@ -15,7 +15,7 @@ class Mnemonic extends React.Component {
     const t = this.props.t
     const {mnemonicArray} = this.state
     return (
-     <div>
+     <div className={styles.container}>
        <div className={styles.flexContainer}>
          <h4>{t('init.mnemonic')}</h4>
          <button

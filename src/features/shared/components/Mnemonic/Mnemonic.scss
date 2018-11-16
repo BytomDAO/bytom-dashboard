@@ -1,6 +1,6 @@
 .seed{
   user-select: none;
-  width: 121px;
+  width: 22%;
   height: 36px;
   background-color: #F8F8F8;
   border: 1px solid $border-color;
@@ -24,4 +24,8 @@
 
 .seedArea{
   margin-bottom : $gutter-size/2;
+}
+
+.container{
+  width: 540px;
 }
