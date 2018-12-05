@@ -24,7 +24,7 @@ const registerKey = (data) => {
 
         dispatch({type: 'INIT_ACCOUNT', data: resp.data.mnemonic})
 
-        chainClient().accounts.create(accountData)
+        return chainClient().accounts.create(accountData)
           .then((resp) => {
             if (resp.status === 'fail') {
               throw resp

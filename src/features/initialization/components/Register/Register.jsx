@@ -16,7 +16,7 @@ class Register extends React.Component {
   submitWithErrors(data) {
     return new Promise((resolve, reject) => {
       this.props.registerKey(data)
-        .catch((err) => reject({_error: err.message}))
+        .catch((err) => reject({_error: err}))
     })
   }
 
