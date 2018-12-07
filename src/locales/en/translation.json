@@ -54,7 +54,8 @@
     "newKey":"Create a key",
     "newToken":"Create an access token",
     "newAsset":"Create an asset",
-    "resetPassword":"Reset password"
+    "resetPassword":"Reset password",
+    "peer":"Peers information"
   },
   "form":{
     "detail": "Details",
@@ -329,6 +330,10 @@
     "download":"Download Backup",
     "selectFile":"Select Restore File",
     "restore":"Restore"
+  },
+  "peers":{
+    "formTitle": ["Remote Address", "Height", "Ping", "Duration", "Total Byte"],
+    "disconnect" : "Disconnect"
   },
   "mnemonic":{
     "backup":"Backup Seed",

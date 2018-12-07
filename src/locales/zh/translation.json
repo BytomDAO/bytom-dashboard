@@ -54,7 +54,8 @@
     "newKey":"新建密钥",
     "newToken":"新建访问令牌",
     "newAsset":"新建资产",
-    "resetPassword":"重置密钥密码"
+    "resetPassword":"重置密钥密码",
+    "peer":"节点信息"
   },
   "form":{
     "detail": "详情",
@@ -328,6 +329,10 @@
     "download":"下载备份",
     "selectFile":"选择备份文件",
     "restore":"恢复"
+  },
+  "peers":{
+    "formTitle": ["远程地址", "高度", "Ping", "时长", "总字节"],
+    "disconnect" : "断开"
   },
   "mnemonic":{
     "backup":"备份助记词",
