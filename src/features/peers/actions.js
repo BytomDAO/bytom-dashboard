@@ -8,13 +8,6 @@ const disconnect = (id) => {
       .then((resp) => {
         if(resp.status == 'fail'){
           dispatch({type: 'ERROR', payload: { 'message': resp.msg}})
-        }else{
-          dispatch(push({
-            pathname: '/peers',
-            state: {
-              preserveFlash: true
-            }
-          }))
         }
       })
       .catch((err) => {
