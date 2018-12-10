@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { ProgressBar, OverlayTrigger, Tooltip } from 'react-bootstrap'
+import { Link } from 'react-router'
 import navStyles from '../Navigation/Navigation.scss'
 import styles from './Sync.scss'
 import {withNamespaces} from 'react-i18next'
@@ -29,7 +30,11 @@ class Sync extends React.Component {
     if (syncing) {
       return <ul className={`${navStyles.navigation} ${styles.main}`}>
         <li key='sync-title' className={navStyles.navigationTitle}>{ networkID } { t('sync.status')}</li>
-        <li key='sync-peer-count' className={(peerCount>0)?styles.blockHightlight: null}>{t('sync.peer')}: {peerCount}</li>
+        <li key='sync-peer-count' className={(peerCount>0)?styles.blockHightlight: null}>
+          <Link to={'/peers'}>
+            {t('sync.peer')}: {peerCount}
+          </Link>
+        </li>
         <li key='sync-status'> <OverlayTrigger placement='top' overlay={tooltip}>
           <div> {t('sync.synchronizing')} {progressInstance} </div>
         </OverlayTrigger></li>
@@ -39,7 +44,11 @@ class Sync extends React.Component {
     const elems = []
 
     elems.push(<li key='sync-title' className={navStyles.navigationTitle}>{ networkID } {t('sync.status') }</li>)
-    elems.push(<li key='sync-peer-count' className={(peerCount>0)?styles.blockHightlight: null}>{t('sync.peer')}: {peerCount}</li>)
+    elems.push(<li key='sync-peer-count' className={(peerCount>0)?styles.blockHightlight: null}>
+        <Link to={'/peers'}>
+         {t('sync.peer')}: {peerCount}
+        </Link>
+      </li>)
 
     if(!syncing && currentBlock == highestBlock){
       elems.push(<li className={styles.blockHightlight} key='sync-done'>

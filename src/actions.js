@@ -13,6 +13,7 @@ import { actions as transaction } from 'features/transactions'
 import { actions as transactionFeed } from 'features/transactionFeeds'
 import { actions as tutorial } from 'features/tutorial'
 import { actions as unspent } from 'features/unspents'
+import { actions as peer } from 'features/peers'
 
 const actions = {
   accessControl,
@@ -30,6 +31,7 @@ const actions = {
   transactionFeed,
   tutorial,
   unspent,
+  peer
 }
 
 export default actions

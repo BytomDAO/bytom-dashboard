@@ -14,6 +14,7 @@ import { reducers as transaction } from 'features/transactions'
 import { reducers as transactionFeed } from 'features/transactionFeeds'
 import { reducers as tutorial } from 'features/tutorial'
 import { reducers as unspent } from 'features/unspents'
+import { reducers as peer } from 'features/peers'
 import { clear as clearStorage } from 'utility/localStorage'
 
 const makeRootReducer = () => (state, action) => {
@@ -55,6 +56,7 @@ const makeRootReducer = () => (state, action) => {
     initialization,
     key: mockhsm,
     routing,
+    peer,
     testnet,
     transaction,
     transactionFeed,

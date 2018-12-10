@@ -12,6 +12,7 @@ const mockHsmKeysAPI = require('./api/mockHsmKeys')
 const transactionsAPI = require('./api/transactions')
 const transactionFeedsAPI = require('./api/transactionFeeds')
 const unspentOutputsAPI = require('./api/unspentOutputs')
+const peersAPI = require('./api/peer')
 
 class Client {
   constructor(opts = {}) {
@@ -47,6 +48,8 @@ class Client {
       keys: mockHsmKeysAPI(this),
       signerConnection: new Connection(`${opts.url}/mockhsm`, opts.accessToken, opts.agent)
     }
+
+    this.peers = peersAPI(this)
 
     this.transactions = transactionsAPI(this)
 

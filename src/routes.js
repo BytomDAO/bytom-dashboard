@@ -12,6 +12,7 @@ import { routes as transactionFeeds } from 'features/transactionFeeds'
 import { routes as unspents } from 'features/unspents'
 import { routes as mockhsm } from 'features/mockhsm'
 import { routes as backup } from 'features/backup'
+import { routes as peers } from 'features/peers'
 
 const makeRoutes = (store) => ({
   path: '/',
@@ -23,6 +24,7 @@ const makeRoutes = (store) => ({
     balances(store),
     configuration,
     core,
+    peers(store),
     initialization,
     transactions(store),
     transactionFeeds(store),
