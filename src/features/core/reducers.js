@@ -47,7 +47,9 @@ export const reset = (state, action) =>
 export const httpOk = (state, action) =>
   buildConfigReducer('isHttpOk', state, false, action)
 export const blockHeight = (state, action) =>
-  coreConfigReducer('blockHeight', state, 0, action)
+  coreConfigReducer('highestBlock', state, 0, action)
+export const currentBlockHeight = (state, action) =>
+  coreConfigReducer('currentBlock', state, 0, action)
 export const generatorBlockHeight = (state, action) => {
   if (action.type == 'UPDATE_CORE_INFO') {
     if (action.param.generatorBlockHeight == 0) return '???'
@@ -265,6 +267,7 @@ export default combineReducers({
   configuredAt,
   coreType,
   coreData,
+  currentBlockHeight,
   generator,
   generatorAccessToken,
   generatorBlockHeight,

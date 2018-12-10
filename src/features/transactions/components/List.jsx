@@ -1,5 +1,5 @@
 import React from 'react'
-import { BaseList, Pagination } from 'features/shared/components'
+import { BaseList } from 'features/shared/components'
 import { pageSize} from 'utility/environment'
 import ListItem from './ListItem/ListItem'
 import actions from 'actions'
@@ -8,9 +8,9 @@ const type = 'transaction'
 
 class List extends React.Component {
   componentWillReceiveProps(nextProps) {
-    if (nextProps.blockHeight != this.props.blockHeight) {
+    if (nextProps.currentBlock != this.props.currentBlock) {
       if (nextProps.currentPage == 1) {
-        this.props.getLatest(nextProps.currentFilter)
+        this.props.getLatest('')
       }
     }
   }
@@ -26,7 +26,7 @@ export default BaseList.connect(
   }),
   (dispatch) => ({
     ...BaseList.mapDispatchToProps(type)(dispatch),
-    getLatest: (query) => dispatch(actions.transaction.fetchPage(query, 1, { refresh: true })),
+    getLatest: (query) => dispatch(actions.transaction.fetchPage(query, 1, { refresh: true, pageSize: pageSize })),
   }),
   List
 )

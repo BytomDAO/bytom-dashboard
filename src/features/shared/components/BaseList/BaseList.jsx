@@ -7,6 +7,7 @@ import componentClassNames from 'utility/componentClassNames'
 import { PageContent, PageTitle, Pagination } from '../'
 import EmptyList from './EmptyList'
 import {withNamespaces} from 'react-i18next'
+import {currentBlockHeight} from '../../../core/reducers'
 
 class ItemList extends React.Component {
   render() {
@@ -87,8 +88,9 @@ export const mapStateToProps = (type, itemComponent, additionalProps = {}) => (s
   const paginationArray =[ 'unspent', 'transaction' ]
 
   let items = Object.assign({}, state[type].items)
-  const highestBlock = state.core.coreData && state.core.coreData.highestBlock
+  const highestBlock = state.core && state.core.highestBlock
   const count = (type === 'unspent')? UTXOpageSize: pageSize
+  const currentBlock = state.core.currentBlockHeight
 
   const currentPage = paginationArray.includes(type) && Math.max(parseInt(ownProps.location.query.page) || 1, 1)
 
@@ -112,6 +114,8 @@ export const mapStateToProps = (type, itemComponent, additionalProps = {}) => (s
     items: target,
     loadedOnce: state[type].queries.loadedOnce,
     type: type,
+
+    currentBlock:currentBlock,
 
     isLastPage: isLastPage,
     currentPage: currentPage,
