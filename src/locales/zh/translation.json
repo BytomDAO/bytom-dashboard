@@ -263,7 +263,11 @@
       "showDetails":"展示交易内容",
       "transactionContent":"交易内容",
       "normalView":"普通展示",
-      "jsonView":"Json格式"
+      "jsonView":"Json格式",
+      "generated":{
+        "title":"生成的交易",
+        "lead":"请将下面的JSON交易发送给其他账户进行签名："
+      }
     }
   },
   "balances":{

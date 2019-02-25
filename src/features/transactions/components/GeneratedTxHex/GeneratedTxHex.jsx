@@ -3,24 +3,26 @@ import { connect } from 'react-redux'
 import { NotFound, PageContent, PageTitle } from 'features/shared/components'
 import styles from './GeneratedTxHex.scss'
 import { copyToClipboard } from 'utility/clipboard'
+import {withNamespaces} from 'react-i18next'
 
 class Generated extends React.Component {
   render() {
-    if (!this.props.hex) return <NotFound />
+    const t = this.props.t
 
+    if (!this.props.hex) return <NotFound />
     return (
       <div>
-        <PageTitle title='Generated Transaction' />
+        <PageTitle title={t('transaction.advance.generated.title')} />
 
         <PageContent>
           <div className={styles.main}>
-            <p>Use the following JSON string as the transaction to sign by another account:</p>
+            <p>{t('transaction.advance.generated.lead')}</p>
 
             <button
               className='btn btn-primary'
               onClick={() => copyToClipboard(this.props.hex)}
             >
-              Copy to clipboard
+              {t('account.copyClipboard')}
             </button>
 
             <pre className={styles.hex}>{this.props.hex}</pre>
@@ -39,4 +41,4 @@ export default connect(
     if (found) return {hex: found.hex}
     return {}
   }
-)(Generated)
+)(withNamespaces('translations') ( Generated) )

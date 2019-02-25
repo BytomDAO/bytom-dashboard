@@ -264,7 +264,11 @@
       "showDetails":"Show transaction details",
       "transactionContent":"Transaction Content",
       "normalView":"Normal View",
-      "jsonView":"Json View"
+      "jsonView":"Json View",
+      "generated":{
+        "title":"Generated Transaction",
+        "lead":"Use the following JSON string as the transaction to sign by another account:"
+      }
     }
   },
   "balances":{
