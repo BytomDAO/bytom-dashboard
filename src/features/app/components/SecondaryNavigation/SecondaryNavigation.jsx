@@ -31,6 +31,13 @@ class SecondaryNavigation extends React.Component {
               { t('crumbName.coreStatus') }
             </Link>
           </li>
+          
+          <li>
+            <Link to='/backup' activeClassName={styles.active}>
+              {navIcon('client', styles)}
+              { t('crumbName.backupRestore') }
+            </Link>
+          </li>
 
           {
             this.props.canViewTokens &&
@@ -49,12 +56,6 @@ class SecondaryNavigation extends React.Component {
             </a>
           </li>}
 
-          <li>
-            <Link to='/backup' activeClassName={styles.active}>
-              {navIcon('client', styles)}
-              { t('crumbName.backupRestore') }
-            </Link>
-          </li>
         </ul>
       </div>
     )
