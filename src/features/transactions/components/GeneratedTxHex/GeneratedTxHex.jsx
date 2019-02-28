@@ -3,24 +3,49 @@ import { connect } from 'react-redux'
 import { NotFound, PageContent, PageTitle } from 'features/shared/components'
 import styles from './GeneratedTxHex.scss'
 import { copyToClipboard } from 'utility/clipboard'
+import {withNamespaces} from 'react-i18next'
+import actions from 'actions'
+import QrCode from './QrCode'
 
 class Generated extends React.Component {
-  render() {
-    if (!this.props.hex) return <NotFound />
+  constructor(props) {
+    super(props)
+    this.showQrCode = this.showQrCode.bind(this)
+  }
 
+  showQrCode(e) {
+    e.preventDefault()
+    this.props.showModal(
+      <QrCode
+        hex={this.props.hex}
+      />
+    )
+  }
+
+  render() {
+    const t = this.props.t
+
+    if (!this.props.hex) return <NotFound />
     return (
       <div>
-        <PageTitle title='Generated Transaction' />
+        <PageTitle title={t('transaction.advance.generated.title')} />
 
         <PageContent>
           <div className={styles.main}>
-            <p>Use the following JSON string as the transaction to sign by another account:</p>
+            <p>{t('transaction.advance.generated.lead')}</p>
 
             <button
               className='btn btn-primary'
               onClick={() => copyToClipboard(this.props.hex)}
             >
-              Copy to clipboard
+              {t('account.copyClipboard')}
+            </button>
+
+            <button
+              className={`btn btn-primary ${styles.mgl}`}
+              onClick={this.showQrCode}
+            >
+              {t('transaction.advance.generated.qrBtnText')}
             </button>
 
             <pre className={styles.hex}>{this.props.hex}</pre>
@@ -31,12 +56,24 @@ class Generated extends React.Component {
   }
 }
 
+
+const mapDispatchToProps = (dispatch) => ({
+  showModal: (body) => dispatch(actions.app.showModal(
+    body,
+    actions.app.hideModal,
+    null,
+    {
+      noCloseBtn: true
+    }
+  ))
+})
+
 export default connect(
-  // mapStateToProps
   (state, ownProps) => {
     const generated = (state.transaction || {}).generated || []
     const found = generated.find(i => i.id == ownProps.params.id)
     if (found) return {hex: found.hex}
     return {}
-  }
-)(Generated)
+  },
+  mapDispatchToProps
+)(withNamespaces('translations') ( Generated) )
