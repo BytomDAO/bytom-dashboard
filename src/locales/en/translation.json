@@ -271,7 +271,9 @@
         "title":"Generated Transaction",
         "lead":"Use the following JSON string as the transaction to sign by another account:",
         "qrBtnText":"Qr Code",
-        "qrModalLabel":"The Json is separated into __size__ different chunk of substring. Please use the phone scanner to scan the Qr code."
+        "signatureQrBtnText":"Signature Qr Code",
+        "qrModalLabel":"The following Qr Code represent the Json String. Please use the phone scanner to scan the Qr code.",
+        "qrModalLabels":"The Json is separated into __size__ different chunk of substring. Please use the phone scanner to scan the Qr code."
       }
     }
   },

@@ -270,7 +270,9 @@
         "title":"生成的交易",
         "lead":"请将下面的JSON交易发送给其他账户进行签名：",
         "qrBtnText":"二维码",
-        "qrModalLabel":"交易Json被分成了__size__个不同的字段， 并转换成二维码。 请用手机扫描二维码并拼接。"
+        "signatureQrBtnText":"Signature二维码",
+        "qrModalLabel":"Json转换成为下面的二维码。 请用手机扫描二维码。",
+        "qrModalLabels":"Json被分成了__size__个不同的字段， 并转换成二维码。 请用手机扫描二维码并拼接。"
       }
     }
   },

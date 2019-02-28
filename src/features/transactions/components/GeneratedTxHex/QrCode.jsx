@@ -70,19 +70,25 @@ class QrCode extends React.Component {
     if (!this.props.hex) return <div></div>
     return (
       <div>
-        <p>{t('transaction.advance.generated.qrModalLabel', {size: arrayLength})}</p>
+        <p>{arrayLength ===1? t('transaction.advance.generated.qrModalLabel'):t('transaction.advance.generated.qrModalLabels', {size: arrayLength})}</p>
         {
           this.state.url &&
             <img className={styles.code} src={this.state.url}/>
         }
-        <ProgressBar className={styles.progressBar} now={now} />
-        <button
-          className='btn btn-primary'
-          onClick={this.next}
-          disabled={this.state.step === arrayLength-1}
-        >
-          {t('commonWords.next')}
-        </button>
+        {
+          arrayLength>1 &&
+            <ProgressBar className={styles.progressBar} now={now} />
+        }
+        {
+          arrayLength>1  &&
+            <button
+            className='btn btn-primary'
+            onClick={this.next}
+            disabled={this.state.step === arrayLength-1}
+          >
+            {t('commonWords.next')}
+          </button>
+        }
         {
           this.state.step > 0 &&
           <button

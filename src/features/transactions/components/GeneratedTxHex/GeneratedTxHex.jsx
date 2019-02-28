@@ -11,6 +11,7 @@ class Generated extends React.Component {
   constructor(props) {
     super(props)
     this.showQrCode = this.showQrCode.bind(this)
+    this.showSignatureQrCode = this.showSignatureQrCode.bind(this)
   }
 
   showQrCode(e) {
@@ -18,6 +19,18 @@ class Generated extends React.Component {
     this.props.showModal(
       <QrCode
         hex={this.props.hex}
+      />
+    )
+  }
+
+  showSignatureQrCode(e) {
+    e.preventDefault()
+    const hex = JSON.parse(this.props.hex)
+    const signatures = hex.signingInstructions.map(obj => obj.witnessComponents[0].signatures)
+    const signingInstructionsSignatures = {signingInstructionsSignatures:signatures}
+    this.props.showModal(
+      <QrCode
+        hex={JSON.stringify(signingInstructionsSignatures)}
       />
     )
   }
@@ -46,6 +59,13 @@ class Generated extends React.Component {
               onClick={this.showQrCode}
             >
               {t('transaction.advance.generated.qrBtnText')}
+            </button>
+
+            <button
+              className={`btn btn-primary ${styles.mgl}`}
+              onClick={this.showSignatureQrCode}
+            >
+              {t('transaction.advance.generated.signatureQrBtnText')}
             </button>
 
             <pre className={styles.hex}>{this.props.hex}</pre>
