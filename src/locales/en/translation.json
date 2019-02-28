@@ -26,7 +26,9 @@
     "errorCode":"Error Code:",
     "requestId":"Request ID:",
     "cancel": "Cancel",
-    "continue":"Continue"
+    "continue":"Continue",
+    "next":"Next",
+    "previous":"Previous"
   },
   "crumbName":{
     "transaction": "transactions",
@@ -267,7 +269,9 @@
       "jsonView":"Json View",
       "generated":{
         "title":"Generated Transaction",
-        "lead":"Use the following JSON string as the transaction to sign by another account:"
+        "lead":"Use the following JSON string as the transaction to sign by another account:",
+        "qrBtnText":"Qr Code",
+        "qrModalLabel":"The Json is separated into __size__ different chunk of substring. Please use the phone scanner to scan the Qr code."
       }
     }
   },

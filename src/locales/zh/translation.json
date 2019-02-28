@@ -26,7 +26,9 @@
     "errorCode":"错误代码：",
     "requestId":"请求ID：",
     "cancel": "返回",
-    "continue":"继续"
+    "continue":"继续",
+    "next":"向后",
+    "previous":"向前"
   },
   "crumbName":{
     "transaction": "交易",
@@ -266,7 +268,9 @@
       "jsonView":"Json格式",
       "generated":{
         "title":"生成的交易",
-        "lead":"请将下面的JSON交易发送给其他账户进行签名："
+        "lead":"请将下面的JSON交易发送给其他账户进行签名：",
+        "qrBtnText":"二维码",
+        "qrModalLabel":"交易Json被分成了__size__个不同的字段， 并转换成二维码。 请用手机扫描二维码并拼接。"
       }
     }
   },

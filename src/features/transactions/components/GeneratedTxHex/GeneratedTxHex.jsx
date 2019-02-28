@@ -4,8 +4,24 @@ import { NotFound, PageContent, PageTitle } from 'features/shared/components'
 import styles from './GeneratedTxHex.scss'
 import { copyToClipboard } from 'utility/clipboard'
 import {withNamespaces} from 'react-i18next'
+import actions from 'actions'
+import QrCode from './QrCode'
 
 class Generated extends React.Component {
+  constructor(props) {
+    super(props)
+    this.showQrCode = this.showQrCode.bind(this)
+  }
+
+  showQrCode(e) {
+    e.preventDefault()
+    this.props.showModal(
+      <QrCode
+        hex={this.props.hex}
+      />
+    )
+  }
+
   render() {
     const t = this.props.t
 
@@ -25,6 +41,13 @@ class Generated extends React.Component {
               {t('account.copyClipboard')}
             </button>
 
+            <button
+              className={`btn btn-primary ${styles.mgl}`}
+              onClick={this.showQrCode}
+            >
+              {t('transaction.advance.generated.qrBtnText')}
+            </button>
+
             <pre className={styles.hex}>{this.props.hex}</pre>
           </div>
         </PageContent>
@@ -33,12 +56,24 @@ class Generated extends React.Component {
   }
 }
 
+
+const mapDispatchToProps = (dispatch) => ({
+  showModal: (body) => dispatch(actions.app.showModal(
+    body,
+    actions.app.hideModal,
+    null,
+    {
+      noCloseBtn: true
+    }
+  ))
+})
+
 export default connect(
-  // mapStateToProps
   (state, ownProps) => {
     const generated = (state.transaction || {}).generated || []
     const found = generated.find(i => i.id == ownProps.params.id)
     if (found) return {hex: found.hex}
     return {}
-  }
+  },
+  mapDispatchToProps
 )(withNamespaces('translations') ( Generated) )
