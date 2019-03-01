@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { NotFound, PageContent, PageTitle } from 'features/shared/components'
+import { NotFound, PageContent, PageTitle, Section } from 'features/shared/components'
 import styles from './GeneratedTxHex.scss'
 import { copyToClipboard } from 'utility/clipboard'
 import {withNamespaces} from 'react-i18next'
@@ -44,32 +44,38 @@ class Generated extends React.Component {
         <PageTitle title={t('transaction.advance.generated.title')} />
 
         <PageContent>
-          <div className={styles.main}>
-            <p>{t('transaction.advance.generated.lead')}</p>
+          <Section
+            title={t('transaction.advance.generated.title')}
+            actions={[
+              <button
+                className='btn btn-link'
+                onClick={this.showQrCode}
+              >
+                {t('transaction.advance.generated.qrBtnText')}
+              </button>,
+              <button
+                className='btn btn-link'
+                onClick={this.showSignatureQrCode}
+              >
+                {t('transaction.advance.generated.signatureQrBtnText')}
+              </button>
 
-            <button
-              className='btn btn-primary'
-              onClick={() => copyToClipboard(this.props.hex)}
-            >
-              {t('account.copyClipboard')}
-            </button>
+            ]}>
+            <div className={styles.main}>
+              <p>{t('transaction.advance.generated.lead')}</p>
 
-            <button
-              className={`btn btn-primary ${styles.mgl}`}
-              onClick={this.showQrCode}
-            >
-              {t('transaction.advance.generated.qrBtnText')}
-            </button>
+              <button
+                className='btn btn-primary'
+                onClick={() => copyToClipboard(this.props.hex)}
+              >
+                {t('account.copyClipboard')}
+              </button>
 
-            <button
-              className={`btn btn-primary ${styles.mgl}`}
-              onClick={this.showSignatureQrCode}
-            >
-              {t('transaction.advance.generated.signatureQrBtnText')}
-            </button>
+              <pre className={styles.hex}>{this.props.hex}</pre>
+            </div>
+          </Section>
 
-            <pre className={styles.hex}>{this.props.hex}</pre>
-          </div>
+
         </PageContent>
       </div>
     )
