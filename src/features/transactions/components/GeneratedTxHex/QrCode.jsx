@@ -6,7 +6,6 @@ import QRCode from 'qrcode'
 import { splitSlice } from 'utility/math'
 
 const opts = {
-  errorCorrectionLevel: 'H',
   width: 340,
 }
 
