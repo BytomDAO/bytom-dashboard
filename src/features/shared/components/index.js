@@ -28,6 +28,7 @@ import PageContent from './PageContent/PageContent'
 import PageTitle from './PageTitle/PageTitle'
 import Pagination from './Pagination/Pagination'
 import PasswordField from './PasswordField/PasswordField'
+import RadioField from './RadioField/RadioField'
 import RawJsonButton from './RawJsonButton'
 import RelativeTime from './RelativeTime'
 import RestoreKeystore from './RestoreKeystore/RestoreKeystore'
@@ -76,6 +77,7 @@ export {
   PageTitle,
   Pagination,
   PasswordField,
+  RadioField,
   RawJsonButton,
   RelativeTime,
   RestoreKeystore,

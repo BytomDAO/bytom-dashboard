@@ -10,10 +10,18 @@
     "information":"Asset Information",
     "quorumHint":"Number of signatures required to issue",
     "aliasError":"Asset alias is required",
+    "aliasLengthError":"The Length of the Asset alias should be less than 30 characters.",
+    "symbolError":"Symbol is required",
+    "symbolCaseError":"Symbol must be in UpperCase.",
+    "symbolPlaceholder":"Symbols must be made up of uppercase letters, 3 or 4 letters is better.",
+    "decimalPlaceholder":"Define the number of decimals the token uses.",
     "keysError":"Please provide keys",
     "editAlias":"Edit asset alias",
     "alias":"Asset Alias",
-    "aliasPlaceholder":"Please entered asset alias"
+    "aliasPlaceholder":"Please entered asset alias",
+    "decimalsError":"Decimals is required.",
+    "decimalsTypeError":"Please enter a number.",
+    "decimalsRangeError":"Please enter a decimals number smaller or equal to 16."
   },
   "commonWords": {
     "version": "Version",
@@ -120,7 +128,12 @@
     "successTitle":"Success",
     "objectField":{
       "aliasPlaceholder":"Start typing __title__ alias..."
-    }
+    },
+    "symbol":"Symbol",
+    "decimals":"Decimals",
+    "reissueTitle":"Token reissuable:",
+    "reissueTrue":"Able to be reissued",
+    "reissueFalse":"Unable to be reissued"
   },
   "xpub":{
     "methodOptions" : {

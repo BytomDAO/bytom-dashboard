@@ -10,10 +10,18 @@
     "information":"资产信息",
     "quorumHint":"所需的签名数",
     "aliasError":"资产别名是必须项",
+    "aliasLengthError":"资产别名的长度应该小于30字符。",
+    "symbolError":"资产代号是必须项",
+    "symbolCaseError":"资产代号必须是大写",
+    "symbolPlaceholder":"资产代号必须是大写, 3或者4个字符最好。",
+    "decimalPlaceholder":"定义资产小数位。",
     "keysError":"请输入或选择密钥",
     "editAlias":"编辑资产别名",
     "alias":"资产别名",
-    "aliasPlaceholder":"请输入资产别名"
+    "aliasPlaceholder":"请输入资产别名",
+    "decimalsError":"精度是必须项",
+    "decimalsTypeError":"请输入数字",
+    "decimalsRangeError":"精度的最大值是16。"
   },
   "commonWords": {
     "version": "版本号",
@@ -120,7 +128,12 @@
     "successTitle":"成功",
     "objectField":{
       "aliasPlaceholder":"输入__title__别名..."
-    }
+    },
+    "symbol":"资产代号",
+    "decimals":"精度",
+    "reissueTitle":"是否可重复发行",
+    "reissueTrue":"可重复发行",
+    "reissueFalse":"不可重复发行"
   },
   "xpub":{
     "methodOptions" : {

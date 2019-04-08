@@ -22,3 +22,7 @@ export const parseNonblankJSON = (json) => {
 
   return JSON.parse(json)
 }
+
+String.prototype.isUpperCase = function() {
+  return this.valueOf().toUpperCase() === this.valueOf();
+}
