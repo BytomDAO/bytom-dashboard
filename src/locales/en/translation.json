@@ -21,7 +21,12 @@
     "aliasPlaceholder":"Please entered asset alias",
     "decimalsError":"Decimals is required.",
     "decimalsTypeError":"Please enter a number.",
-    "decimalsRangeError":"Please enter a decimals number smaller or equal to 16."
+    "decimalsRangeError":"Please enter a decimals number smaller or equal to 16.",
+    "additionInfo":"Additional Info",
+    "additionInfoKey":"Description",
+    "additionInfoValue":"Value",
+    "additionInfoKeyError":"Description is required.",
+    "additionInfoValueError":"Value is required."
   },
   "commonWords": {
     "version": "Version",
@@ -36,7 +41,8 @@
     "cancel": "Cancel",
     "continue":"Continue",
     "next":"Next",
-    "previous":"Previous"
+    "previous":"Previous",
+    "addField":"Add Field"
   },
   "crumbName":{
     "transaction": "transactions",

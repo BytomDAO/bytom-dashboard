@@ -39,6 +39,7 @@ class NewKeyAndSign extends React.Component {
         label= { t('asset.new') }
         onSubmit={handleSubmit}
         submitting={submitting}
+        secondaryAction={prev}
         >
 
         <FormSection title={t('form.keyAndSign')}>
@@ -47,9 +48,6 @@ class NewKeyAndSign extends React.Component {
             quorum={quorum}
             quorumHint={t('asset.quorumHint')} />
         </FormSection>
-        <button type='button' onClick={prev}>
-          <i/> Previous
-        </button>
 
       </FormContainer>
     )

@@ -16,6 +16,10 @@ class Form extends React.Component {
     }
   }
 
+  componentWillUnmount(){
+    this.props.destroyForm()
+  }
+
   submitWithErrors(data) {
     const resultData = {
       alias: data.alias,

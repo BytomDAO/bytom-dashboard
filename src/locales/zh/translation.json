@@ -21,7 +21,12 @@
     "aliasPlaceholder":"请输入资产别名",
     "decimalsError":"精度是必须项",
     "decimalsTypeError":"请输入数字",
-    "decimalsRangeError":"精度的最大值是16。"
+    "decimalsRangeError":"精度的最大值是16。",
+    "additionInfo":"附加信息",
+    "additionInfoKey":"描述",
+    "additionInfoValue":"值",
+    "additionInfoKeyError":"描述是必须项。",
+    "additionInfoValueError":"值是必须项。"
   },
   "commonWords": {
     "version": "版本号",
@@ -36,7 +41,8 @@
     "cancel": "返回",
     "continue":"继续",
     "next":"向后",
-    "previous":"向前"
+    "previous":"向前",
+    "addField":"添加项"
   },
   "crumbName":{
     "transaction": "交易",

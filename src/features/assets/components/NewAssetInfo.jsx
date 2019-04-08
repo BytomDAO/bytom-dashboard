@@ -1,5 +1,5 @@
 import React from 'react'
-import { BaseNew, FormContainer, FormSection, TextField, RadioField } from 'features/shared/components'
+import { FormContainer, FormSection, TextField, RadioField } from 'features/shared/components'
 import { reduxForm } from 'redux-form'
 import {withNamespaces} from 'react-i18next'
 import styles from './New.scss'
@@ -39,7 +39,7 @@ class NewAssetInfo extends React.Component {
         label= { t('asset.new') }
         onSubmit={handleSubmit}
         submitting={submitting}
-        submitLabel={'N'}
+        submitLabel={t('commonWords.next')}
         >
 
         <FormSection title={t('asset.information')}>
@@ -47,20 +47,20 @@ class NewAssetInfo extends React.Component {
           <TextField title={t('form.symbol')} placeholder={t('asset.symbolPlaceholder')} fieldProps={symbol} />
           <TextField title={t('form.decimals')} placeholder={t('asset.decimalPlaceholder')} fieldProps={decimals} />
           <RadioField title={t('form.reissueTitle')} options={options} fieldProps={reissue} />
-          <label >adition info</label>
+          <label >{t('asset.additionInfo')}</label>
 
           <div className={styles.panel}>
             {description.map((descript, index) =>
               <div className={styles.subjectField}>
-                <TextField title={'key'} fieldProps={descript.key}/>
-                <TextField title={'value'} fieldProps={descript.value}/>
+                <TextField title={t('asset.additionInfoKey')} fieldProps={descript.key}/>
+                <TextField title={t('asset.additionInfoValue')} fieldProps={descript.value}/>
                 <button
                   className='btn btn-danger btn-xs'
                   tabIndex='-1'
                   type='button'
                   onClick={() => this.removeReceiverItem(index)}
                 >
-                  Remove
+                  {t('commonWords.remove')}
                 </button>
 
               </div>
@@ -70,7 +70,7 @@ class NewAssetInfo extends React.Component {
               className='btn btn-default'
               onClick={this.addReceiverItem}
             >
-              Add Field
+              {t('commonWords.addField')}
             </button>
           </div>
         </FormSection>
@@ -105,10 +105,10 @@ const validate = (values, props) => {
 
   values.description.forEach((descr, index) => {
     if (!values.description[index].value) {
-      errors.description[index] = {...errors.description[index], value: t('asset.keysError')}
+      errors.description[index] = {...errors.description[index], value: t('asset.additionInfoValueError')}
     }
     if (!values.description[index].key) {
-      errors.description[index] = {...errors.description[index], key: t('asset.keysError')}
+      errors.description[index] = {...errors.description[index], key: t('asset.additionInfoKeyError')}
     }
   })
 
