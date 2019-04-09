@@ -37,9 +37,12 @@ class AssetShow extends BaseShow {
             items={[
               {label: 'ID', value: item.id},
               {label: t('form.alias'), value: item.alias, editUrl: item.alias === 'BTM' ? null : `/assets/${item.id}/alias`},
-              {label: t('form.definition'), value: item.definition},
+              {label: t('form.symbol'), value: item.definition.symbol},
+              {label: t('form.decimals'), value: item.definition.decimals},
+              {label: t('form.reissueTitle'), value: item.definition.reissue === undefined?'-':item.definition.reissue.toString()},
               {label: t('form.xpubs'), value: (item.xpubs || []).length},
               {label: t('form.quorum'), value: item.quorum},
+              {label: t('asset.additionInfo'), value: item.definition.description},
             ]}
           />
 
