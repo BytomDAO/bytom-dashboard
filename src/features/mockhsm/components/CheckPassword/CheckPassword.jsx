@@ -6,11 +6,11 @@ import {NotFound, FormContainer, FormSection, PasswordField} from 'features/shar
 class CheckPassword extends Component {
   constructor(props) {
     super(props)
-    this.submitWithErrors = this.submitWithErrors.bind(this)
+    this.submitWithValidations = this.submitWithValidations.bind(this)
     this.state = {}
   }
 
-  submitWithErrors(data, xpub) {
+  submitWithValidations(data, xpub) {
     return new Promise((resolve, reject) => {
       const arg = {
         'xpub': xpub,
@@ -62,7 +62,7 @@ class CheckPassword extends Component {
         error={error}
         success={success}
         label={title}
-        onSubmit={handleSubmit(value => this.submitWithErrors(value, item.xpub))}
+        onSubmit={handleSubmit(value => this.submitWithValidations(value, item.xpub))}
         submitLabel= {t('key.tryPassword')}>
 
         <FormSection>

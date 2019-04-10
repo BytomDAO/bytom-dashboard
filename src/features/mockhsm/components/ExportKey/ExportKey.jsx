@@ -6,10 +6,10 @@ import styles from './ExportKey.scss'
 class ExportKey extends Component {
   constructor(props) {
     super(props)
-    this.submitWithErrors = this.submitWithErrors.bind(this)
+    this.submitWithValidations = this.submitWithValidations.bind(this)
   }
 
-  submitWithErrors(data, item) {
+  submitWithValidations(data, item) {
     return new Promise((resolve, reject) => {
       const arg = {
         'xpub': item.xpub,
@@ -32,7 +32,7 @@ class ExportKey extends Component {
     return (
       <div className={styles.main}>
         <form
-          onSubmit={handleSubmit(value => this.submitWithErrors(value, item))}
+          onSubmit={handleSubmit(value => this.submitWithValidations(value, item))}
         >
           <TextField
             title = { lang === 'zh' ? '密码' : 'Password' }

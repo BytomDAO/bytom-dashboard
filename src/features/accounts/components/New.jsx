@@ -7,10 +7,10 @@ class Form extends React.Component {
   constructor(props) {
     super(props)
 
-    this.submitWithErrors = this.submitWithErrors.bind(this)
+    this.submitWithValidations = this.submitWithValidations.bind(this)
   }
 
-  submitWithErrors(data) {
+  submitWithValidations(data) {
     return new Promise((resolve, reject) => {
       this.props.submitForm(data)
         .catch((err) => reject({_error: err}))
@@ -30,7 +30,7 @@ class Form extends React.Component {
       <FormContainer
         error={error}
         label={ t('account.new.newAccount') }
-        onSubmit={handleSubmit(this.submitWithErrors)}
+        onSubmit={handleSubmit(this.submitWithValidations)}
         submitting={submitting}
       >
 

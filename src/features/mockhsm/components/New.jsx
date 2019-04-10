@@ -7,14 +7,14 @@ class New extends React.Component {
   constructor(props) {
     super(props)
 
-    this.submitWithErrors = this.submitWithErrors.bind(this)
+    this.submitWithValidations = this.submitWithValidations.bind(this)
     this.state = {
       checked: false,
       key: null
     }
   }
 
-  submitWithErrors(data) {
+  submitWithValidations(data) {
     return new Promise((resolve, reject) => {
       this.props.submitForm(Object.assign({}, data, {
         xprv: this.state.key,
@@ -36,7 +36,7 @@ class New extends React.Component {
       <FormContainer
         error={error}
         label={ t('key.new')}
-        onSubmit={handleSubmit(this.submitWithErrors)}
+        onSubmit={handleSubmit(this.submitWithValidations)}
         submitting={submitting}
       >
 

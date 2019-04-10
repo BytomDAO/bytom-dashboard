@@ -9,10 +9,10 @@ import style from './RestoreMnemonic.scss'
 class RestoreMnemonic extends React.Component {
   constructor(props) {
     super(props)
-    this.submitWithErrors = this.submitWithErrors.bind(this)
+    this.submitWithValidations = this.submitWithValidations.bind(this)
   }
 
-  submitWithErrors(data) {
+  submitWithValidations(data) {
     return new Promise((resolve, reject) => {
       this.props.restoreMnemonic(data, this.props.success)
         .catch((err) => reject({_error: err}))
@@ -34,7 +34,7 @@ class RestoreMnemonic extends React.Component {
         <div>
           <h4>{t('init.restoreWallet')}</h4>
           <div>
-            <form onSubmit={handleSubmit(this.submitWithErrors)}>
+            <form onSubmit={handleSubmit(this.submitWithValidations)}>
 
               <TextareaField
                 title={t('init.mnemonic')}

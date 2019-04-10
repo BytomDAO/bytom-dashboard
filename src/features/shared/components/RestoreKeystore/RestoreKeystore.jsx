@@ -9,10 +9,10 @@ import style from './RestoreKeystore.scss'
 class RestoreKeystore extends React.Component {
   constructor(props) {
     super(props)
-    this.submitWithErrors = this.submitWithErrors.bind(this)
+    this.submitWithValidations = this.submitWithValidations.bind(this)
   }
 
-  submitWithErrors(data) {
+  submitWithValidations(data) {
     return new Promise((resolve, reject) => {
       this.props.restoreKeystore(data, this.props.success)
         .catch((err) => reject({_error: err}))
@@ -35,7 +35,7 @@ class RestoreKeystore extends React.Component {
         <div>
           <h4 >{t('init.restoreWallet')}</h4>
           <div>
-            <form onSubmit={handleSubmit(this.submitWithErrors)}>
+            <form onSubmit={handleSubmit(this.submitWithValidations)}>
               <p>{t('init.restoreLabel')}</p>
 
               <FileField
