@@ -29,9 +29,6 @@ class AssetShow extends BaseShow {
             object='asset'
             title={t('form.detail')}
             actions={[
-              // <button key='show-circulation' className='btn btn-link' onClick={this.props.showCirculation.bind(this, item)}>
-              //  Circulation
-              // </button>,
               <RawJsonButton key='raw-json' item={item} />
             ]}
             items={[
@@ -39,7 +36,7 @@ class AssetShow extends BaseShow {
               {label: t('form.alias'), value: item.alias, editUrl: item.alias === 'BTM' ? null : `/assets/${item.id}/alias`},
               {label: t('form.symbol'), value: item.definition.symbol},
               {label: t('form.decimals'), value: item.definition.decimals},
-              {label: t('form.reissueTitle'), value: item.definition.reissue === undefined?'-':item.definition.reissue.toString()},
+              {label: t('form.reissueTitle'), value:  (item.alias === 'BTM' || item.limitHeight > 0)? 'false': 'true'},
               {label: t('form.xpubs'), value: (item.xpubs || []).length},
               {label: t('form.quorum'), value: item.quorum},
               {label: t('asset.additionInfo'), value: item.definition.description},

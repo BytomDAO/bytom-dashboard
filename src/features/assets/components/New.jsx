@@ -8,7 +8,7 @@ import { destroy } from 'redux-form';
 class Form extends React.Component {
   constructor(props) {
     super(props)
-    this.submitWithErrors = this.submitWithErrors.bind(this)
+    this.submitWithValidations = this.submitWithValidations.bind(this)
     this.nextPage = this.nextPage.bind(this)
     this.previousPage = this.previousPage.bind(this)
     this.state = {
@@ -20,15 +20,15 @@ class Form extends React.Component {
     this.props.destroyForm()
   }
 
-  submitWithErrors(data) {
+  submitWithValidations(data) {
     const resultData = {
       alias: data.alias,
       quorum: data.quorum,
       xpubs: data.xpubs,
+      limit_height: data.reissue === 'true'? 0 : this.props.blockHeight+3,
       definition:{
         name: data.alias,
         symbol: data.symbol,
-        reissue: data.reissue === 'true',
         decimals: data.decimals,
         description: data.description
       }
@@ -56,7 +56,7 @@ class Form extends React.Component {
     return (
       <div>
         {page === 1 && <NewAssetInfo onSubmit={this.nextPage}/>}
-        {page === 2 && <NewKeyAndSign previousPage={this.previousPage} onSubmit={this.submitWithErrors}/>}
+        {page === 2 && <NewKeyAndSign previousPage={this.previousPage} onSubmit={this.submitWithValidations}/>}
       </div>
     )
   }
@@ -67,8 +67,13 @@ const mapDispatchToProps = ( dispatch ) => ({
   destroyForm: () => dispatch(destroy('newAssetForm')),
 })
 
+const mapStateToProps = ( state ) => ({
+  ...BaseNew.mapStateToProps('asset'),
+  blockHeight: state.core.blockHeight
+})
+
 export default withNamespaces('translations') ( BaseNew.connect(
-  BaseNew.mapStateToProps('asset'),
+  mapStateToProps,
   mapDispatchToProps,
   Form
 ))

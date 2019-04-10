@@ -1,12 +1,16 @@
 .subjectField {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
 
   :global {
     .form-group {
       flex: 1;
       margin-right: $gutter-size/2;
     }
+  }
+
+  button{
+    margin-top: 35px;
   }
 }
 
