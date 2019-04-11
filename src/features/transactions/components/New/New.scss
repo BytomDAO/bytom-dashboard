@@ -95,7 +95,7 @@
 
 .mainBox {
   border: 1px solid $border-color;
-  padding: 20px 30px 10px;
+  padding: $gutter-size;
   margin-bottom: $gutter-size;
 }
 
@@ -121,6 +121,22 @@
   >div:last-of-type{
     width: 50%;
     margin-left: $gutter-size;
+  }
+}
+
+.subjectField {
+  display: flex;
+  align-items: flex-start;
+
+  :global {
+    .form-group {
+      flex: 1;
+      margin-right: $gutter-size;
+    }
+  }
+
+  .deleteButton{
+    margin-top: 35px;
   }
 }
 

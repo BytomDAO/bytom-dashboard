@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 import { routerReducer as routing} from 'react-router-redux'
-import { reducer as form } from 'redux-form'
+import form from 'features/form/reducers'
 import accessControl from 'features/accessControl/reducers'
 import { reducers as account } from 'features/accounts'
 import { reducers as app } from 'features/app'

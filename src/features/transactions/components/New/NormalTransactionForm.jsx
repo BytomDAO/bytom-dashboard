@@ -203,7 +203,7 @@ class NormalTxForm extends React.Component {
             <div className={styles.mainBox}>
             {receivers.map((receiver, index) =>
               <div
-                className={this.props.tutorialVisible? styles.tutorialItem: styles.item}
+                className={this.props.tutorialVisible? styles.tutorialItem: styles.subjectField}
                 key={receiver.id.value}>
                 <TextField title={t('form.address')} fieldProps={{
                   ...receiver.address,
@@ -220,13 +220,29 @@ class NormalTxForm extends React.Component {
                 <AmountUnitField title={t('form.amount')} fieldProps={receiver.amount}/>
                 }
 
-                {index===0 ?
-                  <a href='#' className={styles.receiverBtn} onClick={this.addReceiverItem}>+</a> :
-                  <a href='#' className={`${styles.receiverBtn} text-danger`} onClick={()=> this.removeReceiverItem(index)}>-</a>
-                }
+                <button
+                  className={`btn btn-danger btn-xs ${styles.deleteButton}`}
+                  tabIndex='-1'
+                  type='button'
+                  onClick={() => this.removeReceiverItem(index)}
+                >
+                  {t('commonWords.remove')}
+                </button>
+
+                {/*{index===0 ?*/}
+                  {/*<a href='#' className={styles.receiverBtn} onClick={this.addReceiverItem}>+</a> :*/}
+                  {/*<a href='#' className={`${styles.receiverBtn} text-danger`} onClick={()=> this.removeReceiverItem(index)}>-</a>*/}
+                {/*}*/}
 
               </div>
             )}
+              <button
+                type='button'
+                className='btn btn-default'
+                onClick={this.addReceiverItem}
+              >
+                {t('commonWords.addField')}
+              </button>
             </div>
 
             <label className={styles.title}>{t('transaction.normal.selectFee')}</label>

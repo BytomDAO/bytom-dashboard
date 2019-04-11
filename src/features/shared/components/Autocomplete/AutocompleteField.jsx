@@ -97,6 +97,7 @@ class AutocompleteField extends React.Component {
           ...fieldProps,
           value: fieldProps.value,
           placeholder: this.props.placeholder,
+          disabled: this.props.disabled,
           onChange: (event, { newValue }) => fieldProps.onChange(newValue),
           onKeyDown: (event) => this.keyCheck(event)}}
       />

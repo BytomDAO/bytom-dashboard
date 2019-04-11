@@ -137,7 +137,7 @@
     },
     "symbol":"Symbol",
     "decimals":"Decimals",
-    "reissueTitle":"Token reissuable:",
+    "reissueTitle":"Token reissuable",
     "reissueTrue":"Able to be reissued",
     "reissueFalse":"Unable to be reissued"
   },

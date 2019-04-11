@@ -34,6 +34,14 @@ class ObjectSelectorField extends React.Component {
     this.closeDropdown()
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.selected !== prevProps.selected) {
+      this.setState({
+        selected: this.props.selected
+      })
+    }
+  }
+
   render() {
     const idOnChange = (event) => {
       this.props.fieldProps.id.onChange(event.target.value)
@@ -72,12 +80,14 @@ class ObjectSelectorField extends React.Component {
           {this.state.selected == ID_SELECTED &&
             <input className='form-control'
               type={this.state.type}
+              disabled={this.props.disabled}
               placeholder={`${this.props.title} ID`}
               {...idProps} />}
 
           {this.state.selected == ALIAS_SELECTED &&
             <this.props.aliasField
               className={styles.aliasFieldGroupItem}
+              disabled={this.props.disabled}
               placeholder={  t('form.objectField.aliasPlaceholder' , {title: this.props.title.toLowerCase()}) }
               fieldProps={aliasProps} />}
 

@@ -7,16 +7,15 @@ import componentClassNames from 'utility/componentClassNames'
 import Tutorial from 'features/tutorial/components/Tutorial'
 import NormalTxForm from './NormalTransactionForm'
 import AdvancedTxForm from './AdvancedTransactionForm'
+import IssueAssets from './IssueAssets'
 import { withRouter } from 'react-router'
 import {getValues} from 'redux-form'
 import {withNamespaces} from 'react-i18next'
+import { replace } from 'react-router-redux'
 
 class Form extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      showAdvanceTx: false
-    }
     this.handleFormEmpty = this.handleFormEmpty.bind(this)
   }
 
@@ -45,7 +44,7 @@ class Form extends React.Component {
   }
 
   handleFormEmpty() {
-    if(!this.state.showAdvanceTx){
+    if(this.props.normalSelected){
       const array = [
         'accountAlias',
         'accountId',
@@ -60,21 +59,21 @@ class Form extends React.Component {
       }
 
       return !(this.props.normalform['receivers'].length > 1)
-    }else{
+    }else if(this.props.advancedSelected){
       return !(this.props.advform['actions'].length > 0 ||
       this.props.advform['signTransaction'] ||
       this.props.advform['password'])
+    }else if(this.props.issueAssetSelected){
+      return true
     }
   }
 
   showForm(e, type){
     e.preventDefault()
-    const showAdTx = (type === 'advanced')
-    if ( this.state.showAdvanceTx === showAdTx ||
-      ( !this.handleFormEmpty() && !window.confirm(this.props.t('transaction.new.unsaveWarning')) )){
+    if (( !this.handleFormEmpty() && !window.confirm(this.props.t('transaction.new.unsaveWarning')) )){
       return
     }
-    this.setState({ showAdvanceTx: showAdTx })
+    this.props.createForm(type)
   }
 
   render() {
@@ -90,19 +89,24 @@ class Form extends React.Component {
             <div className={styles.btnGroup} >
               <div className={'btn-group'} role='group'>
                 <button
-                  className={`btn btn-default ${this.state.showAdvanceTx ? null : 'active'}`}
+                  className={`btn btn-default ${this.props.normalSelected && 'active'}`}
                   onClick={(e) => this.showForm(e, 'normal')}>
                   {t('transaction.new.normal')}
                   </button>
                 <button
-                  className={`btn btn-default ${this.state.showAdvanceTx ? 'active' : null}`}
+                  className={`btn btn-default ${this.props.advancedSelected && 'active'}`}
                   onClick={(e) => this.showForm(e, 'advanced')}>
                   {t('transaction.new.advanced')}
+                  </button>
+                <button
+                  className={`btn btn-default ${this.props.issueAssetSelected && 'active'}`}
+                  onClick={(e) => this.showForm(e, 'issueAsset')}>
+                  issue
                   </button>
               </div>
             </div>
 
-              {!this.state.showAdvanceTx &&
+              {this.props.normalSelected &&
               <NormalTxForm
                 btmAmountUnit={this.props.btmAmountUnit}
                 asset={this.props.asset}
@@ -111,8 +115,15 @@ class Form extends React.Component {
                 tutorialVisible={this.props.tutorialVisible}
               /> }
 
-              {this.state.showAdvanceTx &&
+              {this.props.advancedSelected &&
               <AdvancedTxForm
+                btmAmountUnit={this.props.btmAmountUnit}
+                asset={this.props.asset}
+                handleKeyDown={this.handleKeyDown}
+              />}
+
+              {this.props.issueAssetSelected &&
+              <IssueAssets
                 btmAmountUnit={this.props.btmAmountUnit}
                 asset={this.props.asset}
                 handleKeyDown={this.handleKeyDown}
@@ -120,14 +131,14 @@ class Form extends React.Component {
           </div>
 
 
-          <Tutorial types={['TutorialForm']} advTx={this.state.showAdvanceTx}/>
+          <Tutorial types={['TutorialForm']} advTx={this.props.advancedSelected}/>
         </div>
       </div>
     )
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
   let balances = []
   for (let key in state.balance.items) {
     balances.push(state.balance.items[key])
@@ -141,7 +152,10 @@ const mapStateToProps = (state) => {
     asset: Object.keys(state.asset.items).map(k => state.asset.items[k]),
     normalform: getValues(state.form.NormalTransactionForm),
     advform: getValues(state.form.AdvancedTransactionForm),
-    tutorialVisible: !state.tutorial.location.isVisited
+    tutorialVisible: !state.tutorial.location.isVisited,
+    normalSelected : ownProps.location.query.type == 'normal' || ownProps.location.query.type == undefined,
+    advancedSelected : ownProps.location.query.type == 'advanced',
+    issueAssetSelected : ownProps.location.query.type == 'issueAsset',
   }
 }
 
@@ -150,6 +164,7 @@ const mapDispatchToProps = (dispatch) => ({
   fetchBalanceAll: (cb) => dispatch(actions.balance.fetchAll(cb)),
   didLoadAssetAutocomplete: () => dispatch(actions.asset.didLoadAutocomplete),
   fetchAssetAll: (cb) => dispatch(actions.asset.fetchAll(cb)),
+  createForm: (type) => dispatch(replace(`/transactions/create?type=${type}`)),
 })
 
 export default connect(

@@ -86,6 +86,7 @@ class AmountInputMask extends React.Component {
             autoFocus={!!this.props.autoFocus}
             onBlur={this.handleBlur}
             onChange={this.handleChange}
+            disabled={this.props.disabled}
           />
         {touched && error && <span className='text-danger'><strong>{error}</strong></span>}
         {this.props.hint && <span className='help-block'>{this.props.hint}</span>}
