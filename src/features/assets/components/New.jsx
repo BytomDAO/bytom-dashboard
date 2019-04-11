@@ -30,6 +30,8 @@ class Form extends React.Component {
         name: data.alias,
         symbol: data.symbol,
         decimals: data.decimals,
+        quorum: data.quorum,
+        reissue: data.reissue,
         description: data.description
       }
     }
