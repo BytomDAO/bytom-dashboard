@@ -124,9 +124,8 @@ class Form extends React.Component {
 
               {this.props.issueAssetSelected &&
               <IssueAssets
-                btmAmountUnit={this.props.btmAmountUnit}
-                asset={this.props.asset}
                 handleKeyDown={this.handleKeyDown}
+                {...this.props}
               />}
           </div>
 

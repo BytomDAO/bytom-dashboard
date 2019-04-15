@@ -223,6 +223,7 @@ const decode = (data) => {
         }
       })
       .catch(err => {
+        dispatch({type: 'DECODE_TRANSACTION', data:[]})
         throw {_error: err}
       })
   }

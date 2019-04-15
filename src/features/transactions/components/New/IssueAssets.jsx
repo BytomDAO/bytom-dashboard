@@ -2,12 +2,10 @@ import {
   BaseNew,
   FormSection,
   Autocomplete,
-  SubmitIndicator,
   ObjectSelectorField,
-  ErrorBanner,
   TextField,
-  AmountInputMask,
   AmountUnitField,
+  AmountField,
   PasswordField,
   RadioField,
   KeyValueTable,
@@ -15,10 +13,10 @@ import {
 import { Connection } from 'sdk'
 import {chainClient} from 'utility/environment'
 import { addZeroToDecimalPosition } from 'utility/buildInOutDisplay'
+import  TxContainer  from './NewTransactionsContainer/TxContainer'
 import {reduxForm} from 'redux-form'
 import React from 'react'
 import styles from './New.scss'
-import disableAutocomplete from 'utility/disableAutocomplete'
 import actions from 'actions'
 import { btmID } from 'utility/environment'
 import { getAssetDecimal} from '../../transactions'
@@ -29,17 +27,13 @@ class IssueAssets extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      counter: 1
+      counter: 1,
     }
 
     this.submitWithValidation = this.submitWithValidation.bind(this)
-    // this.disableSubmit = this.disableSubmit.bind(this)
     this.addReceiverItem = this.addReceiverItem.bind(this)
+    this.removeReceiverItem = this.removeReceiverItem.bind(this)
   }
-
-  // disableSubmit(actions) {
-  //   return actions.length == 0 && !this.state.showAdvanced
-  // }
 
   submitWithValidation(data) {
     return new Promise((resolve, reject) => {
@@ -49,10 +43,6 @@ class IssueAssets extends React.Component {
 
           if (err.data) {
             response.actions = []
-
-            // err.data.forEach((error) => {
-            //   response.actions[error.data.actionIndex] = {type: error}
-            // })
           }
 
           response['_error'] = err
@@ -83,6 +73,48 @@ class IssueAssets extends React.Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.decodedTx.length !== 0 && nextProps.decodedTx !== this.props.decodedTx && nextProps.fields.submitAction.value === 'sign'){
+      const transaction = nextProps.decodedTx
+
+      const inputs = transaction.inputs
+      const outputs = transaction.outputs
+
+      const issueAction = inputs.filter(input => input.type === 'issue')[0]
+      const issueAssetId = issueAction.assetId
+
+      const issueReceivers = outputs.filter(output => output.assetId == issueAssetId)
+
+      const diffLength = issueReceivers.length - this.props.fields.receivers.length
+
+      if(diffLength > 0 ){
+        const counter = this.state.counter
+        for (let i = 0; i < diffLength; i++) {
+          this.props.fields.receivers.addField({
+            id: counter+i
+          })
+        }
+        this.setState({
+          counter: counter+diffLength,
+        })
+      }else if(diffLength < 0){
+        for (let i = 0; i < -diffLength; i++) {
+          this.removeReceiverItem(i)
+        }
+      }
+    }
+
+    else if( nextProps.fields.submitAction.value === 'submit' && this.props.fields.submitAction.value === 'sign'){
+      const length = nextProps.fields.receivers.length
+      if(length>1){
+        for (let i = 0; i < (length-1) ; i++) {
+          nextProps.fields.receivers.removeField(i)
+        }
+      }
+    }
+
+  }
+
   render() {
     const {
       fields: {assetAlias, assetId, receivers, password, submitAction, signTransaction, accountId, accountAlias, gas},
@@ -93,39 +125,40 @@ class IssueAssets extends React.Component {
     const t = this.props.t
 
     let submitLabel = t('transaction.new.submit')
-    // const hasBaseTransaction = ((signTransaction.value || '').trim()).length > 0
-    // if (submitAction.value == 'generate' && !hasBaseTransaction) {
-    //   submitLabel = t('transaction.advance.generateJson')
-    // }
+    if (submitAction.value == 'sign') {
+      submitLabel = 'sign tx'
+    }
 
     const options = [
       {label: t('transaction.advance.submitToBlockchain') , value: 'submit'},
       {label: 'sign raw transaction', value: 'sign'}
     ]
+
     const showBtmAmountUnit = (assetAlias.value === 'BTM' || assetId.value === btmID)
     const assetDecimal = getAssetDecimal(this.props.fields, this.props.asset) || 0
 
     const asset = this.props.asset.filter(a => (a.id === assetId.value || a.alias === assetAlias.value))[0]
 
     let assetItem
-    if(submitAction.value === 'sign' && this.props.decodedTx.length != 0 && signTransaction.value){
+
+    if (submitAction.value === 'sign' && this.props.decodedTx.length !== 0 && signTransaction.value && signTransaction.valid) {
       const transaction = this.props.decodedTx
 
       const inputs = transaction.inputs
       const outputs = transaction.outputs
 
-      const issueAction = inputs.filter(input => input.type=='issue')[0]
+      const issueAction = inputs.filter(input => input.type === 'issue')[0]
       const issueAssetId = issueAction.assetId
       assetId.value = issueAssetId
 
-      gas.value = transaction.fee/Math.pow(10, 8) + ' BTM'
+      gas.value = transaction.fee / Math.pow(10, 8) + ' BTM'
 
-      accountAlias.value = inputs.filter(input => input.type=='spend')[0].address
+      accountAlias.value = inputs.filter(input => input.type === 'spend')[0].address
 
       const assetDefinition = issueAction.assetDefinition
 
       assetItem = <KeyValueTable
-        title={'definition'}
+        title={'Definition'}
         id={issueAssetId}
         object='asset'
         items={[
@@ -142,11 +175,13 @@ class IssueAssets extends React.Component {
       const issueReceivers = outputs.filter(output => output.assetId == issueAssetId)
 
       receivers.map((receiver, index) =>{
-        receiver.address.value = issueReceivers[index].address
-        receiver.amount.value = addZeroToDecimalPosition((issueReceivers[index].amount/Math.pow(10, assetDefinition.decimals)), Number(assetDefinition.decimals))
+        if(issueReceivers[index]){
+          receiver.address.value = issueReceivers[index].address
+          receiver.amount.value = addZeroToDecimalPosition((issueReceivers[index].amount/Math.pow(10, assetDefinition.decimals)), Number(assetDefinition.decimals))
+        }
       })
 
-    }else if(asset){
+    } else if (asset) {
       assetItem = <KeyValueTable
         title={'definition'}
         id={asset.id}
@@ -156,7 +191,7 @@ class IssueAssets extends React.Component {
           {label: t('form.alias'), value: asset.alias},
           {label: t('form.symbol'), value: asset.definition.symbol},
           {label: t('form.decimals'), value: asset.definition.decimals},
-          {label: t('form.reissueTitle'), value: (asset.alias === 'BTM' || asset.limitHeight > 0)? 'false': 'true'},
+          {label: t('form.reissueTitle'), value: (asset.alias === 'BTM' || asset.limitHeight > 0) ? 'false' : 'true'},
           {label: t('form.xpubs'), value: (asset.xpubs || []).length},
           {label: t('form.quorum'), value: asset.quorum},
           {label: t('asset.additionInfo'), value: asset.definition.description},
@@ -165,29 +200,50 @@ class IssueAssets extends React.Component {
     }
 
     return (
-      <form
+      <TxContainer
+        error={error}
+        onSubmit={handleSubmit(this.submitWithValidation)}
+        submitting={submitting}
+        submitLabel= {submitLabel}
         className={styles.container}
-        onSubmit={handleSubmit(this.submitWithValidation)} {...disableAutocomplete}
       >
 
         <FormSection  title= { 'Issue asset'}>
-        {/*<FormSection>*/}
-          <div>
-            {/*<label>definition</label>*/}
-             {assetItem}
-            <ObjectSelectorField
-              key='asset-selector-field'
-              keyIndex='normaltx-asset'
-              title={ t('form.asset')}
-              aliasField={Autocomplete.AssetAlias}
-              disabled = {submitAction.value === 'sign'}
-              selected = {submitAction.value === 'sign'? 'ID':'Alias'}
-              fieldProps={{
-                id: assetId,
-                alias: assetAlias
-              }}
-            />
+          {assetItem}
+          <label className={styles.title}>Input</label>
+          <div className={`${styles.mainBox} ${this.props.tutorialVisible? styles.tutorialItem: styles.item}`}>
+            {
+              submitAction.value === 'sign'?
+                <TextField title={'Account address'}
+                           disabled = {true}
+                           fieldProps={accountAlias}/>
+                :
+                <ObjectSelectorField
+                  key='account-selector-field'
+                  keyIndex='normaltx-account'
+                  title={t('form.account')}
+                  aliasField={Autocomplete.AccountAlias}
+                  fieldProps={{
+                    id: accountId,
+                    alias: accountAlias
+                  }}
+                />
+            }
+
+            {
+              submitAction.value === 'submit' && <ObjectSelectorField
+                key='asset-selector-field'
+                keyIndex='normaltx-asset'
+                title={ t('form.asset')}
+                aliasField={Autocomplete.AssetAlias}
+                fieldProps={{
+                  id: assetId,
+                  alias: assetAlias
+                }}
+              />
+            }
           </div>
+          <label className={styles.title}>Output</label>
           <div className={styles.mainBox}>
             {receivers.map((receiver, index) =>
               <div
@@ -209,19 +265,12 @@ class IssueAssets extends React.Component {
                       disabled = {true}
                       fieldProps={receiver.amount}
                     />:
-                    <div>
-                      {
-                        showBtmAmountUnit ?
-                          <AmountUnitField title={t('form.amount')}
-                          fieldProps={receiver.amount}
-                          />
-                          :
-                          <AmountInputMask title={t('form.amount')}
-                                           fieldProps={receiver.amount}
-                                           decimal={assetDecimal}
-                          />
-                      }
-                    </div>
+                    <AmountField
+                      isBTM={showBtmAmountUnit}
+                      title={t('form.amount')}
+                      fieldProps={receiver.amount}
+                      decimal={assetDecimal}
+                    />
                 }
 
                 <button
@@ -249,34 +298,33 @@ class IssueAssets extends React.Component {
 
             {
               submitAction.value === 'sign'?
-                <div className={styles.item}>
-                    <TextField title={t('form.address')}
-                           disabled = {true}
-                           fieldProps={accountAlias}/>
                   <TextField title={'gas'}
                            disabled = {true}
                            fieldProps={gas}/>
-                </div>
+                // </div>
                 :
-                <div className={styles.item}>
-                  <ObjectSelectorField
-                    key='account-selector-field'
-                    keyIndex='normaltx-account'
-                    title={t('form.account')}
-                    aliasField={Autocomplete.AccountAlias}
-                    fieldProps={{
-                      id: accountId,
-                      alias: accountAlias
-                    }}
-                  />
+                // <div className={styles.item}>
+                //   <ObjectSelectorField
+                //     key='account-selector-field'
+                //     keyIndex='normaltx-account'
+                //     title={t('form.account')}
+                //     aliasField={Autocomplete.AccountAlias}
+                //     fieldProps={{
+                //       id: accountId,
+                //       alias: accountAlias
+                //     }}
+                //   />
                 <AmountUnitField title={'gas'} fieldProps={gas}/>
-              </div>
+              // </div>
             }
 
         </FormSection>
 
         <FormSection  title= { 'transaction'}>
-          <RadioField title={t('transaction.advance.buildType')} options={options} fieldProps={submitAction} />
+          <RadioField title={t('transaction.advance.buildType')} options={options} fieldProps={{
+            ...submitAction,
+            // onChange: submitactionOnChange,
+          }} />
           {
             submitAction.value === 'sign' &&
             <TextField
@@ -299,24 +347,8 @@ class IssueAssets extends React.Component {
             fieldProps={password}
           />
         </FormSection>
+      </TxContainer>
 
-        <FormSection >
-          {error &&
-          <ErrorBanner
-            title={t('form.errorTitle')}
-            error={error} />}
-
-          <div className={styles.submit}>
-            <button type='submit' className='btn btn-primary' disabled={submitting || this.disableSubmit(actions)}>
-              {submitLabel ||  t('form.submit')}
-            </button>
-
-            { submitting &&
-            <SubmitIndicator />
-            }
-          </div>
-        </FormSection>
-      </form>
     )
   }
 }
@@ -375,7 +407,16 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state, ownProps) => ({
   ...BaseNew.mapStateToProps('transaction')(state, ownProps),
-  decodedTx: state.transaction.decodedTx
+  decodedTx: state.transaction.decodedTx,
+  initialValues:{
+    assetAlias: ownProps.location.query.alias,
+    submitAction: 'submit',
+    receivers:[{
+      id: 0,
+      amount:'',
+      address:''
+    }]
+  }
 })
 
 export default withNamespaces('translations') (BaseNew.connect(
@@ -400,14 +441,6 @@ export default withNamespaces('translations') (BaseNew.connect(
     asyncBlurFields: ['receivers[].address'],
     validate,
     touchOnChange: true,
-    initialValues: {
-      submitAction: 'submit',
-      receivers:[{
-        id: 0,
-        amount:'',
-        address:''
-      }]
-    },
   }
   )(IssueAssets)
 ))

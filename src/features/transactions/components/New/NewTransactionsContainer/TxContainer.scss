@@ -1,0 +1,17 @@
+.main {
+  background: $background-color;
+  display: flex;
+  flex-direction: row;
+  padding: 0 $gutter-size;
+  margin-top: $title-height;
+}
+
+.content {
+  min-width: 400px;
+  width: 55%;
+  margin: 0 auto;
+}
+
+.submit {
+  text-align: right;
+}

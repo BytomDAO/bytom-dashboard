@@ -1,5 +1,5 @@
 import React from 'react'
-import { ErrorBanner, HiddenField, Autocomplete, JsonField, TextField, ObjectSelectorField, AmountUnitField, AmountInputMask } from 'features/shared/components'
+import { ErrorBanner, HiddenField, Autocomplete, JsonField, TextField, ObjectSelectorField,AmountField } from 'features/shared/components'
 import styles from './FormActionItem.scss'
 import { btmID } from 'utility/environment'
 import {withNamespaces} from 'react-i18next'
@@ -122,11 +122,13 @@ class ActionItem extends React.Component {
             }}
           />}
 
-        {visible.amount && !btmAmounUnitVisible &&
-          <AmountInputMask title={ t('form.amount') } fieldProps={amount} decimal={decimal} />}
-
-        {visible.amount && btmAmounUnitVisible &&
-          <AmountUnitField title={ t('form.amount') } fieldProps={amount} />}
+        {visible.amount &&
+          <AmountField
+            isBTM={btmAmounUnitVisible}
+            title={t('form.amount')}
+            fieldProps={amount}
+            decimal={decimal}
+          />}
 
         {visible.password && false &&
           <TextField title={t('key.password')} placeholder={t('key.password')} fieldProps={password} autoFocus={false} type={'password'} />

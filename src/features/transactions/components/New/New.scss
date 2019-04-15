@@ -114,13 +114,13 @@
   display: flex;
   position: relative;
 
-  >div:first-of-type{
-    width: 50%;
-  }
-
-  >div:last-of-type{
-    width: 50%;
-    margin-left: $gutter-size;
+  :global {
+    .form-group {
+      flex: 1;
+      &:not(:last-child) {
+        margin-right: $gutter-size;
+      }
+    }
   }
 }
 

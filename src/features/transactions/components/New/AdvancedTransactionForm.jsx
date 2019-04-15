@@ -12,6 +12,7 @@ import {reduxForm} from 'redux-form'
 import ActionItem from './FormActionItem'
 import React from 'react'
 import styles from './New.scss'
+import  TxContainer  from './NewTransactionsContainer/TxContainer'
 import disableAutocomplete from 'utility/disableAutocomplete'
 import actions from 'actions'
 import { getAssetDecimal} from '../../transactions'
@@ -99,12 +100,14 @@ class AdvancedTxForm extends React.Component {
     }
 
     return (
-      <form
+      <TxContainer
+        error={error}
+        onSubmit={handleSubmit(this.submitWithValidation)}
+        submitting={submitting}
+        submitLabel= {submitLabel}
+        disabled={this.disableSubmit(actions)}
         className={`${styles.content} ${styles.center}`}
-        onSubmit={handleSubmit(this.submitWithValidation)} {...disableAutocomplete}
-            // onKeyDown={(e) => { this.props.handleKeyDown(e, handleSubmit(this.submitWithValidation), this.disableSubmit(actions)) }}
       >
-
         <FormSection title='Actions'>
           {actions.map((action, index) =>
             <ActionItem
@@ -196,24 +199,7 @@ class AdvancedTxForm extends React.Component {
               fieldProps={password}
             />
           </FormSection>}
-
-          <FormSection className={styles.submitSection}>
-            {error &&
-            <ErrorBanner
-              title={t('form.errorTitle')}
-              error={error} />}
-
-            <div className={styles.submit}>
-              <button type='submit' className='btn btn-primary' disabled={submitting || this.disableSubmit(actions)}>
-                {submitLabel ||  t('form.submit')}
-              </button>
-
-              { submitting &&
-              <SubmitIndicator />
-              }
-            </div>
-          </FormSection>
-        </form>
+        </TxContainer>
     )
   }
 }

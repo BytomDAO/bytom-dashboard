@@ -1,19 +1,16 @@
 import {
   BaseNew,
-  FormSection,
   TextField,
   Autocomplete,
   ObjectSelectorField,
-  AmountUnitField,
-  AmountInputMask,
-  ErrorBanner,
+  AmountField,
   GasField
 } from 'features/shared/components'
 import {chainClient} from 'utility/environment'
 import {reduxForm} from 'redux-form'
 import React from 'react'
 import styles from './New.scss'
-import disableAutocomplete from 'utility/disableAutocomplete'
+import  TxContainer  from './NewTransactionsContainer/TxContainer'
 import { btmID } from 'utility/environment'
 import actions from 'actions'
 import ConfirmModal from './ConfirmModal/ConfirmModal'
@@ -164,11 +161,14 @@ class NormalTxForm extends React.Component {
     const showBtmAmountUnit = (assetAlias.value === 'BTM' || assetId.value === btmID)
 
     return (
-        <form
-          className={styles.container}
-          onSubmit={e => this.confirmedTransaction(e, assetDecimal)}
-          {...disableAutocomplete}
-        >
+          <TxContainer
+            error={error}
+            onSubmit={e => this.confirmedTransaction(e, assetDecimal)}
+            submitting={submitting}
+            submitLabel= {submitLabel}
+            disabled={this.disableSubmit()}
+            className={styles.container}
+          >
           <div className={styles.borderBottom}>
             <label className={styles.title}>{t('transaction.normal.from')}</label>
             <div className={`${styles.mainBox} ${this.props.tutorialVisible? styles.tutorialItem: styles.item}`}>
@@ -213,12 +213,12 @@ class NormalTxForm extends React.Component {
                   },
                 }}/>
 
-                {!showBtmAmountUnit &&
-                <AmountInputMask title={t('form.amount')} fieldProps={receiver.amount} decimal={assetDecimal}
-                />}
-                {showBtmAmountUnit &&
-                <AmountUnitField title={t('form.amount')} fieldProps={receiver.amount}/>
-                }
+                <AmountField
+                  isBTM={showBtmAmountUnit}
+                  title={t('form.amount')}
+                  fieldProps={receiver.amount}
+                  decimal={assetDecimal}
+                />
 
                 <button
                   className={`btn btn-danger btn-xs ${styles.deleteButton}`}
@@ -255,21 +255,7 @@ class NormalTxForm extends React.Component {
               <span className={styles.feeDescription}> {t('transaction.normal.feeDescription')}</span>
             </div>
           </div>
-
-          <FormSection className={styles.submitSection}>
-            {error && error.message !== 'PasswordWrong' &&
-            <ErrorBanner
-              title={t('form.errorTitle')}
-              error={error} />}
-
-            <div className={styles.submit}>
-              <button type='submit' className='btn btn-primary'
-                      disabled={submitting || this.disableSubmit()}>
-                {submitLabel}
-              </button>
-            </div>
-          </FormSection>
-        </form>
+        </TxContainer>
     )
   }
 }
