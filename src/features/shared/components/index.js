@@ -1,3 +1,4 @@
+import AmountField from './AmountField/AmountField'
 import AmountUnitField from './AmountUnitField/AmountUnitField'
 import AmountInputMask from './AmountInputMask/AmountInputMask'
 import CheckboxField from './CheckboxField/CheckboxField'
@@ -47,6 +48,7 @@ import TextareaField from './TextareaField'
 import XpubField from './XpubField/XpubField'
 
 export {
+  AmountField,
   AmountUnitField,
   AmountInputMask,
   CheckboxField,

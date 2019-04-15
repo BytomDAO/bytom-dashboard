@@ -6,7 +6,9 @@ import {
   KeyValueTable,
   RawJsonButton,
 } from 'features/shared/components'
+import { Link } from 'react-router'
 import componentClassNames from 'utility/componentClassNames'
+import { btmID } from 'utility/environment'
 import { withNamespaces } from 'react-i18next'
 
 class AssetShow extends BaseShow {
@@ -21,7 +23,12 @@ class AssetShow extends BaseShow {
       </span>
 
       view = <div className={componentClassNames(this)}>
-        <PageTitle title={title} />
+        <PageTitle
+          title={title}
+          actions={[
+            item.id!==btmID && <Link key='create-asset-btn' className='btn btn-link' to={`/transactions/create?type=issueAsset&alias=${item.alias}`}> Issue Asset transaction</Link>,
+          ]}
+        />
 
         <PageContent>
           <KeyValueTable

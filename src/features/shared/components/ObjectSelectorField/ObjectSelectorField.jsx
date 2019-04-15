@@ -13,7 +13,7 @@ class ObjectSelectorField extends React.Component {
 
     this.state = {
       showDropdown: false,
-      selected: ALIAS_SELECTED
+      selected: props.selected || ALIAS_SELECTED
     }
 
     this.select = this.select.bind(this)
