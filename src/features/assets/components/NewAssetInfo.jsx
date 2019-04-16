@@ -1,8 +1,10 @@
 import React from 'react'
-import { FormContainer, FormSection, TextField, RadioField } from 'features/shared/components'
+import { FormContainer, FormSection, TextField, RadioField, SelectField } from 'features/shared/components'
 import { reduxForm } from 'redux-form'
 import {withNamespaces} from 'react-i18next'
 import styles from './New.scss'
+
+const rangeOptions = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16].map(val => ({label: val, value: val}))
 
 class NewAssetInfo extends React.Component {
   constructor(props) {
@@ -45,7 +47,11 @@ class NewAssetInfo extends React.Component {
         <FormSection title={t('asset.information')}>
           <TextField title={t('form.alias')} placeholder={t('asset.aliasLengthError')} fieldProps={alias} autoFocus={true} />
           <TextField title={t('form.symbol')} placeholder={t('asset.symbolPlaceholder')} fieldProps={symbol} />
-          <TextField title={t('form.decimals')} placeholder={t('asset.decimalPlaceholder')} fieldProps={decimals} />
+          <SelectField options={rangeOptions}
+                       title={t('form.decimals')}
+                       hint={t('asset.decimalPlaceholder')}
+                       skipEmpty={true}
+                       fieldProps={decimals} />
           <RadioField title={t('form.reissueTitle')} options={options} fieldProps={reissue} />
           <label >{t('asset.additionInfo')}</label>
 

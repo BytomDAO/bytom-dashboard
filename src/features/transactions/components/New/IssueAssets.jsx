@@ -4,7 +4,6 @@ import {
   Autocomplete,
   ObjectSelectorField,
   TextField,
-  AmountUnitField,
   AmountField,
   PasswordField,
   RadioField,
@@ -180,9 +179,10 @@ class IssueAssets extends React.Component {
 
     let submitLabel = t('transaction.new.submit')
     if (submitAction.value == 'sign') {
-      submitLabel = 'sign tx'
+      submitLabel = t('transaction.issue.signTx')
     }
 
+    let gas
     const options = [
       {label: t('transaction.advance.submitToBlockchain') , value: 'submit'},
       {label: t('transaction.issue.signRaw'), value: 'sign'}
@@ -205,7 +205,7 @@ class IssueAssets extends React.Component {
       const issueAssetId = issueAction.assetId
       assetId.value = issueAssetId
 
-      gasLevel.value = transaction.fee / Math.pow(10, 8) + ' BTM'
+      gas = transaction.fee / Math.pow(10, 8) + ' BTM'
 
       accountAlias.value = inputs.filter(input => input.type === 'spend')[0].address
 
@@ -265,36 +265,35 @@ class IssueAssets extends React.Component {
         <FormSection  title={t('transaction.issue.issueAsset')}>
           {assetItem}
           <label className={styles.title}>{t('form.input')}</label>
-          <div className={`${styles.mainBox} ${this.props.tutorialVisible? styles.tutorialItem: styles.item}`}>
+          <div className={styles.mainBox}>
             {
               submitAction.value === 'sign'?
                 <TextField title={t('transaction.issue.accountAddress')}
                            disabled = {true}
                            fieldProps={accountAlias}/>
                 :
-                <ObjectSelectorField
-                  key='account-selector-field'
-                  keyIndex='normaltx-account'
-                  title={t('form.account')}
-                  aliasField={Autocomplete.AccountAlias}
-                  fieldProps={{
-                    id: accountId,
-                    alias: accountAlias
-                  }}
-                />
-            }
-
-            {
-              submitAction.value === 'submit' && <ObjectSelectorField
-                key='asset-selector-field'
-                keyIndex='normaltx-asset'
-                title={ t('form.asset')}
-                aliasField={Autocomplete.AssetAlias}
-                fieldProps={{
-                  id: assetId,
-                  alias: assetAlias
-                }}
-              />
+                [
+                  <ObjectSelectorField
+                    key='asset-selector-field'
+                    keyIndex='normaltx-asset'
+                    title={ t('transaction.issue.issueAsset')}
+                    aliasField={Autocomplete.AssetAlias}
+                    fieldProps={{
+                      id: assetId,
+                      alias: assetAlias
+                    }}
+                  />,
+                  <ObjectSelectorField
+                    key='account-selector-field'
+                    keyIndex='normaltx-account'
+                    title={t('transaction.issue.gasAccount')}
+                    aliasField={Autocomplete.AccountAlias}
+                    fieldProps={{
+                      id: accountId,
+                      alias: accountAlias
+                    }}
+                  />
+                ]
             }
           </div>
           <label className={styles.title}>{t('form.output')}</label>
@@ -352,7 +351,7 @@ class IssueAssets extends React.Component {
 
             {
               submitAction.value === 'sign'?
-                <TextField disable={true} fieldProps={gasLevel}/>
+                gas || ''
                 :
                 <div className={styles.txFeeBox}>
                   <GasField
@@ -453,6 +452,7 @@ const mapStateToProps = (state, ownProps) => ({
   decodedTx: state.transaction.decodedTx,
   initialValues:{
     assetAlias: ownProps.location.query.alias,
+    assetId:'',
     submitAction: 'submit',
     gasLevel: '1',
     receivers:[{

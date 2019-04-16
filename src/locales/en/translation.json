@@ -299,7 +299,9 @@
       "issueAsset":"Issue Asset",
       "transactionType":"Transaction Type",
       "signRaw":"Sign Raw Transaction",
-      "accountAddress":"Account Address"
+      "accountAddress":"Gas Paid Account Address",
+      "gasAccount":"Gas Paid Account",
+      "signTx":"Sign Transaction"
     }
   },
   "balances":{

@@ -40,8 +40,8 @@
     "requestId":"请求ID：",
     "cancel": "返回",
     "continue":"继续",
-    "next":"向后",
-    "previous":"向前",
+    "next":"下一页",
+    "previous":"上一页",
     "addField":"添加项"
   },
   "crumbName":{
@@ -298,7 +298,9 @@
       "issueAsset":"发布资产",
       "transactionType":"交易类型",
       "signRaw":"签名交易Json",
-      "accountAddress":"账户地址"
+      "accountAddress":"Gas付款账户地址",
+      "gasAccount":"Gas付款账户",
+      "signTx":"签名提交交易"
     }
   },
   "balances":{
