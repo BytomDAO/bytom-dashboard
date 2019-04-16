@@ -101,7 +101,7 @@ class Form extends React.Component {
                 <button
                   className={`btn btn-default ${this.props.issueAssetSelected && 'active'}`}
                   onClick={(e) => this.showForm(e, 'issueAsset')}>
-                  issue
+                  {t('transaction.issue.issueAsset')}
                   </button>
               </div>
             </div>

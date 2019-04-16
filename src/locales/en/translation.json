@@ -294,6 +294,12 @@
         "qrModalLabel":"The following Qr Code represent the Json String. Please use the phone scanner to scan the Qr code.",
         "qrModalLabels":"The Json is separated into __size__ different chunk of substring. Please use the phone scanner to scan the Qr code."
       }
+    },
+    "issue":{
+      "issueAsset":"Issue Asset",
+      "transactionType":"Transaction Type",
+      "signRaw":"Sign Raw Transaction",
+      "accountAddress":"Account Address"
     }
   },
   "balances":{

@@ -293,6 +293,12 @@
         "qrModalLabel":"Json转换成为下面的二维码。 请用手机扫描二维码。",
         "qrModalLabels":"Json被分成了__size__个不同的字段， 并转换成二维码。 请用手机扫描二维码并拼接。"
       }
+    },
+    "issue":{
+      "issueAsset":"发布资产",
+      "transactionType":"交易类型",
+      "signRaw":"签名交易Json",
+      "accountAddress":"账户地址"
     }
   },
   "balances":{

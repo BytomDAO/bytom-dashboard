@@ -26,7 +26,7 @@ class AssetShow extends BaseShow {
         <PageTitle
           title={title}
           actions={[
-            item.id!==btmID && <Link key='create-asset-btn' className='btn btn-link' to={`/transactions/create?type=issueAsset&alias=${item.alias}`}> Issue Asset transaction</Link>,
+            item.id!==btmID && <Link key='create-asset-btn' className='btn btn-link' to={`/transactions/create?type=issueAsset&alias=${item.alias}`}>{t('transaction.issue.issueAsset')}</Link>,
           ]}
         />
 
