@@ -29,6 +29,18 @@ export default function(type, options = {}) {
         data[fieldName] = parseInt(data[fieldName])
       })
 
+      if(data.definition && data.definition.description ){
+        if(data.definition.description.length === 0 ){
+          data.definition.description = {}
+        }else {
+          const description = {}
+          data.definition.description.forEach(key => {
+            description[key.key] = key.value
+          })
+          data.definition.description = description
+        }
+      }
+
       if (data.xpubs) {
         data.rootXpubs = []
         data.xpubs.forEach(key => {

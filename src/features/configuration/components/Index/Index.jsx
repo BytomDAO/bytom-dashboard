@@ -130,7 +130,7 @@ class Index extends React.Component {
           <div className={styles.choice_wrapper}>
             <label>
               <input className={styles.choice_radio_button}
-                    type='radio'
+                    type=' radio'
                     {...typeProps}
                     value='testnet' />
               <div className={`${styles.choice} ${styles.testnet}`}>

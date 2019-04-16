@@ -10,10 +10,10 @@ import {withNamespaces} from 'react-i18next'
 class Register extends React.Component {
   constructor(props) {
     super(props)
-    this.submitWithErrors = this.submitWithErrors.bind(this)
+    this.submitWithValidations = this.submitWithValidations.bind(this)
   }
 
-  submitWithErrors(data) {
+  submitWithValidations(data) {
     return new Promise((resolve, reject) => {
       this.props.registerKey(data)
         .catch((err) => reject({_error: err}))
@@ -35,7 +35,7 @@ class Register extends React.Component {
         <div>
           <h2 className={styles.title}>{t('init.title')}</h2>
           <div className={styles.formWarpper}>
-            <form className={styles.form} onSubmit={handleSubmit(this.submitWithErrors)}>
+            <form className={styles.form} onSubmit={handleSubmit(this.submitWithValidations)}>
               <TextField
                 title={t('form.accountAlias')}
                 placeholder={t('init.accountPlaceholder')}

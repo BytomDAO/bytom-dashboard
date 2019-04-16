@@ -6,7 +6,9 @@ import {
   KeyValueTable,
   RawJsonButton,
 } from 'features/shared/components'
+import { Link } from 'react-router'
 import componentClassNames from 'utility/componentClassNames'
+import { btmID } from 'utility/environment'
 import { withNamespaces } from 'react-i18next'
 
 class AssetShow extends BaseShow {
@@ -21,7 +23,12 @@ class AssetShow extends BaseShow {
       </span>
 
       view = <div className={componentClassNames(this)}>
-        <PageTitle title={title} />
+        <PageTitle
+          title={title}
+          actions={[
+            item.id!==btmID && <Link key='create-asset-btn' className='btn btn-link' to={`/transactions/create?type=issueAsset&alias=${item.alias}`}>{t('transaction.issue.issueAsset')}</Link>,
+          ]}
+        />
 
         <PageContent>
           <KeyValueTable
@@ -29,17 +36,17 @@ class AssetShow extends BaseShow {
             object='asset'
             title={t('form.detail')}
             actions={[
-              // <button key='show-circulation' className='btn btn-link' onClick={this.props.showCirculation.bind(this, item)}>
-              //  Circulation
-              // </button>,
               <RawJsonButton key='raw-json' item={item} />
             ]}
             items={[
               {label: 'ID', value: item.id},
               {label: t('form.alias'), value: item.alias, editUrl: item.alias === 'BTM' ? null : `/assets/${item.id}/alias`},
-              {label: t('form.definition'), value: item.definition},
+              {label: t('form.symbol'), value: item.definition.symbol},
+              {label: t('form.decimals'), value: item.definition.decimals},
+              {label: t('form.reissueTitle'), value:  (item.alias === 'BTM' || item.limitHeight > 0)? 'false': 'true'},
               {label: t('form.xpubs'), value: (item.xpubs || []).length},
               {label: t('form.quorum'), value: item.quorum},
+              {label: t('asset.additionInfo'), value: item.definition.description},
             ]}
           />
 

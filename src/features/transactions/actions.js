@@ -3,7 +3,7 @@ import {chainClient} from 'utility/environment'
 import {parseNonblankJSON} from 'utility/string'
 import {push} from 'react-router-redux'
 import {baseCreateActions, baseListActions} from 'features/shared/actions'
-import { normalTxActionBuilder } from './transactions'
+import { normalTxActionBuilder, issueAssetTxActionBuilder } from './transactions'
 
 const type = 'transaction'
 
@@ -23,6 +23,12 @@ function preprocessTransaction(formParams) {
     const gasPrice = formParams.state.estimateGas * Number(formParams.gasLevel)
     builder.actions = normalTxActionBuilder(formParams,  Number(gasPrice), 'amount')
   }
+
+  if (formParams.form === 'issueAssetTx') {
+    const gasPrice = formParams.state.estimateGas * Number(formParams.gasLevel)
+    builder.actions = issueAssetTxActionBuilder(formParams, Number(gasPrice), 'amount')
+  }
+
 
   if (builder.baseTransaction == '') {
     delete builder.baseTransaction
@@ -86,7 +92,7 @@ form.submitForm = (formParams) => function (dispatch) {
   }
 
   // normal transactions
-  if(formParams.form === 'normalTx'){
+  if( formParams.form === 'normalTx'){
 
     const accountId = formParams.accountId
     const accountAlias = formParams.accountAlias
@@ -120,7 +126,7 @@ form.submitForm = (formParams) => function (dispatch) {
   }
 
   //advanced transactions
-  else{
+  else if( formParams.form === 'advancedTx' ){
     const buildPromise = (formParams.state.showAdvanced && formParams.signTransaction) ? null :
       client.transactions.build(builderFunction)
 
@@ -168,6 +174,43 @@ form.submitForm = (formParams) => function (dispatch) {
     return buildPromise
       .then(resp => signAndSubmitGeneratedTransaction(resp.data))
   }
+
+  //issue Asset transactions
+  else if( formParams.form === 'issueAssetTx'){
+    //submit action
+    const signAndSubmitTransaction = (transaction) => {
+      const body = Object.assign({}, {password: formParams.password, transaction: transaction})
+      return client.transactions.sign(body)
+        .then( signed =>{
+          if(!signed.data.signComplete){
+            const id = uuid.v4()
+            dispatch({
+              type: 'GENERATED_TX_HEX',
+              generated: {
+                id: id,
+                hex: JSON.stringify(signed.data.transaction),
+              },
+            })
+            dispatch(push(`/transactions/generated/${id}`))
+
+          }else{
+            return client.transactions.submit(signed.data.transaction.rawTransaction)
+              .then(submitSucceeded)
+          }
+        })
+    }
+
+    if (formParams.submitAction == 'submit') {
+      return client.transactions.build(builderFunction)
+        .then(tpl => signAndSubmitTransaction(tpl.data))
+    }
+
+    if( formParams.submitAction == 'sign' ){
+      const transaction = JSON.parse(formParams.signTransaction)
+      return signAndSubmitTransaction(transaction)
+    }
+
+  }
 }
 
 const decode = (data) => {
@@ -181,6 +224,7 @@ const decode = (data) => {
         }
       })
       .catch(err => {
+        dispatch({type: 'DECODE_TRANSACTION', data:[]})
         throw {_error: err}
       })
   }

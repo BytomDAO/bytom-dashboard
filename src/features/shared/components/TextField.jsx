@@ -30,6 +30,7 @@ class TextField extends React.Component {
           type={this.state.type}
           placeholder={this.props.placeholder}
           autoFocus={!!this.props.autoFocus}
+          disabled={this.props.disabled}
           {...disableAutocomplete}
           {...fieldProps} />
 

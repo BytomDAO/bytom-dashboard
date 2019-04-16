@@ -31,6 +31,9 @@ class FormContainer extends React.Component {
                     success={this.props.success} />}
 
                 <div className={styles.submit}>
+                  {this.props.secondaryAction && <button type='button' className='btn btn-link' onClick={this.props.secondaryAction }>
+                    { this.props.secondaryLabel ||t('commonWords.previous')}
+                  </button>}
                   <button type='submit' className='btn btn-primary' disabled={this.props.submitting || this.props.disabled}>
                     {this.props.submitLabel ||  (t('form.submit'))}
                   </button>

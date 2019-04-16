@@ -1,0 +1,27 @@
+.subjectField {
+  display: flex;
+  align-items: flex-start;
+
+  :global {
+    .form-group {
+      flex: 1;
+      margin-right: $gutter-size/2;
+    }
+  }
+
+  button{
+    margin-top: 35px;
+  }
+}
+
+.receiverBtn{
+  width: 25px;
+  height: 25px;
+  font-size: 22px;
+  line-height: 20px;
+}
+
+.panel{
+  padding: $gutter-size;
+  border: solid 1px $border-color;
+}

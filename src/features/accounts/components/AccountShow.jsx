@@ -121,7 +121,7 @@ class AccountShow extends BaseShow {
           {(this.state.addresses || []).length > 0 &&
           <KeyValueTable title={t('account.address')}
                          items={this.state.addresses.map((item, index) => ({
-                           label: index,
+                           label: index+1,
                            value: item.address,
                            program: (e => this.showProgram(item.program))
                          }))}/>
@@ -130,7 +130,7 @@ class AccountShow extends BaseShow {
           {(this.state.changeAddresses || []).length > 0 &&
           <KeyValueTable title={t('account.changeAddress')}
                          items={this.state.changeAddresses.map((item, index) => ({
-                           label: index,
+                           label: index+1,
                            value: item.address,
                            program: (e => this.showProgram(item.program))
                          }))}/>

@@ -277,7 +277,7 @@ export default combineReducers({
   // localhostAuth,
   // newVersionCode,
   // mockhsm,
-  // mingStatus,
+  mingStatus,
   // crosscoreRpcVersion,
   // onTestnet,
   // httpOk,

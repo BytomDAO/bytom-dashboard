@@ -10,10 +10,23 @@
     "information":"资产信息",
     "quorumHint":"所需的签名数",
     "aliasError":"资产别名是必须项",
+    "aliasLengthError":"资产别名的长度应该小于30字符。",
+    "symbolError":"资产代号是必须项",
+    "symbolCaseError":"资产代号必须是大写",
+    "symbolPlaceholder":"资产代号必须是大写, 3或者4个字符最好。",
+    "decimalPlaceholder":"定义资产小数位。",
     "keysError":"请输入或选择密钥",
     "editAlias":"编辑资产别名",
     "alias":"资产别名",
-    "aliasPlaceholder":"请输入资产别名"
+    "aliasPlaceholder":"请输入资产别名",
+    "decimalsError":"精度是必须项",
+    "decimalsTypeError":"请输入数字",
+    "decimalsRangeError":"精度的最大值是16。",
+    "additionInfo":"附加信息",
+    "additionInfoKey":"描述",
+    "additionInfoValue":"值",
+    "additionInfoKeyError":"描述是必须项。",
+    "additionInfoValueError":"值是必须项。"
   },
   "commonWords": {
     "version": "版本号",
@@ -27,8 +40,9 @@
     "requestId":"请求ID：",
     "cancel": "返回",
     "continue":"继续",
-    "next":"向后",
-    "previous":"向前"
+    "next":"下一页",
+    "previous":"上一页",
+    "addField":"添加项"
   },
   "crumbName":{
     "transaction": "交易",
@@ -120,7 +134,12 @@
     "successTitle":"成功",
     "objectField":{
       "aliasPlaceholder":"输入__title__别名..."
-    }
+    },
+    "symbol":"资产代号",
+    "decimals":"精度",
+    "reissueTitle":"是否可重复发行",
+    "reissueTrue":"可重复发行",
+    "reissueFalse":"不可重复发行"
   },
   "xpub":{
     "methodOptions" : {
@@ -274,6 +293,14 @@
         "qrModalLabel":"Json转换成为下面的二维码。 请用手机扫描二维码。",
         "qrModalLabels":"Json被分成了__size__个不同的字段， 并转换成二维码。 请用手机扫描二维码并拼接。"
       }
+    },
+    "issue":{
+      "issueAsset":"发布资产",
+      "transactionType":"交易类型",
+      "signRaw":"签名交易Json",
+      "accountAddress":"Gas付款账户地址",
+      "gasAccount":"Gas付款账户",
+      "signTx":"签名提交交易"
     }
   },
   "balances":{

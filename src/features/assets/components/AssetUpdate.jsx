@@ -7,12 +7,12 @@ class Form extends React.Component {
   constructor(props) {
     super(props)
 
-    this.submitWithErrors = this.submitWithErrors.bind(this)
+    this.submitWithValidations = this.submitWithValidations.bind(this)
 
     this.state = {}
   }
 
-  submitWithErrors(data) {
+  submitWithValidations(data) {
     return this.props.submitForm(data, this.props.item.id).catch(err => {
       throw {_error: err}
     })
@@ -52,7 +52,7 @@ class Form extends React.Component {
     return <FormContainer
       error={error}
       label={title}
-      onSubmit={handleSubmit(this.submitWithErrors)}
+      onSubmit={handleSubmit(this.submitWithValidations)}
       submitting={submitting}
       >
 
