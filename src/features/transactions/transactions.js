@@ -85,11 +85,11 @@ export const normalTxActionBuilder = (transaction, gas, prop) =>{
   return actions
 }
 
-export const issueAssetTxActionBuilder = (transaction, prop) =>{
-  const accountAlias =  transaction.accountAlias
-  const accountId = transaction.accountId
-  const assetAlias =  transaction.assetAlias
-  const assetId = transaction.assetId
+export const issueAssetTxActionBuilder = (transaction, gas,prop) =>{
+  const accountAlias = transaction.accountAlias.value || transaction.accountAlias
+  const accountId = transaction.accountId.value || transaction.accountId
+  const assetAlias = transaction.assetAlias.value || transaction.assetAlias
+  const assetId = transaction.assetId.value || transaction.assetId
   const receivers = transaction.receivers
 
   const totalAmount = sum(receivers, prop )
@@ -105,7 +105,7 @@ export const issueAssetTxActionBuilder = (transaction, prop) =>{
     accountAlias,
     accountId,
     assetAlias: 'BTM',
-    amount: transaction.gas,
+    amount: gas,
     type: 'spend_account'
   }
 

@@ -25,7 +25,8 @@ function preprocessTransaction(formParams) {
   }
 
   if (formParams.form === 'issueAssetTx') {
-    builder.actions = issueAssetTxActionBuilder(formParams,  'amount')
+    const gasPrice = formParams.state.estimateGas * Number(formParams.gasLevel)
+    builder.actions = issueAssetTxActionBuilder(formParams, Number(gasPrice), 'amount')
   }
 
 

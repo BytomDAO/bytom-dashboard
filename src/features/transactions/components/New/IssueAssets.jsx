@@ -9,6 +9,7 @@ import {
   PasswordField,
   RadioField,
   KeyValueTable,
+  GasField,
 } from 'features/shared/components'
 import { Connection } from 'sdk'
 import {chainClient} from 'utility/environment'
@@ -19,14 +20,16 @@ import React from 'react'
 import styles from './New.scss'
 import actions from 'actions'
 import { btmID } from 'utility/environment'
-import { getAssetDecimal} from '../../transactions'
+import {getAssetDecimal, issueAssetTxActionBuilder} from '../../transactions'
 import {withNamespaces} from 'react-i18next'
 
 
 class IssueAssets extends React.Component {
   constructor(props) {
     super(props)
+    this.connection = chainClient().connection
     this.state = {
+      estimateGas:null,
       counter: 1,
     }
 
@@ -115,14 +118,65 @@ class IssueAssets extends React.Component {
 
   }
 
+  estimateNormalTransactionGas() {
+    const transaction = this.props.fields
+    const accountAlias = transaction.accountAlias.value
+    const accountId = transaction.accountId.value
+    const assetAlias = transaction.assetAlias.value
+    const assetId = transaction.assetId.value
+    const receivers = transaction.receivers
+    const addresses = receivers.map(x => x.address.value)
+    const amounts = receivers.map(x => Number(x.amount.value))
+
+    const {t, i18n} = this.props
+
+    const noAccount = !accountAlias && !accountId
+    const noAsset = !assetAlias && !assetId
+
+    if ( addresses.includes('') || amounts.includes(0)|| noAccount || noAsset) {
+      this.setState({estimateGas: null})
+      return
+    }
+
+    const actions = issueAssetTxActionBuilder(transaction, Math.pow(10, 7), 'amount.value' )
+
+    const body = {actions, ttl: 1}
+    this.connection.request('/build-transaction', body).then(resp => {
+      if (resp.status === 'fail') {
+        this.setState({estimateGas: null})
+        const errorMsg =  resp.code && i18n.exists(`btmError.${resp.code}`) && t(`btmError.${resp.code}`) || resp.msg
+        this.props.showError(new Error(errorMsg))
+        return
+      }
+
+      return this.connection.request('/estimate-transaction-gas', {
+        transactionTemplate: resp.data
+      }).then(resp => {
+        if (resp.status === 'fail') {
+          this.setState({estimateGas: null})
+          const errorMsg =  resp.code && i18n.exists(`btmError.${resp.code}`) && t(`btmError.${resp.code}`) || resp.msg
+          this.props.showError(new Error(errorMsg))
+          return
+        }
+        this.setState({estimateGas: Math.ceil(resp.data.totalNeu/100000)*100000})
+      })
+    })
+  }
+
   render() {
     const {
-      fields: {assetAlias, assetId, receivers, password, submitAction, signTransaction, accountId, accountAlias, gas},
+      fields: {assetAlias, assetId, receivers, password, submitAction, signTransaction, accountId, accountAlias, gasLevel},
       error,
       handleSubmit,
       submitting
     } = this.props
-    const t = this.props.t
+    const t = this.props.t;
+    [accountAlias, accountId, assetAlias, assetId].forEach(key => {
+      key.onBlur = this.estimateNormalTransactionGas.bind(this)
+    });
+    (receivers.map(receiver => receiver.amount)).forEach(amount =>{
+      amount.onBlur = this.estimateNormalTransactionGas.bind(this)
+    })
 
     let submitLabel = t('transaction.new.submit')
     if (submitAction.value == 'sign') {
@@ -131,7 +185,7 @@ class IssueAssets extends React.Component {
 
     const options = [
       {label: t('transaction.advance.submitToBlockchain') , value: 'submit'},
-      {label: 'sign raw transaction', value: 'sign'}
+      {label: t('transaction.issue.signRaw'), value: 'sign'}
     ]
 
     const showBtmAmountUnit = (assetAlias.value === 'BTM' || assetId.value === btmID)
@@ -151,14 +205,14 @@ class IssueAssets extends React.Component {
       const issueAssetId = issueAction.assetId
       assetId.value = issueAssetId
 
-      gas.value = transaction.fee / Math.pow(10, 8) + ' BTM'
+      gasLevel.value = transaction.fee / Math.pow(10, 8) + ' BTM'
 
       accountAlias.value = inputs.filter(input => input.type === 'spend')[0].address
 
       const assetDefinition = issueAction.assetDefinition
 
       assetItem = <KeyValueTable
-        title={'Definition'}
+        title={t('form.assetDefinition')}
         id={issueAssetId}
         object='asset'
         items={[
@@ -183,7 +237,7 @@ class IssueAssets extends React.Component {
 
     } else if (asset) {
       assetItem = <KeyValueTable
-        title={'definition'}
+        title={t('form.assetDefinition')}
         id={asset.id}
         object='asset'
         items={[
@@ -208,13 +262,13 @@ class IssueAssets extends React.Component {
         className={styles.container}
       >
 
-        <FormSection  title= { 'Issue asset'}>
+        <FormSection  title={t('transaction.issue.issueAsset')}>
           {assetItem}
-          <label className={styles.title}>Input</label>
+          <label className={styles.title}>{t('form.input')}</label>
           <div className={`${styles.mainBox} ${this.props.tutorialVisible? styles.tutorialItem: styles.item}`}>
             {
               submitAction.value === 'sign'?
-                <TextField title={'Account address'}
+                <TextField title={t('transaction.issue.accountAddress')}
                            disabled = {true}
                            fieldProps={accountAlias}/>
                 :
@@ -243,7 +297,7 @@ class IssueAssets extends React.Component {
               />
             }
           </div>
-          <label className={styles.title}>Output</label>
+          <label className={styles.title}>{t('form.output')}</label>
           <div className={styles.mainBox}>
             {receivers.map((receiver, index) =>
               <div
@@ -298,33 +352,22 @@ class IssueAssets extends React.Component {
 
             {
               submitAction.value === 'sign'?
-                  <TextField title={'gas'}
-                           disabled = {true}
-                           fieldProps={gas}/>
-                // </div>
+                <TextField disable={true} fieldProps={gasLevel}/>
                 :
-                // <div className={styles.item}>
-                //   <ObjectSelectorField
-                //     key='account-selector-field'
-                //     keyIndex='normaltx-account'
-                //     title={t('form.account')}
-                //     aliasField={Autocomplete.AccountAlias}
-                //     fieldProps={{
-                //       id: accountId,
-                //       alias: accountAlias
-                //     }}
-                //   />
-                <AmountUnitField title={'gas'} fieldProps={gas}/>
-              // </div>
+                <div className={styles.txFeeBox}>
+                  <GasField
+                    gas={this.state.estimateGas}
+                    fieldProps={gasLevel}
+                    btmAmountUnit={this.props.btmAmountUnit}
+                  />
+                  <span className={styles.feeDescription}> {t('transaction.normal.feeDescription')}</span>
+                </div>
             }
 
         </FormSection>
 
-        <FormSection  title= { 'transaction'}>
-          <RadioField title={t('transaction.advance.buildType')} options={options} fieldProps={{
-            ...submitAction,
-            // onChange: submitactionOnChange,
-          }} />
+        <FormSection  title= { t('transaction.issue.transactionType')}>
+          <RadioField title={t('transaction.advance.buildType')} options={options} fieldProps={submitAction} />
           {
             submitAction.value === 'sign' &&
             <TextField
@@ -342,7 +385,6 @@ class IssueAssets extends React.Component {
 
         <FormSection  title={ t('key.password') }>
           <PasswordField
-            // title={t('key.password')}
             placeholder={t('key.passwordPlaceholder')}
             fieldProps={password}
           />
@@ -403,6 +445,7 @@ const asyncValidate = (values, dispatch, props) => {
 const mapDispatchToProps = (dispatch) => ({
   ...BaseNew.mapDispatchToProps('transaction')(dispatch),
   decode: (transaction) => dispatch( actions.transaction.decode(transaction)),
+  showError: err => dispatch({type: 'ERROR', payload: err}),
 })
 
 const mapStateToProps = (state, ownProps) => ({
@@ -411,6 +454,7 @@ const mapStateToProps = (state, ownProps) => ({
   initialValues:{
     assetAlias: ownProps.location.query.alias,
     submitAction: 'submit',
+    gasLevel: '1',
     receivers:[{
       id: 0,
       amount:'',
@@ -435,7 +479,7 @@ export default withNamespaces('translations') (BaseNew.connect(
       'signTransaction',
       'accountAlias',
       'accountId',
-      'gas'
+      'gasLevel'
     ],
     asyncValidate,
     asyncBlurFields: ['receivers[].address'],
