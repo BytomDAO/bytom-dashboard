@@ -131,10 +131,16 @@ const formatIntNumToPosDecimal = (neu,pos) => {
       }
       return '0.'+ zeros + neuString
     }else {
-      return neuString.slice(0, -pos) + '.' + neuString.slice(-pos)
+      return numberWithCommas(neuString.slice(0, -pos) + '.' + neuString.slice(-pos))
     }
   }
-  return neu
+  return numberWithCommas(neu)
+}
+
+const numberWithCommas = (x) => {
+  var parts = x.toString().split('.')
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+  return parts.join('.')
 }
 
 export const normalizeGlobalBTMAmount = (assetID, amount, btmAmountUnit) => {
