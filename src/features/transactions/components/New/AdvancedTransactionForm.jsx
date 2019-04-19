@@ -127,10 +127,8 @@ class AdvancedTxForm extends React.Component {
               title='+ Add action'
               onSelect={this.addActionItem}
             >
-              <MenuItem eventKey='issue'>Issue</MenuItem>
-              <MenuItem eventKey='spend_account'>Spend from account</MenuItem>
-              <MenuItem eventKey='control_address'>Control with address</MenuItem>
-              <MenuItem eventKey='retire'>Retire</MenuItem>
+              <MenuItem eventKey='issue'>存证方</MenuItem>
+              <MenuItem eventKey='retire'>信息上链</MenuItem>
             </DropdownButton>
           </div>
         </FormSection>
@@ -260,6 +258,7 @@ export default withNamespaces('translations') (BaseNew.connect(
       'actions[].type',
       'actions[].address',
       'actions[].password',
+      'actions[].arbitrary',
       'submitAction',
       'password'
     ],

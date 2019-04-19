@@ -98,16 +98,9 @@ class Show extends BaseShow {
         <PageTitle title={title} />
 
         <PageContent>
-          <Section
-            title={t('form.summary')}
-            actions={[
-              <RawJsonButton key='raw-json' item={item} />
-            ]}>
-            <Summary transaction={item}  btmAmountUnit={btmAmountUnit}/>
-          </Section>
 
           <KeyValueTable
-            title={t('form.detail')}
+            title={t('区块详情')}
             items={[
               {label: 'ID', value: item.id},
               {label: t('form.timestamp'), value:  unconfirmedItem ? '-' : moment.unix(item.timestamp).format()},
@@ -115,7 +108,6 @@ class Show extends BaseShow {
               {label: t('form.blockHeight'), value: unconfirmedItem?
                   t('transaction.unconfirmedItem'): item.blockHeight },
               {label: t('form.position'), value: unconfirmedItem? '-' :item.position},
-              {label: 'Gas', value: gas},
               {label: t('form.txStatus'), value: status}
             ]}
           />
@@ -123,7 +115,7 @@ class Show extends BaseShow {
           {inputs.map((input, index) =>
             <KeyValueTable
               key={index}
-              title={index == 0 ? t('form.input') : ''}
+              title={index == 0 ? t('存证主体') : ''}
               items={buildTxInputDisplay(input, btmAmountUnit, t)}
             />
           )}
@@ -131,7 +123,7 @@ class Show extends BaseShow {
           {outputs.map((output, index) =>
             <KeyValueTable
               key={index}
-              title={index == 0 ?t('form.output') : ''}
+              title={index == 0 ?t('存证信息') : ''}
               items={buildTxOutputDisplay(output, btmAmountUnit, t)}
             />
           )}

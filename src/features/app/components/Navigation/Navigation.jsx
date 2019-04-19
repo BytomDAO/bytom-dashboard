@@ -39,21 +39,9 @@ class Navigation extends React.Component {
             </Link>
           </li>
           <li>
-            <Link to='/accounts' activeClassName={styles.active}>
-              {navIcon('account', styles)}
-              {capitalize(t('crumbName.account'))}
-            </Link>
-          </li>
-          <li>
             <Link to='/assets' activeClassName={styles.active}>
               {navIcon('asset', styles)}
-              {capitalize((t('crumbName.asset')))}
-            </Link>
-          </li>
-          <li>
-            <Link to='/balances' activeClassName={styles.active}>
-              {navIcon('balance', styles)}
-              {capitalize((t('crumbName.balance')))}
+              可信身份认证存证
             </Link>
           </li>
         </ul>
@@ -65,36 +53,6 @@ class Navigation extends React.Component {
               {navIcon('mockhsm', styles)}
               {capitalize((t('crumbName.key')))}
             </Link>
-          </li>
-        </ul>
-
-        { this.props.showNavAdvance && <ul className={styles.navigation}>
-          <li className={styles.navigationTitle}>{ t('crumbName.advanced') }</li>
-          <li>
-            <Link to='/unspents' activeClassName={styles.active}>
-              {navIcon('unspent', styles)}
-              {capitalize((t('crumbName.unspent')))}
-            </Link>
-          </li>
-        </ul>}
-
-        <ul className={styles.navigation}>
-          <li className={styles.navigationTitle}>{t('crumbName.help') }</li>
-          <li>
-            <a href={docsRoot} target='_blank'>
-              {navIcon('docs', styles)}
-              {t('crumbName.doc')}
-            </a>
-          </li>
-        </ul>
-
-        <ul className={styles.navigation}>
-          <li className={styles.navigationTitle}>{ t('crumbName.developer') }</li>
-          <li>
-            <a href='/equity' target='_blank'>
-              {navIcon('transaction', styles)}
-              { t('crumbName.equity')}
-            </a>
           </li>
         </ul>
 

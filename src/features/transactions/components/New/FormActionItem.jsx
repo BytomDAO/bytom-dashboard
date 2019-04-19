@@ -1,5 +1,5 @@
 import React from 'react'
-import { ErrorBanner, HiddenField, Autocomplete, JsonField, TextField, ObjectSelectorField,AmountField } from 'features/shared/components'
+import { ErrorBanner, HiddenField, Autocomplete, JsonField, TextField, ObjectSelectorField,AmountField, TextareaField} from 'features/shared/components'
 import styles from './FormActionItem.scss'
 import { btmID } from 'utility/environment'
 import {withNamespaces} from 'react-i18next'
@@ -28,7 +28,7 @@ const visibleFields = {
   [SPEND_UNSPENT_KEY]: {outputId: true, password: true},
   [CONTROL_RECEIVER_KEY]: {asset: true, receiver: true, amount: true},
   [CONTROL_ADDRESS_KEY]: {asset: true, address: true, amount: true},
-  [RETIRE_ASSET_KEY]: {asset: true, amount: true},
+  [RETIRE_ASSET_KEY]: {asset: true, amount: true, arbitrary:true},
   [TRANSACTION_REFERENCE_DATA]: {},
 }
 
@@ -64,6 +64,7 @@ class ActionItem extends React.Component {
       assetAlias,
       password,
       amount,
+      arbitrary,
       referenceData } = this.props.fieldProps
 
     const visible = visibleFields[type.value] || {}
@@ -129,6 +130,12 @@ class ActionItem extends React.Component {
             fieldProps={amount}
             decimal={decimal}
           />}
+
+        {visible.arbitrary &&
+        <TextareaField
+          title={'retire'}
+          fieldProps={arbitrary}
+        />}
 
         {visible.password && false &&
           <TextField title={t('key.password')} placeholder={t('key.password')} fieldProps={password} autoFocus={false} type={'password'} />

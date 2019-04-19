@@ -33,7 +33,6 @@ const balanceFields = [
 const txInputFields = [
   'type',
   'asset',
-  'amount',
   'account',
   'controlProgram',
   'address',
@@ -43,7 +42,6 @@ const txOutputFields = [
   'type',
   'id',
   'asset',
-  'amount',
   'account',
   'controlProgram',
   'address',

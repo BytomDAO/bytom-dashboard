@@ -26,3 +26,12 @@ export const parseNonblankJSON = (json) => {
 String.prototype.isUpperCase = function() {
   return this.valueOf().toUpperCase() === this.valueOf();
 }
+
+String.prototype.toHex = function () {
+  const str = this.valueOf()
+  let hex = '';
+  for(let i=0;i<str.length;i++) {
+    hex += ''+str.charCodeAt(i).toString(16);
+  }
+  return hex;
+}

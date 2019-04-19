@@ -29,7 +29,7 @@ class Sync extends React.Component {
 
     if (syncing) {
       return <ul className={`${navStyles.navigation} ${styles.main}`}>
-        <li key='sync-title' className={navStyles.navigationTitle}>{ networkID } { t('sync.status')}</li>
+        <li key='sync-title' className={navStyles.navigationTitle}>区块链节点同步状态</li>
         <li key='sync-peer-count' className={(peerCount>0)?styles.blockHightlight: null}>
           <Link to={'/peers'}>
             {t('sync.peer')}: {peerCount}
@@ -43,7 +43,7 @@ class Sync extends React.Component {
 
     const elems = []
 
-    elems.push(<li key='sync-title' className={navStyles.navigationTitle}>{ networkID } {t('sync.status') }</li>)
+    elems.push(<li key='sync-title' className={navStyles.navigationTitle}>区块链节点同步状态</li>)
     elems.push(<li key='sync-peer-count' className={(peerCount>0)?styles.blockHightlight: null}>
         <Link to={'/peers'}>
          {t('sync.peer')}: {peerCount}

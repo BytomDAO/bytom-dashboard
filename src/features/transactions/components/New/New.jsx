@@ -85,49 +85,18 @@ class Form extends React.Component {
 
         <div className={`${styles.mainContainer} flex-container`}>
 
-          <div className={styles.center}>
-            <div className={styles.btnGroup} >
-              <div className={'btn-group'} role='group'>
-                <button
-                  className={`btn btn-default ${this.props.normalSelected && 'active'}`}
-                  onClick={(e) => this.showForm(e, 'normal')}>
-                  {t('transaction.new.normal')}
-                  </button>
-                <button
-                  className={`btn btn-default ${this.props.advancedSelected && 'active'}`}
-                  onClick={(e) => this.showForm(e, 'advanced')}>
-                  {t('transaction.new.advanced')}
-                  </button>
-                <button
-                  className={`btn btn-default ${this.props.issueAssetSelected && 'active'}`}
-                  onClick={(e) => this.showForm(e, 'issueAsset')}>
-                  {t('transaction.issue.issueAsset')}
-                  </button>
-              </div>
-            </div>
-
-              {this.props.normalSelected &&
-              <NormalTxForm
-                btmAmountUnit={this.props.btmAmountUnit}
-                asset={this.props.asset}
-                balances ={this.props.balances}
-                handleKeyDown={this.handleKeyDown}
-                tutorialVisible={this.props.tutorialVisible}
-              /> }
-
-              {this.props.advancedSelected &&
               <AdvancedTxForm
                 btmAmountUnit={this.props.btmAmountUnit}
                 asset={this.props.asset}
                 handleKeyDown={this.handleKeyDown}
-              />}
+              />
 
-              {this.props.issueAssetSelected &&
-              <IssueAssets
-                handleKeyDown={this.handleKeyDown}
-                {...this.props}
-              />}
-          </div>
+              {/*{this.props.issueAssetSelected &&*/}
+              {/*<IssueAssets*/}
+                {/*handleKeyDown={this.handleKeyDown}*/}
+                {/*{...this.props}*/}
+              {/*/>}*/}
+          {/*</div>*/}
 
 
           <Tutorial types={['TutorialForm']} advTx={this.props.advancedSelected}/>
@@ -152,9 +121,9 @@ const mapStateToProps = (state, ownProps) => {
     normalform: getValues(state.form.NormalTransactionForm),
     advform: getValues(state.form.AdvancedTransactionForm),
     tutorialVisible: !state.tutorial.location.isVisited,
-    normalSelected : ownProps.location.query.type == 'normal' || ownProps.location.query.type == undefined,
-    advancedSelected : ownProps.location.query.type == 'advanced',
-    issueAssetSelected : ownProps.location.query.type == 'issueAsset',
+    // normalSelected : ownProps.location.query.type == 'normal' || ownProps.location.query.type == undefined,
+    // advancedSelected : ownProps.location.query.type == 'advanced',
+    // issueAssetSelected : ownProps.location.query.type == 'issueAsset',
   }
 }
 

@@ -53,6 +53,10 @@ function preprocessTransaction(formParams) {
       }
     })
 
+    if(a['arbitrary']){
+      a['arbitrary'] = a['arbitrary'].toHex()
+    }
+
     try {
       a.referenceData = parseNonblankJSON(a.referenceData)
     } catch (err) {

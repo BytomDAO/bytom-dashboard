@@ -20,7 +20,7 @@ class Login extends React.Component {
   }
 
   render() {
-    let logo = require('images/logo-bytom-white.svg')
+    let logo = require('images/logo2.jpeg')
 
     const {
       fields: { token },
