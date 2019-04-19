@@ -24,7 +24,7 @@ class Register extends React.Component {
     const t = this.props.t
 
     const {
-      fields: {keyAlias, password, repeatPassword, accountAlias},
+      fields: {keyAlias, password, repeatPassword},
       error,
       handleSubmit,
       submitting
@@ -36,10 +36,6 @@ class Register extends React.Component {
           <h2 className={styles.title}>{t('init.title')}</h2>
           <div className={styles.formWarpper}>
             <form className={styles.form} onSubmit={handleSubmit(this.submitWithValidations)}>
-              <TextField
-                title={t('form.accountAlias')}
-                placeholder={t('init.accountPlaceholder')}
-                fieldProps={accountAlias} />
               <TextField
                 title={t('form.keyAlias')}
                 placeholder={t('init.keyPlaceholder')}
@@ -89,9 +85,6 @@ const validate = (values, props) => {
   if (values.password !== values.repeatPassword) {
     errors.repeatPassword = ( t('key.reset.repeatPWarning') )
   }
-  if (!values.accountAlias) {
-    errors.accountAlias = ( t('account.new.aliasWarning') )
-  }
 
   return errors
 }
@@ -103,6 +96,6 @@ export default withNamespaces('translations')( connect(
   })
 )(reduxForm({
   form: 'initDefaultPassword',
-  fields: ['keyAlias', 'password', 'repeatPassword', 'accountAlias'],
+  fields: ['keyAlias', 'password', 'repeatPassword'],
   validate
 })(Register)))

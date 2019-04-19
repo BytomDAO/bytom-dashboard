@@ -14,9 +14,19 @@ import { buildTxInputDisplay, buildTxOutputDisplay } from 'utility/buildInOutDis
 import { btmID } from 'utility/environment'
 import moment from 'moment/moment'
 import BigNumber from 'bignumber.js'
-
+import jsPDF from 'jspdf';
 
 class Show extends BaseShow {
+  constructor(porps){
+    super(porps)
+    // const doc = new jsPDF()
+    //
+    // doc.setFontSize(22)
+    // doc.text('This is a title', 20, 20)
+    //
+    // doc.save('two-by-four.pdf')
+
+  }
 
   render() {
     const item = this.props.item
@@ -50,9 +60,11 @@ class Show extends BaseShow {
 
       const status = (!item.statusFail)? t('form.succeed'): t('form.failed')
 
+
       const getInout = (inout) =>{
         let resultoutput = {}
 
+        console.log(inout)
         resultoutput.id = inout.id
 
         if(inout.address){
@@ -72,6 +84,7 @@ class Show extends BaseShow {
         resultoutput.assetId =  inout.assetId
         resultoutput.assetDefinition =  inout.assetDefinition
         resultoutput.type = inout.type
+        resultoutput.retireData = inout.retireData
 
         return resultoutput
       }

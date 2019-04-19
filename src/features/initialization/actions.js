@@ -16,11 +16,10 @@ const registerKey = (data) => {
           throw resp
         }
 
-        if (typeof data.accountAlias == 'string')  data.accountAlias = data.accountAlias.trim()
         const accountData = {
           'root_xpubs':[resp.data.xpub],
           'quorum':1,
-          'alias': data.accountAlias}
+          'alias': 'default'}
 
         dispatch({type: 'INIT_ACCOUNT', data: resp.data.mnemonic})
 

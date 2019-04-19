@@ -26,6 +26,7 @@
     "fetch-ponyfill": "~3.0.2",
     "i18next": "^11.9.1",
     "i18next-browser-languagedetector": "^2.2.3",
+    "jspdf": "^1.5.3",
     "lodash": "~4.17.11",
     "moment": "^2.22.1",
     "moment-timezone": "^0.5.17",

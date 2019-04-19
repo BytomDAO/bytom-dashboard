@@ -71,7 +71,6 @@ const fields = [
   'alias',
   'symbol',
   'decimals',
-  'reissue',
   'description[].key',
   'description[].value',
   'xpubs[].value',

@@ -87,7 +87,7 @@ class ActionItem extends React.Component {
         <HiddenField fieldProps={type} />
 
         <div className={styles.header}>
-          <label className={styles.title}>{actionLabels[type.value]}</label>
+          <label className={styles.title}>{actionLabels[type.value]} {this.props.index+1}</label>
           <a href='#' className='btn btn-sm btn-danger' onClick={remove}>{ t('commonWords.remove') }</a>
         </div>
 

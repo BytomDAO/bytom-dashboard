@@ -1,4 +1,5 @@
 import { btmID } from './environment'
+import jsPDF from 'jspdf';
 
 const balanceFields = [
   'id' ,
@@ -71,6 +72,37 @@ const unspentFields = [
   'change',
 ]
 
+const saveAsPDF = (content) =>{
+
+  if (!window.btoa) {
+    var tableStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    var table = tableStr.split("");
+
+    window.btoa = function (bin) {
+      for (var i = 0, j = 0, len = bin.length / 3, base64 = []; i < len; ++i) {
+        var a = bin.charCodeAt(j++), b = bin.charCodeAt(j++), c = bin.charCodeAt(j++);
+        if ((a | b | c) > 255) throw new Error("String contains an invalid character");
+        base64[base64.length] = table[a >> 2] + table[((a << 4) & 63) | (b >> 4)] +
+          (isNaN(b) ? "=" : table[((b << 2) & 63) | (c >> 6)]) +
+          (isNaN(b + c) ? "=" : table[c & 63]);
+      }
+      return base64.join("");
+    };
+  }
+
+  //script block
+  // try this way  to open you pdf file like this in javascript hope it will help you.
+  function hexToBase64(str)
+  {
+    return btoa(String.fromCharCode.apply(null,str.replace(/\r|\n/g, "").replace(/([\da-fA-F]{2}) ?/g, "0x$1 ").replace(/ +$/, "").split(" ")));
+  }
+
+  var data=   hexToBase64(content);// here pass the big hex string
+
+  // it will be open in the web browser like this
+  return 'data:application/pdf;base64, ' +data
+}
+
 const buildDisplay = (item, fields, btmAmountUnit, t) => {
   const details = []
   const decimals = (item.assetDefinition && item.assetDefinition.decimals && item.assetId !== btmID)?
@@ -93,6 +125,12 @@ const buildDisplay = (item, fields, btmAmountUnit, t) => {
           label:  t(`form.${key}`),
           value: item[key],
           link: `/accounts/${item.accountId}`
+        })
+      }else if(key === 'controlProgram'){
+        details.push({
+          label:  t(`form.${key}`),
+          value: item[key],
+          pdf: saveAsPDF(item['retireData'])
         })
       }else{
         details.push({label:  t(`form.${key}`), value: item[key]})

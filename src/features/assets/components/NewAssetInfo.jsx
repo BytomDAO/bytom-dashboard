@@ -24,7 +24,7 @@ class NewAssetInfo extends React.Component {
 
   render() {
     const {
-      fields: { alias, symbol,decimals,reissue, description},
+      fields: { alias, symbol,decimals, description},
       error,
       handleSubmit,
       submitting,
@@ -52,7 +52,6 @@ class NewAssetInfo extends React.Component {
                        hint={t('asset.decimalPlaceholder')}
                        skipEmpty={true}
                        fieldProps={decimals} />
-          <RadioField title={t('form.reissueTitle')} options={options} fieldProps={reissue} />
           <label >{t('asset.additionInfo')}</label>
 
           <div className={styles.panel}>
@@ -125,7 +124,6 @@ const fields = [
   'alias',
   'symbol',
   'decimals',
-  'reissue',
   'description[].key',
   'description[].value',
   'quorum'
@@ -138,7 +136,6 @@ export default withNamespaces('translations') (
     destroyOnUnmount: false,
     initialValues: {
       decimals: 8,
-      reissue: 'false',
       quorum: 1,
     }
   })(NewAssetInfo)
