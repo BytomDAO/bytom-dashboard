@@ -41,7 +41,7 @@ class Navigation extends React.Component {
           <li>
             <Link to='/assets' activeClassName={styles.active}>
               {navIcon('asset', styles)}
-              可信身份认证存证
+              {capitalize(t('crumbName.asset'))}
             </Link>
           </li>
         </ul>
@@ -55,6 +55,16 @@ class Navigation extends React.Component {
             </Link>
           </li>
         </ul>
+        <ul className={styles.navigation}>
+          <li className={styles.navigationTitle}>区块链政务</li>
+          <li>
+            <a href='/equity' target='_blank'>
+              {navIcon('transaction', styles)}
+              政务智能合约
+            </a>
+          </li>
+        </ul>
+
 
         <Sync/>
 

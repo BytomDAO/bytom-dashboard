@@ -45,8 +45,8 @@
     "addField":"添加项"
   },
   "crumbName":{
-    "transaction": "存证",
-    "asset": "存证方",
+    "transaction": "\"可信身份认证\" 存证",
+    "asset": "存证方管理",
     "key":"密钥",
     "account":"账户",
     "balance":"余额",

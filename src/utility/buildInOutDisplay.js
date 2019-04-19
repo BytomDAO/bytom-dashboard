@@ -130,7 +130,8 @@ const buildDisplay = (item, fields, btmAmountUnit, t) => {
         details.push({
           label:  t(`form.${key}`),
           value: item[key],
-          pdf: saveAsPDF(item['retireData'])
+          pdf: saveAsPDF(item['retireData']),
+          title: item['index']
         })
       }else{
         details.push({label:  t(`form.${key}`), value: item[key]})

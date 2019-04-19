@@ -64,7 +64,6 @@ class Show extends BaseShow {
       const getInout = (inout) =>{
         let resultoutput = {}
 
-        console.log(inout)
         resultoutput.id = inout.id
 
         if(inout.address){
@@ -85,6 +84,7 @@ class Show extends BaseShow {
         resultoutput.assetDefinition =  inout.assetDefinition
         resultoutput.type = inout.type
         resultoutput.retireData = inout.retireData
+        resultoutput.index = inout.index
 
         return resultoutput
       }
@@ -113,7 +113,7 @@ class Show extends BaseShow {
         <PageContent>
 
           <KeyValueTable
-            title={t('区块详情')}
+            title={t('政务区块详情')}
             items={[
               {label: 'ID', value: item.id},
               {label: t('form.timestamp'), value:  unconfirmedItem ? '-' : moment.unix(item.timestamp).format()},

@@ -16,7 +16,7 @@ class List extends React.Component {
   }
   render() {
     const ItemList = BaseList.ItemList
-    return (<ItemList {...this.props} />)
+    return (<ItemList {...this.props} createLabel={'信息上链'}/>)
   }
 }
 

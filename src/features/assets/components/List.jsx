@@ -11,7 +11,8 @@ const mapStateToProps = (state, props) => {
       wrapperComponent: TableList,
       wrapperProps: {
         titles: props.t('asset.formTitle', { returnObjects: true })
-      }
+      },
+      createLabel:'新建存证方'
     })(state)
   }
 }

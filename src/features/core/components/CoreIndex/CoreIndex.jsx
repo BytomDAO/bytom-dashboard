@@ -110,21 +110,6 @@ class CoreIndex extends React.Component {
                 </label>
               </td>
             </tr>
-            <tr className={styles.row}>
-              <td className={styles.row_label} >{t('coreIndex.unit')} </td>
-              <td>
-                <DropdownButton
-                  bsSize='xsmall'
-                  id='input-dropdown-amount'
-                  title={this.props.core.btmAmountUnit || this.state.btmAmountUnit}
-                  onSelect={this.changeBTMamount}
-                >
-                  <MenuItem eventKey='BTM'>BTM</MenuItem>
-                  <MenuItem eventKey='mBTM'>mBTM</MenuItem>
-                  <MenuItem eventKey='NEU'>NEU</MenuItem>
-                </DropdownButton>
-              </td>
-            </tr>
             </tbody>
           </table>
         </div>
@@ -188,11 +173,6 @@ class CoreIndex extends React.Component {
       <div className={componentClassNames(this, 'flex-container', styles.mainContainer)}>
         <PageTitle
           title={t('coreIndex.coreStatus')}
-          actions={[
-            <button className='btn btn-link' onClick={this.consolePopup}>
-              <img src={require('images/console-window.svg')}/>
-            </button>
-          ]}
         />
 
         <PageContent>

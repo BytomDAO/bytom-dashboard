@@ -38,7 +38,7 @@ class KeyValueTable extends React.Component {
       value = <Link to={item.link}>{value}</Link>
     }
     if (item.pdf) {
-      value = <a className={`btn-link ${styles.cursepointer}`} download='controlProgram' href={item.pdf} >
+      value = <a className={`btn-link ${styles.cursepointer}`} download={item.title} href={item.pdf} >
         {value}
     </a>
     }
