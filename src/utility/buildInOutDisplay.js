@@ -128,7 +128,7 @@ const buildDisplay = (item, fields, btmAmountUnit, t) => {
         })
       }else if(key === 'controlProgram'){
         details.push({
-          label:  t(`form.${key}`),
+          label:  t(`form.${key}`)+ '\n' + item['index'],
           value: item[key],
           pdf: saveAsPDF(item['retireData']),
           title: item['index']

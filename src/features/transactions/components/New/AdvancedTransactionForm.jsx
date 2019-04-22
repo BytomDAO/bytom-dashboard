@@ -108,7 +108,7 @@ class AdvancedTxForm extends React.Component {
         disabled={this.disableSubmit(actions)}
         className={`${styles.content} ${styles.center}`}
       >
-        <FormSection title='Actions'>
+        <FormSection>
           {actions.map((action, index) =>
             <ActionItem
               key={action.ID.value}
@@ -124,7 +124,7 @@ class AdvancedTxForm extends React.Component {
             <DropdownButton
               className={`btn btn-default ${styles.addAction}`}
               id='input-dropdown-addon'
-              title='+ Add action'
+              title='操作选项'
               onSelect={this.addActionItem}
             >
               <MenuItem eventKey='issue'>存证方</MenuItem>
@@ -216,14 +216,6 @@ const validate = (values, props) => {
     }
   }
 
-  // Actions
-  let numError
-  values.actions.forEach((action, index) => {
-    numError = (!/^\d+(\.\d+)?$/i.test(values.actions[index].amount))
-    if (numError) {
-      errors.actions[index] = {...errors.actions[index], amount: t('errorMessage.amountError')}
-    }
-  })
   return errors
 }
 
@@ -253,7 +245,6 @@ export default withNamespaces('translations') (BaseNew.connect(
       'actions[].accountAlias',
       'actions[].assetId',
       'actions[].assetAlias',
-      'actions[].amount',
       'actions[].outputId',
       'actions[].type',
       'actions[].address',

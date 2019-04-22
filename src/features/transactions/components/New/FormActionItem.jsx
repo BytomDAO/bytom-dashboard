@@ -13,22 +13,22 @@ const RETIRE_ASSET_KEY = 'retire'
 const TRANSACTION_REFERENCE_DATA = 'set_transaction_reference_data'
 
 const actionLabels = {
-  [ISSUE_KEY]: 'Issue',
+  [ISSUE_KEY]: '存证方',
   [SPEND_ACCOUNT_KEY]: 'Spend from account',
   [SPEND_UNSPENT_KEY]: 'Spend unspent output',
   [CONTROL_RECEIVER_KEY]: 'Control with receiver',
   [CONTROL_ADDRESS_KEY]: 'Control with address',
-  [RETIRE_ASSET_KEY]: 'Retire',
+  [RETIRE_ASSET_KEY]: '信息上链',
   [TRANSACTION_REFERENCE_DATA]: 'Set transaction reference data',
 }
 
 const visibleFields = {
-  [ISSUE_KEY]: {asset: true, amount: true, password: true},
+  [ISSUE_KEY]: {asset: true, password: true},
   [SPEND_ACCOUNT_KEY]: {asset: true, account: true, amount: true, password: true},
   [SPEND_UNSPENT_KEY]: {outputId: true, password: true},
   [CONTROL_RECEIVER_KEY]: {asset: true, receiver: true, amount: true},
   [CONTROL_ADDRESS_KEY]: {asset: true, address: true, amount: true},
-  [RETIRE_ASSET_KEY]: {asset: true, amount: true, arbitrary:true},
+  [RETIRE_ASSET_KEY]: {asset: true, arbitrary:true},
   [TRANSACTION_REFERENCE_DATA]: {},
 }
 
@@ -133,7 +133,7 @@ class ActionItem extends React.Component {
 
         {visible.arbitrary &&
         <TextareaField
-          title={'retire'}
+          title={'上链内容'}
           fieldProps={arbitrary}
         />}
 

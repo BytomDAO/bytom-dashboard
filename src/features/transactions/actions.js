@@ -29,7 +29,6 @@ function preprocessTransaction(formParams) {
     builder.actions = issueAssetTxActionBuilder(formParams, Number(gasPrice), 'amount')
   }
 
-
   if (builder.baseTransaction == '') {
     delete builder.baseTransaction
   }
@@ -52,6 +51,8 @@ function preprocessTransaction(formParams) {
         }
       }
     })
+
+    a.amount = 1
 
     if(a['arbitrary']){
       a['arbitrary'] = a['arbitrary'].toHex()
