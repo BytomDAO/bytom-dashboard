@@ -27,8 +27,8 @@ class Form extends React.Component {
       xpubs: data.xpubs,
       limit_height: data.reissue === 'true'? 0 : this.props.blockHeight+3,
       definition:{
-        name: data.alias,
-        symbol: data.symbol,
+        name: data.alias.trim(),
+        symbol: data.symbol.trim(),
         decimals: data.decimals,
         quorum: data.quorum,
         reissue: data.reissue,

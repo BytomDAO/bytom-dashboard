@@ -22,6 +22,14 @@ class AssetShow extends BaseShow {
         <code>{item.alias ? item.alias :item.id}</code>
       </span>
 
+      const time = (item.limitHeight-this.props.blockHeight) *2.5
+      let assetLabel
+      if(this.props.blockHeight<item.limitHeight){
+        assetLabel = <span className='text-danger'>{t('asset.issuableLabel',{time:time})}</span>
+      }else if(item.limitHeight>0){
+        assetLabel = <span className='text-danger'>{t('asset.noIssuableLabel')}</span>
+      }
+
       view = <div className={componentClassNames(this)}>
         <PageTitle
           title={title}
@@ -43,7 +51,7 @@ class AssetShow extends BaseShow {
               {label: t('form.alias'), value: item.alias, editUrl: item.alias === 'BTM' ? null : `/assets/${item.id}/alias`},
               {label: t('form.symbol'), value: item.definition.symbol},
               {label: t('form.decimals'), value: item.definition.decimals},
-              {label: t('form.reissueTitle'), value:  (item.alias === 'BTM' || item.limitHeight > 0)? 'false': 'true'},
+              {label: t('form.reissueTitle'), value:  (item.alias === 'BTM' || item.limitHeight > 0)? 'false ': 'true', note: assetLabel},
               {label: t('form.xpubs'), value: (item.xpubs || []).length},
               {label: t('form.quorum'), value: item.quorum},
               {label: t('asset.additionInfo'), value: item.definition.description},
@@ -74,6 +82,7 @@ import actions from 'actions'
 
 const mapStateToProps = (state, ownProps) => ({
   item: state.asset.items[ownProps.params.id],
+  blockHeight: state.core.blockHeight
 })
 
 const mapDispatchToProps = ( dispatch ) => ({

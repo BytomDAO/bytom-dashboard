@@ -57,6 +57,7 @@ class KeyValueTable extends React.Component {
             return <tr key={item.label}>
               <td className={styles.label}>{item.label}</td>
               <td className={styles.value}>{this.renderValue(item)}
+                {item.note}
                 {item.editUrl && <Link to={item.editUrl} className={styles.edit}>
                   <span
                     className={`${styles.pencil} glyphicon glyphicon-pencil`}></span>{t('form.edit')}

@@ -26,7 +26,9 @@
     "additionInfoKey":"描述",
     "additionInfoValue":"值",
     "additionInfoKeyError":"描述是必须项。",
-    "additionInfoValueError":"值是必须项。"
+    "additionInfoValueError":"值是必须项。",
+    "issuableLabel":"（请在大约__time__分钟内完成发布资产）",
+    "noIssuableLabel":"（资产不可发行）"
   },
   "commonWords": {
     "version": "版本号",
