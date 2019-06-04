@@ -11,7 +11,7 @@ if (process.env.NODE_ENV === 'production') {
   apiHost = window.location.origin
   basename = '/dashboard'
 } else {
-  apiHost = process.env.API_URL || 'http://localhost:9888'
+  apiHost = process.env.API_URL || 'http://localhost:9889'
   basename = ''
 }
 

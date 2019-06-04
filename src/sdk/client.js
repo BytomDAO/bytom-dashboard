@@ -24,7 +24,7 @@ class Client {
         accessToken: arguments[1] || ''
       }
     }
-    opts.url = opts.url || 'http://localhost:9888'
+    opts.url = opts.url || 'http://localhost:9889'
     this.connection = new Connection(opts.url, opts.accessToken, opts.agent)
     this.signer = new hsmSigner()
 

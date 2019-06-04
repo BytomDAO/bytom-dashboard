@@ -44,12 +44,12 @@ class Navigation extends React.Component {
               {capitalize(t('crumbName.account'))}
             </Link>
           </li>
-          <li>
-            <Link to='/assets' activeClassName={styles.active}>
-              {navIcon('asset', styles)}
-              {capitalize((t('crumbName.asset')))}
-            </Link>
-          </li>
+          {/*<li>*/}
+            {/*<Link to='/assets' activeClassName={styles.active}>*/}
+              {/*{navIcon('asset', styles)}*/}
+              {/*{capitalize((t('crumbName.asset')))}*/}
+            {/*</Link>*/}
+          {/*</li>*/}
           <li>
             <Link to='/balances' activeClassName={styles.active}>
               {navIcon('balance', styles)}
