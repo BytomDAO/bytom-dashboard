@@ -24,7 +24,7 @@ let actions = {
     return chainClient().accounts.createAddress(data)
   },
   listAddresses: (accountId) => {
-    return chainClient().accounts.listAddresses(accountId)
+    return chainClient().accounts.listAddresses({accountId})
   }
 }
 
