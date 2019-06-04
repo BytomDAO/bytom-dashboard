@@ -127,6 +127,11 @@ const transactionsAPI = (client) => {
             .then(resp => new shared.BatchResponse(resp)),
       cb
     ),
+
+    estimateGas: (template, cb) => shared.tryCallback(
+      client.request('/estimate-transaction-gas', {'transactionTemplate': template}).then(resp => checkForError(resp)),
+      cb
+    )
   }
 }
 
