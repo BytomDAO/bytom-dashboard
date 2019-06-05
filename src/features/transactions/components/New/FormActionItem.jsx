@@ -4,7 +4,10 @@ import styles from './FormActionItem.scss'
 import { btmID } from 'utility/environment'
 import {withNamespaces} from 'react-i18next'
 
-const ISSUE_KEY = 'issue'
+const CROSS_CHAIN_OUT_KEY = 'cross_chain_out'
+const CROSS_CHAIN_IN_KEY = 'cross_chain_in'
+const VOTE_OUTPUT_KEY = 'vote_output'
+const UNVOTE_KEY = 'unvote'
 const SPEND_ACCOUNT_KEY = 'spend_account'
 const SPEND_UNSPENT_KEY = 'spend_account_unspent_output'
 const CONTROL_RECEIVER_KEY = 'control_receiver'
@@ -13,7 +16,10 @@ const RETIRE_ASSET_KEY = 'retire'
 const TRANSACTION_REFERENCE_DATA = 'set_transaction_reference_data'
 
 const actionLabels = {
-  [ISSUE_KEY]: 'Issue',
+  [CROSS_CHAIN_OUT_KEY]: 'Cross Chain Out',
+  [CROSS_CHAIN_IN_KEY]: 'Cross Chain In',
+  [VOTE_OUTPUT_KEY]: 'Vote Output',
+  [UNVOTE_KEY]: 'Unvote',
   [SPEND_ACCOUNT_KEY]: 'Spend from account',
   [SPEND_UNSPENT_KEY]: 'Spend unspent output',
   [CONTROL_RECEIVER_KEY]: 'Control with receiver',
@@ -23,7 +29,10 @@ const actionLabels = {
 }
 
 const visibleFields = {
-  [ISSUE_KEY]: {asset: true, amount: true, password: true},
+  [CROSS_CHAIN_OUT_KEY]: {asset: true, amount: true, address:true},
+  [CROSS_CHAIN_IN_KEY]: {asset: true, amount: true, sourceId:true, sourcePos:true},
+  [VOTE_OUTPUT_KEY]: {asset: true, amount: true, address:true, vote:true},
+  [UNVOTE_KEY]: {account:true, amount: true, asset: true, vote:true},
   [SPEND_ACCOUNT_KEY]: {asset: true, account: true, amount: true, password: true},
   [SPEND_UNSPENT_KEY]: {outputId: true, password: true},
   [CONTROL_RECEIVER_KEY]: {asset: true, receiver: true, amount: true},
@@ -64,6 +73,9 @@ class ActionItem extends React.Component {
       assetAlias,
       password,
       amount,
+      vote,
+      sourceId,
+      sourcePos,
       referenceData } = this.props.fieldProps
 
     const visible = visibleFields[type.value] || {}
@@ -107,6 +119,9 @@ class ActionItem extends React.Component {
           <JsonField title='Receiver' fieldProps={receiver} />}
 
         {visible.address && <TextField title={ t('form.address' )} fieldProps={address} />}
+        {visible.vote && <TextField title={ t('form.vote' )} fieldProps={vote} />}
+        {visible.sourceId && <TextField title={ t('form.sourceId' )} fieldProps={sourceId} />}
+        {visible.sourcePos && <TextField title={ t('form.sourcePos' )} fieldProps={sourcePos} />}
 
         {visible.outputId &&
           <TextField title='Output ID' fieldProps={outputId} />}

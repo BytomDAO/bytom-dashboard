@@ -141,7 +141,8 @@
     "decimals":"精度",
     "reissueTitle":"是否可重复发行",
     "reissueTrue":"可重复发行",
-    "reissueFalse":"不可重复发行"
+    "reissueFalse":"不可重复发行",
+    "vote": "节点公钥"
   },
   "xpub":{
     "methodOptions" : {
@@ -261,6 +262,7 @@
       "new":"新建交易",
       "normal":"简单交易",
       "advanced" :"高级交易",
+      "vote": "投票",
       "submit":"提交交易"
     },
     "normal":{
@@ -303,6 +305,13 @@
       "accountAddress":"Gas付款账户地址",
       "gasAccount":"Gas付款账户",
       "signTx":"签名提交交易"
+    },
+    "vote":{
+      "info":"投票信息",
+      "voteAmount":"投票数量",
+      "for":"投票给",
+      "submit":"提交投票",
+      "confirm":"确认投票"
     }
   },
   "balances":{

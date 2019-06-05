@@ -7,7 +7,7 @@ import componentClassNames from 'utility/componentClassNames'
 import Tutorial from 'features/tutorial/components/Tutorial'
 import NormalTxForm from './NormalTransactionForm'
 import AdvancedTxForm from './AdvancedTransactionForm'
-import IssueAssets from './IssueAssets'
+import Vote from './Vote'
 import { withRouter } from 'react-router'
 import {getValues} from 'redux-form'
 import {withNamespaces} from 'react-i18next'
@@ -63,7 +63,19 @@ class Form extends React.Component {
       return !(this.props.advform['actions'].length > 0 ||
       this.props.advform['signTransaction'] ||
       this.props.advform['password'])
-    }else if(this.props.issueAssetSelected){
+    }else if(this.props.voteSelected){
+      const array = [
+        'accountAlias',
+        'accountId',
+        'amount',
+        'nodePubkey'
+      ]
+
+      for (let k in array){
+        if(this.props.voteform[array[k]]){
+          return false
+        }
+      }
       return true
     }
   }
@@ -99,9 +111,9 @@ class Form extends React.Component {
                   {t('transaction.new.advanced')}
                   </button>
                 <button
-                  className={`btn btn-default ${this.props.issueAssetSelected && 'active'}`}
-                  onClick={(e) => this.showForm(e, 'issueAsset')}>
-                  {t('transaction.issue.issueAsset')}
+                  className={`btn btn-default ${this.props.voteSelected && 'active'}`}
+                  onClick={(e) => this.showForm(e, 'vote')}>
+                  {t('transaction.new.vote')}
                   </button>
               </div>
             </div>
@@ -122,8 +134,8 @@ class Form extends React.Component {
                 handleKeyDown={this.handleKeyDown}
               />}
 
-              {this.props.issueAssetSelected &&
-              <IssueAssets
+              {this.props.voteSelected &&
+              <Vote
                 handleKeyDown={this.handleKeyDown}
                 {...this.props}
               />}
@@ -151,10 +163,11 @@ const mapStateToProps = (state, ownProps) => {
     asset: Object.keys(state.asset.items).map(k => state.asset.items[k]),
     normalform: getValues(state.form.NormalTransactionForm),
     advform: getValues(state.form.AdvancedTransactionForm),
+    voteform: getValues(state.form.Vote),
     tutorialVisible: !state.tutorial.location.isVisited,
     normalSelected : ownProps.location.query.type == 'normal' || ownProps.location.query.type == undefined,
     advancedSelected : ownProps.location.query.type == 'advanced',
-    issueAssetSelected : ownProps.location.query.type == 'issueAsset',
+    voteSelected : ownProps.location.query.type == 'vote',
   }
 }
 

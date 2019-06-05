@@ -127,10 +127,12 @@ class AdvancedTxForm extends React.Component {
               title='+ Add action'
               onSelect={this.addActionItem}
             >
-              <MenuItem eventKey='issue'>Issue</MenuItem>
               <MenuItem eventKey='spend_account'>Spend from account</MenuItem>
               <MenuItem eventKey='control_address'>Control with address</MenuItem>
-              <MenuItem eventKey='retire'>Retire</MenuItem>
+              <MenuItem eventKey='vote_output'>Vote Output</MenuItem>
+              <MenuItem eventKey='unvote'>Unvote</MenuItem>
+              <MenuItem eventKey='cross_chain_in'>Cross Chain In</MenuItem>
+              <MenuItem eventKey='cross_chain_out'>Cross Chain Out</MenuItem>
             </DropdownButton>
           </div>
         </FormSection>
@@ -259,6 +261,9 @@ export default withNamespaces('translations') (BaseNew.connect(
       'actions[].outputId',
       'actions[].type',
       'actions[].address',
+      'actions[].vote',
+      'actions[].sourceId',
+      'actions[].sourcePos',
       'actions[].password',
       'submitAction',
       'password'

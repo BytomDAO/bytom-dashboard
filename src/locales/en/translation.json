@@ -141,7 +141,8 @@
     "decimals":"Decimals",
     "reissueTitle":"Token reissuable",
     "reissueTrue":"Able to be reissued",
-    "reissueFalse":"Unable to be reissued"
+    "reissueFalse":"Unable to be reissued",
+    "vote": "Node Public Key"
   },
   "xpub":{
     "methodOptions" : {
@@ -261,6 +262,7 @@
       "unsaveWarning":"Your work is not saved! Are you sure you want to leave?",
       "new":"New transaction",
       "normal":"Normal",
+      "vote": "Vote",
       "submit":"Submit transaction",
       "advanced" :"Advanced"
     },
@@ -304,6 +306,13 @@
       "accountAddress":"Gas Paid Account Address",
       "gasAccount":"Gas Paid Account",
       "signTx":"Sign Transaction"
+    },
+    "vote":{
+      "info":"Vote Information",
+      "voteAmount":"Amount Vote",
+      "for":"Vote for",
+      "submit":"Submit Vote",
+      "confirm":"Confirm Vote"
     }
   },
   "balances":{

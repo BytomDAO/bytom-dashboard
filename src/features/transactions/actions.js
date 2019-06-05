@@ -3,7 +3,7 @@ import {chainClient} from 'utility/environment'
 import {parseNonblankJSON} from 'utility/string'
 import {push} from 'react-router-redux'
 import {baseCreateActions, baseListActions} from 'features/shared/actions'
-import { normalTxActionBuilder, issueAssetTxActionBuilder } from './transactions'
+import { voteTxActionBuilder, normalTxActionBuilder, issueAssetTxActionBuilder } from './transactions'
 
 const type = 'transaction'
 
@@ -24,6 +24,11 @@ function preprocessTransaction(formParams) {
     builder.actions = normalTxActionBuilder(formParams,  Number(gasPrice), 'amount')
   }
 
+  if (formParams.form === 'voteTx') {
+    const gasPrice = formParams.state.estimateGas * Number(formParams.gasLevel)
+    builder.actions = voteTxActionBuilder(formParams,  Number(gasPrice), formParams.state.address)
+  }
+
   if (formParams.form === 'issueAssetTx') {
     const gasPrice = formParams.state.estimateGas * Number(formParams.gasLevel)
     builder.actions = issueAssetTxActionBuilder(formParams, Number(gasPrice), 'amount')
@@ -41,7 +46,8 @@ function preprocessTransaction(formParams) {
   for (let i in builder.actions) {
     let a = builder.actions[i]
 
-    const intFields = ['amount', 'position']
+    delete a.ID
+    const intFields = ['amount', 'position','sourcePos']
     intFields.forEach(key => {
       const value = a[key]
       if (value) {
@@ -65,7 +71,6 @@ function preprocessTransaction(formParams) {
       throw new Error(`Action ${parseInt(i) + 1} receiver should be valid JSON.`)
     }
   }
-
   return builder
 }
 
@@ -92,7 +97,7 @@ form.submitForm = (formParams) => function (dispatch) {
   }
 
   // normal transactions
-  if( formParams.form === 'normalTx'){
+  if( formParams.form === 'normalTx' || formParams.form === 'voteTx'){
 
     const accountId = formParams.accountId
     const accountAlias = formParams.accountAlias
@@ -230,8 +235,48 @@ const decode = (data) => {
   }
 }
 
+const getAddresses =(params) => {
+  return new Promise((resolve, reject) => {
+    const body = Object.assign({from:0, count:1}, params)
+    chainClient().accounts.listAddresses(body)
+      .then((resp) =>{
+        const result = resp.data
+        if(result.length > 0){
+          resolve(result[0].address)
+        }else{
+          chainClient().accounts.createAddress(params)
+            .then((ret) =>{
+              resolve(ret.data.address)
+            }).catch((err) => reject( err))
+        }
+      })
+      .catch((err) => reject(err))
+  })
+}
+
+const estimateGas =(template) => {
+  return chainClient().transactions.estimateGas(template)
+}
+
+const buildTransaction = (builderBlock) =>{
+  const builderFunction = ( builder ) => {
+    const processed = preprocessTransaction(builderBlock)
+
+    builder.actions = processed.actions
+    builder.ttl = builderBlock.ttl
+    if (processed.baseTransaction) {
+      builder.baseTransaction = processed.baseTransaction
+    }
+
+  }
+  return chainClient().transactions.build(builderFunction)
+}
+
 export default {
   ...list,
   ...form,
   decode,
+  getAddresses,
+  estimateGas,
+  buildTransaction
 }

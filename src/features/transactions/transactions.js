@@ -124,3 +124,39 @@ export const issueAssetTxActionBuilder = (transaction, gas,prop) =>{
 
   return actions
 }
+
+export const voteTxActionBuilder = (transaction, gas, address) =>{
+  const accountAlias = transaction.accountAlias.value || transaction.accountAlias
+  const accountId = transaction.accountId.value || transaction.accountId
+  const nodePubkey = transaction.nodePubkey.value || transaction.nodePubkey
+  const amount = transaction.amount.value || transaction.amount
+
+  const spendAction = {
+    accountAlias,
+    accountId,
+    assetId: btmID,
+    amount,
+    type: 'spend_account'
+  }
+
+
+  const gasAction = {
+    accountAlias,
+    accountId,
+    asset_id:btmID,
+    amount: gas,
+    type: 'spend_account'
+  }
+
+  const voteAction ={
+    amount,
+    asset_id:btmID,
+    address,
+    vote: nodePubkey,
+    type:'vote_output'
+  }
+
+  const actions = [spendAction, gasAction, voteAction]
+
+  return actions
+}
