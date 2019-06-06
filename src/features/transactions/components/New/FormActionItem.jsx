@@ -19,7 +19,7 @@ const actionLabels = {
   [CROSS_CHAIN_OUT_KEY]: 'Cross Chain Out',
   [CROSS_CHAIN_IN_KEY]: 'Cross Chain In',
   [VOTE_OUTPUT_KEY]: 'Vote Output',
-  [UNVOTE_KEY]: 'Unvote',
+  [UNVOTE_KEY]: 'Veto',
   [SPEND_ACCOUNT_KEY]: 'Spend from account',
   [SPEND_UNSPENT_KEY]: 'Spend unspent output',
   [CONTROL_RECEIVER_KEY]: 'Control with receiver',

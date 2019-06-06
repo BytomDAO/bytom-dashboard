@@ -255,7 +255,8 @@
       "received": "收入",
       "retire": "销毁资产",
       "coinbase":"挖矿收入",
-      "immature": "未成熟"
+      "immature": "未成熟",
+      "vote":"投票"
     },
     "new":{
       "unsaveWarning":"交易表格有未完成内容，你确定要离开么？",

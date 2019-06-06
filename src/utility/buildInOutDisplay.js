@@ -47,6 +47,7 @@ const txOutputFields = [
   'account',
   'controlProgram',
   'address',
+  'vote'
 ]
 
 const unspentFields = [

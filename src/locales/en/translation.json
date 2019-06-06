@@ -256,7 +256,8 @@
       "received":"received",
       "retire":"retire",
       "coinbase":"coinbase",
-      "immature":"immature"
+      "immature":"immature",
+      "vote":"vote"
     },
     "new":{
       "unsaveWarning":"Your work is not saved! Are you sure you want to leave?",

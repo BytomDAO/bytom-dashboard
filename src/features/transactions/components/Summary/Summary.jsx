@@ -10,6 +10,7 @@ const INOUT_TYPES = {
   spend: 'Spend',
   control: 'Control',
   retire: 'Retire',
+  vote: 'Vote',
 }
 
 class Summary extends React.Component {
@@ -33,7 +34,8 @@ class Summary extends React.Component {
         if (!account) account = asset[accountKey] = {
           alias: inout.accountAlias,
           spend: 0,
-          control: 0
+          control: 0,
+          vote:{}
         }
 
         if (inout.type == 'spend') {
@@ -42,7 +44,16 @@ class Summary extends React.Component {
           account.spend -= inout.amount
         } else if (inout.type == 'control') {
           account.control += inout.amount
+        } else if (inout.type == 'vote'){
+          let vote = inout.vote
+          let voteObject = account['vote']
+          let nodePubkey = voteObject[vote]
+          if (nodePubkey === undefined) {
+            voteObject[vote] = 0
+          }
+          voteObject[vote] += inout.amount
         }
+
       }
     })
 
@@ -109,16 +120,34 @@ class Summary extends React.Component {
               amount: asset.decimals? converIntToDec(account[type], asset.decimals) : normalizeBtmAmountUnit(assetId, account[type], this.props.btmAmountUnit),
               asset: asset.alias ? asset.alias : <code className={styles.rawId}>{assetId}</code>,
               assetId: assetId,
-              direction: type == 'spend' ? 'from' : 'to',
               account: account.alias ? account.alias : <code className={styles.rawId}>{accountId}</code>,
               accountId: accountId,
             })
           }
         })
+
+        if(!_.isEmpty(account['vote'])){
+          let nodePubkeyArray = account.vote
+          for (const nodePubkey of Object.keys(nodePubkeyArray)) {
+            let amount = nodePubkeyArray[nodePubkey]
+            let type = 'vote'
+            items.push({
+              type: INOUT_TYPES[type],
+              rawAction: type,
+              amount: asset.decimals? converIntToDec(amount, asset.decimals) : normalizeBtmAmountUnit(assetId, amount, this.props.btmAmountUnit),
+              asset: asset.alias ? asset.alias : <code className={styles.rawId}>{assetId}</code>,
+              assetId: assetId,
+              account: account.alias ? account.alias : <code className={styles.rawId}>{accountId}</code>,
+              accountId: accountId,
+              nodePubkey: <code className={styles.rawId}>{nodePubkey}</code>
+            })
+          }
+        }
+
       })
     })
 
-    const ordering = ['issue', 'spend', 'control', 'retire']
+    const ordering = ['issue', 'spend', 'control', 'retire', 'vote']
     items.sort((a,b) => {
       return ordering.indexOf(a.rawAction) - ordering.indexOf(b.rawAction)
     })
@@ -137,22 +166,25 @@ class Summary extends React.Component {
               </td>
             }
             <td className={styles.colLabel}>{ t('form.amount') }</td>
-            <td className={styles.colAmount}>
+            <td className={item.rawAction==='vote'? styles.colVote: styles.colAmount}>
               <code className={styles.amount}>{item.amount}</code>
             </td>
             <td className={styles.colLabel}>{ t('form.asset') }</td>
-            <td className={styles.colAccount}>
+            <td className={item.rawAction==='vote'? styles.colVote: styles.colAccount}>
               <Link to={`/assets/${item.assetId}`}>
                 {item.asset}
               </Link>
             </td>
             <td className={styles.colLabel}>{item.account && t('form.account')}</td>
-            <td className={styles.colAccount}>
+            <td className={item.rawAction==='vote'? styles.colVote: styles.colAccount}>
               {item.accountId && <Link to={`/accounts/${item.accountId}`}>
                 {item.account}
               </Link>}
               {!item.accountId && item.account}
             </td>
+            {item.rawAction ==='vote'? [<td className={`${styles.colLabel} ${styles.nodePubkey}`}> {t('form.vote')}</td>,
+              <td className={styles.colVote}>{item.nodePubkey}
+              </td>]:[<td></td>,<td></td>]}
           </tr>
         )}
       </tbody>

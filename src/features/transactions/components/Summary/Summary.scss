@@ -43,6 +43,11 @@
   width: 20%;
 }
 
+.colVote{
+  color: $text-strong-color;
+  width: 10%;
+}
+
 .amount {
   color: $text-strong-color;
   background: none;
@@ -65,4 +70,8 @@
   text-overflow: ellipsis;
   max-width: 150px;
   vertical-align: middle;
+}
+
+.nodePubkey{
+  min-width: 75px;
 }

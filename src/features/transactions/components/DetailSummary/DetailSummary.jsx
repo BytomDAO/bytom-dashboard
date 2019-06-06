@@ -26,7 +26,8 @@ class DetailSummary extends React.Component {
         if (!account) account = asset[accountKey] = {
           alias: inout.accountAlias,
           spend: 0,
-          control: 0
+          control: 0,
+          vote: {}
         }
 
         if (inout.type == 'spend') {
@@ -35,6 +36,15 @@ class DetailSummary extends React.Component {
           account.spend -= inout.amount
         } else if (inout.type == 'control') {
           account.control += inout.amount
+        } else if (inout.type == 'vote'){
+          account.control += inout.amount
+          let vote = inout.vote
+          let voteObject = account['vote']
+          let nodePubkey = voteObject[vote]
+          if (nodePubkey === undefined) {
+            voteObject[vote] = 0
+          }
+          voteObject[vote] += inout.amount
         }
       }
     })
@@ -80,6 +90,21 @@ class DetailSummary extends React.Component {
 
         const assetAlias = asset.alias ==='BTM'? this.props.btmAmountUnit: asset.alias
         if (accountId !== 'external') {
+          if(!_.isEmpty(account['vote'])){
+            let nodePubkeyArray = account.vote
+            for (const nodePubkey of Object.keys(nodePubkeyArray)) {
+              let amount = nodePubkeyArray[nodePubkey]
+              items.push({
+                type: 'vote',
+                amount: asset.decimals? converIntToDec(amount, asset.decimals) : normalizeBtmAmountUnit(assetId, amount, this.props.btmAmountUnit),
+                asset: assetAlias ? assetAlias : <code className={styles.rawId}>{assetId}</code>,
+                assetId: assetId,
+                account: account.alias ? account.alias : <code className={styles.rawId}>{accountId}</code>,
+                accountId: accountId,
+                nodePubkey: <code className={styles.rawId}>{nodePubkey}</code>
+              })
+            }
+          }
           if(account['spend']> account['control'] && account['spend'] > 0){
             let type,
               amount = account['spend']- account['control']
@@ -127,50 +152,69 @@ class DetailSummary extends React.Component {
       })
     })
 
-    const ordering = ['issue','received',  'retire', 'sent']
+    const ordering = ['vote', 'issue','received',  'retire', 'sent']
     items.sort((a,b) => {
       return ordering.indexOf(a.type) - ordering.indexOf(b.type)
     })
 
 
 
-    return(<table className={styles.main}>
-      <tbody>
+    return(<div className={styles.main}>
         {items.map((item, index) =>
-          <tr key={index}>
-            {/*<td className={styles.colLabel}><img src={require(`images/transactions/${isCoinbase?'coinbase':item.type}.svg`)}/></td>*/}
-            {
-              !isCoinbase && <td className={styles.colAction}>
-                <img src={require(`images/transactions/${item.type}.svg`)}/> {t(`transaction.type.${item.type}`)}
-                </td>
-            }
-            {
-              isCoinbase && <td className={styles.colAction}>
-                <img src={require('images/transactions/coinbase.svg')}/> {t('transaction.type.coinbase')}
-                {!mature && <small className={styles.immature}>{ t('transaction.type.immature') }</small>}
-              </td>
-            }
+          <div className={styles.row} key={index}>
+            <div className={`${styles.colAction} ${styles.col}`}>
+              {
+                isCoinbase ?
+                  [<img src={require('images/transactions/coinbase.svg')}/>, t('transaction.type.coinbase'),
+                  !mature && <small className={styles.immature}>{ t('transaction.type.immature') }</small>]
+                :
+                  [<img src={require(`images/transactions/${item.type}.svg`)}/> , t(`transaction.type.${item.type}`)]
 
-            <td className={styles.colLabel}>{item.account && item.type && ( addType.includes(item.type) ? 'To' : 'From' )}</td>
-            <td className={styles.colAccount}>
-              {item.accountId && <Link to={`/accounts/${item.accountId}`}>
-                {item.account}
-              </Link>}
-              {!item.accountId && item.account}
-            </td>
+              }
+            </div>
 
-            <td className={`${styles.colAmount} ${styles.recievedAmount}`}>
-              <code className={ `${styles.amount} ${addType.includes(item.type)? styles.emphasisLabel : 'text-danger'}`}> {item.type && ( addType.includes(item.type) ? '+' : '-' )} {item.amount}</code>
-            </td>
-            <td className={styles.colUnit}>
-              <Link to={`/assets/${item.assetId}`}>
-                {item.asset}
-              </Link>
-            </td>
-          </tr>
+            <div className={styles.middle}>
+              <div className={styles.account}>
+                {
+                  item.type ==='vote' ?
+                  <div className={`${styles.colLabel}  ${styles.col}`}>{t('form.account')}</div>
+                  :<div className={`${styles.colLabel}  ${styles.col}`}>{item.account && item.type && ( addType.includes(item.type) ? 'To' : 'From' )}</div>
+                }
+                <div className={`${styles.colAccount}  ${styles.col}`}>
+                  {item.accountId && <Link to={`/accounts/${item.accountId}`}>
+                    {item.account}
+                  </Link>}
+                  {!item.accountId && item.account}
+                </div>
+              </div>
+
+              {
+                item.type ==='vote'&&
+                  [
+                    <div className={`${styles.colLabel}  ${styles.col}`}> {t('form.vote')}</div>,
+                    <div className={`${styles.col}`}>{item.nodePubkey}</div>
+                  ]
+
+              }
+            </div>
+
+            <div className={styles.end}>
+              <div className={`${styles.colAmount} ${styles.recievedAmount}  ${styles.col}`}>
+                {
+                  item.type === 'vote'?
+                  <code className={ `${styles.amount} ${styles.emphasisLabel}`}> {item.amount}</code>:
+                  <code className={ `${styles.amount} ${addType.includes(item.type)? styles.emphasisLabel : 'text-danger'}`}> {item.type && ( addType.includes(item.type) ? '+' : '-' )} {item.amount}</code>
+                }
+              </div>
+              <div className={`${styles.colUnit}  ${styles.col}`}>
+                <Link to={`/assets/${item.assetId}`}>
+                  {item.asset}
+                </Link>
+              </div>
+            </div>
+          </div>
         )}
-      </tbody>
-    </table>)
+    </div>)
   }
 }
 

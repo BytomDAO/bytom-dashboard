@@ -67,6 +67,10 @@ class Show extends BaseShow {
           resultoutput.account = inout.accountAlias ||inout.accountId
         }
 
+        if(inout.type === 'vote'){
+          resultoutput.vote = inout.vote
+        }
+
         resultoutput.accountId = inout.accountId
         resultoutput.asset = inout.assetAlias || inout.assetId
         resultoutput.assetId =  inout.assetId
