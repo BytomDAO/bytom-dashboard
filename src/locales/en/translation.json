@@ -310,10 +310,21 @@
     },
     "vote":{
       "info":"Vote Information",
-      "voteAmount":"Amount Vote",
-      "for":"Vote for",
-      "submit":"Submit Vote",
-      "confirm":"Confirm Vote"
+      "action":"Action",
+      "vote":{
+        "title":"Vote",
+        "voteAmount":"Amount Vote",
+        "for":"Vote for",
+        "confirm":"Confirm Vote",
+        "submit":"Submit Vote"
+      },
+      "veto":{
+        "title":"Veto",
+        "voteAmount":"Amount Veto",
+        "for":"Veto for",
+        "confirm":"Confirm Veto",
+        "submit":"Submit Veto"
+      }
     }
   },
   "balances":{

@@ -126,19 +126,12 @@ export const issueAssetTxActionBuilder = (transaction, gas,prop) =>{
 }
 
 export const voteTxActionBuilder = (transaction, gas, address) =>{
+
   const accountAlias = transaction.accountAlias.value || transaction.accountAlias
   const accountId = transaction.accountId.value || transaction.accountId
   const nodePubkey = transaction.nodePubkey.value || transaction.nodePubkey
   const amount = transaction.amount.value || transaction.amount
-
-  const spendAction = {
-    accountAlias,
-    accountId,
-    assetId: btmID,
-    amount,
-    type: 'spend_account'
-  }
-
+  const action = transaction.action.value || transaction.action
 
   const gasAction = {
     accountAlias,
@@ -148,15 +141,42 @@ export const voteTxActionBuilder = (transaction, gas, address) =>{
     type: 'spend_account'
   }
 
-  const voteAction ={
-    amount,
-    asset_id:btmID,
-    address,
-    vote: nodePubkey,
-    type:'vote_output'
+  if(action === 'vote'){
+    const spendAction = {
+      accountAlias,
+      accountId,
+      assetId: btmID,
+      amount,
+      type: 'spend_account'
+    }
+
+    const voteAction ={
+      amount,
+      asset_id:btmID,
+      address,
+      vote: nodePubkey,
+      type:'vote_output'
+    }
+
+    return [spendAction, gasAction, voteAction]
+  }else if(action === 'veto'){
+    const controlAction = {
+      assetId: btmID,
+      amount,
+      address,
+      type: 'control_address'
+    }
+
+    const vetoAction ={
+      accountAlias,
+      accountId,
+      amount,
+      asset_id:btmID,
+      vote: nodePubkey,
+      type:'unvote'
+    }
+    return [gasAction, vetoAction, controlAction]
+  }else{
+    throw 'invalid operation type.'
   }
-
-  const actions = [spendAction, gasAction, voteAction]
-
-  return actions
 }

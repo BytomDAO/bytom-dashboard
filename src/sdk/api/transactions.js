@@ -85,7 +85,7 @@ const transactionsAPI = (client) => {
       return shared.tryCallback(
         client.request('/build-transaction', builder),
         cb
-      ).then(resp => checkForError(resp))
+      ).then(resp => checkForError(resp)).catch(errors  => {throw checkForError(errors)})
     },
 
     buildBatch: (builderBlocks, cb) => {
@@ -104,12 +104,12 @@ const transactionsAPI = (client) => {
     },
 
     decodeTransaction: (raw_transaction, cb) => shared.tryCallback(
-      client.request('/decode-raw-transaction', {'raw_transaction': raw_transaction}).then(resp => checkForError(resp)),
+      client.request('/decode-raw-transaction', {'raw_transaction': raw_transaction}).then(resp => checkForError(resp)).catch(errors  => {throw checkForError(errors)}),
       cb
     ),
 
     sign: (template, cb) => finalize(template)
-      .then(finalized => client.request('/sign-transaction', finalized ).then(resp => checkForError(resp)),
+      .then(finalized => client.request('/sign-transaction', finalized ).then(resp => checkForError(resp)).catch(errors  => {throw checkForError(errors)}),
         cb
       ),
 
@@ -118,7 +118,8 @@ const transactionsAPI = (client) => {
       .then(finalized => client.signer.signBatch(finalized.successes, cb)),
 
     submit: (signed, cb) => shared.tryCallback(
-      client.request('/submit-transaction', {'raw_transaction': signed}).then(resp => checkForError(resp)),
+      client.request('/submit-transaction', {'raw_transaction': signed}).then(resp => checkForError(resp))
+        .catch(errors  => {throw checkForError(errors)}),
       cb
     ),
 
@@ -129,7 +130,7 @@ const transactionsAPI = (client) => {
     ),
 
     estimateGas: (template, cb) => shared.tryCallback(
-      client.request('/estimate-transaction-gas', {'transactionTemplate': template}).then(resp => checkForError(resp)),
+      client.request('/estimate-transaction-gas', {'transactionTemplate': template}).then(resp => checkForError(resp)).catch(errors  => {throw checkForError(errors)}),
       cb
     )
   }

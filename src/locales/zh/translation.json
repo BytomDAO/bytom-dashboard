@@ -309,10 +309,21 @@
     },
     "vote":{
       "info":"投票信息",
-      "voteAmount":"投票数量",
-      "for":"投票给",
-      "submit":"提交投票",
-      "confirm":"确认投票"
+      "action":"操作",
+      "vote":{
+        "title":"投票",
+        "voteAmount":"投票数量",
+        "for":"投票给",
+        "confirm":"确认投票",
+        "submit":"提交投票"
+      },
+      "veto":{
+        "title":"取消投票",
+        "voteAmount":"取消投票数量",
+        "for":"取消投票给",
+        "confirm":"取消投票",
+        "submit":"提交取消投票"
+      }
     }
   },
   "balances":{

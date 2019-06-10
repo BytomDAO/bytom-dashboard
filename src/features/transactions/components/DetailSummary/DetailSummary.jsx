@@ -37,7 +37,6 @@ class DetailSummary extends React.Component {
         } else if (inout.type == 'control') {
           account.control += inout.amount
         } else if (inout.type == 'vote'){
-          account.control += inout.amount
           let vote = inout.vote
           let voteObject = account['vote']
           let nodePubkey = voteObject[vote]

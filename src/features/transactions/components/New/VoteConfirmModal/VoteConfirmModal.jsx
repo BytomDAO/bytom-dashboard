@@ -18,7 +18,7 @@ class VoteConfirmModal extends Component {
 
   render() {
     const {
-      fields: { accountId, accountAlias, nodePubkey, amount, password, gasLevel },
+      fields: { action, accountId, accountAlias, nodePubkey, amount, password, gasLevel },
       handleSubmit,
       submitting,
       cancel,
@@ -31,7 +31,7 @@ class VoteConfirmModal extends Component {
     const fee = Number(gasLevel.value * gas)
 
     const  Total = Number(amount.value) + fee
-    let submitLabel = t('transaction.vote.confirm')
+    let submitLabel = t(`transaction.vote.${action.value}.confirm`)
 
     const normalize = (value) => {
       return normalizeBTMAmountUnit(btmID, value, btmAmountUnit)
@@ -39,7 +39,7 @@ class VoteConfirmModal extends Component {
 
     return (
       <div>
-        <h3>{ t('transaction.vote.confirm') }</h3>
+        <h3>{ t(`transaction.vote.${action.value}.confirm`) }</h3>
         <table className={styles.table}>
           <tbody>
             <tr>
@@ -47,11 +47,11 @@ class VoteConfirmModal extends Component {
               <td> <span>{accountAlias.value || accountId.value}</span></td>
             </tr>
             <tr>
-              <td className={styles.colLabel}>{ t('transaction.vote.for') }</td>
+              <td className={styles.colLabel}>{ t(`transaction.vote.${action.value}.for`) }</td>
               <td> <span>{nodePubkey.value}</span> </td>
             </tr>
             <tr>
-              <td className={styles.colLabel}>{ t('transaction.vote.voteAmount') }</td>
+              <td className={styles.colLabel}>{ t(`transaction.vote.${action.value}.voteAmount`) }</td>
               <td> <code>{normalize(amount.value)}</code> </td>
             </tr>
 
@@ -116,6 +116,7 @@ const validate = values => {
 export default  withNamespaces('translations') (reduxForm({
   form: 'Vote',
   fields:[
+    'action',
     'accountAlias',
     'accountId',
     'nodePubkey',

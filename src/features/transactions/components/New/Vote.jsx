@@ -4,7 +4,8 @@ import {
   Autocomplete,
   ObjectSelectorField,
   AmountUnitField,
-  GasField
+  GasField,
+  RadioField
 } from 'features/shared/components'
 import {chainClient} from 'utility/environment'
 import {reduxForm} from 'redux-form'
@@ -101,7 +102,7 @@ class Vote extends React.Component {
 
   render() {
     const {
-      fields: {accountId, accountAlias, nodePubkey, amount, gasLevel},
+      fields: {action, accountId, accountAlias, nodePubkey, amount, gasLevel},
       error,
       submitting
     } = this.props
@@ -110,7 +111,12 @@ class Vote extends React.Component {
       key.onBlur = this.estimateNormalTransactionGas.bind(this)
     });
 
-    let submitLabel = t('transaction.vote.submit')
+    let submitLabel = t(`transaction.vote.${action.value}.submit`)
+
+    const options = [
+      {label:t('transaction.vote.vote.title'), value: 'vote'},
+      {label:t('transaction.vote.veto.title'), value: 'veto'}
+    ]
 
     return (
           <TxContainer
@@ -124,6 +130,7 @@ class Vote extends React.Component {
           <div className={styles.borderBottom}>
             <label className={styles.title}>{t('transaction.vote.info')}</label>
             <div className={`${styles.mainBox} `}>
+              <RadioField title={t('transaction.vote.action')} options={options} fieldProps={action} />
               <ObjectSelectorField
                 key='account-selector-field'
                 keyIndex='votetx-account'
@@ -146,7 +153,7 @@ class Vote extends React.Component {
                 <AmountUnitField
                   key='asset-selector-field'
                   keyIndex='votetx-amount'
-                  title={ t('transaction.vote.voteAmount')}
+                  title={ t(`transaction.vote.${action.value}.voteAmount`)}
                   fieldProps={amount}
                 />
               </div>
@@ -203,6 +210,7 @@ export default withNamespaces('translations') (BaseNew.connect(
   reduxForm({
     form: 'Vote',
     fields: [
+      'action',
       'accountAlias',
       'accountId',
       'nodePubkey',
@@ -211,7 +219,8 @@ export default withNamespaces('translations') (BaseNew.connect(
     ],
     validate,
     initialValues: {
-      gasLevel: '1'
+      gasLevel: '1',
+      action: 'vote',
     },
     touchOnChange: true
   })(Vote)
