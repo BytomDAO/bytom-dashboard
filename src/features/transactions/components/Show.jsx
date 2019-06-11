@@ -27,7 +27,7 @@ class Show extends BaseShow {
     if (item) {
       const confirmation = this.props.highestBlock - item.blockHeight + 1
       const btmInput = item.inputs.reduce((sum, input) => {
-        if (input.type === 'spend' && input.assetId === btmID) {
+        if ((input.type === 'spend' || input.type === 'cross_chain_in') && input.assetId === btmID) {
           sum = BigNumber(input.amount).plus(sum)
         }
         return sum
@@ -36,7 +36,9 @@ class Show extends BaseShow {
       item.confirmations = confirmation
 
       const btmOutput = item.outputs.reduce((sum, output) => {
-        if ((output.type === 'control' || output.type === 'retire')&& output.assetId === btmID) {
+        if ((output.type === 'control' || output.type === 'retire'
+            || output.type === 'vote' ||  output.type === 'cross_chain_out')&&
+          output.assetId === btmID) {
           sum = BigNumber(output.amount).plus(sum)
         }
         return sum
