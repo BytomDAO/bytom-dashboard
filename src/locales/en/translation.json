@@ -265,7 +265,8 @@
       "normal":"Normal",
       "vote": "Vote",
       "submit":"Submit transaction",
-      "advanced" :"Advanced"
+      "advanced" :"Advanced",
+      "crossChain": "Cross Chain"
     },
     "normal":{
       "from":"From",
@@ -325,6 +326,13 @@
         "confirm":"Confirm Veto",
         "submit":"Submit Veto"
       }
+    },
+    "crossChain":{
+      "title":"Cross Chain info (Vapor->Bytom)",
+      "address":"Bytom Address",
+      "submit":"Submit Cross Chain",
+      "confirm":"Confirm Cross Chain",
+      "crossChainAddress":"Cross Chain Address"
     }
   },
   "balances":{

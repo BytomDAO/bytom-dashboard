@@ -6,6 +6,7 @@ import actions from 'actions'
 import componentClassNames from 'utility/componentClassNames'
 import Tutorial from 'features/tutorial/components/Tutorial'
 import NormalTxForm from './NormalTransactionForm'
+import CrossChain from './CrossChain/CrossChainTransaction'
 import AdvancedTxForm from './AdvancedTransactionForm'
 import Vote from './Vote'
 import { withRouter } from 'react-router'
@@ -77,6 +78,23 @@ class Form extends React.Component {
         }
       }
       return true
+    }else if(this.props.crossChainSelected){
+      const array = [
+        'accountAlias',
+        'accountId',
+        'assetAlias',
+        'assetId',
+        'address',
+        'amount',
+        'password'
+      ]
+
+      for (let k in array){
+        if(this.props.crossChainform[array[k]]){
+          return false
+        }
+      }
+      return true
     }
   }
 
@@ -115,6 +133,11 @@ class Form extends React.Component {
                   onClick={(e) => this.showForm(e, 'vote')}>
                   {t('transaction.new.vote')}
                   </button>
+                <button
+                  className={`btn btn-default ${this.props.crossChainSelected && 'active'}`}
+                  onClick={(e) => this.showForm(e, 'crossChain')}>
+                  {t('transaction.new.crossChain')}
+                  </button>
               </div>
             </div>
 
@@ -136,6 +159,12 @@ class Form extends React.Component {
 
               {this.props.voteSelected &&
               <Vote
+                handleKeyDown={this.handleKeyDown}
+                {...this.props}
+              />}
+
+              {this.props.crossChainSelected &&
+              <CrossChain
                 handleKeyDown={this.handleKeyDown}
                 {...this.props}
               />}
@@ -164,10 +193,12 @@ const mapStateToProps = (state, ownProps) => {
     normalform: getValues(state.form.NormalTransactionForm),
     advform: getValues(state.form.AdvancedTransactionForm),
     voteform: getValues(state.form.Vote),
+    crossChainform: getValues(state.form.CrossChainTransaction),
     tutorialVisible: !state.tutorial.location.isVisited,
     normalSelected : ownProps.location.query.type == 'normal' || ownProps.location.query.type == undefined,
     advancedSelected : ownProps.location.query.type == 'advanced',
     voteSelected : ownProps.location.query.type == 'vote',
+    crossChainSelected : ownProps.location.query.type == 'crossChain',
   }
 }
 

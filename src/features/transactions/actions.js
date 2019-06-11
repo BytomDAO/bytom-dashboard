@@ -3,7 +3,7 @@ import {chainClient} from 'utility/environment'
 import {parseNonblankJSON} from 'utility/string'
 import {push} from 'react-router-redux'
 import {baseCreateActions, baseListActions} from 'features/shared/actions'
-import { voteTxActionBuilder, normalTxActionBuilder, issueAssetTxActionBuilder } from './transactions'
+import { voteTxActionBuilder, normalTxActionBuilder, issueAssetTxActionBuilder, crossChainTxActionBuilder } from './transactions'
 
 const type = 'transaction'
 
@@ -22,6 +22,11 @@ function preprocessTransaction(formParams) {
   if (formParams.form === 'normalTx') {
     const gasPrice = formParams.state.estimateGas * Number(formParams.gasLevel)
     builder.actions = normalTxActionBuilder(formParams,  Number(gasPrice), 'amount')
+  }
+
+  if (formParams.form === 'crossChainTx') {
+    const gasPrice = formParams.state.estimateGas * Number(formParams.gasLevel)
+    builder.actions = crossChainTxActionBuilder(formParams,  Number(gasPrice))
   }
 
   if (formParams.form === 'voteTx') {
@@ -97,7 +102,7 @@ form.submitForm = (formParams) => function (dispatch) {
   }
 
   // normal transactions
-  if( formParams.form === 'normalTx' || formParams.form === 'voteTx'){
+  if( formParams.form === 'normalTx' || formParams.form === 'voteTx' || formParams.form === 'crossChainTx'){
 
     const accountId = formParams.accountId
     const accountAlias = formParams.accountAlias

@@ -1,0 +1,45 @@
+.submitIndicator{
+  float:right;
+}
+
+.btnGroup{
+  display: flex;
+  >div{
+    width: 50%;
+    button{
+      width: 100%;
+    }
+  }
+
+  >button{
+    width: 50%;
+    margin-left: $gutter-size;
+  }
+}
+
+.hr{
+  margin-top: 11px;
+  margin-bottom: 11px;
+}
+
+.table{
+  word-break: break-all;
+  width: 100%;
+  td{
+    padding: 4px 0px;
+  }
+}
+
+.colLabel{
+  width: 20%;
+  color: $text-strong-color;
+  font-weight: 500;
+}
+
+.unit{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: bottom;
+  width: 130px;
+  display: inline-block;
+}

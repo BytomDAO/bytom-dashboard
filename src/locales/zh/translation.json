@@ -264,7 +264,8 @@
       "normal":"简单交易",
       "advanced" :"高级交易",
       "vote": "投票",
-      "submit":"提交交易"
+      "submit":"提交交易",
+      "crossChain": "跨链"
     },
     "normal":{
       "from":"从",
@@ -324,6 +325,13 @@
         "confirm":"取消投票",
         "submit":"提交取消投票"
       }
+    },
+    "crossChain":{
+      "title":"跨链信息（Vapor->Bytom）",
+      "address":"Bytom地址",
+      "submit":"提交跨链",
+      "confirm":"确认跨链",
+      "crossChainAddress":"跨链地址"
     }
   },
   "balances":{

@@ -125,6 +125,44 @@ export const issueAssetTxActionBuilder = (transaction, gas,prop) =>{
   return actions
 }
 
+export const crossChainTxActionBuilder = (transaction, gas) =>{
+  const accountAlias = transaction.accountAlias.value || transaction.accountAlias
+  const accountId = transaction.accountId.value || transaction.accountId
+  const assetAlias = transaction.assetAlias.value || transaction.assetAlias
+  const assetId = transaction.assetId.value || transaction.assetId
+  const amount = transaction.amount.value || transaction.amount
+  const address = transaction.address.value || transaction.address
+
+  const spendAction = {
+    accountAlias,
+    accountId,
+    assetAlias,
+    assetId,
+    amount,
+    type: 'spend_account'
+  }
+
+  const gasAction = {
+    accountAlias,
+    accountId,
+    assetAlias: 'BTM',
+    amount: gas,
+    type: 'spend_account'
+  }
+
+  const crossOutAction = {
+    amount,
+    assetAlias,
+    assetId,
+    address,
+    type:'cross_chain_out'
+  }
+
+  const actions = [spendAction, crossOutAction, gasAction]
+
+  return actions
+}
+
 export const voteTxActionBuilder = (transaction, gas, address) =>{
 
   const accountAlias = transaction.accountAlias.value || transaction.accountAlias
