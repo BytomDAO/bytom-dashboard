@@ -11,6 +11,8 @@ const INOUT_TYPES = {
   control: 'Control',
   retire: 'Retire',
   vote: 'Vote',
+  crossOut:'Cross Out',
+  crossIn:'Cross In'
 }
 
 class Summary extends React.Component {
@@ -23,11 +25,22 @@ class Summary extends React.Component {
         alias: inout.assetAlias,
         decimals: (inout.assetDefinition && inout.assetDefinition.decimals && inout.assetId !== btmID)? inout.assetDefinition.decimals : null,
         issue: 0,
-        retire: 0
+        retire: 0,
+        crossOut:0,
+        crossIn:0
       }
 
-      if (['issue', 'retire'].includes(inout.type)) {
-        asset[inout.type] += inout.amount
+      if (['issue', 'retire', 'cross_chain_out', 'cross_chain_in'].includes(inout.type)) {
+        switch (inout.type){
+          case 'cross_chain_out':
+            asset['crossOut'] += inout.amount
+            break
+          case 'cross_chain_in':
+            asset['crossIn'] += inout.amount
+            break
+          default:
+            asset[inout.type] += inout.amount
+        }
       } else {
         let accountKey = inout.accountId || 'external'
         let account = asset[accountKey]
@@ -86,7 +99,7 @@ class Summary extends React.Component {
 
     Object.keys(summary).forEach((assetId) => {
       const asset = summary[assetId]
-      const nonAccountTypes = ['issue','retire']
+      const nonAccountTypes = ['issue','retire', 'crossOut', 'crossIn']
 
       nonAccountTypes.forEach((type) => {
         if (asset[type] > 0) {
@@ -147,7 +160,7 @@ class Summary extends React.Component {
       })
     })
 
-    const ordering = ['issue', 'spend', 'control', 'retire', 'vote']
+    const ordering = ['issue', 'spend', 'crossIn', 'control', 'retire', 'vote', 'crossOut']
     items.sort((a,b) => {
       return ordering.indexOf(a.rawAction) - ordering.indexOf(b.rawAction)
     })
