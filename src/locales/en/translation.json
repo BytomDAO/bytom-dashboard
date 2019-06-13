@@ -257,7 +257,9 @@
       "retire":"retire",
       "coinbase":"coinbase",
       "immature":"immature",
-      "vote":"vote"
+      "vote":"vote",
+      "crossOut":"Vapor -> Bytom",
+      "crossIn":"Bytom -> Vapor"
     },
     "new":{
       "unsaveWarning":"Your work is not saved! Are you sure you want to leave?",

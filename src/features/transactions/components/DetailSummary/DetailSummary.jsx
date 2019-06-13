@@ -15,11 +15,23 @@ class DetailSummary extends React.Component {
         alias: inout.assetAlias,
         decimals: (inout.assetDefinition && inout.assetDefinition.decimals && inout.assetId !== btmID)? inout.assetDefinition.decimals : null,
         issue: 0,
-        retire: 0
+        retire: 0,
+        crossOut:0,
+        crossIn:0
       }
 
-      if (['issue', 'retire'].includes(inout.type)) {
-        asset[inout.type] += inout.amount
+
+      if (['issue', 'retire', 'cross_chain_out', 'cross_chain_in'].includes(inout.type)) {
+        switch (inout.type){
+          case 'cross_chain_out':
+            asset['crossOut'] += inout.amount
+            break
+          case 'cross_chain_in':
+            asset['crossIn'] += inout.amount
+            break
+          default:
+            asset[inout.type] += inout.amount
+        }
       } else {
         let accountKey = inout.accountId || 'external'
         let account = asset[accountKey]
@@ -76,11 +88,11 @@ class DetailSummary extends React.Component {
       return amount
     }
 
-    const addType =['issue','received']
+    const addType =['issue','received', 'crossIn']
 
     Object.keys(summary).forEach((assetId) => {
       const asset = summary[assetId]
-      const nonAccountTypes = ['issue','retire']
+      const nonAccountTypes = ['issue','retire','cross_chain_out','cross_chain_in']
 
       Object.keys(asset).forEach((accountId) => {
         if (nonAccountTypes.includes(accountId)) return
@@ -93,6 +105,7 @@ class DetailSummary extends React.Component {
             let nodePubkeyArray = account.vote
             for (const nodePubkey of Object.keys(nodePubkeyArray)) {
               let amount = nodePubkeyArray[nodePubkey]
+              account['spend'] = account['spend'] - amount
               items.push({
                 type: 'vote',
                 amount: asset.decimals? converIntToDec(amount, asset.decimals) : normalizeBtmAmountUnit(assetId, amount, this.props.btmAmountUnit),
@@ -108,7 +121,25 @@ class DetailSummary extends React.Component {
             let type,
               amount = account['spend']- account['control']
 
-            if(asset.retire === 0 ){
+            if(asset.crossOut > 0){
+              if( amount < asset.crossOut ){
+                asset.crossOut = asset.crossOut - amount
+                type = 'crossOut'
+              }else{
+                const crossOut = asset.crossOut
+                amount = amount - crossOut
+                type = 'sent'
+                items.push({
+                  type: 'crossOut',
+                  amount: normalizeBtmAmountUnit(assetId,  crossOut, this.props.btmAmountUnit),
+                  asset: assetAlias ? assetAlias : <code className={styles.rawId}>{assetId}</code>,
+                  assetId: assetId,
+                  account: account.alias ? account.alias : <code className={styles.rawId}>{accountId}</code>,
+                  accountId: accountId,
+                })
+                asset.crossOut = 0
+              }
+            }else if(asset.retire === 0 ){
               type = 'sent'
             }else if(asset.retire >= amount ){
               type = 'retire'
@@ -136,8 +167,28 @@ class DetailSummary extends React.Component {
           }
 
           if(account['spend']< account['control'] && account['control'] > 0){
-            const amount = account['control']- account['spend']
-            const type = asset.issue >= amount? 'issue': 'received'
+            let type, amount = account['control']- account['spend']
+            if(asset.crossIn > 0){
+              if( amount < asset.crossIn ){
+                asset.crossIn = asset.crossIn - amount
+                type = 'crossIn'
+              }else{
+                const crossIn = asset.crossIn
+                amount = amount - crossIn
+                type = 'received'
+                items.push({
+                  type: 'crossIn',
+                  amount: normalizeBtmAmountUnit(assetId,  crossIn, this.props.btmAmountUnit),
+                  asset: assetAlias ? assetAlias : <code className={styles.rawId}>{assetId}</code>,
+                  assetId: assetId,
+                  account: account.alias ? account.alias : <code className={styles.rawId}>{accountId}</code>,
+                  accountId: accountId,
+                })
+                asset.crossIn = 0
+              }
+            }else{
+              type = asset.issue >= amount? 'issue': 'received'
+            }
             items.push({
               type: type,
               amount: asset.decimals? converIntToDec(amount, asset.decimals) : normalizeBtmAmountUnit(assetId, amount, this.props.btmAmountUnit),
@@ -151,7 +202,7 @@ class DetailSummary extends React.Component {
       })
     })
 
-    const ordering = ['vote', 'issue','received',  'retire', 'sent']
+    const ordering = ['vote', 'issue', 'cross_chain_in','received',  'retire', 'cross_chain_out', 'sent']
     items.sort((a,b) => {
       return ordering.indexOf(a.type) - ordering.indexOf(b.type)
     })
