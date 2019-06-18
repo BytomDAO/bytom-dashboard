@@ -5,6 +5,8 @@ import { btmID } from 'utility/environment'
 import styles from './DetailSummary.scss'
 import {withNamespaces} from 'react-i18next'
 
+const voteType = ['vote', 'veto']
+
 class DetailSummary extends React.Component {
   normalizeInouts(inouts) {
     const normalized = {}
@@ -39,11 +41,14 @@ class DetailSummary extends React.Component {
           alias: inout.accountAlias,
           spend: 0,
           control: 0,
-          vote: {}
+          vote: {},
+          veto:0
         }
 
         if (inout.type == 'spend') {
           account.spend += inout.amount
+        } else if (inout.type == 'veto') {
+          account.veto += inout.amount
         } else if (inout.type == 'control' && inout.purpose == 'change') {
           account.spend -= inout.amount
         } else if (inout.type == 'control') {
@@ -198,15 +203,27 @@ class DetailSummary extends React.Component {
               accountId: accountId,
             })
           }
+
+          if(account['veto'] > 0){
+            let type = 'veto',
+              amount = account['veto']
+            items.push({
+              type: type,
+              amount: asset.decimals? converIntToDec(amount, asset.decimals) : normalizeBtmAmountUnit(assetId, amount, this.props.btmAmountUnit),
+              asset: assetAlias ? assetAlias : <code className={styles.rawId}>{assetId}</code>,
+              assetId: assetId,
+              account: account.alias ? account.alias : <code className={styles.rawId}>{accountId}</code>,
+              accountId: accountId,
+            })
+          }
         }
       })
     })
 
-    const ordering = ['vote', 'issue', 'cross_chain_in','received',  'retire', 'cross_chain_out', 'sent']
+    const ordering = ['vote', 'veto' , 'issue', 'cross_chain_in','received',  'retire', 'cross_chain_out', 'sent']
     items.sort((a,b) => {
       return ordering.indexOf(a.type) - ordering.indexOf(b.type)
     })
-
 
 
     return(<div className={styles.main}>
@@ -226,7 +243,7 @@ class DetailSummary extends React.Component {
             <div className={styles.middle}>
               <div className={styles.account}>
                 {
-                  item.type ==='vote' ?
+                  voteType.includes(item.type) ?
                   <div className={`${styles.colLabel}  ${styles.col}`}>{t('form.account')}</div>
                   :<div className={`${styles.colLabel}  ${styles.col}`}>{item.account && item.type && ( addType.includes(item.type) ? 'To' : 'From' )}</div>
                 }
@@ -251,7 +268,7 @@ class DetailSummary extends React.Component {
             <div className={styles.end}>
               <div className={`${styles.colAmount} ${styles.recievedAmount}  ${styles.col}`}>
                 {
-                  item.type === 'vote'?
+                  voteType.includes(item.type) ?
                   <code className={ `${styles.amount} ${styles.emphasisLabel}`}> {item.amount}</code>:
                   <code className={ `${styles.amount} ${addType.includes(item.type)? styles.emphasisLabel : 'text-danger'}`}> {item.type && ( addType.includes(item.type) ? '+' : '-' )} {item.amount}</code>
                 }

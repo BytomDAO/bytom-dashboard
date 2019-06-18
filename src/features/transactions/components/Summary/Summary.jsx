@@ -11,6 +11,7 @@ const INOUT_TYPES = {
   control: 'Control',
   retire: 'Retire',
   vote: 'Vote',
+  veto: 'Veto',
   crossOut:'Cross Out',
   crossIn:'Cross In'
 }
@@ -48,11 +49,14 @@ class Summary extends React.Component {
           alias: inout.accountAlias,
           spend: 0,
           control: 0,
-          vote:{}
+          vote:{},
+          veto: 0
         }
 
         if (inout.type == 'spend') {
           account.spend += inout.amount
+        } else if (inout.type == 'veto') {
+          account.veto += inout.amount
         } else if (inout.type == 'control' && inout.purpose == 'change') {
           account.spend -= inout.amount
         } else if (inout.type == 'control') {
@@ -124,7 +128,7 @@ class Summary extends React.Component {
           accountId = null
         }
 
-        const accountTypes = ['spend', 'control']
+        const accountTypes = ['spend', 'control', 'veto']
         accountTypes.forEach((type) => {
           if (account[type] > 0) {
             items.push({
@@ -160,7 +164,7 @@ class Summary extends React.Component {
       })
     })
 
-    const ordering = ['issue', 'spend', 'crossIn', 'control', 'retire', 'vote', 'crossOut']
+    const ordering = ['issue', 'spend', 'crossIn', 'veto', 'control', 'retire', 'vote', 'crossOut']
     items.sort((a,b) => {
       return ordering.indexOf(a.rawAction) - ordering.indexOf(b.rawAction)
     })

@@ -259,6 +259,7 @@
       "coinbase":"coinbase",
       "immature":"immature",
       "vote":"vote",
+      "veto":"veto",
       "crossOut":"Vapor -> Bytom",
       "crossIn":"Bytom -> Vapor"
     },
