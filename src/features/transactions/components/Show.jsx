@@ -27,7 +27,7 @@ class Show extends BaseShow {
     if (item) {
       const confirmation = this.props.highestBlock - item.blockHeight + 1
       const btmInput = item.inputs.reduce((sum, input) => {
-        if ((input.type === 'spend' || input.type === 'cross_chain_in') && input.assetId === btmID) {
+        if ((input.type === 'spend' || input.type === 'cross_chain_in'|| input.type === 'veto') && input.assetId === btmID) {
           sum = BigNumber(input.amount).plus(sum)
         }
         return sum
@@ -116,7 +116,7 @@ class Show extends BaseShow {
             title={t('form.detail')}
             items={[
               {label: 'ID', value: item.id},
-              {label: t('form.timestamp'), value:  unconfirmedItem ? '-' : moment.unix(item.timestamp).format()},
+              {label: t('form.timestamp'), value:  unconfirmedItem ? '-' : moment(item.timestamp).format()},
               {label: t('form.blockId'), value: unconfirmedItem? '-' : item.blockId},
               {label: t('form.blockHeight'), value: unconfirmedItem?
                   t('transaction.unconfirmedItem'): item.blockHeight },
