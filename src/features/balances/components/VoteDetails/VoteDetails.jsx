@@ -40,7 +40,7 @@ class VoteDetails extends BaseShow {
             {(voteDetails).map(item =>
               <tr>
                 <td>{item.vote}</td>
-                <td>{normalizeGlobalBTMAmount(btmID, item.voteAmount, btmAmountUnit)}</td>
+                <td>{normalizeGlobalBTMAmount(btmID, item.voteNumber, btmAmountUnit)}</td>
               </tr>
             )}
             </tbody>

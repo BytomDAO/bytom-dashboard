@@ -13,7 +13,7 @@ const balanceFields = [
   'assetTags' ,
   'assetIsLocal' ,
   'amount' ,
-  'totalVoteAmount',
+  'totalVoteNumber',
   'accountAlias' ,
   'account' ,
   'accountTags' ,
@@ -85,7 +85,7 @@ const buildDisplay = (item, fields, btmAmountUnit, t) => {
           label: t(`form.${key}`),
           value: decimals? formatIntNumToPosDecimal(item[key], decimals) :normalizeGlobalBTMAmount(item['assetId'], item[key], btmAmountUnit)
         })
-      }else if(key === 'totalVoteAmount' ){
+      }else if(key === 'totalVoteNumber' ){
         details.push({
           label: t(`form.${key}`),
           value: decimals? formatIntNumToPosDecimal(item[key], decimals) :normalizeGlobalBTMAmount(item['assetId'], item[key], btmAmountUnit),

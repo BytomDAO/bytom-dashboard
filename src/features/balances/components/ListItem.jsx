@@ -22,8 +22,8 @@ class ListItem extends React.Component {
         accountAlias: item.accountAlias,
         accountId: item.accountId
       }
-      if(item.totalVoteAmount){
-        balanceItem.totalVoteAmount = convertAmount(item.totalVoteAmount)
+      if(item.totalVoteNumber){
+        balanceItem.totalVoteNumber = convertAmount(item.totalVoteNumber)
       }
     }
 
