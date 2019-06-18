@@ -33,6 +33,13 @@ const rescanProgress = (state = {}, action) => {
   return state
 }
 
+const voteDetail = (state = [], action) => {
+  if (action.type == 'UPDATE_VOTE_DETAILS') {
+    return action.param
+  }
+  return state
+}
+
 
 const rescanning = (state = {}, action) => {
   if (action.type == 'START_RESCAN') return true
@@ -45,5 +52,6 @@ export default combineReducers({
   items: itemsReducer,
   queries: queriesReducer,
   rescanning,
-  rescanProgress
+  rescanProgress,
+  voteDetail
 })

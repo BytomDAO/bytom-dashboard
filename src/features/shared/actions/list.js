@@ -28,7 +28,9 @@ export default function(type, options = {}) {
             dispatch(receive(resp))
           }
         }
-      )
+      ).catch(error=>{
+        dispatch({type: 'ERROR', payload: { 'message': error.msg}})
+      })
 
       return promise
     }

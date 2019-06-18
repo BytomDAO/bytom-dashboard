@@ -142,7 +142,8 @@
     "reissueTitle":"是否可重复发行",
     "reissueTrue":"可重复发行",
     "reissueFalse":"不可重复发行",
-    "vote": "节点公钥"
+    "vote": "节点公钥",
+    "totalVoteAmount":"投票"
   },
   "xpub":{
     "methodOptions" : {
@@ -343,7 +344,8 @@
       "successMsg":"已经成功扫描资产余额。",
       "startMsg":"扫描正在启动...",
       "rescanMsg":"钱包正在扫描中..."
-    }
+    },
+    "voteDetails":"投票详情"
   },
   "errorMessage":{
     "password": "密码错误，请重新查看密码。",

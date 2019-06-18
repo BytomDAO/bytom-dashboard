@@ -35,7 +35,9 @@ const accountsAPI = (client) => {
 
     listAddresses: (params) => shared.query(client, 'accounts', '/list-addresses', params),
 
-    validateAddresses: (address, cb) => shared.query(client, 'accounts', '/validate-address', {'address': address},  {cb})
+    validateAddresses: (address, cb) => shared.query(client, 'accounts', '/validate-address', {'address': address},  {cb}),
+
+    listAccountVotes: (params, cb) => shared.query(client, 'accounts', '/list-account-votes', params, {cb}),
   }
 }
 

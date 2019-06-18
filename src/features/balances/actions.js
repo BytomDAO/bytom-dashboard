@@ -41,10 +41,23 @@ const walletInfo = () => {
   }
 }
 
+const getVoteDetail = () => {
+  return (dispatch) => {
+    return chainClient().accounts.listAccountVotes({})
+      .then(resp => {
+        dispatch({type: 'UPDATE_VOTE_DETAILS', param:resp.data})
+      })
+      .catch((err) => {
+        dispatch({type: 'ERROR', payload: err})
+      })
+  }
+}
+
 let actions = {
   updateInfo,
   rescan,
   walletInfo,
+  getVoteDetail,
   ...baseListActions('balance')
 }
 export default actions

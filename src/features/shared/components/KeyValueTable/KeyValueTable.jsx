@@ -62,6 +62,9 @@ class KeyValueTable extends React.Component {
                   <span
                     className={`${styles.pencil} glyphicon glyphicon-pencil`}></span>{t('form.edit')}
                 </Link>}
+                {item.details && <Link to={item.details} className={styles.edit}>
+                 {t('form.detail')}
+                </Link>}
                 {item.program && <button  onClick={item.program} className={`${styles.detail} ${styles.edit} btn btn-link`}>
                   { t('commonWords.program')}
                 </button>}

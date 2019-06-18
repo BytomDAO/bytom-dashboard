@@ -1,0 +1,48 @@
+.main {
+  background: $background-color;
+  color: $text-strong-color;
+  width: 100%;
+  table-layout: fixed;
+
+  code {
+    padding: 0;
+    font-size: $font-size-code;
+  }
+
+  td {
+    border-top: 1px solid $border-light-color;
+    word-wrap: break-word;
+    color: $text-color;
+    line-height: 20px;
+    vertical-align: top;
+  }
+
+  th {
+    color: $text-strong-color;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: $font-size-chrome;
+  }
+
+  td, th  {
+    padding: 13px $gutter-size 13px 0;
+  }
+  th, td {
+
+    &:first-child {
+      padding-left: $gutter-size * 2;
+    }
+
+    &:last-child {
+      width: 30%;
+    }
+  }
+
+  :global {
+    .btn-link {
+      padding-top: 0;
+      padding-bottom: 0;
+      line-height: 1;
+    }
+  }
+}

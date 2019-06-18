@@ -142,7 +142,8 @@
     "reissueTitle":"Token reissuable",
     "reissueTrue":"Able to be reissued",
     "reissueFalse":"Unable to be reissued",
-    "vote": "Node Public Key"
+    "vote": "Node Public Key",
+    "totalVoteAmount":"Vote"
   },
   "xpub":{
     "methodOptions" : {
@@ -346,7 +347,8 @@
       "successMsg":"Successfully rescanned spent outputs.",
       "startMsg":"Rescan is starting...",
       "rescanMsg":"Wallet Rescanning..."
-    }
+    },
+    "voteDetails":"Vote Details"
   },
   "errorMessage":{
     "password": "Your password is wrong, please check your password.",

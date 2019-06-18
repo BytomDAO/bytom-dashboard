@@ -113,25 +113,14 @@ class NormalTxForm extends React.Component {
     const actions = normalTxActionBuilder(transaction, Math.pow(10, 7), 'amount.value' )
 
     const body = {actions, ttl: 1}
-    this.connection.request('/build-transaction', body).then(resp => {
-      if (resp.status === 'fail') {
-        this.setState({estimateGas: null})
-        const errorMsg =  resp.code && i18n.exists(`btmError.${resp.code}`) && t(`btmError.${resp.code}`) || resp.msg
-        this.props.showError(new Error(errorMsg))
-        return
-      }
-
-      return this.connection.request('/estimate-transaction-gas', {
-        transactionTemplate: resp.data
-      }).then(resp => {
-        if (resp.status === 'fail') {
-          this.setState({estimateGas: null})
-          const errorMsg =  resp.code && i18n.exists(`btmError.${resp.code}`) && t(`btmError.${resp.code}`) || resp.msg
-          this.props.showError(new Error(errorMsg))
-          return
-        }
+    this.props.buildTransaction(body).then(resp => {
+      return this.props.estimateGasFee(resp.data).then(resp => {
         this.setState({estimateGas: Math.ceil(resp.data.totalNeu/100000)*100000})
       })
+    }).catch(err =>{
+      this.setState({estimateGas: null, address: null})
+      const errorMsg =  err.code && i18n.exists(`btmError.${err.code}`) && t(`btmError.${err.code}`) || err.msg
+      this.props.showError(new Error(errorMsg))
     })
   }
 
@@ -307,6 +296,8 @@ const mapDispatchToProps = (dispatch) => ({
       noCloseBtn: true
     }
   )),
+  estimateGasFee: actions.transaction.estimateGas,
+  buildTransaction: actions.transaction.buildTransaction,
   ...BaseNew.mapDispatchToProps('transaction')(dispatch)
 })
 

@@ -29,6 +29,8 @@ class AccountShow extends BaseShow {
       const changeAddresses = data.data.filter(address => address.change).map((address) => {return {address: address.address, program: address.controlProgram}})
 
       this.setState({addresses: normalAddresses, changeAddresses})
+    }).catch(error =>{
+      return
     })
   }
 
