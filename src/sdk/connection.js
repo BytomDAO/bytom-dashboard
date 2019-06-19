@@ -165,6 +165,9 @@ class Connection {
           }
         )
       }).then((body) => {
+        if(body.status === 'fail'){
+          throw body
+        }
         // After processing the response, convert snakecased field names to
         // camelcase to match language conventions.
         return skipSnakeize? body : camelize(body)
