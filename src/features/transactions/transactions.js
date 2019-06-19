@@ -211,7 +211,7 @@ export const voteTxActionBuilder = (transaction, gas, address) =>{
       amount,
       asset_id:btmID,
       vote: nodePubkey,
-      type:'unvote'
+      type:'veto'
     }
     return [gasAction, vetoAction, controlAction]
   }else{
