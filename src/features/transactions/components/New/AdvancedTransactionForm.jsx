@@ -263,6 +263,8 @@ export default withNamespaces('translations') (BaseNew.connect(
       'actions[].address',
       'actions[].vote',
       'actions[].sourceId',
+      'actions[].vmVersion',
+      'actions[].issuanceProgram',
       'actions[].sourcePos',
       'actions[].password',
       'submitAction',

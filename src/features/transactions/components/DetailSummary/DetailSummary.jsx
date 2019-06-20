@@ -194,14 +194,16 @@ class DetailSummary extends React.Component {
             }else{
               type = asset.issue >= amount? 'issue': 'received'
             }
-            items.push({
-              type: type,
-              amount: asset.decimals? converIntToDec(amount, asset.decimals) : normalizeBtmAmountUnit(assetId, amount, this.props.btmAmountUnit),
-              asset: assetAlias ? assetAlias : <code className={styles.rawId}>{assetId}</code>,
-              assetId: assetId,
-              account: account.alias ? account.alias : <code className={styles.rawId}>{accountId}</code>,
-              accountId: accountId,
-            })
+            if(amount >0){
+              items.push({
+                type: type,
+                amount: asset.decimals? converIntToDec(amount, asset.decimals) : normalizeBtmAmountUnit(assetId, amount, this.props.btmAmountUnit),
+                asset: assetAlias ? assetAlias : <code className={styles.rawId}>{assetId}</code>,
+                assetId: assetId,
+                account: account.alias ? account.alias : <code className={styles.rawId}>{accountId}</code>,
+                accountId: accountId,
+              })
+            }
           }
 
           if(account['veto'] > 0){

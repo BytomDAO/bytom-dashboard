@@ -30,7 +30,7 @@ const actionLabels = {
 
 const visibleFields = {
   [CROSS_CHAIN_OUT_KEY]: {asset: true, amount: true, address:true},
-  [CROSS_CHAIN_IN_KEY]: {asset: true, amount: true, sourceId:true, sourcePos:true},
+  [CROSS_CHAIN_IN_KEY]: {asset: true, amount: true, sourceId:true, sourcePos:true, vmVersion:true, issuanceProgram:true},
   [VOTE_OUTPUT_KEY]: {asset: true, amount: true, address:true, vote:true},
   [VETO_KEY]: {account:true, amount: true, asset: true, vote:true},
   [SPEND_ACCOUNT_KEY]: {asset: true, account: true, amount: true, password: true},
@@ -76,6 +76,8 @@ class ActionItem extends React.Component {
       vote,
       sourceId,
       sourcePos,
+      vmVersion,
+      issuanceProgram,
       referenceData } = this.props.fieldProps
 
     const visible = visibleFields[type.value] || {}
@@ -122,6 +124,9 @@ class ActionItem extends React.Component {
         {visible.vote && <TextField title={ t('form.vote' )} fieldProps={vote} />}
         {visible.sourceId && <TextField title={ t('form.sourceId' )} fieldProps={sourceId} />}
         {visible.sourcePos && <TextField title={ t('form.sourcePos' )} fieldProps={sourcePos} />}
+        {visible.vmVersion && <TextField title={t('form.vmVersion')} fieldProps={vmVersion} />}
+        {visible.issuanceProgram && <TextField title={ t('form.issuanceProgram') } fieldProps={issuanceProgram} />}
+
 
         {visible.outputId &&
           <TextField title='Output ID' fieldProps={outputId} />}

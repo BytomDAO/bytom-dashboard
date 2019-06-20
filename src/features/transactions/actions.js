@@ -52,7 +52,7 @@ function preprocessTransaction(formParams) {
     let a = builder.actions[i]
 
     delete a.ID
-    const intFields = ['amount', 'position','sourcePos']
+    const intFields = ['amount', 'position','sourcePos','vmVersion']
     intFields.forEach(key => {
       const value = a[key]
       if (value) {
