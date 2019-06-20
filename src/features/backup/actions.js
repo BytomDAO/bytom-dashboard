@@ -11,7 +11,7 @@ let actions = {
           const date = new Date()
           const dateStr = date.toLocaleDateString().split(' ')[0]
           const timestamp = date.getTime()
-          const fileName = ['bytom-wallet-backup-', dateStr, timestamp].join('-')
+          const fileName = ['vapor-wallet-backup-', dateStr, timestamp].join('-')
 
           let element = document.createElement('a')
           element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(resp.data)))

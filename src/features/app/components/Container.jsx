@@ -83,7 +83,7 @@ class Container extends React.Component {
     if (!this.props.authOk) {
       layout = <Login/>
     } else if (!this.props.configKnown) {
-      return <Loading>Connecting to Bytom Core...</Loading>
+      return <Loading>Connecting to Vapor Core...</Loading>
     } else if (!this.props.configured) {
       layout = <Config>{this.props.children}</Config>
     } else if (!this.props.accountInit && this.state.noAccountItem){
