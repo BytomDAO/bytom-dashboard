@@ -6,6 +6,7 @@ import { actions as backUp } from 'features/backup'
 import { actions as balance } from 'features/balances'
 import { actions as configuration } from 'features/configuration'
 import { actions as core } from 'features/core'
+import { actions as federation } from 'features/federation'
 import { actions as initialization } from 'features/initialization'
 import { actions as mockhsm } from 'features/mockhsm'
 import { actions as testnet } from 'features/testnet'
@@ -24,6 +25,7 @@ const actions = {
   balance,
   configuration,
   core,
+  federation,
   initialization,
   key: mockhsm,
   testnet,

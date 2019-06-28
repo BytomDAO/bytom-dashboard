@@ -7,6 +7,7 @@ import { reducers as app } from 'features/app'
 import { reducers as asset } from 'features/assets'
 import { reducers as balance } from 'features/balances'
 import { reducers as core } from 'features/core'
+import { reducers as federation } from 'features/federation'
 import { reducers as initialization } from 'features/initialization'
 import { reducers as mockhsm } from 'features/mockhsm'
 import { reducers as testnet } from 'features/testnet'
@@ -53,6 +54,7 @@ const makeRootReducer = () => (state, action) => {
     balance,
     core,
     form,
+    federation,
     initialization,
     key: mockhsm,
     routing,

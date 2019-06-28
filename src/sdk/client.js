@@ -7,6 +7,7 @@ const backUpAPI = require('./api/backUp')
 const balancesAPI = require('./api/balances')
 const bytomCLI = require('./api/bytomCLI')
 const configAPI = require('./api/config')
+const federationAPI = require('./api/federations')
 const hsmSigner = require('./api/hsmSigner')
 const mockHsmKeysAPI = require('./api/mockHsmKeys')
 const transactionsAPI = require('./api/transactions')
@@ -43,6 +44,8 @@ class Client {
     this.bytomCli = bytomCLI(this)
 
     this.config = configAPI(this)
+
+    this.federations = federationAPI(this)
 
     this.mockHsm = {
       keys: mockHsmKeysAPI(this),

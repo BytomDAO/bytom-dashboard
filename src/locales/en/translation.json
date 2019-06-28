@@ -73,7 +73,8 @@
     "newToken":"Create an access token",
     "newAsset":"Create an asset",
     "resetPassword":"Reset password",
-    "peer":"Peers information"
+    "peer":"Peers information",
+    "federation":"Federation"
   },
   "form":{
     "detail": "Details",
@@ -247,11 +248,14 @@
     "transaction":"Transaction",
     "unconfirmedTx":"unconfirmed transaction",
     "id":"Tx ID:",
+    "crossChainId":"Tx ID(__id__):",
     "confirmed":"confirmed",
     "contractStatus":"Contract Execution Status",
     "confirmation":"__count__ confirmation",
     "confirmation_plural":"__count__ confirmations",
     "unconfirmedItem":"Unknown (0 confirmation)",
+    "pending":"Pending",
+    "completed":"Completed",
     "type":{
       "issue":"issue",
       "sent":"sent",

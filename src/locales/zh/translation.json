@@ -73,7 +73,8 @@
     "newToken":"新建访问令牌",
     "newAsset":"新建资产",
     "resetPassword":"重置密钥密码",
-    "peer":"节点信息"
+    "peer":"节点信息",
+    "federation":"联邦"
   },
   "form":{
     "detail": "详情",
@@ -247,10 +248,13 @@
     "transaction":"交易",
     "unconfirmedTx":"未确认交易",
     "id":"交易ID:",
+    "crossChainId":"交易ID(__id__):",
     "confirmed":"已确认",
     "contractStatus":"合约运行状态",
     "confirmation":"确认数 __count__",
     "unconfirmedItem":"未知 (确认数 0)",
+    "pending":"等待确认中",
+    "completed":"已完成",
     "type":{
       "issue": "创建资产",
       "sent": "支出",

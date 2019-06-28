@@ -7,17 +7,29 @@ import Sync from '../Sync/Sync'
 import {docsRoot, releaseUrl} from '../../../../utility/environment'
 import { capitalize } from 'utility/string'
 import {withNamespaces} from 'react-i18next'
+import actions from 'actions'
 
 class Navigation extends React.Component {
   constructor(props) {
     super(props)
-
     this.openTutorial = this.openTutorial.bind(this)
+    this.state = {
+      showFed: false
+    }
   }
 
   openTutorial(event) {
     event.preventDefault()
     this.props.openTutorial()
+  }
+  componentDidMount() {
+    this.props.fetchFederationItem()
+      .then(resp =>{
+        this.setState({showFed: true})
+      })
+      .catch(e =>{
+        this.setState({showFed: false})
+      })
   }
 
   render() {
@@ -56,6 +68,12 @@ class Navigation extends React.Component {
               {capitalize((t('crumbName.balance')))}
             </Link>
           </li>
+          { this.state.showFed && <li>
+            <Link to='/federations' activeClassName={styles.active}>
+              {navIcon('balance', styles)}
+              {capitalize((t('crumbName.federation')))}
+            </Link>
+          </li>}
         </ul>
 
         <ul className={styles.navigation}>
@@ -114,5 +132,8 @@ export default connect(
       routing: state.routing, // required for <Link>s to update active state on navigation
       showNavAdvance: state.app.navAdvancedState === 'advance'
     }
-  }
+  },
+  (dispatch) => ({
+    fetchFederationItem: () => dispatch(actions.federation.fetchItems()),
+  })
 )( withNamespaces('translations')(Navigation))

@@ -29,7 +29,10 @@ export default function(type, options = {}) {
           }
         }
       ).catch(error=>{
-        dispatch({type: 'ERROR', payload: { 'message': error.msg}})
+        if(error.body){
+          dispatch({type: 'ERROR', payload: { 'message': error.body.msg}})
+        }
+        else throw error
       })
 
       return promise
