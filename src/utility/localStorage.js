@@ -21,8 +21,12 @@ export const exportState = (store) => () => {
     app:{
       navAdvancedState : state.app.navAdvancedState,
     },
+    account:{
+      currentAccount: state.account.currentAccount,
+    },
     transaction: {
       generated: (state.transaction || {}).generated,
+      pageIds: (state.transaction || {}).pageIds
     },
     tutorial: state.tutorial
   }

@@ -10,7 +10,7 @@ class List extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.currentBlock != this.props.currentBlock) {
       if (nextProps.currentPage == 1) {
-        this.props.getLatest('')
+        this.props.getLatest({accountAlias: this.props.accountAlias})
       }
     }
   }
@@ -22,11 +22,12 @@ class List extends React.Component {
 
 export default BaseList.connect(
   (state, ownProps) => ({
-    ...BaseList.mapStateToProps(type, ListItem)(state, ownProps)
+    ...BaseList.mapStateToProps(type, ListItem)(state, ownProps),
+    accountAlias: state.account.currentAccount,
   }),
   (dispatch) => ({
     ...BaseList.mapDispatchToProps(type)(dispatch),
-    getLatest: (query) => dispatch(actions.transaction.fetchPage(query, 1, { refresh: true, pageSize: pageSize })),
+    getLatest: (query) => dispatch(actions.transaction.fetchPage(query, 1, { refresh: true, pageSize: pageSize, accountAlias: query.accountAlias, unconfirmed: true })),
   }),
   List
 )

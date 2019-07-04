@@ -7,7 +7,6 @@ import componentClassNames from 'utility/componentClassNames'
 import { PageContent, PageTitle, Pagination } from '../'
 import EmptyList from './EmptyList'
 import {withNamespaces} from 'react-i18next'
-import {currentBlockHeight} from '../../../core/reducers'
 
 class ItemList extends React.Component {
   render() {

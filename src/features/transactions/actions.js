@@ -10,6 +10,7 @@ const type = 'transaction'
 const list = baseListActions(type, {
   defaultKey: 'id'
 })
+
 const form = baseCreateActions(type)
 
 function preprocessTransaction(formParams) {

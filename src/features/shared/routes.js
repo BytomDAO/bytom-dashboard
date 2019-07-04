@@ -5,15 +5,19 @@ import actions from 'actions'
 
 const makeRoutes = (store, type, List, New, Show, options = {}) => {
   const loadPage = ( state ) => {
+    const accountAlias = store.getState().account.currentAccount
     if(type === 'transaction' || type === 'unspent'){
       const query = state.location.query
+      const unconfirmed = store.getState().transaction.unconfirm
       const pageNumber = parseInt(state.location.query.page || 1)
       const pageSizes = (type === 'unspent')? UTXOpageSize: pageSize
       if (pageNumber == 1) {
-        store.dispatch(actions[type].fetchPage(query, pageNumber, { refresh: true, pageSize: pageSizes }))
+        store.dispatch(actions[type].fetchPage(query, pageNumber, { refresh: true, pageSize: pageSizes , accountAlias , unconfirmed:true }))
       } else {
-        store.dispatch(actions[type].fetchPage(query, pageNumber,  { pageSize: pageSizes }))
+        store.dispatch(actions[type].fetchPage(query, pageNumber,  { pageSize: pageSizes , accountAlias , unconfirmed } ))
       }
+    }else if(type === 'balance'){
+      store.dispatch(actions[type].fetchAll({accountAlias}))
     }else{
       store.dispatch(actions[type].fetchAll())
     }
