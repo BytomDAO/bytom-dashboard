@@ -11,10 +11,13 @@ const makeRoutes = (store, type, List, New, Show, options = {}) => {
       const unconfirmed = store.getState().transaction.unconfirm
       const pageNumber = parseInt(state.location.query.page || 1)
       const pageSizes = (type === 'unspent')? UTXOpageSize: pageSize
+      let options = {pageSize: pageSizes}
       if (pageNumber == 1) {
-        store.dispatch(actions[type].fetchPage(query, pageNumber, { refresh: true, pageSize: pageSizes , accountAlias , unconfirmed:true }))
+        options = type==='transaction'? {...options,refresh: true,  accountAlias , unconfirmed:true }: options
+        store.dispatch(actions[type].fetchPage(query, pageNumber, options))
       } else {
-        store.dispatch(actions[type].fetchPage(query, pageNumber,  { pageSize: pageSizes , accountAlias , unconfirmed } ))
+        options = type==='transaction'? {...options, accountAlias , unconfirmed }: options
+        store.dispatch(actions[type].fetchPage(query, pageNumber,  options ))
       }
     }else if(type === 'balance'){
       store.dispatch(actions[type].fetchAll({accountAlias}))

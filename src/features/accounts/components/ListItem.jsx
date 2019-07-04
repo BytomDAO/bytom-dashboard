@@ -9,12 +9,21 @@ class ListItem extends React.Component {
 
     return(
       <tr>
-        <td>{item.alias || '-'}</td>
-        <td><code>{item.id}</code></td>
         <td>
           <Link to={`/accounts/${item.id}`}>
-            {t('commonWords.viewDetails')} →
+            {item.alias || '-'}
           </Link>
+        </td>
+        <td><code>{item.id}</code></td>
+        <td>
+          {item.isUsed?
+            <button className='btn btn-default btn-sx' disabled>
+              inused
+            </button>:
+            <button className='btn btn-primary btn-xs' onClick={() => this.props.switch(item.alias)}>
+              switch
+          </button>
+          }
         </td>
       </tr>
     )

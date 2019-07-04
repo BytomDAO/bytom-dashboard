@@ -13,6 +13,12 @@ const update = baseUpdateActions(type, {
   jsonFields: ['tags']
 })
 
+const switchAccount = (accountAlias) => {
+  return (dispatch) => {
+    dispatch({type: 'SET_CURRENT_ACCOUNT', account: accountAlias})
+  }
+}
+
 let actions = {
   ...list,
   ...create,
@@ -25,7 +31,8 @@ let actions = {
   },
   listAddresses: (accountId) => {
     return chainClient().accounts.listAddresses({accountId})
-  }
+  },
+  switchAccount
 }
 
 export default actions
