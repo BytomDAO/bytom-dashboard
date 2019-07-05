@@ -79,12 +79,6 @@ class Navigation extends React.Component {
               {capitalize((t('crumbName.key')))}
             </Link>
           </li>
-          {/*<li>*/}
-            {/*<Link to='/accounts' activeClassName={styles.active}>*/}
-              {/*{navIcon('account', styles)}*/}
-              {/*{capitalize(t('crumbName.account'))}*/}
-            {/*</Link>*/}
-          {/*</li>*/}
         </ul>
 
         { this.props.showNavAdvance && <ul className={styles.navigation}>
@@ -122,7 +116,7 @@ class Navigation extends React.Component {
           <li>
             <Link to='/accounts' activeClassName={styles.active}>
               {navIcon('account', styles)}
-              {capitalize(t('crumbName.account'))}
+              {capitalize(t('crumbName.accountManagement'))}
             </Link>
           </li>
         </ul>

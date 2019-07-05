@@ -51,6 +51,7 @@
     "asset": "assets",
     "key":"keys",
     "account":"accounts",
+    "accountManagement":"Accounts Management",
     "unspent": "Unspent outputs",
     "balance":"balances",
     "accessControl":"Access control",
@@ -233,6 +234,8 @@
     "copyAddress":"Copy this address to use in a transaction:",
     "copyProgram":"Copy this control program to use in a transaction:",
     "copyClipboard":"Copy to clipboard",
+    "select":"Select",
+    "selected":"Selected",
     "new":{
       "newAccount":"New account",
       "information":"Account Information",

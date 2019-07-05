@@ -51,6 +51,7 @@
     "asset": "资产",
     "key":"密钥",
     "account":"账户",
+    "accountManagement":"账户管理",
     "balance":"余额",
     "unspent": "未花费输出",
     "accessControl":"访问控制",
@@ -233,6 +234,8 @@
     "copyAddress":"拷贝这个地址以用于交易中：",
     "copyProgram":"拷贝这个合约程序以用于交易中：",
     "copyClipboard":"拷贝到剪贴板",
+    "select":"切换",
+    "selected":"使用中",
     "new":{
       "newAccount":"新建账户",
       "information":"账户信息",

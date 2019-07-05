@@ -3,7 +3,7 @@ import { combineReducers } from 'redux'
 
 const type = 'account'
 
-export const currentAccount = (state = '', action) => {
+export const currentAccount = (state = null, action) => {
   if (action.type == 'SET_CURRENT_ACCOUNT') {
     return action.account
   }

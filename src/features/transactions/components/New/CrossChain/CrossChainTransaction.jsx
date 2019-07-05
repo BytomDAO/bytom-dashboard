@@ -212,6 +212,20 @@ const mapDispatchToProps = (dispatch) => ({
   ...BaseNew.mapDispatchToProps('transaction')(dispatch)
 })
 
+const initialValues = (state, ownProps) => {
+  const account = state.account.currentAccount
+  if (account) {
+    return {
+      initialValues: {
+        accountAlias: account,
+        accountId:'',
+        gasLevel: '1',
+      }
+    }
+  }
+  return {}
+}
+
 export default withNamespaces('translations') (BaseNew.connect(
   BaseNew.mapStateToProps('transaction'),
   mapDispatchToProps,
@@ -227,9 +241,6 @@ export default withNamespaces('translations') (BaseNew.connect(
       'gasLevel',
     ],
     validate,
-    initialValues: {
-      gasLevel: '1',
-    },
     touchOnChange: true
-  })(CrossChainTransaction)
+  }, initialValues)(CrossChainTransaction)
 ))

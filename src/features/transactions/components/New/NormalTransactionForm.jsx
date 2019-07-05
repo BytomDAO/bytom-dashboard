@@ -301,6 +301,25 @@ const mapDispatchToProps = (dispatch) => ({
   ...BaseNew.mapDispatchToProps('transaction')(dispatch)
 })
 
+const initialValues = (state, ownProps) => {
+  const account = state.account.currentAccount
+  if (account) {
+    return {
+      initialValues: {
+        accountAlias: account,
+        accountId:'',
+        gasLevel: '1',
+        receivers:[{
+          id: 0,
+          amount:'',
+          address:''
+        }]
+      }
+    }
+  }
+  return {}
+}
+
 export default withNamespaces('translations') (BaseNew.connect(
   BaseNew.mapStateToProps('transaction'),
   mapDispatchToProps,
@@ -319,14 +338,6 @@ export default withNamespaces('translations') (BaseNew.connect(
     asyncValidate,
     asyncBlurFields: ['receivers[].address'],
     validate,
-    touchOnChange: true,
-    initialValues: {
-      gasLevel: '1',
-      receivers:[{
-        id: 0,
-        amount:'',
-        address:''
-      }]
-    },
-  })(NormalTxForm)
+    touchOnChange: true
+  }, initialValues)(NormalTxForm)
 ))

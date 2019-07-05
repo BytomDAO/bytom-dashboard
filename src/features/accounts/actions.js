@@ -19,6 +19,16 @@ const switchAccount = (accountAlias) => {
   }
 }
 
+const setDefaultAccount = () =>{
+  return (dispatch) => {
+    return chainClient().accounts.query().then(result => {
+      const account = result.data[0].alias
+      dispatch(switchAccount((account)))
+      return account
+    })
+  }
+}
+
 let actions = {
   ...list,
   ...create,
@@ -32,7 +42,8 @@ let actions = {
   listAddresses: (accountId) => {
     return chainClient().accounts.listAddresses({accountId})
   },
-  switchAccount
+  switchAccount,
+  setDefaultAccount
 }
 
 export default actions
