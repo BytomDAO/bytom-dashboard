@@ -278,11 +278,40 @@ const buildTransaction = (builderBlock) =>{
   return chainClient().transactions.build(builderFunction)
 }
 
+const getTransaction = (params) => {
+
+  return (dispatch) => {
+    const promise = chainClient().transactions.getTransaction(params)
+
+    promise.then(
+      (resp) => {
+        if(resp.status == 'fail'){
+          dispatch({type: 'ERROR', payload: { 'message': resp.msg}})
+        }else{
+          resp.data = [resp.data]
+          dispatch({
+            type: `RECEIVED_${type.toUpperCase()}_ITEMS`,
+            param: resp
+          })
+        }
+      }
+    ).catch(error=>{
+      if(error.body){
+        dispatch({type: 'ERROR', payload: { 'message': error.body.msg}})
+      }
+      else throw error
+    })
+
+    return promise
+  }
+}
+
 export default {
   ...list,
   ...form,
   decode,
   getAddresses,
   estimateGas,
-  buildTransaction
+  buildTransaction,
+  getTransaction
 }

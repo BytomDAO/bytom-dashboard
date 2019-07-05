@@ -71,6 +71,9 @@ const transactionsAPI = (client) => {
       Object.assign({}, params, {detail: true}),
       {cb}),
 
+    getTransaction: (params, cb) => shared.query(client, 'transactions', '/get-transaction',
+      params, {cb}),
+
     queryAll: (params, processor, cb) => shared.queryAll(client, 'transactions', params, processor, cb),
 
     build: (builderBlock, cb) => {
