@@ -65,7 +65,7 @@ class Navigation extends React.Component {
           </li>
           { this.state.showFed && <li>
             <Link to='/federations' activeClassName={styles.active}>
-              {navIcon('balance', styles)}
+              {navIcon('federation', styles)}
               {capitalize((t('crumbName.federation')))}
             </Link>
           </li>}
