@@ -25,14 +25,18 @@ export default function(type, options = {}) {
   })
 
   const updateId = (arrayList, options) => {
-    const txId = arrayList[arrayList.length-1].txId
-    const pageIds = options.pageIds
-    if(options && options.pageNumber === 1){
-      return [txId]
-    }else if(options && options.pageNumber > 1){
-      pageIds[options.pageNumber-1] = txId
+    if(arrayList.length !== 0){
+      const txId = arrayList[arrayList.length-1].txId
+      const pageIds = options.pageIds
+      if(options && options.pageNumber === 1){
+        return [txId]
+      }else if(options && options.pageNumber > 1){
+        pageIds[options.pageNumber-1] = txId
+      }
+      return pageIds
+    }else{
+      return []
     }
-    return pageIds
   }
 
   // Dispatch a single request for the specified query, and persist the
