@@ -98,19 +98,6 @@ class CoreIndex extends React.Component {
               </td>
             </tr>
             <tr className={styles.row}>
-              <td className={styles.row_label}>{t('coreIndex.mining')}: </td>
-              <td>
-                <label className={styles.switch}>
-                  <input
-                    type='checkbox'
-                    onChange={this.handleMiningState}
-                    checked={miningState}
-                  />
-                  <span className={styles.slider}></span>
-                </label>
-              </td>
-            </tr>
-            <tr className={styles.row}>
               <td className={styles.row_label} >{t('coreIndex.unit')} </td>
               <td>
                 <DropdownButton
@@ -150,10 +137,6 @@ class CoreIndex extends React.Component {
               <td className={styles.row_label}> {t('coreIndex.syncStatus')}:</td>
               <td className={styles.row_value}><code>{(coreData['syncing'])? t('coreIndex.synchronizing'): t('coreIndex.synced')}</code></td>
             </tr>
-            <tr className={styles.row} key={'core-mining'}>
-              <td className={styles.row_label}> {t('coreIndex.miningStatus')}:</td>
-              <td className={styles.row_value}><code>{(coreData['mining'])? t('coreIndex.miningRuning'): t('coreIndex.miningStopped')}</code></td>
-            </tr>
             <tr className={styles.row} key={'core-peerCount'}>
               <td className={styles.row_label}> {t('coreIndex.peer')}:</td>
               <td className={styles.row_value}><code>{String(coreData['peerCount'])}</code></td>
@@ -185,7 +168,7 @@ class CoreIndex extends React.Component {
     )
 
     return (
-      <div className={componentClassNames(this, 'flex-container', styles.mainContainer)}>
+      <div className={componentClassNames(this, 'flex-container')}>
         <PageTitle
           title={t('coreIndex.coreStatus')}
           actions={[
@@ -196,7 +179,7 @@ class CoreIndex extends React.Component {
         />
 
         <PageContent>
-          <div className={`${styles.flex}`}>
+          <div className={`${styles.flex} ${styles.mainContainer}`}>
             {configBlock}
             {networkStatusBlock}
           </div>

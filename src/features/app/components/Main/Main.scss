@@ -48,8 +48,8 @@
   align-items: center;
 
   img {
-    width: 100px;
-    height: 23.86px;
+    width: 106px;
+    height: 28px;
   }
 }
 
@@ -78,8 +78,8 @@
   top: 50%;
   transform: translateY(-50%);
   border: none;
-  background-color: transparentize($background-content-color, 0.9);
-  color: $background-content-color;
+  background-color: transparentize($highlight-inverse-color, 0.9);
+  color: $highlight-inverse-color;
   height: 27px;
   line-height: 27px !important;
 }

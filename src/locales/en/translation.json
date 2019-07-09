@@ -1,6 +1,9 @@
 {
   "language": "EN",
   "languageFull": "English",
+  "main":{
+    "loading":"Connecting to Vapor Core..."
+  },
   "asset":{
     "asset": "Asset",
     "xpubs":"xpub __id__",

@@ -1,6 +1,6 @@
 .main {
   background: $background-color;
-  padding: $gutter-size;
+  padding: $gutter-size/2 $gutter-size;
   border-bottom: 1px solid $border-color;
   height: $title-height;
   display: flex;

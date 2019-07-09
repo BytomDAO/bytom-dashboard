@@ -1,6 +1,9 @@
 {
   "language": "中",
   "languageFull": "中文",
+  "main":{
+    "loading":"等待连接Vapor Core..."
+  },
   "asset":{
     "asset": "资产",
     "xpubs":"扩展公钥 __id__",

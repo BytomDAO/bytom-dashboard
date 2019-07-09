@@ -89,6 +89,9 @@
 
 .mainContainer {
   background-color: $background-color;
+  padding: 0 $gutter-size;
+  display: flex;
+  flex-direction: row;
 }
 
 code {

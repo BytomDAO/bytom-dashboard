@@ -1,7 +1,7 @@
 .mainContainer {
   background: $background-color;
   padding: 0 $gutter-size;
-  margin-top: $title-height;
+  margin: $title-height+$gutter-size $gutter-size $gutter-size $gutter-size;
   display: flex;
   flex-direction: row;
 }

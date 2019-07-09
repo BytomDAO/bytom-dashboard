@@ -6,6 +6,9 @@
   right: $gutter-size/2;
   width: $sidebar-width - $gutter-size;
   z-index: 11;
+  background-clip: padding-box;
+  border: 1px solid #ccc;
+  box-shadow: $box-shadow;
 
   a {
     display: block;

@@ -9,7 +9,7 @@ class ListItem extends React.Component {
     const t = this.props.t
 
     return(
-      <tr>
+      <tr className={styles.tr}>
         <td>
           <Link to={`/accounts/${item.id}`}>
             {item.alias || '-'}
@@ -18,10 +18,10 @@ class ListItem extends React.Component {
         <td><code>{item.id}</code></td>
         <td>
           {item.isUsed?
-            <button className={`btn btn-default btn-sx ${styles.selectButton}`} disabled>
+            <button className={`btn btn-default btn-sm ${styles.selectButton} ${styles.buttonDisable}`} disabled>
               {t('account.selected')}
             </button>:
-            <button className={`btn btn-primary btn-xs ${styles.selectButton}`} onClick={() => this.props.switch(item.alias)}>
+            <button className={`btn btn-outline-primary btn-sm ${styles.selectButton}`} onClick={() => this.props.switch(item.alias)}>
               {t('account.select')}
             </button>
           }
