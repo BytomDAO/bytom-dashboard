@@ -8,6 +8,7 @@ import {
   RawJsonButton,
 } from 'features/shared/components'
 import componentClassNames from 'utility/componentClassNames'
+import { Link } from 'react-router'
 
 class AccountShow extends BaseShow {
   constructor(props) {
@@ -113,9 +114,12 @@ class AccountShow extends BaseShow {
             <KeyValueTable
               key={index}
               title={t('account.xpubs', {id: index + 1})}
+              actions={[
+                <Link key='check-password-btn' className='btn btn-link' to={`/accounts/key/check-password/${key}`}>{t('key.tryPassword') }</Link>,
+                <Link key='reset-password-btn' className='btn btn-link' to={`/accounts/key/reset-password/${key}`}>{t('key.resetPassword')}</Link>
+              ]}
               items={[
                 {label: t('account.accountXpub'), value: key},
-                {label: t('account.keyIndex'), value: item.keyIndex},
               ]}
             />
           )}

@@ -51,12 +51,12 @@ class Navigation extends React.Component {
             </Link>
           </li>
 
-          {/*<li>*/}
-            {/*<Link to='/assets' activeClassName={styles.active}>*/}
-              {/*{navIcon('asset', styles)}*/}
-              {/*{capitalize((t('crumbName.asset')))}*/}
-            {/*</Link>*/}
-          {/*</li>*/}
+          <li>
+            <Link to='/assets' activeClassName={styles.active}>
+              {navIcon('asset', styles)}
+              {capitalize((t('crumbName.asset')))}
+            </Link>
+          </li>
           <li>
             <Link to='/balances' activeClassName={styles.active}>
               {navIcon('balance', styles)}
@@ -71,12 +71,21 @@ class Navigation extends React.Component {
           </li>}
         </ul>
 
+        {/*<ul className={styles.navigation}>*/}
+          {/*<li className={styles.navigationTitle}>{ t('crumbName.services') }</li>*/}
+          {/*<li>*/}
+            {/*<Link to='/keys' activeClassName={styles.active}>*/}
+              {/*{navIcon('mockhsm', styles)}*/}
+              {/*{capitalize((t('crumbName.key')))}*/}
+            {/*</Link>*/}
+          {/*</li>*/}
+        {/*</ul>*/}
         <ul className={styles.navigation}>
-          <li className={styles.navigationTitle}>{ t('crumbName.services') }</li>
+          <li className={styles.navigationTitle}>{t('crumbName.account')}( {this.props.currentAccount} )</li>
           <li>
-            <Link to='/keys' activeClassName={styles.active}>
-              {navIcon('mockhsm', styles)}
-              {capitalize((t('crumbName.key')))}
+            <Link to='/accounts' activeClassName={styles.active}>
+              {navIcon('account', styles)}
+              {capitalize(t('crumbName.accountManagement'))}
             </Link>
           </li>
         </ul>
@@ -111,15 +120,7 @@ class Navigation extends React.Component {
           {/*</li>*/}
         {/*</ul>*/}
 
-        <ul className={styles.navigation}>
-          <li className={styles.navigationTitle}>{t('crumbName.account')}( {this.props.currentAccount} )</li>
-          <li>
-            <Link to='/accounts' activeClassName={styles.active}>
-              {navIcon('account', styles)}
-              {capitalize(t('crumbName.accountManagement'))}
-            </Link>
-          </li>
-        </ul>
+
         <Sync/>
 
       </div>

@@ -3,10 +3,10 @@ import {push} from 'react-router-redux'
 
 const registerKey = (data) => {
   return (dispatch) => {
-    if (typeof data.keyAlias == 'string')  data.keyAlias = data.keyAlias.trim()
+    if (typeof data.accountAlias == 'string')  data.accountAlias = data.accountAlias.trim()
 
     const keyData = {
-      'alias': data.keyAlias,
+      'alias': `${data.accountAlias}Key`,
       'password': data.password
     }
 
@@ -16,7 +16,6 @@ const registerKey = (data) => {
           throw resp
         }
 
-        if (typeof data.accountAlias == 'string')  data.accountAlias = data.accountAlias.trim()
         const accountData = {
           'root_xpubs':[resp.data.xpub],
           'quorum':1,

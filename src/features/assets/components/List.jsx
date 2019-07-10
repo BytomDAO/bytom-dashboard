@@ -7,6 +7,7 @@ const type = 'asset'
 
 const mapStateToProps = (state, props) => {
   return {
+    skipCreate: true,
     ...BaseList.mapStateToProps(type, ListItem, {
       wrapperComponent: TableList,
       wrapperProps: {

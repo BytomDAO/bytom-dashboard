@@ -24,7 +24,7 @@ class Register extends React.Component {
     const t = this.props.t
 
     const {
-      fields: {keyAlias, password, repeatPassword, accountAlias},
+      fields: {password, repeatPassword, accountAlias},
       error,
       handleSubmit,
       submitting
@@ -40,10 +40,6 @@ class Register extends React.Component {
                 title={t('form.accountAlias')}
                 placeholder={t('init.accountPlaceholder')}
                 fieldProps={accountAlias} />
-              <TextField
-                title={t('form.keyAlias')}
-                placeholder={t('init.keyPlaceholder')}
-                fieldProps={keyAlias}/>
               <PasswordField
                 title={t('init.keyPassword')}
                 placeholder={t('init.passwordPlaceholder')}
@@ -78,9 +74,6 @@ const validate = (values, props) => {
   const errors = {}
   const t = props.t
 
-  if (!values.keyAlias) {
-    errors.keyAlias = t('key.aliasRequired')
-  }
   if (!values.password) {
     errors.password = t('key.passwordRequired')
   } else if (values.password.length < 5) {
@@ -103,6 +96,6 @@ export default withNamespaces('translations')( connect(
   })
 )(reduxForm({
   form: 'initDefaultPassword',
-  fields: ['keyAlias', 'password', 'repeatPassword', 'accountAlias'],
+  fields: ['password', 'repeatPassword', 'accountAlias'],
   validate
 })(Register)))

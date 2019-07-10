@@ -1,0 +1,13 @@
+.content {
+  display: flex;
+  background: $background-color;
+  min-width: 400px;
+  max-width: 900px;
+  width: 100%;
+  padding: $gutter-size $gutter-size $gutter-size*2;
+}
+
+
+.marginLeft{
+  margin-left: $gutter-size/2;
+}

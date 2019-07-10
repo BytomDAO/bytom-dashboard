@@ -1,7 +1,8 @@
 import React from 'react'
-import { BaseNew, FormContainer, FormSection, JsonField, KeyConfiguration, TextField } from 'features/shared/components'
+import { BaseNew, FormContainer, FormSection, JsonField, PasswordField, TextField } from 'features/shared/components'
 import { reduxForm } from 'redux-form'
 import {withNamespaces} from 'react-i18next'
+import actions from 'actions'
 
 class Form extends React.Component {
   constructor(props) {
@@ -12,14 +13,14 @@ class Form extends React.Component {
 
   submitWithValidations(data) {
     return new Promise((resolve, reject) => {
-      this.props.submitForm(data)
+      this.props.createAccount(data)
         .catch((err) => reject({_error: err}))
     })
   }
 
   render() {
     const {
-      fields: { alias, xpubs, quorum },
+      fields: { alias, password, repeatPassword },
       error,
       handleSubmit,
       submitting,
@@ -36,14 +37,8 @@ class Form extends React.Component {
 
         <FormSection title={ t('account.new.information') }>
           <TextField title={ t('form.alias')} placeholder={  t('form.alias')} fieldProps={alias} autoFocus={true} />
-        </FormSection>
-
-        <FormSection title={ t('form.keyAndSign')}>
-          <KeyConfiguration
-            xpubs={xpubs}
-            quorum={quorum}
-            quorumHint={t('account.new.quorumHint')}
-          />
+          <PasswordField title={ t('key.password')}  placeholder={ t('key.passwordPlaceholder')} fieldProps={password} autoFocus={false} />
+          <PasswordField title={ t('key.repeatPassword')} placeholder={ t('key.repeatPasswordPlaceholder')} fieldProps={repeatPassword} autoFocus={false} />
         </FormSection>
       </FormContainer>
     )
@@ -54,36 +49,27 @@ const validate = ( values, props ) => {
   const errors = { xpubs:{} }
   const t = props.t
 
-  const tagError = JsonField.validator(values.tags)
-  if (tagError) { errors.tags = tagError }
-
   if (!values.alias) { errors.alias = ( t('account.new.aliasWarning')) }
 
-  values.xpubs.forEach((xpub, index) => {
-    if (!values.xpubs[index].value) {
-      errors.xpubs[index] = {...errors.xpubs[index], value: ( t('account.new.keyWarning'))}
-    }
-  })
 
   return errors
 }
 
 const fields = [
   'alias',
-  'xpubs[].value',
-  'xpubs[].type',
-  'quorum'
+  'password',
+  'repeatPassword'
 ]
 
 export default withNamespaces('translations')( BaseNew.connect(
   BaseNew.mapStateToProps('account'),
-  BaseNew.mapDispatchToProps('account'),
+  (dispatch) => ({
+    ...BaseNew.mapDispatchToProps('account')(dispatch),
+    createAccount: (data) => dispatch(actions.account.createAccount(data))
+  }),
   reduxForm({
     form: 'newAccountForm',
     fields,
     validate,
-    initialValues: {
-      quorum: 1,
-    }
   })(Form)
 ))

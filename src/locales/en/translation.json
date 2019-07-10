@@ -54,7 +54,7 @@
     "asset": "assets",
     "key":"keys",
     "account":"accounts",
-    "accountManagement":"Accounts Management",
+    "accountManagement":"Management",
     "unspent": "Unspent outputs",
     "balance":"balances",
     "accessControl":"Access control",
@@ -385,7 +385,7 @@
     "name":"Token Name"
   },
   "init":{
-    "title":"Init your account and key",
+    "title":"Init your account",
     "keyPassword":"Key Password",
     "repeatKeyPassword":"Repeat your key password",
     "register":"Register",

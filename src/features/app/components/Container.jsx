@@ -29,7 +29,7 @@ class Container extends React.Component {
       return
     }
 
-    if (accountInit || !this.state.noAccountItem) {
+    if (accountInit && !this.state.noAccountItem) {
       if (location.pathname === '/'|| location.pathname.indexOf('initialization') >= 0) {
         this.props.showRoot()
       }
@@ -42,6 +42,7 @@ class Container extends React.Component {
     this.props.fetchKeyItem().then(resp => {
       if (resp.data.length == 0) {
         this.setState({noAccountItem: true})
+        this.props.updateAccountInit(false)
         this.redirectRoot(this.props)
       }
     })
@@ -86,7 +87,7 @@ class Container extends React.Component {
       return <Loading>{t('main.loading')}</Loading>
     } else if (!this.props.configured) {
       layout = <Config>{this.props.children}</Config>
-    } else if (!this.props.accountInit && this.state.noAccountItem){
+    } else if (!this.props.accountInit || this.state.noAccountItem){
       layout = <Config>{this.props.children}</Config>
     } else{
       layout = <Main>{this.props.children}</Main>
@@ -118,6 +119,7 @@ export default connect(
     fetchInfo: options => dispatch(actions.core.fetchCoreInfo(options)),
     showRoot: () => dispatch(actions.app.showRoot),
     showInitialization: () => dispatch(actions.app.showInitialization()),
+    updateAccountInit: (param) => dispatch(actions.app.updateAccountInit(param)),
     fetchKeyItem: () => dispatch(actions.key.fetchItems())
   })
 )( withI18n() (Container) )

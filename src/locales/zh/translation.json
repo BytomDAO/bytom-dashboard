@@ -54,7 +54,7 @@
     "asset": "资产",
     "key":"密钥",
     "account":"账户",
-    "accountManagement":"账户管理",
+    "accountManagement":"管理",
     "balance":"余额",
     "unspent": "未花费输出",
     "accessControl":"访问控制",
@@ -382,7 +382,7 @@
     "name":"令牌名称"
   },
   "init":{
-    "title":"初始账户和密钥",
+    "title":"初始账户",
     "keyPassword":"密钥密码",
     "repeatKeyPassword":"重复输入密钥密码",
     "register":"注册",
@@ -418,7 +418,7 @@
   },
   "mnemonic":{
     "backup":"备份助记词",
-    "backupMessage":"助记词用于恢复密钥相关的信息。 请将它准确的抄写到纸上，并存放在的安全的地方。",
+    "backupMessage":"助记词只展示一次。用于恢复密钥相关的信息。 请将它准确的抄写到纸上，并存放在的安全的地方。",
     "continue":"我已抄写助记词",
     "skip": "跳过备份",
     "confirmTitle":"请重复输入钱包助记词",
