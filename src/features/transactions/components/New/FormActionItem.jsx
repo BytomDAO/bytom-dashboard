@@ -115,6 +115,7 @@ class ActionItem extends React.Component {
               id: accountId,
               alias: accountAlias
             }}
+            disabled
           />}
 
         {visible.receiver &&

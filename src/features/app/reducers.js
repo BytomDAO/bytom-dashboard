@@ -97,7 +97,7 @@ export const flashMessages = (state = {}, action) => {
     }
 
     case 'ERROR': {
-      return newError(state, action.payload.message)
+      return newError(state, action.payload.message||action.payload.msg)
     }
 
     case 'USER_LOG_IN': {

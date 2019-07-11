@@ -47,8 +47,6 @@ class Form extends React.Component {
   handleFormEmpty() {
     if(this.props.normalSelected){
       const array = [
-        'accountAlias',
-        'accountId',
         'assetAlias',
         'assetId',
         'password']
@@ -66,8 +64,6 @@ class Form extends React.Component {
       this.props.advform['password'])
     }else if(this.props.voteSelected){
       const array = [
-        'accountAlias',
-        'accountId',
         'amount',
         'nodePubkey'
       ]
@@ -80,8 +76,6 @@ class Form extends React.Component {
       return true
     }else if(this.props.crossChainSelected){
       const array = [
-        'accountAlias',
-        'accountId',
         'assetAlias',
         'assetId',
         'address',

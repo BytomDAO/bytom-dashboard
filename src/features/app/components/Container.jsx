@@ -39,7 +39,7 @@ class Container extends React.Component {
   }
 
   componentDidMount() {
-    this.props.fetchKeyItem().then(resp => {
+    this.props.fetchAccountItem().then(resp => {
       if (resp.data.length == 0) {
         this.setState({noAccountItem: true})
         this.props.updateAccountInit(false)
@@ -120,6 +120,6 @@ export default connect(
     showRoot: () => dispatch(actions.app.showRoot),
     showInitialization: () => dispatch(actions.app.showInitialization()),
     updateAccountInit: (param) => dispatch(actions.app.updateAccountInit(param)),
-    fetchKeyItem: () => dispatch(actions.key.fetchItems())
+    fetchAccountItem: () => dispatch(actions.account.fetchItems())
   })
 )( withI18n() (Container) )

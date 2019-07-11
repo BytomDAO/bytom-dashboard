@@ -170,6 +170,7 @@ class NormalTxForm extends React.Component {
                   id: accountId,
                   alias: accountAlias
                 }}
+                disabled
               />
               <div>
                 <ObjectSelectorField

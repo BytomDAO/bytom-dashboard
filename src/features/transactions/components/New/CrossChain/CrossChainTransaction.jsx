@@ -143,6 +143,7 @@ class CrossChainTransaction extends React.Component {
                   id: accountId,
                   alias: accountAlias
                 }}
+                disabled
               />
 
               <ObjectSelectorField

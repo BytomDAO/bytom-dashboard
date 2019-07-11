@@ -46,10 +46,20 @@ class AdvancedTxForm extends React.Component {
 
   addActionItem(type) {
     const counter = this.state.counter
-    this.props.fields.actions.addField({
-      type: type,
-      ID: counter
-    })
+    let obj
+    if(type === 'spend_account' || type === 'veto'){
+      obj = {
+        type: type,
+        ID: counter,
+        accountAlias: this.props.currentAccount
+      }
+    }else{
+      obj = {
+        type: type,
+        ID: counter,
+      }
+    }
+    this.props.fields.actions.addField(obj)
     this.closeDropdown()
     this.setState({
       counter: counter+1
@@ -111,7 +121,7 @@ class AdvancedTxForm extends React.Component {
         <FormSection title='Actions'>
           {actions.map((action, index) =>
             <ActionItem
-              key={action.ID.value}
+              key={`form-action-${action.ID.value}`}
               index={index}
               fieldProps={action}
               accounts={this.props.accounts}
@@ -245,7 +255,8 @@ const mapDispatchToProps = (dispatch) => ({
 export default withNamespaces('translations') (BaseNew.connect(
   (state, ownProps) => ({
     ...BaseNew.mapStateToProps('transaction')(state, ownProps),
-    decodedTx: state.transaction.decodedTx
+    decodedTx: state.transaction.decodedTx,
+    currentAccount : state.account.currentAccount
   }),
   mapDispatchToProps,
   reduxForm({

@@ -140,6 +140,7 @@ class Vote extends React.Component {
                   id: accountId,
                   alias: accountAlias
                 }}
+                disabled
               />
               <div>
                 <TextField
