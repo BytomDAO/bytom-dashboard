@@ -10,9 +10,6 @@ const CORE_POLLING_TIME = 2 * 1000
 class Container extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      noAccountItem: false
-    }
     this.redirectRoot = this.redirectRoot.bind(this)
   }
 
@@ -29,7 +26,7 @@ class Container extends React.Component {
       return
     }
 
-    if (accountInit && !this.state.noAccountItem) {
+    if (accountInit) {
       if (location.pathname === '/'|| location.pathname.indexOf('initialization') >= 0) {
         this.props.showRoot()
       }
@@ -41,9 +38,13 @@ class Container extends React.Component {
   componentDidMount() {
     this.props.fetchAccountItem().then(resp => {
       if (resp.data.length == 0) {
-        this.setState({noAccountItem: true})
         this.props.updateAccountInit(false)
         this.redirectRoot(this.props)
+      }else{
+        const aliasArray = resp.data.map(account => account.alias)
+        if(!aliasArray.includes(this.props.currentAccount)){
+          this.props.setDefaultAccount()
+        }
       }
     })
     if(this.props.lng === 'zh'){
@@ -67,6 +68,7 @@ class Container extends React.Component {
         nextProps.location.pathname != this.props.location.pathname) {
       this.redirectRoot(nextProps)
     }
+
   }
 
   render() {
@@ -87,7 +89,7 @@ class Container extends React.Component {
       return <Loading>{t('main.loading')}</Loading>
     } else if (!this.props.configured) {
       layout = <Config>{this.props.children}</Config>
-    } else if (!this.props.accountInit || this.state.noAccountItem){
+    } else if (!this.props.accountInit){
       layout = <Config>{this.props.children}</Config>
     } else{
       layout = <Main>{this.props.children}</Main>
@@ -114,12 +116,14 @@ export default connect(
     configKnown: state.core.configKnown,
     configured: true,
     accountInit: state.core.accountInit,
+    currentAccount: state.core.currentAccount
   }),
   (dispatch) => ({
     fetchInfo: options => dispatch(actions.core.fetchCoreInfo(options)),
     showRoot: () => dispatch(actions.app.showRoot),
     showInitialization: () => dispatch(actions.app.showInitialization()),
     updateAccountInit: (param) => dispatch(actions.app.updateAccountInit(param)),
-    fetchAccountItem: () => dispatch(actions.account.fetchItems())
+    fetchAccountItem: () => dispatch(actions.account.fetchItems()),
+    setDefaultAccount:() => dispatch(actions.account.setDefaultAccount())
   })
 )( withI18n() (Container) )
