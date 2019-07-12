@@ -17,7 +17,11 @@
 }
 
 .sidebarContent {
+  background-image: url('images/sidebarBackground.svg');
   background-color: $background-inverse-color;
+  background-repeat: no-repeat;
+  background-position: 0px 60px;
+  background-size: cover;
   position: fixed;
   width: $sidebar-width;
   height: 100%;
@@ -36,7 +40,7 @@
   border-top: solid 1px $border-inverse-color;
 
   padding: $gutter-size/2 $gutter-size;
-  background: $background-inverse-color;
+  background: #FCFDFD;
   font-size: $font-size-chrome;
 }
 
