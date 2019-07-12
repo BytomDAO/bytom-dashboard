@@ -17,6 +17,8 @@ import disableAutocomplete from 'utility/disableAutocomplete'
 import actions from 'actions'
 import { getAssetDecimal} from '../../transactions'
 import {withNamespaces} from 'react-i18next'
+import { btmID } from 'utility/environment'
+
 
 
 class AdvancedTxForm extends React.Component {
@@ -233,9 +235,18 @@ const validate = (values, props) => {
   // Actions
   let numError
   values.actions.forEach((action, index) => {
+    const item = values.actions[index]
     numError = (!/^\d+(\.\d+)?$/i.test(values.actions[index].amount))
     if (numError) {
       errors.actions[index] = {...errors.actions[index], amount: t('errorMessage.amountError')}
+    }
+    if(((item.assetAlias &&
+      (item.assetAlias).toUpperCase() !== 'BTM') ||
+        ((item.assetId &&
+        item.assetId !== btmID)))
+      && item.type == 'cross_chain_in' && !item.rawDefinitionByte){
+      errors.actions[index] = {...errors.actions[index], rawDefinitionByte: t('errorMessage.rawDefinitionByteError')}
+
     }
   })
   return errors
@@ -275,6 +286,7 @@ export default withNamespaces('translations') (BaseNew.connect(
       'actions[].vote',
       'actions[].sourceId',
       'actions[].vmVersion',
+      'actions[].rawDefinitionByte',
       'actions[].issuanceProgram',
       'actions[].sourcePos',
       'actions[].password',

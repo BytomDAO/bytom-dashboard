@@ -149,7 +149,8 @@
     "reissueFalse":"Unable to be reissued",
     "vote": "Node Public Key",
     "totalVoteNumber":"Vote",
-    "vmVersion":"VM Version"
+    "vmVersion":"VM Version",
+    "rawDefinitionByte":"Raw Definition Byte"
   },
   "xpub":{
     "methodOptions" : {
@@ -370,7 +371,8 @@
     "tokenError":"Token name is required",
     "jsonObjectError":"Contents must be represented as a JSON object",
     "jsonRowError":" __error__ on row __row__`",
-    "parseError":"Error parsing JSON"
+    "parseError":"Error parsing JSON",
+    "rawDefinitionByteError":"Raw Definition Byte is required"
   },
   "emptyList":{
     "loading":"LOADING",

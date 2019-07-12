@@ -149,7 +149,8 @@
     "reissueFalse":"不可重复发行",
     "vote": "节点公钥",
     "totalVoteNumber":"投票",
-    "vmVersion":"VM版本号"
+    "vmVersion":"VM版本号",
+    "rawDefinitionByte":"资产描述"
   },
   "xpub":{
     "methodOptions" : {
@@ -367,7 +368,8 @@
     "tokenError":"令牌名称是必须项",
     "jsonObjectError":"内容必须表示为JSON对象",
     "jsonRowError":" 行数：__row__,  __error__",
-    "parseError":"转换错误"
+    "parseError":"转换错误",
+    "rawDefinitionByteError":"资产描述是必须项"
   },
   "emptyList":{
     "loading":"加载中",
