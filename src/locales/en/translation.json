@@ -170,7 +170,7 @@
     "configuration":"Configuration",
     "version":"Core Versions",
     "advanced":"Advanced",
-    "mining":"Mining",
+    "mining":"Block Producing",
     "unit":"Unit to show amount in",
     "networkStatus":"Network status",
     "listening":"Peer Listening",
@@ -179,7 +179,7 @@
     "syncStatus":"Syncing",
     "synchronizing":"true",
     "synced":"false",
-    "miningStatus":"Mining",
+    "miningStatus":"Block Producing",
     "miningRuning":"true",
     "miningStopped":"false",
     "peer":"Peer Count",
@@ -402,7 +402,7 @@
     "mnemonic":"mnemonic",
     "mnemonicRequire":"Mnemonic is Required",
     "create": "Create Wallet",
-    "createDescription":"This option will create a default account, key password and give you a option to keep you mnemonic.  Warning: key seed words will display only once, it's important to remember your password.",
+    "createDescription":"This option will create a default account, key password.  Warning: it's important to remember your password.",
     "welcome":"Welcome to Vapor __network__"
   },
   "backup":{

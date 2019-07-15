@@ -170,7 +170,7 @@
     "configuration":"配置",
     "version":"核心版本号",
     "advanced":"高级导航选项",
-    "mining":"挖矿",
+    "mining":"节点出块",
     "unit":"比原数量单位显示",
     "networkStatus":"网络状态",
     "listening":"节点监听",
@@ -179,7 +179,7 @@
     "syncStatus":"网络同步",
     "synchronizing":"同步中",
     "synced":"同步完成",
-    "miningStatus":"挖矿状态",
+    "miningStatus":"节点出块状态",
     "miningRuning":"运行",
     "miningStopped":"停止",
     "peer":"连接数",
@@ -399,7 +399,7 @@
     "mnemonic":"助记词",
     "mnemonicRequire":"助记词是必须项",
     "create": "新建钱包",
-    "createDescription":"这个选项将生成默认的挖矿账户和默认密钥。 助记词将会在此生成，您可以选择保留助记词或者跳过。 注意： 助记词只生成一次， 请将密码，助记词妥善保存",
+    "createDescription":"这个选项将生成默认的挖矿账户和默认密钥。注意： 请将密码妥善保存",
     "welcome":"欢迎来到__network__"
   },
   "backup":{
