@@ -36,15 +36,12 @@ class Container extends React.Component {
   }
 
   componentDidMount() {
-    this.props.fetchAccountItem().then(resp => {
+    this.props.fetchKeyItem().then(resp => {
       if (resp.data.length == 0) {
         this.props.updateAccountInit(false)
         this.redirectRoot(this.props)
       }else{
-        const aliasArray = resp.data.map(account => account.alias)
-        if(!aliasArray.includes(this.props.currentAccount)){
-          this.props.setDefaultAccount()
-        }
+        this.props.updateAccountInit(true)
       }
     })
     if(this.props.lng === 'zh'){
@@ -123,7 +120,7 @@ export default connect(
     showRoot: () => dispatch(actions.app.showRoot),
     showInitialization: () => dispatch(actions.app.showInitialization()),
     updateAccountInit: (param) => dispatch(actions.app.updateAccountInit(param)),
-    fetchAccountItem: () => dispatch(actions.account.fetchItems()),
+    fetchKeyItem: () => dispatch(actions.key.fetchItems()),
     setDefaultAccount:() => dispatch(actions.account.setDefaultAccount())
   })
 )( withI18n() (Container) )
