@@ -32,7 +32,7 @@ const registerKey = (data) => {
 
             if(resp.status === 'success') {
               dispatch({type: 'SET_CURRENT_ACCOUNT', account: resp.data.alias})
-              dispatch(push('/initialization/mnemonic'))
+              dispatch(initSucceeded())
             }
           })
           .catch((err) => {
