@@ -1,6 +1,7 @@
 import { chainClient } from 'utility/environment'
 import { baseCreateActions, baseUpdateActions, baseListActions } from 'features/shared/actions'
 import {push} from 'react-router-redux'
+import action from 'actions'
 
 const type = 'account'
 
@@ -16,7 +17,15 @@ const update = baseUpdateActions(type, {
 
 const switchAccount = (accountAlias) => {
   return (dispatch) => {
-    dispatch({type: 'SET_CURRENT_ACCOUNT', account: accountAlias})
+    return action.transaction.getAddresses({accountAlias}).then(address => {
+      return chainClient().accounts.setMiningAddress({'miningAddress':address}).then(resp =>{
+        if (resp.status === 'fail') {
+          throw resp
+        }
+
+        dispatch({type: 'SET_CURRENT_ACCOUNT', account: accountAlias})
+      })
+    })
   }
 }
 
@@ -29,6 +38,7 @@ const setDefaultAccount = () =>{
     })
   }
 }
+
 const createAccount = (data) => {
   return (dispatch) => {
     if (typeof data.alias == 'string')  data.alias = data.alias.trim()
@@ -44,12 +54,20 @@ const createAccount = (data) => {
           throw resp
         }
 
-        const accountData = {
-          'root_xpubs':[resp.data.xpub],
-          'quorum':1,
-          'alias': data.alias}
+        if (data.xpubs) {
+          data.rootXpubs = [resp.data.xpub]
+          data.xpubs.forEach(key => {
+            if (key.value) {
+              data.rootXpubs.push(key.value)
+            }
+          })
+          delete data.xpubs
+        }
 
-        dispatch({type: 'NEW_KEY', data: resp.data.mnemonic})
+        const accountData = {
+          'root_xpubs':data.rootXpubs,
+          'quorum':  parseInt(data.quorum),
+          'alias': data.alias}
 
         return chainClient().accounts.create(accountData)
           .then((resp) => {
@@ -59,7 +77,7 @@ const createAccount = (data) => {
 
             if(resp.status === 'success') {
               dispatch({type: 'SET_CURRENT_ACCOUNT', account: resp.data.alias})
-              dispatch( push('/accounts/mnemonic') )
+              dispatch(createSuccess() )
             }
           })
           .catch((err) => {
