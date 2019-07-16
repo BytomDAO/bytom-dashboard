@@ -42,6 +42,18 @@ class Container extends React.Component {
         this.redirectRoot(this.props)
       }else{
         this.props.updateAccountInit(true)
+        this.props.fetchAccountItem().then(resp => {
+          if (resp.data.length == 0) {
+            this.props.switchAccount('')
+            this.redirectRoot(this.props)
+          }else{
+            const aliasArray = resp.data.map(account => account.alias)
+            if(!aliasArray.includes(this.props.currentAccount) ){
+              this.props.setDefaultAccount()
+              this.props.showRoot()
+            }
+          }
+        })
       }
     })
     if(this.props.lng === 'zh'){
@@ -113,7 +125,7 @@ export default connect(
     configKnown: state.core.configKnown,
     configured: true,
     accountInit: state.core.accountInit,
-    currentAccount: state.core.currentAccount
+    currentAccount: state.account.currentAccount
   }),
   (dispatch) => ({
     fetchInfo: options => dispatch(actions.core.fetchCoreInfo(options)),
@@ -121,6 +133,8 @@ export default connect(
     showInitialization: () => dispatch(actions.app.showInitialization()),
     updateAccountInit: (param) => dispatch(actions.app.updateAccountInit(param)),
     fetchKeyItem: () => dispatch(actions.key.fetchItems()),
-    setDefaultAccount:() => dispatch(actions.account.setDefaultAccount())
+    fetchAccountItem: () => dispatch(actions.account.fetchItems()),
+    setDefaultAccount:() => dispatch(actions.account.setDefaultAccount()),
+    switchAccount:(alias) => dispatch(actions.account.switchAccount(alias))
   })
 )( withI18n() (Container) )
