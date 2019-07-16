@@ -155,7 +155,9 @@
   "xpub":{
     "methodOptions" : {
       "mockhsm": "Use existing key",
-      "provide": "Provide existing xpub"
+      "provide": "Provide existing xpub",
+      "generate": "Generate a new key",
+      "currentAccount": "Current account xpub"
     },
     "providePlaceholder": "Enter xpub"
   },

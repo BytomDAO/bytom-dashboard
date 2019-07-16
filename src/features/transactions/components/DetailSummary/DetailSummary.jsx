@@ -136,7 +136,7 @@ class DetailSummary extends React.Component {
                 type = 'sent'
                 items.push({
                   type: 'crossOut',
-                  amount: normalizeBtmAmountUnit(assetId,  crossOut, this.props.btmAmountUnit),
+                  amount: asset.decimals? converIntToDec(crossOut, asset.decimals) :normalizeBtmAmountUnit(assetId,  crossOut, this.props.btmAmountUnit),
                   asset: assetAlias ? assetAlias : <code className={styles.rawId}>{assetId}</code>,
                   assetId: assetId,
                   account: account.alias ? account.alias : <code className={styles.rawId}>{accountId}</code>,
@@ -183,7 +183,7 @@ class DetailSummary extends React.Component {
                 type = 'received'
                 items.push({
                   type: 'crossIn',
-                  amount: normalizeBtmAmountUnit(assetId,  crossIn, this.props.btmAmountUnit),
+                  amount: asset.decimals? converIntToDec(crossIn, asset.decimals) :normalizeBtmAmountUnit(assetId,  crossIn, this.props.btmAmountUnit),
                   asset: assetAlias ? assetAlias : <code className={styles.rawId}>{assetId}</code>,
                   assetId: assetId,
                   account: account.alias ? account.alias : <code className={styles.rawId}>{accountId}</code>,

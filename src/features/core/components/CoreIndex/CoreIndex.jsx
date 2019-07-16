@@ -189,8 +189,8 @@ class CoreIndex extends React.Component {
         <PageTitle
           title={t('coreIndex.coreStatus')}
           actions={[
-            <button className={`btn btn-link ${styles.actionBtn}`} onClick={this.consolePopup}>
-              <span>{t('console.title')}</span> <img src={require('images/console-window.svg')}/>
+            <button className='btn btn-link' onClick={this.consolePopup}>
+              <img src={require('images/console-window.svg')}/>
             </button>
           ]}
         />

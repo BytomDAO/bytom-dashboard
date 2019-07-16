@@ -155,7 +155,9 @@
   "xpub":{
     "methodOptions" : {
       "mockhsm": "使用已有的密钥",
-      "provide": "提供已有的扩展公钥"
+      "provide": "提供已有的扩展公钥",
+      "generate": "新建密钥",
+      "currentAccount": "本账户扩展密钥"
     },
     "providePlaceholder": "输入扩展公钥"
   },
