@@ -188,6 +188,7 @@
     "currentBlock":"Current Block",
     "highestBlock":"Highest Block",
     "networkId":"Network Id",
+    "nodeXpub":"Node Xpub",
     "coreStatus":"Core Status"
   },
   "console":{

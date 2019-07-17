@@ -188,6 +188,7 @@
     "currentBlock":"当前高度",
     "highestBlock":"最高高度",
     "networkId":"网络ID",
+    "nodeXpub":"节点公钥",
     "coreStatus":"核心状态"
   },
   "console":{

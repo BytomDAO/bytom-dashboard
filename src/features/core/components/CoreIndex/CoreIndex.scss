@@ -7,6 +7,8 @@
 
   td {
     vertical-align: top;
+    word-break: break-all;
+    word-wrap: break-word;
   }
 }
 .actionBtn{
@@ -61,12 +63,12 @@
 
 .left {
   padding-left: 0;
-  width: 50%;
+  width: 67%;
 }
 
 .right {
   border-left: 1px solid $border-color;
-  width: 50%;
+  width: 33%;
 }
 
 .replication_lag {
