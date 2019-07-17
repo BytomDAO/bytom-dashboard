@@ -53,8 +53,8 @@ export const normalTxActionBuilder = (transaction, gas, prop) =>{
   const totalAmount = sum(receivers, prop )
 
   const spendAction = {
-    accountAlias,
-    accountId,
+    accountAlias: typeof(accountAlias) !== 'string'?'':accountAlias,
+    accountId:  typeof(accountId) !== 'string'?'':accountId,
     assetAlias,
     assetId,
     amount: totalAmount,
@@ -62,14 +62,19 @@ export const normalTxActionBuilder = (transaction, gas, prop) =>{
   }
 
   const gasAction = {
-    accountAlias,
-    accountId,
+    accountAlias: typeof(accountAlias) !== 'string'?'':accountAlias,
+    accountId:  typeof(accountId) !== 'string'?'':accountId,
     assetAlias: 'BTM',
     amount: gas,
     type: 'spend_account'
   }
 
-  const actions = [spendAction, gasAction]
+  const actions = [spendAction]
+
+  if(gas>0){
+    actions.push(gasAction)
+  }
+
   receivers.forEach((receiver)=>{
     actions.push(
       {
@@ -102,14 +107,19 @@ export const issueAssetTxActionBuilder = (transaction, gas,prop) =>{
   }
 
   const gasAction = {
-    accountAlias,
-    accountId,
+    accountAlias: typeof(accountAlias) !== 'string'?'':accountAlias,
+    accountId:  typeof(accountId) !== 'string'?'':accountId,
     assetAlias: 'BTM',
     amount: gas,
     type: 'spend_account'
   }
 
-  const actions = [spendAction, gasAction]
+  const actions = [spendAction]
+
+  if(gas>0){
+    actions.push(gasAction)
+  }
+
   receivers.forEach((receiver)=>{
     actions.push(
       {
@@ -134,8 +144,8 @@ export const crossChainTxActionBuilder = (transaction, gas) =>{
   const address = transaction.address.value || transaction.address
 
   const spendAction = {
-    accountAlias,
-    accountId,
+    accountAlias: typeof(accountAlias) !== 'string'?'':accountAlias,
+    accountId:  typeof(accountId) !== 'string'?'':accountId,
     assetAlias,
     assetId,
     amount,
@@ -143,8 +153,8 @@ export const crossChainTxActionBuilder = (transaction, gas) =>{
   }
 
   const gasAction = {
-    accountAlias,
-    accountId,
+    accountAlias: typeof(accountAlias) !== 'string'?'':accountAlias,
+    accountId:  typeof(accountId) !== 'string'?'':accountId,
     assetAlias: 'BTM',
     amount: gas,
     type: 'spend_account'
@@ -158,7 +168,11 @@ export const crossChainTxActionBuilder = (transaction, gas) =>{
     type:'cross_chain_out'
   }
 
-  const actions = [spendAction, crossOutAction, gasAction]
+  const actions = [spendAction, crossOutAction]
+
+  if(gas>0){
+    actions.push(gasAction)
+  }
 
   return actions
 }
@@ -172,8 +186,8 @@ export const voteTxActionBuilder = (transaction, gas, address) =>{
   const action = transaction.action.value || transaction.action
 
   const gasAction = {
-    accountAlias,
-    accountId,
+    accountAlias: typeof(accountAlias) !== 'string'?'':accountAlias,
+    accountId:  typeof(accountId) !== 'string'?'':accountId,
     asset_id:btmID,
     amount: gas,
     type: 'spend_account'
@@ -181,8 +195,8 @@ export const voteTxActionBuilder = (transaction, gas, address) =>{
 
   if(action === 'vote'){
     const spendAction = {
-      accountAlias,
-      accountId,
+      accountAlias: typeof(accountAlias) !== 'string'?'':accountAlias,
+      accountId:  typeof(accountId) !== 'string'?'':accountId,
       assetId: btmID,
       amount,
       type: 'spend_account'
@@ -196,7 +210,11 @@ export const voteTxActionBuilder = (transaction, gas, address) =>{
       type:'vote_output'
     }
 
-    return [spendAction, gasAction, voteAction]
+    if(gas>0){
+      return [spendAction, gasAction, voteAction]
+    }else{
+      return [spendAction, voteAction]
+    }
   }else if(action === 'veto'){
     const controlAction = {
       assetId: btmID,
@@ -206,14 +224,19 @@ export const voteTxActionBuilder = (transaction, gas, address) =>{
     }
 
     const vetoAction ={
-      accountAlias,
-      accountId,
+      accountAlias: typeof(accountAlias) !== 'string'?'':accountAlias,
+      accountId:  typeof(accountId) !== 'string'?'':accountId,
       amount,
       asset_id:btmID,
       vote: nodePubkey,
       type:'veto'
     }
-    return [gasAction, vetoAction, controlAction]
+
+    if(gas>0){
+      return [gasAction, vetoAction, controlAction]
+    }else{
+      return [vetoAction, controlAction]
+    }
   }else{
     throw 'invalid operation type.'
   }

@@ -22,7 +22,8 @@ class CrossChainTransaction extends React.Component {
     super(props)
     this.connection = chainClient().connection
     this.state = {
-      estimateGas:null
+      estimateGas:null,
+      displayGas: true
     }
 
     this.submitWithValidation = this.submitWithValidation.bind(this)
@@ -30,7 +31,7 @@ class CrossChainTransaction extends React.Component {
   }
 
   disableSubmit() {
-    return !(this.state.estimateGas)
+    return (this.state.displayGas && !this.state.estimateGas)
   }
 
   submitWithValidation(data) {
@@ -87,7 +88,12 @@ class CrossChainTransaction extends React.Component {
 
     this.props.buildTransaction({actions, ttl: 1}).then(tmp => {
       return this.props.estimateGasFee(tmp.data).then(resp => {
-        this.setState({estimateGas: Math.ceil(resp.data.totalNeu/100000)*100000})
+        const gas = resp.data.totalNeu
+        if(gas === 0){
+          this.setState({displayGas:false})
+        }else{
+          this.setState({estimateGas: Math.ceil(gas/100000)*100000, displayGas:true})
+        }
       }).catch(err =>{
         throw err
       })
@@ -122,66 +128,64 @@ class CrossChainTransaction extends React.Component {
 
     const showBtmAmountUnit = (assetAlias.value === 'BTM' || assetId.value === btmID)
 
-    return (
-          <TxContainer
-            error={error}
-            onSubmit={(e)=>this.confirmedTransaction(e)}
-            submitting={submitting}
-            submitLabel= {submitLabel}
-            disabled={this.disableSubmit()}
-            className={styles.container}
-          >
-          <div className={styles.borderBottom}>
-            <label className={styles.title}>{t('transaction.crossChain.title')}</label>
-            <div className={`${styles.mainBox} `}>
-              <ObjectSelectorField
-                key='account-selector-field'
-                keyIndex='votetx-account'
-                title={t('form.account')}
-                aliasField={Autocomplete.AccountAlias}
-                fieldProps={{
-                  id: accountId,
-                  alias: accountAlias
-                }}
-                disabled
-              />
+    return <TxContainer
+      error={error}
+      onSubmit={(e) => this.confirmedTransaction(e)}
+      submitting={submitting}
+      submitLabel={submitLabel}
+      disabled={this.disableSubmit()}
+      className={styles.container}
+    >
+      <div className={styles.borderBottom}>
+        <label className={styles.title}>{t('transaction.crossChain.title')}</label>
+        <div className={`${styles.mainBox} `}>
+          <ObjectSelectorField
+            key='account-selector-field'
+            keyIndex='votetx-account'
+            title={t('form.account')}
+            aliasField={Autocomplete.AccountAlias}
+            fieldProps={{
+              id: accountId,
+              alias: accountAlias
+            }}
+            disabled
+          />
 
-              <ObjectSelectorField
-                key='asset-selector-field'
-                keyIndex='normaltx-asset'
-                title={ t('form.asset')}
-                aliasField={Autocomplete.AssetAlias}
-                fieldProps={{
-                  id: assetId,
-                  alias: assetAlias
-                }}
-              />
-              {showAvailableBalance && availableBalance &&
-              <small className={styles.balanceHint}>{t('transaction.normal.availableBalance')} {availableBalance}</small>}
+          <ObjectSelectorField
+            key='asset-selector-field'
+            keyIndex='normaltx-asset'
+            title={t('form.asset')}
+            aliasField={Autocomplete.AssetAlias}
+            fieldProps={{
+              id: assetId,
+              alias: assetAlias
+            }}
+          />
+          {showAvailableBalance && availableBalance &&
+          <small className={styles.balanceHint}>{t('transaction.normal.availableBalance')} {availableBalance}</small>}
 
-              <AmountField
-                isBTM={showBtmAmountUnit}
-                title={t('form.amount')}
-                fieldProps={amount}
-                decimal={assetDecimal}
-              />
+          <AmountField
+            isBTM={showBtmAmountUnit}
+            title={t('form.amount')}
+            fieldProps={amount}
+            decimal={assetDecimal}
+          />
 
-              <TextField title={t('transaction.crossChain.address')} fieldProps={address}/>
-            </div>
+          <TextField title={t('transaction.crossChain.address')} fieldProps={address}/>
+        </div>
 
 
-            <label className={styles.title}>{t('transaction.normal.selectFee')}</label>
-            <div className={styles.txFeeBox}>
-              <GasField
-                gas={this.state.estimateGas}
-                fieldProps={gasLevel}
-                btmAmountUnit={this.props.btmAmountUnit}
-              />
-              <span className={styles.feeDescription}> {t('transaction.normal.feeDescription')}</span>
-            </div>
-          </div>
-        </TxContainer>
-    )
+        {this.state.displayGas && [<label className={styles.title}>{t('transaction.normal.selectFee')}</label>,
+          <div className={styles.txFeeBox}>
+            <GasField
+              gas={this.state.estimateGas}
+              fieldProps={gasLevel}
+              btmAmountUnit={this.props.btmAmountUnit}
+            />
+            <span className={styles.feeDescription}> {t('transaction.normal.feeDescription')}</span>
+          </div>]}
+      </div>
+    </TxContainer>
   }
 }
 

@@ -23,7 +23,8 @@ class Vote extends React.Component {
     this.connection = chainClient().connection
     this.state = {
       estimateGas:null,
-      address:null
+      address:null,
+      displayGas: true
     }
 
     this.submitWithValidation = this.submitWithValidation.bind(this)
@@ -31,7 +32,7 @@ class Vote extends React.Component {
   }
 
   disableSubmit() {
-    return !(this.state.estimateGas)
+    return (this.state.displayGas && !this.state.estimateGas)
   }
 
   submitWithValidation(data) {
@@ -85,7 +86,12 @@ class Vote extends React.Component {
 
       return this.props.buildTransaction({actions, ttl: 1}).then(tmp => {
         return this.props.estimateGasFee(tmp.data).then(resp => {
-          this.setState({estimateGas: Math.ceil(resp.data.totalNeu/100000)*100000})
+          const gas = resp.data.totalNeu
+          if(gas === 0){
+            this.setState({displayGas:false})
+          }else{
+            this.setState({estimateGas: Math.ceil(gas/100000)*100000, displayGas:true})
+          }
         }).catch(err =>{
           throw err
         })
@@ -118,61 +124,59 @@ class Vote extends React.Component {
       {label:t('transaction.vote.veto.title'), value: 'veto'}
     ]
 
-    return (
-          <TxContainer
-            error={error}
-            onSubmit={(e)=>this.confirmedTransaction(e)}
-            submitting={submitting}
-            submitLabel= {submitLabel}
-            disabled={this.disableSubmit()}
-            className={styles.container}
-          >
-          <div className={styles.borderBottom}>
-            <label className={styles.title}>{t('transaction.vote.info')}</label>
-            <div className={`${styles.mainBox} `}>
-              <RadioField title={t('transaction.vote.action')} options={options} fieldProps={action} />
-              <ObjectSelectorField
-                key='account-selector-field'
-                keyIndex='votetx-account'
-                title={t('form.account')}
-                aliasField={Autocomplete.AccountAlias}
-                fieldProps={{
-                  id: accountId,
-                  alias: accountAlias
-                }}
-                disabled
-              />
-              <div>
-                <TextField
-                  key='asset-selector-field'
-                  keyIndex='votetx-nodePubkey'
-                  title={ t('form.vote')}
-                  fieldProps={nodePubkey}
-                />
-              </div>
-              <div>
-                <AmountUnitField
-                  key='asset-selector-field'
-                  keyIndex='votetx-amount'
-                  title={ t(`transaction.vote.${action.value}.voteAmount`)}
-                  fieldProps={amount}
-                />
-              </div>
-            </div>
-
-
-            <label className={styles.title}>{t('transaction.normal.selectFee')}</label>
-            <div className={styles.txFeeBox}>
-              <GasField
-                gas={this.state.estimateGas}
-                fieldProps={gasLevel}
-                btmAmountUnit={this.props.btmAmountUnit}
-              />
-              <span className={styles.feeDescription}> {t('transaction.normal.feeDescription')}</span>
-            </div>
+    return <TxContainer
+      error={error}
+      onSubmit={(e) => this.confirmedTransaction(e)}
+      submitting={submitting}
+      submitLabel={submitLabel}
+      disabled={this.disableSubmit()}
+      className={styles.container}
+    >
+      <div className={styles.borderBottom}>
+        <label className={styles.title}>{t('transaction.vote.info')}</label>
+        <div className={`${styles.mainBox} `}>
+          <RadioField title={t('transaction.vote.action')} options={options} fieldProps={action}/>
+          <ObjectSelectorField
+            key='account-selector-field'
+            keyIndex='votetx-account'
+            title={t('form.account')}
+            aliasField={Autocomplete.AccountAlias}
+            fieldProps={{
+              id: accountId,
+              alias: accountAlias
+            }}
+            disabled
+          />
+          <div>
+            <TextField
+              key='asset-selector-field'
+              keyIndex='votetx-nodePubkey'
+              title={t('form.vote')}
+              fieldProps={nodePubkey}
+            />
           </div>
-        </TxContainer>
-    )
+          <div>
+            <AmountUnitField
+              key='asset-selector-field'
+              keyIndex='votetx-amount'
+              title={t(`transaction.vote.${action.value}.voteAmount`)}
+              fieldProps={amount}
+            />
+          </div>
+        </div>
+
+
+        {this.state.displayGas && [<label className={styles.title}>{t('transaction.normal.selectFee')}</label>,
+          <div className={styles.txFeeBox}>
+            <GasField
+              gas={this.state.estimateGas}
+              fieldProps={gasLevel}
+              btmAmountUnit={this.props.btmAmountUnit}
+            />
+            <span className={styles.feeDescription}> {t('transaction.normal.feeDescription')}</span>
+          </div>]}
+      </div>
+    </TxContainer>
   }
 }
 
