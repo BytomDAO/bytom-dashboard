@@ -110,12 +110,6 @@ const restoreMnemonic = (data, success) => {
 
 const initSucceeded = () => (dispatch) => {
   dispatch({type: 'CREATE_REGISTER_ACCOUNT'})
-  dispatch(push({
-    pathname: '/transactions',
-    state: {
-      preserveFlash: true
-    }
-  }))
 }
 
 let actions = {

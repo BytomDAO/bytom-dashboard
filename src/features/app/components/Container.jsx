@@ -36,26 +36,6 @@ class Container extends React.Component {
   }
 
   componentDidMount() {
-    this.props.fetchKeyItem().then(resp => {
-      if (resp.data.length == 0) {
-        this.props.updateAccountInit(false)
-        this.redirectRoot(this.props)
-      }else{
-        this.props.updateAccountInit(true)
-        this.props.fetchAccountItem().then(resp => {
-          if (resp.data.length == 0) {
-            this.props.switchAccount('')
-            this.redirectRoot(this.props)
-          }else{
-            const aliasArray = resp.data.map(account => account.alias)
-            if(!aliasArray.includes(this.props.currentAccount) ){
-              this.props.setDefaultAccount()
-              this.props.showRoot()
-            }
-          }
-        })
-      }
-    })
     if(this.props.lng === 'zh'){
       moment.locale('zh-cn')
     }else{
@@ -64,8 +44,35 @@ class Container extends React.Component {
   }
 
   componentWillMount() {
-    this.props.fetchInfo().then(() => {
-      this.redirectRoot(this.props)
+    this.props.fetchAccountItem().then(resp => {
+      const promise = new Promise((resolve, reject) => {
+        if (resp.data.length == 0) {
+          this.props.switchAccount('')
+          resolve()
+        }else{
+          const aliasArray = resp.data.map(account => account.alias)
+          if(!aliasArray.includes(this.props.currentAccount) ){
+            this.props.setDefaultAccount().then(()=>{
+              resolve()
+            })
+          }else{
+            resolve()
+          }
+        }
+      })
+
+      return promise.then(()=>{
+        return this.props.fetchKeyItem().then(resp => {
+          if (resp.data.length == 0) {
+            this.props.updateAccountInit(false)
+          }else{
+            this.props.updateAccountInit(true)
+          }
+          return this.props.fetchInfo().then(() => {
+            this.redirectRoot(this.props)
+          })
+        })
+      })
     })
 
     setInterval(() => this.props.fetchInfo(), CORE_POLLING_TIME)

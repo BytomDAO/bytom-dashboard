@@ -37,7 +37,9 @@ const mapDispatchToProps = (dispatch) => ({
   ...BaseList.mapDispatchToProps(type)(dispatch),
   itemActions: {
     switch: (account) => {
-      dispatch(actions.switchAccount(account))
+      return actions.setMiningAddress(account).then(()=>{
+        dispatch(actions.switchAccount((account)))
+      })
     }
   },
 })

@@ -17,24 +17,30 @@ const update = baseUpdateActions(type, {
 
 const switchAccount = (accountAlias) => {
   return (dispatch) => {
-    return action.transaction.getAddresses({accountAlias}).then(address => {
-      return chainClient().accounts.setMiningAddress({'miningAddress':address}).then(resp =>{
-        if (resp.status === 'fail') {
-          throw resp
-        }
-
-        dispatch({type: 'SET_CURRENT_ACCOUNT', account: accountAlias})
-      })
-    })
+    dispatch({type: 'SET_CURRENT_ACCOUNT', account: accountAlias})
   }
+}
+
+const setMiningAddress = (accountAlias) =>{
+  return action.transaction.getAddresses({accountAlias}).then(address => {
+    return chainClient().accounts.setMiningAddress({'miningAddress':address}).then(resp =>{
+      if (resp.status === 'fail') {
+        throw resp
+      }
+
+      return resp
+    })
+  })
 }
 
 const setDefaultAccount = () =>{
   return (dispatch) => {
     return chainClient().accounts.query().then(result => {
       const account = result.data[0].alias
-      dispatch(switchAccount((account)))
-      return account
+      return setMiningAddress(account).then(()=>{
+        dispatch(switchAccount((account)))
+        return account
+      })
     })
   }
 }
@@ -111,7 +117,8 @@ let actions = {
   switchAccount,
   setDefaultAccount,
   createAccount,
-  createSuccess
+  createSuccess,
+  setMiningAddress
 }
 
 export default actions
