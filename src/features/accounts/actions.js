@@ -2,6 +2,7 @@ import { chainClient } from 'utility/environment'
 import { baseCreateActions, baseUpdateActions, baseListActions } from 'features/shared/actions'
 import {push} from 'react-router-redux'
 import action from 'actions'
+import uuid from 'uuid'
 
 const type = 'account'
 
@@ -50,7 +51,7 @@ const createAccount = (data) => {
     if (typeof data.alias == 'string')  data.alias = data.alias.trim()
 
     const keyData = {
-      'alias': `${data.alias}Key`,
+      'alias': `${data.alias}Key-${uuid.v4()}`,
       'password': data.password
     }
 
