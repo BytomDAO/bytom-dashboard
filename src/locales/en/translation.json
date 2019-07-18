@@ -70,7 +70,7 @@
     "settings":"settings",
     "coreStatus":"Core status",
     "logout":"Log Out",
-    "backupRestore":"Backup and Restore",
+    "backupRestore":"Backup or Restore",
     "newTx":"Create a new transaction",
     "newAccount":"Create an account",
     "newKey":"Create a key",
@@ -231,7 +231,7 @@
   },
   "account":{
     "account":"Account",
-    "formTitle":["Account Alias", "Account ID"],
+    "formTitle":["Account Alias", "Account ID", "Signature Structure"],
     "accountXpub":"Account Xpub",
     "keyIndex":"Key Index",
     "address":"Addresses",

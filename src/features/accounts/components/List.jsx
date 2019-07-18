@@ -3,6 +3,7 @@ import ListItem from './ListItem'
 import {withNamespaces} from 'react-i18next'
 import React from 'react'
 import { actions } from 'features/accounts'
+import styles from './List.scss'
 
 const type = 'account'
 
@@ -27,7 +28,8 @@ const mapStateToProps = (state, ownProps) => {
     ...BaseList.mapStateToProps(type, ListItem, {
       wrapperComponent: TableList,
       wrapperProps: {
-        titles: ownProps.t('account.formTitle',  { returnObjects: true })
+        titles: ownProps.t('account.formTitle',  { returnObjects: true }),
+        styles: styles.main
       }
     })(state)
   }

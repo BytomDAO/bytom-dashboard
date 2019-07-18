@@ -231,7 +231,7 @@
   },
   "account":{
     "account":"账户",
-    "formTitle":["账户别名","账户ID"],
+    "formTitle":["账户别名","账户ID","签名构成"],
     "accountXpub":"账户公钥",
     "keyIndex":"密钥索引",
     "address":"地址",

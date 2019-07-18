@@ -32,7 +32,12 @@ const registerKey = (data) => {
 
             if(resp.status === 'success') {
               dispatch({type: 'SET_CURRENT_ACCOUNT', account: resp.data.alias})
-              dispatch(initSucceeded())
+              return chainClient().accounts.createAddress({'account_alias':resp.data.alias})
+                .then(() =>{
+                  dispatch(initSucceeded() )
+                }).catch((err) => {
+                  throw ( err)
+                })
             }
           })
           .catch((err) => {

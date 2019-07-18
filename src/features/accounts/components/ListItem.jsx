@@ -7,6 +7,7 @@ class ListItem extends React.Component {
   render() {
     const item = this.props.item
     const t = this.props.t
+    const signStuct = `${item.quorum} of ${item.xpubs.length}`
 
     return(
       <tr className={styles.tr}>
@@ -16,6 +17,7 @@ class ListItem extends React.Component {
           </Link>
         </td>
         <td><code>{item.id}</code></td>
+        <td><code>{signStuct}</code></td>
         <td>
           {item.isUsed?
             <button className={`btn btn-default btn-sm ${styles.selectButton} ${styles.buttonDisable}`} disabled>

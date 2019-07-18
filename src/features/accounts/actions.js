@@ -84,7 +84,12 @@ const createAccount = (data) => {
 
             if(resp.status === 'success') {
               dispatch({type: 'SET_CURRENT_ACCOUNT', account: resp.data.alias})
-              dispatch(createSuccess() )
+              return chainClient().accounts.createAddress({'account_alias':resp.data.alias})
+                .then(() =>{
+                  dispatch(createSuccess() )
+                }).catch((err) => {
+                  throw ( err)
+                })
             }
           })
           .catch((err) => {
