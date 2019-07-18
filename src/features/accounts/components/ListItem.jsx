@@ -7,7 +7,7 @@ class ListItem extends React.Component {
   render() {
     const item = this.props.item
     const t = this.props.t
-    const signStuct = `${item.quorum} of ${item.xpubs.length}`
+    const signStuct = `${item.quorum} / ${item.xpubs.length}`
 
     return(
       <tr className={styles.tr}>
