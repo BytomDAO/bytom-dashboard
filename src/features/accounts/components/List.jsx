@@ -38,11 +38,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => ({
   ...BaseList.mapDispatchToProps(type)(dispatch),
   itemActions: {
-    switch: (account) => {
-      return actions.setMiningAddress(account).then(()=>{
-        dispatch(actions.switchAccount((account)))
-      })
-    }
+    switch: (account) => dispatch(actions.switchAccount((account)))
   },
 })
 export default withNamespaces('translations') (BaseList.connect(

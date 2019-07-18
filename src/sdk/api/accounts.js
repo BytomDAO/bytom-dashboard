@@ -38,11 +38,6 @@ const accountsAPI = (client) => {
     validateAddresses: (address, cb) => shared.query(client, 'accounts', '/validate-address', {'address': address},  {cb}),
 
     listAccountVotes: (params, cb) => shared.query(client, 'accounts', '/list-account-votes', params, {cb}),
-
-    setMiningAddress: (params, cb) => shared.tryCallback(
-      client.request('/set-mining-address', params),
-      cb
-    ),
   }
 }
 
