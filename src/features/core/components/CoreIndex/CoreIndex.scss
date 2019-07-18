@@ -5,10 +5,9 @@
 .table {
   margin-bottom: $grid-gutter-width;
 
+
   td {
     vertical-align: top;
-    word-break: break-all;
-    word-wrap: break-word;
   }
 }
 .actionBtn{
@@ -33,6 +32,11 @@
   text-align: right;
 }
 
+.shorten_value{
+  max-width: 220px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
 .block_hash {
   display: block;
   word-wrap: break-word;
@@ -50,6 +54,13 @@
   padding: $grid-gutter-width;
   h4 {
     margin-top: 0;
+  }
+}
+
+.copyButton{
+  padding: 0px 9px 4px;
+  img{
+    width: 18px;
   }
 }
 
