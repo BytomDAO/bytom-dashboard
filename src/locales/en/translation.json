@@ -189,7 +189,8 @@
     "highestBlock":"Highest Block",
     "networkId":"Network Id",
     "nodeXpub":"Node Xpub",
-    "coreStatus":"Core Status"
+    "coreStatus":"Core Status",
+    "fedAddress":"Federation Addr."
   },
   "console":{
     "title":"Console",

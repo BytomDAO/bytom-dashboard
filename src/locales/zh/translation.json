@@ -189,7 +189,8 @@
     "highestBlock":"最高高度",
     "networkId":"网络ID",
     "nodeXpub":"节点公钥",
-    "coreStatus":"核心状态"
+    "coreStatus":"核心状态",
+    "fedAddress":"联邦地址"
   },
   "console":{
     "title":"命令行",

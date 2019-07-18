@@ -56,7 +56,10 @@
     margin-top: 0;
   }
 }
-
+.wordWrap{
+  word-wrap: break-word;
+  word-break: break-all;
+}
 .copyButton{
   padding: 0px 9px 4px;
   img{

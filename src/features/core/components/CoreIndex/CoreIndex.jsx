@@ -94,7 +94,11 @@ class CoreIndex extends React.Component {
               </td>
             </tr>
             <tr className={styles.row}>
-              <td colSpan={2}>
+              <td className={styles.row_label}>{t('coreIndex.fedAddress')}:</td>
+              <td className={styles.wordWrap}><code>{String(coreData['federationAddress'])}</code></td>
+            </tr>
+            <tr className={styles.row}>
+              <td colSpan={3}>
                 <hr/>
               </td>
             </tr>
