@@ -347,6 +347,7 @@
     "crossChain":{
       "title":"跨链信息（Vapor->Bytom）",
       "address":"Bytom地址",
+      "addressHint":"注意：所填地址必须以__id__开头。",
       "submit":"提交跨链",
       "confirm":"确认跨链",
       "crossChainAddress":"跨链地址"

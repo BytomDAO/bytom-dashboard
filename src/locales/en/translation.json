@@ -350,6 +350,7 @@
     "crossChain":{
       "title":"Cross Chain info (Vapor->Bytom)",
       "address":"Bytom Address",
+      "addressHint":"Note: the address must start with '__id__'.",
       "submit":"Submit Cross Chain",
       "confirm":"Confirm Cross Chain",
       "crossChainAddress":"Cross Chain Address"

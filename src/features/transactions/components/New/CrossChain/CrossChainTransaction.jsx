@@ -128,6 +128,8 @@ class CrossChainTransaction extends React.Component {
 
     const showBtmAmountUnit = (assetAlias.value === 'BTM' || assetId.value === btmID)
 
+    const net = this.props.networkId
+
     return <TxContainer
       error={error}
       onSubmit={(e) => this.confirmedTransaction(e)}
@@ -171,7 +173,7 @@ class CrossChainTransaction extends React.Component {
             decimal={assetDecimal}
           />
 
-          <TextField title={t('transaction.crossChain.address')} fieldProps={address}/>
+          <TextField title={t('transaction.crossChain.address')} fieldProps={address} hint={t('transaction.crossChain.addressHint', {id: net})}/>
         </div>
 
 
@@ -231,8 +233,30 @@ const initialValues = (state, ownProps) => {
   return {}
 }
 
+const mapStateToProps = (state, ownProps) => {
+  const coreData = state.core.coreData
+  let networkId
+  if(coreData && coreData.networkId){
+    switch (coreData.networkId){
+      case 'mainnet':
+        networkId = 'bm'
+        break
+      case 'testnet':
+        networkId = 'tm'
+        break
+      case 'solonet':
+        networkId = 'sm'
+    }
+  }
+  return {
+    ...BaseNew.mapStateToProps('transaction')(state, ownProps),
+    networkId
+  }
+}
+
+
 export default withNamespaces('translations') (BaseNew.connect(
-  BaseNew.mapStateToProps('transaction'),
+  mapStateToProps,
   mapDispatchToProps,
   reduxForm({
     form: 'CrossChainTransaction',
