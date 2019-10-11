@@ -1,4 +1,4 @@
-import { chainClient } from 'utility/environment'
+import { chainClient, UTXOpageSize } from 'utility/environment'
 import { push, replace } from 'react-router-redux'
 
 export default function(type, options = {}) {
@@ -163,6 +163,9 @@ export default function(type, options = {}) {
           }
           if( type === 'transaction' && requestOptions.pageNumber > 1 ){
             params.startTxId = requestOptions.pageIds[requestOptions.pageNumber-2]
+          }
+          if(type === 'unspent'){
+            params.from = (requestOptions.pageNumber-1)*UTXOpageSize
           }
         }
         promise = dispatch(fetchItems(params, requestOptions))
