@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import styles from './New.scss'
 import actions from 'actions'
 import componentClassNames from 'utility/componentClassNames'
+import { btmID } from 'utility/environment'
 import Tutorial from 'features/tutorial/components/Tutorial'
 import NormalTxForm from './NormalTransactionForm'
 import CrossChain from './CrossChain/CrossChainTransaction'
@@ -23,7 +24,9 @@ class Form extends React.Component {
   componentDidMount() {
     if (!this.props.autocompleteIsBalanceLoaded) {
       this.props.fetchBalanceAll().then(() => {
-        this.props.didLoadBalanceAutocomplete()
+        this.props.getVoteDetail().then(()=>{
+          this.props.didLoadBalanceAutocomplete()
+        })
       })
     }
     if (!this.props.autocompleteIsAssetLoaded) {
@@ -178,6 +181,15 @@ const mapStateToProps = (state, ownProps) => {
     balances.push(state.balance.items[key])
   }
 
+  const mergeById = (a1, a2) =>
+    a1.map(itm => ({
+      ...a2.find((item) => (item.accountId === itm.accountId && itm.assetId === btmID) && item),
+      ...itm
+    }))
+
+  const voteDetail = state.balance.voteDetail || []
+  balances =  voteDetail.length === 0?  balances: mergeById(balances, voteDetail)
+
   return {
     autocompleteIsBalanceLoaded: state.balance.autocompleteIsLoaded,
     autocompleteIsAssetLoaded: state.asset.autocompleteIsLoaded,
@@ -199,6 +211,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => ({
   didLoadBalanceAutocomplete: () => dispatch(actions.balance.didLoadAutocomplete),
   fetchBalanceAll: (cb) => dispatch(actions.balance.fetchAll(cb)),
+  getVoteDetail: () => dispatch(actions.balance.getVoteDetail()),
   didLoadAssetAutocomplete: () => dispatch(actions.asset.didLoadAutocomplete),
   fetchAssetAll: (cb) => dispatch(actions.asset.fetchAll(cb)),
   createForm: (type) => dispatch(replace(`/transactions/create?type=${type}`)),

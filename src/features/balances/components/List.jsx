@@ -1,5 +1,6 @@
 import { BaseList } from 'features/shared/components'
 import { ProgressBar } from 'react-bootstrap'
+import { btmID } from 'utility/environment'
 import ListItem from './ListItem'
 import React from 'react'
 import actions from 'actions'
@@ -31,7 +32,7 @@ class List extends React.Component {
     if(this.props.items.length !== 0){
       const mergeById = (a1, a2) =>
         a1.map(itm => ({
-          ...a2.find((item) => (item.accountId === itm.accountId) && item),
+          ...a2.find((item) => (item.accountId === itm.accountId && itm.assetId === btmID) && item),
           ...itm
         }))
       items =  this.props.voteDetail.length === 0?  this.props.items: mergeById(this.props.items, this.props.voteDetail)

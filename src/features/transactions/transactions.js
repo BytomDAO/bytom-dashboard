@@ -1,6 +1,8 @@
 import { normalizeBTMAmountUnit, converIntToDec } from 'utility/buildInOutDisplay'
 import { btmID } from 'utility/environment'
 import { sum } from 'utility/math'
+import BigNumber from 'bignumber.js'
+
 
 export const balance = (values, assetDecimal, balances, btmAmountUnit) => {
   let filteredBalances = balances
@@ -19,7 +21,8 @@ export const balance = (values, assetDecimal, balances, btmAmountUnit) => {
 
   if(filteredBalances.length === 1){
     if (filteredBalances[0].assetId === btmID){
-      return normalizeBTMAmountUnit(filteredBalances[0].assetId, filteredBalances[0].amount, btmAmountUnit)
+      const voteNum = filteredBalances[0].totalVoteNumber || 0
+      return normalizeBTMAmountUnit(filteredBalances[0].assetId, ( BigNumber(filteredBalances[0].amount).minus(voteNum) ), btmAmountUnit)
     }else if( assetDecimal ){
       return converIntToDec(filteredBalances[0].amount, assetDecimal)
     }else{
