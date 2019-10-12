@@ -6,34 +6,43 @@ import {
   AmountField,
   GasField
 } from 'features/shared/components'
-import {chainClient} from 'utility/environment'
 import {reduxForm} from 'redux-form'
 import React from 'react'
 import styles from './New.scss'
 import  TxContainer  from './NewTransactionsContainer/TxContainer'
 import { btmID } from 'utility/environment'
 import actions from 'actions'
+import {chainClient} from 'utility/environment'
 import ConfirmModal from './ConfirmModal/ConfirmModal'
-import { balance , getAssetDecimal, normalTxActionBuilder} from '../../transactions'
+import { balance , getAssetDecimal} from '../../transactions'
 import {withNamespaces} from 'react-i18next'
 
 class NormalTxForm extends React.Component {
   constructor(props) {
     super(props)
-    this.connection = chainClient().connection
     this.state = {
-      estimateGas:null,
+      estimateGas:1000000,
       counter: 1,
       displayGas: true
     }
 
     this.submitWithValidation = this.submitWithValidation.bind(this)
-    this.disableSubmit = this.disableSubmit.bind(this)
     this.addReceiverItem = this.addReceiverItem.bind(this)
+    this.disableSubmit = this.disableSubmit.bind(this)
   }
 
   disableSubmit() {
-    return (this.state.displayGas && !this.state.estimateGas)
+    const {
+      values: {assetId, assetAlias, receivers},
+    } = this.props
+
+    const noAsset = !assetAlias && !assetId
+    const addresses = receivers.map(x => x.address)
+    const amounts = receivers.map(x => Number(x.amount))
+
+    const invalids = this.props.fields.receivers.map(x => x.address.invalid)
+
+    return ( addresses.includes('') || amounts.includes(0) || invalids.includes(true) || noAsset)
   }
 
   submitWithValidation(data) {
@@ -73,7 +82,6 @@ class NormalTxForm extends React.Component {
     })
     this.setState({
       counter: counter+1,
-      estimateGas: null
     })
   }
 
@@ -88,46 +96,7 @@ class NormalTxForm extends React.Component {
       resolve()
     })
 
-    promise.then(() =>  this.estimateNormalTransactionGas())
-  }
-
-  estimateNormalTransactionGas() {
-    const transaction = this.props.fields
-    const accountAlias = transaction.accountAlias.value
-    const accountId = transaction.accountId.value
-    const assetAlias = transaction.assetAlias.value
-    const assetId = transaction.assetId.value
-    const receivers = transaction.receivers
-    const addresses = receivers.map(x => x.address.value)
-    const amounts = receivers.map(x => Number(x.amount.value))
-
-    const {t, i18n} = this.props
-
-    const noAccount = !accountAlias && !accountId
-    const noAsset = !assetAlias && !assetId
-
-    if ( addresses.includes('') || amounts.includes(0)|| noAccount || noAsset) {
-      this.setState({estimateGas: null})
-      return
-    }
-
-    const actions = normalTxActionBuilder(transaction, Math.pow(10, 7), 'amount.value' )
-
-    const body = {actions, ttl: 1}
-    this.props.buildTransaction(body).then(resp => {
-      return this.props.estimateGasFee(resp.data).then(resp => {
-        const gas = resp.data.totalNeu
-        if(gas === 0){
-          this.setState({displayGas:false})
-        }else{
-          this.setState({estimateGas: Math.ceil(gas/100000)*100000, displayGas:true})
-        }
-      })
-    }).catch(err =>{
-      this.setState({estimateGas: null, address: null})
-      const errorMsg =  err.code && i18n.exists(`btmError.${err.code}`) && t(`btmError.${err.code}`) || err.msg
-      this.props.showError(new Error(errorMsg))
-    })
+    promise.then(() => {})
   }
 
   render() {
@@ -137,12 +106,6 @@ class NormalTxForm extends React.Component {
       submitting
     } = this.props
     const t = this.props.t;
-    [accountAlias, accountId, assetAlias, assetId].forEach(key => {
-      key.onBlur = this.estimateNormalTransactionGas.bind(this)
-    });
-    (receivers.map(receiver => receiver.amount)).forEach(amount =>{
-      amount.onBlur = this.estimateNormalTransactionGas.bind(this)
-    })
 
     let submitLabel = t('transaction.new.submit')
 
@@ -153,7 +116,7 @@ class NormalTxForm extends React.Component {
 
     const availableBalance = balance(this.props.fields, assetDecimal, this.props.balances, this.props.btmAmountUnit)
 
-    const showBtmAmountUnit = (assetAlias.value === 'BTM' || assetId.value === btmID)
+    const isBTM = (assetAlias.value === 'BTM' || assetId.value === btmID)
 
     return <TxContainer
       error={error}
@@ -201,15 +164,11 @@ class NormalTxForm extends React.Component {
               className={this.props.tutorialVisible ? styles.tutorialItem : styles.subjectField}
               key={receiver.id.value}>
               <TextField title={t('form.address')} fieldProps={{
-                ...receiver.address,
-                onBlur: (e) => {
-                  receiver.address.onBlur(e)
-                  this.estimateNormalTransactionGas()
-                },
+                ...receiver.address
               }}/>
 
               <AmountField
-                isBTM={showBtmAmountUnit}
+                isBTM={isBTM}
                 title={t('form.amount')}
                 fieldProps={receiver.amount}
                 decimal={assetDecimal}
@@ -302,8 +261,6 @@ const mapDispatchToProps = (dispatch) => ({
       noCloseBtn: true
     }
   )),
-  estimateGasFee: actions.transaction.estimateGas,
-  buildTransaction: actions.transaction.buildTransaction,
   ...BaseNew.mapDispatchToProps('transaction')(dispatch)
 })
 

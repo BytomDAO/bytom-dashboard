@@ -26,8 +26,8 @@ class GasField extends React.Component {
         <span>{normalizeBTMAmountUnit(btmID, fieldProps.value* this.props.gas, this.props.btmAmountUnit)}</span>
         <input
                type='range'
-               min={0}
-               max={3}
+               min={1}
+               max={10}
                step='1'
                {...fieldProps} />
 

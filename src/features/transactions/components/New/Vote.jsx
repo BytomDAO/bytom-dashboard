@@ -22,7 +22,7 @@ class Vote extends React.Component {
     super(props)
     this.connection = chainClient().connection
     this.state = {
-      estimateGas:null,
+      estimateGas:1000000,
       address:null,
       displayGas: true
     }
@@ -32,22 +32,30 @@ class Vote extends React.Component {
   }
 
   disableSubmit() {
-    return (this.state.displayGas && !this.state.estimateGas)
+    const {
+      values: {nodePubkey, amount}
+    } = this.props
+
+    return ( !nodePubkey || !amount )
   }
 
   submitWithValidation(data) {
     return new Promise((resolve, reject) => {
-      this.props.submitForm(Object.assign({}, data, {state: this.state, form: 'voteTx'}))
-        .then(() => {
-          this.props.closeModal()
-          this.props.destroyForm()
+      this.props.getAddress({accountAlias:data.accountAlias, accountId:data.accountId}).then(address => {
+        this.setState({address},()=>{
+          this.props.submitForm(Object.assign({}, data, {state: this.state, form: 'voteTx'}))
+            .then(() => {
+              this.props.closeModal()
+              this.props.destroyForm()
+            })
+            .catch((err) => {
+              if(err.message !== 'PasswordWrong'){
+                this.props.closeModal()
+              }
+              reject({_error: err})
+            })
         })
-        .catch((err) => {
-          if(err.message !== 'PasswordWrong'){
-            this.props.closeModal()
-          }
-          reject({_error: err})
-        })
+      })
     })
   }
 
@@ -63,49 +71,6 @@ class Vote extends React.Component {
     )
   }
 
-  estimateNormalTransactionGas() {
-    const transaction = this.props.fields
-    const accountAlias = transaction.accountAlias.value
-    const accountId = transaction.accountId.value
-    const nodePubkey = transaction.nodePubkey.value
-    const amount = Number(transaction.amount.value)
-
-    const {t, i18n} = this.props
-
-    const noAccount = !accountAlias && !accountId
-
-    if ( nodePubkey === '' || amount === 0|| noAccount ) {
-      this.setState({estimateGas: null})
-      return
-    }
-
-
-    this.props.getAddress({accountAlias, accountId}).then(address => {
-      this.setState({address})
-      const actions = voteTxActionBuilder(transaction, Math.pow(10, 7), address)
-
-      return this.props.buildTransaction({actions, ttl: 1}).then(tmp => {
-        return this.props.estimateGasFee(tmp.data).then(resp => {
-          const gas = resp.data.totalNeu
-          if(gas === 0){
-            this.setState({displayGas:false})
-          }else{
-            this.setState({estimateGas: Math.ceil(gas/100000)*100000, displayGas:true})
-          }
-        }).catch(err =>{
-          throw err
-        })
-      }).catch(err =>{
-        throw err
-      })
-    }).catch(err =>{
-      this.setState({estimateGas: null, address: null})
-      const errorMsg =  err.code && i18n.exists(`btmError.${err.code}`) && t(`btmError.${err.code}`) || err.msg
-      this.props.showError(new Error(errorMsg))
-    })
-
-  }
-
   render() {
     const {
       fields: {action, accountId, accountAlias, nodePubkey, amount, gasLevel},
@@ -113,9 +78,6 @@ class Vote extends React.Component {
       submitting
     } = this.props
     const t = this.props.t;
-    [accountAlias, accountId,nodePubkey, amount].forEach(key => {
-      key.onBlur = this.estimateNormalTransactionGas.bind(this)
-    });
 
     let submitLabel = t(`transaction.vote.${action.value}.submit`)
 
@@ -204,8 +166,6 @@ const mapDispatchToProps = (dispatch) => ({
     }
   )),
   getAddress: actions.transaction.getAddresses,
-  estimateGasFee: actions.transaction.estimateGas,
-  buildTransaction: actions.transaction.buildTransaction,
   ...BaseNew.mapDispatchToProps('transaction')(dispatch)
 })
 

@@ -14,7 +14,7 @@ import  TxContainer  from '../NewTransactionsContainer/TxContainer'
 import actions from 'actions'
 import { btmID } from 'utility/environment'
 import CrossChainConfirmModal from './CrossChainConfirmModal/CrossChainConfirmModal'
-import {balance, getAssetDecimal, crossChainTxActionBuilder} from '../../../transactions'
+import {balance, getAssetDecimal} from '../../../transactions'
 import {withNamespaces} from 'react-i18next'
 
 class CrossChainTransaction extends React.Component {
@@ -22,7 +22,7 @@ class CrossChainTransaction extends React.Component {
     super(props)
     this.connection = chainClient().connection
     this.state = {
-      estimateGas:null,
+      estimateGas:1000000,
       displayGas: true
     }
 
@@ -31,7 +31,13 @@ class CrossChainTransaction extends React.Component {
   }
 
   disableSubmit() {
-    return (this.state.displayGas && !this.state.estimateGas)
+    const {
+      values: {assetAlias, assetId, amount, address}
+    } = this.props
+
+    const noAsset = !assetAlias && !assetId
+
+    return ( noAsset || !address || !amount )
   }
 
   submitWithValidation(data) {
@@ -64,48 +70,6 @@ class CrossChainTransaction extends React.Component {
     )
   }
 
-  estimateNormalTransactionGas() {
-    const transaction = this.props.fields
-
-    const accountAlias = transaction.accountAlias.value
-    const accountId = transaction.accountId.value
-    const assetAlias = transaction.assetAlias.value
-    const assetId = transaction.assetId.value
-    const address = transaction.address.value
-    const amount = Number(transaction.amount.value)
-
-    const {t, i18n} = this.props
-
-    const noAccount = !accountAlias && !accountId
-    const noAsset = !assetAlias && !assetId
-
-    if ( address === '' || amount === 0|| noAccount || noAsset) {
-      this.setState({estimateGas: null})
-      return
-    }
-
-    const actions = crossChainTxActionBuilder(transaction, Math.pow(10, 7))
-
-    this.props.buildTransaction({actions, ttl: 1}).then(tmp => {
-      return this.props.estimateGasFee(tmp.data).then(resp => {
-        const gas = resp.data.totalNeu
-        if(gas === 0){
-          this.setState({displayGas:false})
-        }else{
-          this.setState({estimateGas: Math.ceil(gas/100000)*100000, displayGas:true})
-        }
-      }).catch(err =>{
-        throw err
-      })
-
-    }).catch(err =>{
-      this.setState({estimateGas: null, address: null})
-      const errorMsg =  err.code && i18n.exists(`btmError.${err.code}`) && t(`btmError.${err.code}`) || err.msg
-      this.props.showError(new Error(errorMsg))
-    })
-
-  }
-
   render() {
     const {
       fields: {accountId, accountAlias,assetAlias, assetId, amount, address, gasLevel},
@@ -113,9 +77,6 @@ class CrossChainTransaction extends React.Component {
       submitting
     } = this.props
     const t = this.props.t;
-    [accountAlias, accountId, assetAlias, assetId, amount, address].forEach(key => {
-      key.onBlur = this.estimateNormalTransactionGas.bind(this)
-    });
 
     let submitLabel = t('transaction.crossChain.submit')
 
@@ -214,8 +175,6 @@ const mapDispatchToProps = (dispatch) => ({
       noCloseBtn: true
     }
   )),
-  estimateGasFee: actions.transaction.estimateGas,
-  buildTransaction: actions.transaction.buildTransaction,
   ...BaseNew.mapDispatchToProps('transaction')(dispatch)
 })
 
