@@ -114,24 +114,17 @@ class NormalTxForm extends React.Component {
 
     const body = {actions, ttl: 1}
     this.connection.request('/build-transaction', body).then(resp => {
-      if (resp.status === 'fail') {
-        this.setState({estimateGas: null})
-        const errorMsg =  resp.code && i18n.exists(`btmError.${resp.code}`) && t(`btmError.${resp.code}`) || resp.msg
-        this.props.showError(new Error(errorMsg))
-        return
-      }
-
       return this.connection.request('/estimate-transaction-gas', {
         transactionTemplate: resp.data
       }).then(resp => {
-        if (resp.status === 'fail') {
-          this.setState({estimateGas: null})
-          const errorMsg =  resp.code && i18n.exists(`btmError.${resp.code}`) && t(`btmError.${resp.code}`) || resp.msg
-          this.props.showError(new Error(errorMsg))
-          return
-        }
         this.setState({estimateGas: Math.ceil(resp.data.totalNeu/100000)*100000})
+      }).catch(err =>{
+        throw err
       })
+    }).catch(err=>{
+      this.setState({estimateGas: null, address: null})
+      const errorMsg =  err.code && i18n.exists(`btmError.${err.code}`) && t(`btmError.${err.code}`) || err.msg
+      this.props.showError(new Error(errorMsg))
     })
   }
 

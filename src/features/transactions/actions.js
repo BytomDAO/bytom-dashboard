@@ -1,5 +1,5 @@
 import uuid from 'uuid'
-import {chainClient} from 'utility/environment'
+import {chainClient, btmID} from 'utility/environment'
 import {parseNonblankJSON} from 'utility/string'
 import {push} from 'react-router-redux'
 import {baseCreateActions, baseListActions} from 'features/shared/actions'
@@ -98,6 +98,8 @@ form.submitForm = (formParams) => function (dispatch) {
     const accountAlias = formParams.accountAlias
     const accountInfo = Object.assign({},  accountAlias!== ''? {alias: accountAlias}: {id: accountId})
 
+    const isBTM = (formParams.assetId === btmID) || (formParams.assetAlias === 'BTM')
+
     return client.accounts.query(accountInfo)
       .then( resp => {
         if(resp.data[0].xpubs.length > 1){
@@ -110,17 +112,32 @@ form.submitForm = (formParams) => function (dispatch) {
         if(!result.data.checkResult){
           throw new Error('PasswordWrong')
         }
-        return client.transactions.build(builderFunction)
+        if(isBTM)
+          return client.transactions.buildChain(builderFunction)
+        else
+          return client.transactions.build(builderFunction)
       })
       .then( tpl => {
-        const body = Object.assign({}, {password: formParams.password, transaction: tpl.data})
-        return client.transactions.sign(body)
+        if(isBTM){
+          const body = Object.assign({}, {password: formParams.password, transactions: tpl.data})
+          return client.transactions.signBatch(body)
+        }
+        else{
+          const body = Object.assign({}, {password: formParams.password, transaction: tpl.data})
+          return client.transactions.sign(body)
+        }
       })
       .then(signed => {
         if(!signed.data.signComplete){
           throw {code: 'F_BTM100'}
         }
-        return client.transactions.submit(signed.data.transaction.rawTransaction)
+        if(isBTM){
+          const rawTransactions = signed.data.transaction.map(tx => tx.rawTransaction)
+          return client.transactions.submitBatch(rawTransactions)
+        }
+        else{
+          return client.transactions.submit(signed.data.transaction.rawTransaction)
+        }
       })
       .then(submitSucceeded)
   }
