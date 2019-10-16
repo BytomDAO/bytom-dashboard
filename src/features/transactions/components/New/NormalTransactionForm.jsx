@@ -91,14 +91,14 @@ class NormalTxForm extends React.Component {
   }
 
   estimateNormalTransactionGas() {
-    const transaction = this.props.fields
-    const accountAlias = transaction.accountAlias.value
-    const accountId = transaction.accountId.value
-    const assetAlias = transaction.assetAlias.value
-    const assetId = transaction.assetId.value
+    const transaction = this.props.values
+    const accountAlias = transaction.accountAlias
+    const accountId = transaction.accountId
+    const assetAlias = transaction.assetAlias
+    const assetId = transaction.assetId
     const receivers = transaction.receivers
-    const addresses = receivers.map(x => x.address.value)
-    const amounts = receivers.map(x => Number(x.amount.value))
+    const addresses = receivers.map(x => x.address)
+    const amounts = receivers.map(x => Number(x.amount))
 
     const {t, i18n} = this.props
 
@@ -110,7 +110,7 @@ class NormalTxForm extends React.Component {
       return
     }
 
-    const actions = normalTxActionBuilder(transaction, Math.pow(10, 7), 'amount.value' )
+    const actions = normalTxActionBuilder(transaction, Math.pow(10, 7), 'amount' )
 
     const body = {actions, ttl: 1}
     this.connection.request('/build-transaction', body).then(resp => {
@@ -149,7 +149,7 @@ class NormalTxForm extends React.Component {
     const showAvailableBalance = (accountAlias.value || accountId.value) &&
       (assetAlias.value || assetId.value)
 
-    const availableBalance = balance(this.props.fields, assetDecimal, this.props.balances, this.props.btmAmountUnit)
+    const availableBalance = balance(this.props.values, assetDecimal, this.props.balances, this.props.btmAmountUnit)
 
     const showBtmAmountUnit = (assetAlias.value === 'BTM' || assetId.value === btmID)
 

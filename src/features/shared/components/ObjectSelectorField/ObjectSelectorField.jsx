@@ -43,27 +43,33 @@ class ObjectSelectorField extends React.Component {
   }
 
   render() {
+    const {
+      fieldProps: { id, alias },
+      t,
+      title,
+      hint
+    } = this.props
+
     const idOnChange = (event) => {
-      this.props.fieldProps.id.onChange(event.target.value)
-      this.props.fieldProps.alias.onChange('')
+      id.onChange(event.target.value)
+      alias.onChange('')
     }
 
     const aliasOnChange = value => {
-      this.props.fieldProps.alias.onChange(value)
-      this.props.fieldProps.id.onChange('')
+      alias.onChange(value)
+      id.onChange('')
     }
 
-    const t = this.props.t
     const alias_title = t('form.alias')
 
-    const idProps = Object.assign({...this.props.fieldProps.id}, {onChange: idOnChange})
-    const aliasProps = Object.assign({...this.props.fieldProps.alias}, {onChange: aliasOnChange})
+    const idProps = Object.assign({...id}, {onChange: idOnChange})
+    const aliasProps = Object.assign({...alias}, {onChange: aliasOnChange})
 
 
 
     return(
       <div className='form-group'>
-        {this.props.title && <FieldLabel>{this.props.title}</FieldLabel>}
+        {title && <FieldLabel>{title}</FieldLabel>}
         <div className='input-group'>
           <div className={`input-group-btn ${this.state.showDropdown && 'open'}`}>
             <DropdownButton
@@ -88,11 +94,11 @@ class ObjectSelectorField extends React.Component {
             <this.props.aliasField
               className={styles.aliasFieldGroupItem}
               disabled={this.props.disabled}
-              placeholder={  t('form.objectField.aliasPlaceholder' , {title: this.props.title.toLowerCase()}) }
+              placeholder={  t('form.objectField.aliasPlaceholder' , {title: title.toLowerCase()}) }
               fieldProps={aliasProps} />}
 
         </div>
-        {this.props.hint && <span className='help-block'>{this.props.hint}</span>}
+        {hint && <span className='help-block'>{hint}</span>}
       </div>
     )
   }

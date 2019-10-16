@@ -4,17 +4,17 @@ import { sum } from 'utility/math'
 
 export const balance = (values, assetDecimal, balances, btmAmountUnit) => {
   let filteredBalances = balances
-  if (values.accountAlias.value) {
-    filteredBalances = filteredBalances.filter(balance => balance.accountAlias === values.accountAlias.value)
+  if (values.accountAlias) {
+    filteredBalances = filteredBalances.filter(balance => balance.accountAlias === values.accountAlias)
   }
-  if (values.accountId.value) {
-    filteredBalances = filteredBalances.filter(balance => balance.accountId === values.accountId.value)
+  if (values.accountId) {
+    filteredBalances = filteredBalances.filter(balance => balance.accountId === values.accountId)
   }
-  if (values.assetAlias.value) {
-    filteredBalances = filteredBalances.filter(balance => balance.assetAlias === values.assetAlias.value)
+  if (values.assetAlias) {
+    filteredBalances = filteredBalances.filter(balance => balance.assetAlias === values.assetAlias)
   }
-  if (values.assetId.value) {
-    filteredBalances = filteredBalances.filter(balance => balance.assetId === values.assetId.value)
+  if (values.assetId) {
+    filteredBalances = filteredBalances.filter(balance => balance.assetId === values.assetId)
   }
 
   if(filteredBalances.length === 1){
@@ -44,10 +44,10 @@ export const getAssetDecimal = (values, asset) => {
 }
 
 export const normalTxActionBuilder = (transaction, gas, prop) =>{
-  const accountAlias = transaction.accountAlias.value || transaction.accountAlias
-  const accountId = transaction.accountId.value || transaction.accountId
-  const assetAlias = transaction.assetAlias.value || transaction.assetAlias
-  const assetId = transaction.assetId.value || transaction.assetId
+  const accountAlias =  transaction.accountAlias
+  const accountId = transaction.accountId
+  const assetAlias = transaction.assetAlias
+  const assetId = transaction.assetId
   const receivers = transaction.receivers
 
   const totalAmount = sum(receivers, prop )
@@ -73,10 +73,10 @@ export const normalTxActionBuilder = (transaction, gas, prop) =>{
   receivers.forEach((receiver)=>{
     actions.push(
       {
-        address: receiver.address.value || receiver.address,
+        address: receiver.address,
         assetAlias,
         assetId,
-        amount: Number(receiver.amount.value || receiver.amount),
+        amount: Number(receiver.amount),
         type: 'control_address'
       }
     )
@@ -86,10 +86,10 @@ export const normalTxActionBuilder = (transaction, gas, prop) =>{
 }
 
 export const issueAssetTxActionBuilder = (transaction, gas,prop) =>{
-  const accountAlias = transaction.accountAlias.value || transaction.accountAlias
-  const accountId = transaction.accountId.value || transaction.accountId
-  const assetAlias = transaction.assetAlias.value || transaction.assetAlias
-  const assetId = transaction.assetId.value || transaction.assetId
+  const accountAlias = transaction.accountAlias
+  const accountId = transaction.accountId
+  const assetAlias = transaction.assetAlias
+  const assetId =  transaction.assetId
   const receivers = transaction.receivers
 
   const totalAmount = sum(receivers, prop )
@@ -113,10 +113,10 @@ export const issueAssetTxActionBuilder = (transaction, gas,prop) =>{
   receivers.forEach((receiver)=>{
     actions.push(
       {
-        address: receiver.address.value || receiver.address,
+        address: receiver.address,
         assetAlias,
         assetId,
-        amount: Number(receiver.amount.value || receiver.amount),
+        amount: Number(receiver.amount),
         type: 'control_address'
       }
     )

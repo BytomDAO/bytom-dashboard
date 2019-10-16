@@ -118,14 +118,14 @@ class IssueAssets extends React.Component {
   }
 
   estimateNormalTransactionGas() {
-    const transaction = this.props.fields
-    const accountAlias = transaction.accountAlias.value
-    const accountId = transaction.accountId.value
-    const assetAlias = transaction.assetAlias.value
-    const assetId = transaction.assetId.value
+    const transaction = this.props.values
+    const accountAlias = transaction.accountAlias
+    const accountId = transaction.accountId
+    const assetAlias = transaction.assetAlias
+    const assetId = transaction.assetId
     const receivers = transaction.receivers
-    const addresses = receivers.map(x => x.address.value)
-    const amounts = receivers.map(x => Number(x.amount.value))
+    const addresses = receivers.map(x => x.address)
+    const amounts = receivers.map(x => Number(x.amount))
 
     const {t, i18n} = this.props
 
@@ -137,28 +137,21 @@ class IssueAssets extends React.Component {
       return
     }
 
-    const actions = issueAssetTxActionBuilder(transaction, Math.pow(10, 7), 'amount.value' )
+    const actions = issueAssetTxActionBuilder(transaction, Math.pow(10, 7), 'amount' )
 
     const body = {actions, ttl: 1}
     this.connection.request('/build-transaction', body).then(resp => {
-      if (resp.status === 'fail') {
-        this.setState({estimateGas: null})
-        const errorMsg =  resp.code && i18n.exists(`btmError.${resp.code}`) && t(`btmError.${resp.code}`) || resp.msg
-        this.props.showError(new Error(errorMsg))
-        return
-      }
-
       return this.connection.request('/estimate-transaction-gas', {
         transactionTemplate: resp.data
       }).then(resp => {
-        if (resp.status === 'fail') {
-          this.setState({estimateGas: null})
-          const errorMsg =  resp.code && i18n.exists(`btmError.${resp.code}`) && t(`btmError.${resp.code}`) || resp.msg
-          this.props.showError(new Error(errorMsg))
-          return
-        }
         this.setState({estimateGas: Math.ceil(resp.data.totalNeu/100000)*100000})
+      }).catch(err =>{
+        throw err
       })
+    }).catch(err=>{
+      this.setState({estimateGas: null, address: null})
+      const errorMsg =  err.code && i18n.exists(`btmError.${err.code}`) && t(`btmError.${err.code}`) || err.msg
+      this.props.showError(new Error(errorMsg))
     })
   }
 
