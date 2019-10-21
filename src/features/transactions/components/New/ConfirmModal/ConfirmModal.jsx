@@ -26,12 +26,13 @@ class ConfirmModal extends Component {
       cancel,
       error,
       gas,
+      chainGas,
       t,
       btmAmountUnit,
       assetDecimal
     } = this.props
 
-    const fee = Number(gasLevel.value * gas)
+    const fee = Number( (chainGas||0 ) + gasLevel.value * gas )
 
     const totalAmount = sum(receivers, 'amount.value')
 
