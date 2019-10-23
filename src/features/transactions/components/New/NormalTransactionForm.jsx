@@ -101,7 +101,7 @@ class NormalTxForm extends React.Component {
 
   render() {
     const {
-      fields: {accountId, accountAlias, assetId, assetAlias, receivers, gasLevel},
+      fields: {accountId, accountAlias, assetId, assetAlias, receivers, gasLevel, isChainTx},
       error,
       submitting
     } = this.props
@@ -192,6 +192,21 @@ class NormalTxForm extends React.Component {
             {t('commonWords.addField')}
           </button>
         </div>
+
+        {isBTM && [<label className={styles.title}>{t('transaction.new.submitType')}</label>,
+          <div className={styles.submitSwitchSet}>
+            <div className={styles.submitSwitch}>
+              <div className={styles.label}>{t('transaction.new.chainTx')}</div>
+              <label className={styles.switch}>
+                <input
+                  type='checkbox'
+                  {...isChainTx}
+                />
+                <span className={styles.slider}></span>
+              </label>
+            </div>
+            <div>{t('transaction.new.chainTxNote')}</div>
+          </div>]}
 
         { this.state.displayGas &&
           [<label className={styles.title}>{t('transaction.normal.selectFee')}</label>,
@@ -297,6 +312,7 @@ export default withNamespaces('translations') (BaseNew.connect(
       'receivers[].amount',
       'receivers[].address',
       'gasLevel',
+      'isChainTx'
     ],
     asyncValidate,
     asyncBlurFields: ['receivers[].address'],

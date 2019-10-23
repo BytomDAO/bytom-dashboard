@@ -286,7 +286,10 @@
       "vote": "Vote",
       "submit":"Submit transaction",
       "advanced" :"Advanced",
-      "crossChain": "Cross Chain"
+      "crossChain": "Cross Chain",
+      "submitType":"Transactions Submitted Type",
+      "chainTx":"Chain Transactions",
+      "chainTxNote":"Chain Transactions will generate multiple transactions, cost an extra fee and improve UTXO amount limit in a single transaction."
     },
     "normal":{
       "from":"From",

@@ -156,6 +156,7 @@ export default  withNamespaces('translations') (reduxForm({
     'receivers[].amount',
     'receivers[].address',
     'gasLevel',
+    'isChainTx',
     'password'
   ],
   destroyOnUnmount: false,

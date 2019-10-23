@@ -283,7 +283,10 @@
       "advanced" :"高级交易",
       "vote": "投票",
       "submit":"提交交易",
-      "crossChain": "跨链"
+      "crossChain": "跨链",
+      "submitType":"交易提交类型",
+      "chainTx":"链式交易",
+      "chainTxNote":"解决单笔交易UTXO个数限制，链式交易会生成多笔交易以及额外手续费。"
     },
     "normal":{
       "from":"从",
