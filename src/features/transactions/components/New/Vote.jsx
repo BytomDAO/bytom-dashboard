@@ -73,11 +73,11 @@ class Vote extends React.Component {
 
   render() {
     const {
-      fields: {action, accountId, accountAlias, nodePubkey, amount, gasLevel},
+      fields: {action, accountId, accountAlias, nodePubkey, amount, gasLevel, isChainTx},
       error,
       submitting
     } = this.props
-    const t = this.props.t;
+    const t = this.props.t
 
     let submitLabel = t(`transaction.vote.${action.value}.submit`)
 
@@ -127,6 +127,20 @@ class Vote extends React.Component {
           </div>
         </div>
 
+        <label className={styles.title}>{t('transaction.new.submitType')}</label>
+        <div className={styles.submitSwitchSet}>
+          <div className={styles.submitSwitch}>
+            <div className={styles.label}>{t('transaction.new.chainTx')}</div>
+            <label className={styles.switch}>
+              <input
+                type='checkbox'
+                {...isChainTx}
+              />
+              <span className={styles.slider}></span>
+            </label>
+          </div>
+          <div>{t('transaction.new.chainTxNote')}</div>
+        </div>
 
         {this.state.displayGas && [<label className={styles.title}>{t('transaction.normal.selectFee')}</label>,
           <div className={styles.txFeeBox}>
@@ -196,6 +210,7 @@ export default withNamespaces('translations') (BaseNew.connect(
       'nodePubkey',
       'amount',
       'gasLevel',
+      'isChainTx'
     ],
     validate,
     touchOnChange: true

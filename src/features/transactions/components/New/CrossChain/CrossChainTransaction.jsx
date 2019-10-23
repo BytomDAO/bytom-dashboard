@@ -72,7 +72,7 @@ class CrossChainTransaction extends React.Component {
 
   render() {
     const {
-      fields: {accountId, accountAlias,assetAlias, assetId, amount, address, gasLevel},
+      fields: {accountId, accountAlias,assetAlias, assetId, amount, address, gasLevel, isChainTx},
       error,
       submitting
     } = this.props
@@ -137,6 +137,20 @@ class CrossChainTransaction extends React.Component {
           <TextField title={t('transaction.crossChain.address')} fieldProps={address} hint={t('transaction.crossChain.addressHint', {id: net})}/>
         </div>
 
+        {showBtmAmountUnit && [<label className={styles.title}>{t('transaction.new.submitType')}</label>,
+          <div className={styles.submitSwitchSet}>
+            <div className={styles.submitSwitch}>
+              <div className={styles.label}>{t('transaction.new.chainTx')}</div>
+              <label className={styles.switch}>
+                <input
+                  type='checkbox'
+                  {...isChainTx}
+                />
+                <span className={styles.slider}></span>
+              </label>
+            </div>
+            <div>{t('transaction.new.chainTxNote')}</div>
+          </div>]}
 
         {this.state.displayGas && [<label className={styles.title}>{t('transaction.normal.selectFee')}</label>,
           <div className={styles.txFeeBox}>
@@ -227,6 +241,7 @@ export default withNamespaces('translations') (BaseNew.connect(
       'amount',
       'address',
       'gasLevel',
+      'isChainTx'
     ],
     validate,
     touchOnChange: true

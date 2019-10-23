@@ -143,6 +143,7 @@ export default  withNamespaces('translations') (reduxForm({
     'amount',
     'address',
     'gasLevel',
+    'isChainTx',
     'password'
   ],
   destroyOnUnmount: false,

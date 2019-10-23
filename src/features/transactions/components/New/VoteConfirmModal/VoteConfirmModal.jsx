@@ -122,6 +122,7 @@ export default  withNamespaces('translations') (reduxForm({
     'nodePubkey',
     'amount',
     'gasLevel',
+    'isChainTx',
     'password'
   ],
   destroyOnUnmount: false,
