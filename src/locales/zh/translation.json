@@ -270,7 +270,10 @@
       "selectFee":"选择手续费",
       "feeDescription":"交易所需手续费， 你的交易将会在2.5分钟之后完成。",
       "confirmation":"确认交易",
-      "total": "交易总数"
+      "total": "交易总数",
+      "submitType":"交易提交类型",
+      "chainTx":"链式交易",
+      "chainTxNote":"解决单笔交易UTXO个数限制，链式交易会生成多笔交易以及额外手续费。"
     },
     "advance":{
       "generateJson":"生成交易JSON",

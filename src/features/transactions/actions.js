@@ -98,6 +98,7 @@ form.submitForm = (formParams) => function (dispatch) {
     const accountAlias = formParams.accountAlias
     const accountInfo = Object.assign({},  accountAlias!== ''? {alias: accountAlias}: {id: accountId})
 
+    const isChainTx = formParams.isChainTx
     const isBTM = (formParams.assetId === btmID) || (formParams.assetAlias === 'BTM')
 
     return client.accounts.query(accountInfo)
@@ -112,13 +113,13 @@ form.submitForm = (formParams) => function (dispatch) {
         if(!result.data.checkResult){
           throw new Error('PasswordWrong')
         }
-        if(isBTM)
+        if(isChainTx && isBTM)
           return client.transactions.buildChain(builderFunction)
         else
           return client.transactions.build(builderFunction)
       })
       .then( tpl => {
-        if(isBTM){
+        if(isChainTx && isBTM){
           const body = Object.assign({}, {password: formParams.password, transactions: tpl.data})
           return client.transactions.signBatch(body)
         }
@@ -131,7 +132,7 @@ form.submitForm = (formParams) => function (dispatch) {
         if(!signed.data.signComplete){
           throw {code: 'F_BTM100'}
         }
-        if(isBTM){
+        if(isChainTx && isBTM){
           const rawTransactions = signed.data.transaction.map(tx => tx.rawTransaction)
           return client.transactions.submitBatch(rawTransactions)
         }

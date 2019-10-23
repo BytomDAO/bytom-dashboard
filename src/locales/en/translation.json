@@ -271,7 +271,10 @@
       "selectFee":"Select Fee",
       "feeDescription":"This is the money that might be used to process this transaction. Your transaction will be mined usually within 2.5 minutes.",
       "confirmation":"Confirm Transaction",
-      "total": "Total"
+      "total": "Total",
+      "submitType":"Transactions Submitted Type",
+      "chainTx":"Chain Transactions",
+      "chainTxNote":"Chain Transactions will generate multiple transactions, cost an extra fee and improve UTXO amount limit in a single transaction."
     },
     "advance":{
       "generateJson":"Generate transaction JSON",
