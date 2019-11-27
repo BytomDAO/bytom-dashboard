@@ -1,4 +1,4 @@
-import { chainClient } from 'utility/environment'
+import { chainClient, UTXOpageSize } from 'utility/environment'
 import { push, replace } from 'react-router-redux'
 
 export default function(type, options = {}) {
@@ -10,9 +10,38 @@ export default function(type, options = {}) {
     param,
   })
 
+  const updateIdArray = (param) => ({
+    type: 'UPDATE_TRANSACTION_ID_ARRAY',
+    data: param
+  })
+
+  const updateUnconfirmed = () => ({
+    type: 'UPDATE_CONFIRM_PARAMS',
+  })
+
+  const updateMixedPageNo = (param) => ({
+    type: 'UPDATE_MIXED_PAGES_NUMBER_PARAMS',
+    data: param
+  })
+
+  const updateId = (arrayList, options) => {
+    if(arrayList.length !== 0){
+      const txId = arrayList[arrayList.length-1].txId
+      const pageIds = options.pageIds
+      if(options && options.pageNumber === 1){
+        return [txId]
+      }else if(options && options.pageNumber > 1){
+        pageIds[options.pageNumber-1] = txId
+      }
+      return pageIds
+    }else{
+      return []
+    }
+  }
+
   // Dispatch a single request for the specified query, and persist the
   // results to the default item store
-  const fetchItems = (params) => {
+  const fetchItems = (params, requestOptions) => {
     const requiredParams = options.requiredParams || {}
 
     params = { ...params, ...requiredParams }
@@ -25,10 +54,41 @@ export default function(type, options = {}) {
           if(resp.status == 'fail'){
             dispatch({type: 'ERROR', payload: { 'message': resp.msg}})
           }else{
-            dispatch(receive(resp))
+            if(type === 'transaction'){
+              const result = resp.data
+              let response = resp
+              if(requestOptions.unconfirmed &&result.length<requestOptions.pageSize ) {
+                params.unconfirmed = false
+                params.count = params.count - result.length
+                delete params.startTxId
+                return clientApi().query(params).then(
+                  (resp1) => {
+                    if (resp1.status == 'fail') {
+                      dispatch({type: 'ERROR', payload: {'message': resp1.msg}})
+                    } else {
+                      dispatch(updateMixedPageNo(requestOptions.pageNumber))
+                      response.data = result.concat(resp1.data)
+                      dispatch(updateIdArray(updateId(response.data, requestOptions)))
+                      dispatch(receive(response))
+                      dispatch(updateUnconfirmed())
+                    }
+                  }
+                )
+              }else{
+                dispatch(updateIdArray(updateId(response.data, requestOptions)))
+                dispatch(receive(resp))
+              }
+            }else{
+              dispatch(receive(resp))
+            }
           }
         }
-      )
+      ).catch(error=>{
+        if(error.body){
+          dispatch({type: 'ERROR', payload: { 'message': error.body.msg}})
+        }
+        else throw error
+      })
 
       return promise
     }
@@ -44,6 +104,10 @@ export default function(type, options = {}) {
       const getFilterStore = () => getState()[type].queries[listId] || {}
 
       options.pageNumber = pageNumber
+      if(type === 'transaction'){
+        options.pageIds = getState()[type].pageIds || []
+        options.mixPageNo = getState()[type].mixPageNo || 0
+      }
 
       const fetchNextPage = () =>
         dispatch(_load(query, getFilterStore(), options)).then((resp) => {
@@ -57,8 +121,8 @@ export default function(type, options = {}) {
   }
 
   // Fetch and persist all records of the current object type
-  const fetchAll = () => {
-    return fetchPage('', -1)
+  const fetchAll = (obj) => {
+    return fetchPage('', -1, obj)
   }
 
   const _load = function(query = {}, list = {}, requestOptions) {
@@ -72,6 +136,8 @@ export default function(type, options = {}) {
 
       let promise
       const filter = query.filter || ''
+      const unconfirmed = requestOptions.unconfirmed || true
+      const accountAlias = requestOptions.accountAlias || ''
 
       if (!refresh && latestResponse) {
         let responsePage
@@ -85,16 +151,24 @@ export default function(type, options = {}) {
       } else {
         const params = {}
         if (query.filter) params.filter = filter
+        if (requestOptions.accountAlias) params.accountAlias = accountAlias
+        if (requestOptions.unconfirmed) params.unconfirmed = unconfirmed
         if (query.sumBy) params.sumBy = query.sumBy.split(',')
 
         if(requestOptions.pageNumber !== -1){
           const count = requestOptions.pageSize
-          const from = ( count ) * ( requestOptions.pageNumber -1 )
-          params.from = from
           params.count = count
+          if( type === 'transaction' &&  requestOptions.mixPageNo === requestOptions.pageNumber){
+            params.unconfirmed = requestOptions.unconfirmed = true
+          }
+          if( type === 'transaction' && requestOptions.pageNumber > 1 ){
+            params.startTxId = requestOptions.pageIds[requestOptions.pageNumber-2]
+          }
+          if(type === 'unspent'){
+            params.from = (requestOptions.pageNumber-1)*UTXOpageSize
+          }
         }
-
-        promise = dispatch(fetchItems(params))
+        promise = dispatch(fetchItems(params, requestOptions))
       }
 
       return promise.then((response) => {
@@ -121,8 +195,8 @@ export default function(type, options = {}) {
           id: id,
           message: deleteMessage,
         })).catch(err => dispatch({
-          type: 'ERROR', payload: err
-        }))
+        type: 'ERROR', payload: err
+      }))
     }
   }
 

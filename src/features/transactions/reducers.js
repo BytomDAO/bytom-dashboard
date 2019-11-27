@@ -11,6 +11,27 @@ const decodedTx = (state = [], action) => {
   return state
 }
 
+const pageIds = (state = [], action) => {
+  if (action.type == 'UPDATE_TRANSACTION_ID_ARRAY') {
+    return action.data
+  }
+  return state
+}
+
+const unconfirm = (state = true, action) => {
+  if (action.type == 'UPDATE_CONFIRM_PARAMS') {
+    return false
+  }
+  return state
+}
+
+const mixPageNo = (state = 0, action) => {
+  if (action.type == 'UPDATE_MIXED_PAGES_NUMBER_PARAMS') {
+    return action.data
+  }
+  return state
+}
+
 export default combineReducers({
   items: reducers.itemsReducer(type),
   queries: reducers.queriesReducer(type),
@@ -20,5 +41,8 @@ export default combineReducers({
     }
     return state
   },
-  decodedTx
+  decodedTx,
+  pageIds,
+  unconfirm,
+  mixPageNo
 })

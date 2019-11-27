@@ -16,18 +16,17 @@ class List extends React.Component {
   }
   render() {
     const ItemList = BaseList.ItemList
-    return (<ItemList {...this.props} createLabel={'信息上链'}/>)
+    return (<ItemList {...this.props} />)
   }
 }
 
 export default BaseList.connect(
   (state, ownProps) => ({
-    ...BaseList.mapStateToProps(type, ListItem)(state, ownProps)
+    ...BaseList.mapStateToProps(type, ListItem)(state, ownProps),
   }),
   (dispatch) => ({
     ...BaseList.mapDispatchToProps(type)(dispatch),
-    getLatest: (query) => dispatch(actions.transaction.fetchPage(query, 1, { refresh: true, pageSize: pageSize })),
+    getLatest: (query) => dispatch(actions.transaction.fetchPage(query, 1, { refresh: true, pageSize: pageSize, unconfirmed: true })),
   }),
   List
 )
-
