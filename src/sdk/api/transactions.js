@@ -68,7 +68,7 @@ const transactionsAPI = (client) => {
 
   return {
     query: (params, cb) => shared.query(client, 'transactions', '/list-transactions',
-      Object.assign({}, params, {unconfirmed:true, detail: true}),
+      Object.assign({}, params, {detail: true}),
       {cb}),
 
     queryAll: (params, processor, cb) => shared.queryAll(client, 'transactions', params, processor, cb),
