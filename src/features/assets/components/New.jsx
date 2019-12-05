@@ -35,7 +35,6 @@ class Form extends React.Component {
         description: data.description
       }
     }
-
     return new Promise((resolve, reject) => {
       this.props.submitForm(resultData)
         .then(()=>{

@@ -46,11 +46,13 @@ import TableList from './TableList/TableList'
 import TextField from './TextField'
 import TextareaField from './TextareaField'
 import XpubField from './XpubField/XpubField'
+import AssetXpubField from './AssetXpubField/AssetXpubField'
 
 export {
   AmountField,
   AmountUnitField,
   AmountInputMask,
+  AssetXpubField,
   CheckboxField,
   ConfirmMnemonic,
   ConsoleSection,

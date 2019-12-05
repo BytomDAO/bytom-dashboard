@@ -13,23 +13,11 @@ class Navigation extends React.Component {
   constructor(props) {
     super(props)
     this.openTutorial = this.openTutorial.bind(this)
-    this.state = {
-      showFed: false
-    }
   }
 
   openTutorial(event) {
     event.preventDefault()
     this.props.openTutorial()
-  }
-  componentDidMount() {
-    this.props.fetchFederationItem()
-      .then(resp =>{
-        this.setState({showFed: true})
-      })
-      .catch(e =>{
-        this.setState({showFed: false})
-      })
   }
 
   render() {
@@ -56,23 +44,7 @@ class Navigation extends React.Component {
               {capitalize(t('crumbName.asset'))}
             </Link>
           </li>
-          { this.state.showFed && <li>
-            <Link to='/federations' activeClassName={styles.active}>
-              {navIcon('federation', styles)}
-              {capitalize((t('crumbName.federation')))}
-            </Link>
-          </li>}
         </ul>
-
-        {/*<ul className={styles.navigation}>*/}
-          {/*<li className={styles.navigationTitle}>{ t('crumbName.services') }</li>*/}
-          {/*<li>*/}
-            {/*<Link to='/keys' activeClassName={styles.active}>*/}
-              {/*{navIcon('mockhsm', styles)}*/}
-              {/*{capitalize((t('crumbName.key')))}*/}
-            {/*</Link>*/}
-          {/*</li>*/}
-        {/*</ul>*/}
         <ul className={styles.navigation}>
           <li className={styles.navigationTitle}>{t('crumbName.account')}( {this.props.currentAccount} )</li>
           <li>

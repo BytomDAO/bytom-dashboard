@@ -276,6 +276,7 @@ export default withNamespaces('translations') (BaseNew.connect(
       'actions[].accountAlias',
       'actions[].assetId',
       'actions[].assetAlias',
+      'actions[].amount',
       'actions[].outputId',
       'actions[].type',
       'actions[].address',

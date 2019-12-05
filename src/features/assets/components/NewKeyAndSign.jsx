@@ -40,10 +40,11 @@ class NewKeyAndSign extends React.Component {
         onSubmit={handleSubmit}
         submitting={submitting}
         secondaryAction={prev}
-        >
+      >
 
         <FormSection title={t('form.keyAndSign')}>
           <KeyConfiguration
+            asset={true}
             xpubs={xpubs}
             quorum={quorum}
             quorumHint={t('asset.quorumHint')} />
@@ -59,8 +60,8 @@ const validate = (values, props) => {
   const t = props.t
 
   values.xpubs.forEach((xpub, index) => {
-    if (!values.xpubs[index].value) {
-      errors.xpubs[index] = {...errors.xpubs[index], value: t('asset.keysError')}
+    if ( !values.xpubs[index].value) {
+      errors.xpubs[index] = {...errors.xpubs[index], value: ( t('asset.keysError'))}
     }
   })
 
@@ -71,6 +72,7 @@ const fields = [
   'alias',
   'symbol',
   'decimals',
+  'reissue',
   'description[].key',
   'description[].value',
   'xpubs[].value',

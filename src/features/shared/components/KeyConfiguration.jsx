@@ -1,5 +1,5 @@
 import React from 'react'
-import { SelectField, XpubField } from 'features/shared/components'
+import { SelectField, XpubField, AssetXpubField } from 'features/shared/components'
 import {withNamespaces} from 'react-i18next'
 
 const rangeOptions = [1,2,3,4,5,6].map(val => ({label: val, value: val}))
@@ -56,24 +56,29 @@ class KeyConfiguration extends React.Component {
     return(
       <div>
         <SelectField options={rangeOptions}
-          title={ t('form.keys') }
-          skipEmpty={true}
-          fieldProps={{
-            value: this.state.keys,
-            onChange: keyCountChange,
-          }} />
+                     title={ t('form.keys') }
+                     skipEmpty={true}
+                     fieldProps={{
+                       value: this.state.keys,
+                       onChange: keyCountChange,
+                     }} />
 
         <SelectField options={quorumOptions}
-          title={ t('form.quorum') }
-          skipEmpty={true}
-          hint={quorumHint}
-          fieldProps={{
-            ...quorum,
-            onChange: quorumChange,
-          }} />
+                     title={ t('form.quorum') }
+                     skipEmpty={true}
+                     hint={quorumHint}
+                     fieldProps={{
+                       ...quorum,
+                       onChange: quorumChange,
+                     }} />
 
         {xpubs.map((xpub, index) =>
-          <XpubField
+          this.props.asset? <AssetXpubField
+            key={`xpub-${index}`}
+            index={index}
+            typeProps={xpub.type}
+            valueProps={xpub.value}
+          />: <XpubField
             key={`xpub-${index}`}
             index={index}
             typeProps={xpub.type}

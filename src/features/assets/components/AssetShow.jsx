@@ -33,9 +33,6 @@ class AssetShow extends BaseShow {
       view = <div className={componentClassNames(this)}>
         <PageTitle
           title={title}
-          actions={[
-            item.id!==btmID && <Link key='create-asset-btn' className='btn btn-link' to={`/transactions/create?type=issueAsset&alias=${item.alias}`}>{t('transaction.issue.issueAsset')}</Link>,
-          ]}
         />
 
         <PageContent>
