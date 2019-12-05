@@ -33,14 +33,14 @@ const actionLabels = {
 const visibleFields = {
   [ISSUE_KEY]: {asset: true, password: true},
   [CROSS_CHAIN_OUT_KEY]: {asset: true, amount: true, address:true},
-  [CROSS_CHAIN_IN_KEY]: {asset: true, amount: true, sourceId:true, sourcePos:true, vmVersion:true, issuanceProgram:true, rawDefinitionByte:true},
+  [CROSS_CHAIN_IN_KEY]: {asset: true},
   [VOTE_OUTPUT_KEY]: {asset: true, amount: true, address:true, vote:true},
   [VETO_KEY]: {account:true, amount: true, asset: true, vote:true},
   [SPEND_ACCOUNT_KEY]: {asset: true, account: true, amount: true, password: true},
   [SPEND_UNSPENT_KEY]: {outputId: true, password: true},
   [CONTROL_RECEIVER_KEY]: {asset: true, receiver: true, amount: true},
   [CONTROL_ADDRESS_KEY]: {asset: true, address: true, amount: true},
-  [RETIRE_ASSET_KEY]: {asset: true, arbitrary:true},
+  [RETIRE_ASSET_KEY]: {asset: true, arbitrary:true, file:true},
   [TRANSACTION_REFERENCE_DATA]: {},
 }
 
@@ -78,6 +78,7 @@ class ActionItem extends React.Component {
       amount,
       arbitrary,
       vote,
+      file,
       sourceId,
       sourcePos,
       vmVersion,
@@ -148,6 +149,12 @@ class ActionItem extends React.Component {
               alias: assetAlias
             }}
           />}
+
+        {visible.file &&
+        <TextField
+          title={'文件名'}
+          fieldProps={file}
+        />}
 
         {visible.amount &&
           <AmountField

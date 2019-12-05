@@ -105,6 +105,7 @@ class AdvancedTxForm extends React.Component {
     } = this.props
     const t = this.props.t
 
+
     let submitLabel = t('transaction.new.submit')
     const hasBaseTransaction = ((signTransaction.value || '').trim()).length > 0
     if (submitAction.value == 'generate' && !hasBaseTransaction) {
@@ -139,9 +140,8 @@ class AdvancedTxForm extends React.Component {
               title='操作选项'
               onSelect={this.addActionItem}
             >
-              <MenuItem eventKey='issue'>存证方</MenuItem>
+              <MenuItem eventKey='cross_chain_in'>存证方</MenuItem>
               <MenuItem eventKey='retire'>信息上链</MenuItem>
-              <MenuItem eventKey='cross_chain_in'>Cross Chain In</MenuItem>
             </DropdownButton>
           </div>
         </FormSection>
@@ -230,22 +230,6 @@ const validate = (values, props) => {
   }
 
   // Actions
-  let numError
-  values.actions.forEach((action, index) => {
-    const item = values.actions[index]
-    numError = (!/^\d+(\.\d+)?$/i.test(values.actions[index].amount))
-    if (numError) {
-      errors.actions[index] = {...errors.actions[index], amount: t('errorMessage.amountError')}
-    }
-    if(((item.assetAlias &&
-      (item.assetAlias).toUpperCase() !== 'BTM') ||
-        ((item.assetId &&
-        item.assetId !== btmID)))
-      && item.type == 'cross_chain_in' && !item.rawDefinitionByte){
-      errors.actions[index] = {...errors.actions[index], rawDefinitionByte: t('errorMessage.rawDefinitionByteError')}
-
-    }
-  })
   return errors
 }
 
@@ -272,21 +256,10 @@ export default withNamespaces('translations') (BaseNew.connect(
     fields: [
       'signTransaction',
       'actions[].ID',
-      'actions[].accountId',
-      'actions[].accountAlias',
       'actions[].assetId',
       'actions[].assetAlias',
-      'actions[].amount',
-      'actions[].outputId',
       'actions[].type',
-      'actions[].address',
-      'actions[].vote',
-      'actions[].sourceId',
-      'actions[].vmVersion',
-      'actions[].rawDefinitionByte',
-      'actions[].issuanceProgram',
-      'actions[].sourcePos',
-      'actions[].password',
+      'actions[].file',
       'actions[].arbitrary',
       'submitAction',
       'password'
