@@ -4,7 +4,7 @@ import { humanizeDuration } from 'utility/time'
 
 class RelativeTime extends React.Component {
   render() {
-    const momentTime = moment.unix(this.props.timestamp)
+    const momentTime = moment(this.props.timestamp)
 
     let timestamp = momentTime.fromNow()
     const diff = momentTime.diff(moment())

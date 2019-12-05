@@ -25,12 +25,6 @@ class MnemonicStepper extends React.Component {
                   <Mnemonic
                     mnemonic={this.props.mnemonic}
                   />
-                  <button
-                    className={'btn btn-link'}
-                    onClick={() => this.props.succeeded()}
-                  >
-                    {t('mnemonic.skip')}
-                  </button>
                 </Step>
                 <Step>
                   <ConfirmMnemonic

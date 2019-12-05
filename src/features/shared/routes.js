@@ -5,18 +5,37 @@ import actions from 'actions'
 
 const makeRoutes = (store, type, List, New, Show, options = {}) => {
   const loadPage = ( state ) => {
-    if(type === 'transaction' || type === 'unspent'){
-      const query = state.location.query
-      const pageNumber = parseInt(state.location.query.page || 1)
-      const pageSizes = (type === 'unspent')? UTXOpageSize: pageSize
-      if (pageNumber == 1) {
-        store.dispatch(actions[type].fetchPage(query, pageNumber, { refresh: true, pageSize: pageSizes }))
-      } else {
-        store.dispatch(actions[type].fetchPage(query, pageNumber,  { pageSize: pageSizes }))
+    const promise = new Promise((resolve, reject) => {
+      let accountAlias = store.getState().account.currentAccount
+      if(!accountAlias) {
+        store.dispatch(actions.account.setDefaultAccount()).then(resp => {
+          resolve(resp)
+        })
+      }else{
+        resolve(accountAlias)
       }
-    }else{
-      store.dispatch(actions[type].fetchAll())
-    }
+    })
+
+    promise.then((accountAlias)=>{
+      if(type === 'transaction' || type === 'unspent'){
+        const query = state.location.query
+        const unconfirmed = store.getState().transaction.unconfirm
+        const pageNumber = parseInt(state.location.query.page || 1)
+        const pageSizes = (type === 'unspent')? UTXOpageSize: pageSize
+        let options = {pageSize: pageSizes}
+        if (pageNumber == 1) {
+          options = type==='transaction'? {...options,refresh: true,  accountAlias , unconfirmed:true }: options
+          store.dispatch(actions[type].fetchPage(query, pageNumber, options))
+        } else {
+          options = type==='transaction'? {...options, accountAlias , unconfirmed }: options
+          store.dispatch(actions[type].fetchPage(query, pageNumber,  options ))
+        }
+      }else if(type === 'balance'){
+        store.dispatch(actions[type].fetchAll({accountAlias}))
+      }else{
+        store.dispatch(actions[type].fetchAll())
+      }
+    })
   }
 
   const childRoutes = []

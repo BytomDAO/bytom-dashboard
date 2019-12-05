@@ -29,7 +29,7 @@ class Index extends React.Component {
     const networkID = coreData.networkId
     const createButton = <Link className={`btn btn-primary ${styles.submit}`} to='/initialization/register'>{t('init.create')}</Link>
     const restoreKeystore = <Link className={`btn btn-primary ${styles.submit}`}to='/initialization/restoreKeystore'>{t('init.restoreWallet')}</Link>
-    const restoreMnemonic = <Link className={`btn btn-primary ${styles.submit}`} to='/initialization/restoreMnemonic'>{t('init.restoreWallet')}</Link>
+    // const restoreMnemonic = <Link className={`btn btn-primary ${styles.submit}`} to='/initialization/restoreMnemonic'>{t('init.restoreWallet')}</Link>
 
     return (
       <div onChange={e => this.setValue(e)}>
@@ -66,20 +66,20 @@ class Index extends React.Component {
             </label>
           </div>
 
-          <div className={styles.choice_wrapper}>
-            <label>
-              <input className={styles.choice_radio_button}
-                     type='radio'
-                     name='type'
-                     value='restoreMnemonic' />
-              <div className={`${styles.choice} ${styles.restoreMnemonic}`}>
-                <span className={styles.choice_title}>{t('backup.restoreMnemonic')}</span>
-                <p>
-                  {t('backup.restoreMnemonicDescription')}
-                </p>
-              </div>
-            </label>
-          </div>
+          {/*<div className={styles.choice_wrapper}>*/}
+            {/*<label>*/}
+              {/*<input className={styles.choice_radio_button}*/}
+                     {/*type='radio'*/}
+                     {/*name='type'*/}
+                     {/*value='restoreMnemonic' />*/}
+              {/*<div className={`${styles.choice} ${styles.restoreMnemonic}`}>*/}
+                {/*<span className={styles.choice_title}>{t('backup.restoreMnemonic')}</span>*/}
+                {/*<p>*/}
+                  {/*{t('backup.restoreMnemonicDescription')}*/}
+                {/*</p>*/}
+              {/*</div>*/}
+            {/*</label>*/}
+          {/*</div>*/}
         </div>
 
         <div className={styles.choices}>
@@ -98,12 +98,12 @@ class Index extends React.Component {
             }
           </div>
 
-          <div>
-            {
-              this.state.value === 'restoreMnemonic'
-              &&  <span className={styles.submitWrapper}>{restoreMnemonic}</span>
-            }
-          </div>
+          {/*<div>*/}
+            {/*{*/}
+              {/*this.state.value === 'restoreMnemonic'*/}
+              {/*&&  <span className={styles.submitWrapper}>{restoreMnemonic}</span>*/}
+            {/*}*/}
+          {/*</div>*/}
         </div>
       </div>
     )

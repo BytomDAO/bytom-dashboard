@@ -1,12 +1,13 @@
 import { chainClient } from 'utility/environment'
 import {push} from 'react-router-redux'
+import uuid from 'uuid'
 
 const registerKey = (data) => {
   return (dispatch) => {
-    if (typeof data.keyAlias == 'string')  data.keyAlias = data.keyAlias.trim()
+    if (typeof data.accountAlias == 'string')  data.accountAlias = data.accountAlias.trim()
 
     const keyData = {
-      'alias': data.keyAlias,
+      'alias': `${data.accountAlias}Key-${uuid.v4()}`,
       'password': data.password
     }
 
@@ -30,7 +31,13 @@ const registerKey = (data) => {
             }
 
             if(resp.status === 'success') {
-              dispatch(push('/initialization/mnemonic'))
+              dispatch({type: 'SET_CURRENT_ACCOUNT', account: resp.data.alias})
+              return chainClient().accounts.createAddress({'account_alias':resp.data.alias})
+                .then(() =>{
+                  dispatch(initSucceeded() )
+                }).catch((err) => {
+                  throw ( err)
+                })
             }
           })
           .catch((err) => {
@@ -72,11 +79,10 @@ const restoreKeystore = (data, success) => {
 
 const restoreMnemonic = (data, success) => {
   return (dispatch) => {
-    if (typeof data.keyAlias == 'string')  data.keyAlias = data.keyAlias.trim()
     if (typeof data.mnemonic == 'string') data.mnemonic = data.mnemonic.trim()
 
     const keyData = {
-      'alias': data.keyAlias,
+      'alias': `key-${uuid.v4()}`,
       'password': data.password,
       'mnemonic': data.mnemonic
     }
@@ -109,12 +115,6 @@ const restoreMnemonic = (data, success) => {
 
 const initSucceeded = () => (dispatch) => {
   dispatch({type: 'CREATE_REGISTER_ACCOUNT'})
-  dispatch(push({
-    pathname: '/transactions',
-    state: {
-      preserveFlash: true
-    }
-  }))
 }
 
 let actions = {

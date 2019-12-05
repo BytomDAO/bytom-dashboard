@@ -2,29 +2,21 @@
   background: $background-color;
   width: 100%;
 
-  code{
-    font-size: $font-size-code;
+  .row {
+    display: flex;
+    border-bottom: 1px solid $border-light-color;
   }
-
-  thead {
-    border-bottom: 1px solid $border-color;
-  }
-
-  td, th {
+  .col {
     padding-top: 13px;
     padding-bottom: 13px;
     padding-right: 10px;
   }
 
-  td {
-    border-bottom: 1px solid $border-light-color;
-  }
-
-  td:last-child {
+  .col:last-child {
     padding-right: $gutter-size;
   }
 
-  tr:last-of-type td {
+  .row:last-child {
     border-bottom: none;
   }
 
@@ -54,13 +46,30 @@
 
 .colAction, .colAmount {
   color: $text-strong-color;
-  width: 20%;
 }
 
-.colAccount {
-  width: 10%;
+.colAction{
+  width: 22%;
+  flex-grow: 1;
 }
 
+.account{
+  display: flex;
+  flex: 1;
+}
+
+.middle{
+  width: 50%;
+  display: flex;
+  flex-grow: 2;
+}
+
+.end{
+  width: 28%;
+  display: flex;
+  flex-grow: 1;
+  justify-content: flex-end;
+}
 .amount {
   background: none;
 }
@@ -72,12 +81,10 @@
 .colLabel {
   color: $text-light-color;
   text-align: right;
-  width: 7%;
 }
 
 .colUnit {
   text-align: right;
-  width: 1%;
   white-space: nowrap;
 
   > a{

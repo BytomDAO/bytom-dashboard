@@ -33,9 +33,11 @@ const accountsAPI = (client) => {
 
     createReceiverBatch: (params, cb) => shared.createBatch(client, '/create-account-receiver', params, {cb}),
 
-    listAddresses: (accountId) => shared.query(client, 'accounts', '/list-addresses', {account_id: accountId}),
+    listAddresses: (params) => shared.query(client, 'accounts', '/list-addresses', params),
 
-    validateAddresses: (address, cb) => shared.query(client, 'accounts', '/validate-address', {'address': address},  {cb})
+    validateAddresses: (address, cb) => shared.query(client, 'accounts', '/validate-address', {'address': address},  {cb}),
+
+    listAccountVotes: (params, cb) => shared.query(client, 'accounts', '/list-account-votes', params, {cb}),
   }
 }
 

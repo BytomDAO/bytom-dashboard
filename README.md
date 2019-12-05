@@ -27,7 +27,7 @@ with default values to connect to a local Bytom Core instance:
 
 ```
 API_URL=http://localhost:3000/api
-PROXY_API_HOST=http://localhost:9888
+PROXY_API_HOST=http://localhost:9889
 ```
 
 #### Style Guide

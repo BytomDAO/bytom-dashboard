@@ -1,0 +1,160 @@
+.main {
+  background: $background-color;
+  width: 100%;
+
+  .row {
+    display: flex;
+    border-bottom: 1px solid $border-light-color;
+  }
+  .col {
+    padding-top: 13px;
+    padding-bottom: 13px;
+    padding-right: 10px;
+  }
+
+  .col:last-child {
+    padding-right: $gutter-size;
+  }
+
+  .row:last-child {
+    border-bottom: none;
+  }
+
+  a {
+    .rawId {
+      color: $highlight-default;
+    }
+
+    &:hover .rawId {
+      text-decoration: underline;
+    }
+  }
+}
+
+
+
+.colAction {
+  padding-left: 25px ;
+  text-transform: uppercase;
+  font-weight: 500;
+  img {
+    width: 20px;
+    margin-bottom: 4px;
+    margin-right: 6px;
+  }
+}
+
+.colAction, .colAmount {
+  color: $text-strong-color;
+}
+
+.colAction{
+  width: 25%;
+  flex-grow: 1;
+}
+
+.account{
+  display: flex;
+  flex: 1;
+}
+
+.middle{
+  width: 20%;
+  display: flex;
+  flex-grow: 2;
+}
+
+.end{
+  width: 15%;
+  display: flex;
+  flex-grow: 1;
+  justify-content: flex-end;
+}
+.amount {
+  background: none;
+}
+
+.emphasisLabel{
+  color: $text-strong-color;
+}
+
+.colAccount {
+  width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.colLabel {
+  color: $text-light-color;
+  text-align: right;
+}
+
+.colUnit {
+  text-align: right;
+  white-space: nowrap;
+
+  > a{
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+  }
+}
+
+.immature {
+  text-transform: lowercase;
+  margin-left: 5px;
+  color: $text-danger;
+}
+
+.rawId {
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 150px;
+  vertical-align: middle;
+}
+
+.recievedAmount {
+  text-align: right;
+}
+
+.titleBar {
+  background: $background-color;
+  border-bottom: 1px solid $border-color;
+  display: flex;
+  align-items: center;
+  padding: 5px 25px;
+
+  code {
+    display: inline-block;
+    font-size: $font-size-code;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: bottom;
+    width: 200px;
+    padding: 0 6px;
+    background: $background-emphasis-color;
+    border: 1px solid transparentize($border-color, 0.5);
+    line-height: 1.4;
+  }
+}
+
+.title {
+  flex-grow: 1;
+  align-items: center;
+  display: flex;
+
+  label {
+    color: $text-strong-color;
+    font-size: $font-size-chrome;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin: 0 8px 0 0;
+  }
+  img{
+    width: 20px;
+    margin-left: $gutter-size/2;
+    margin-bottom: 2px;
+  }
+}

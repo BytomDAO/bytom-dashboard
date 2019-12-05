@@ -41,7 +41,7 @@ const resetPassword = {
         if(resp.data.changed){
           dispatch({ type: `RESET_PASSWORD_${type.toUpperCase()}`, resp })
           dispatch(push({
-            pathname: `/${type}s/${params.xpub}`,
+            pathname: '/accounts',
             state: {
               preserveFlash: true
             }

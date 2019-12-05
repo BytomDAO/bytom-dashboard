@@ -12,10 +12,10 @@
 @import 'node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_tooltip';
 
 $background-color: #ffffff;
-$background-content-color: #f2f2f2;
+$background-content-color: #F3F6F8;
 $background-emphasis-color: #fafafa;
 
-$border-color: #dadee2;
+$border-color: #F5F5F5;
 $border-strong-color: #cccccc;
 $border-light-color: $background-content-color;
 $text-color: #747c89;
@@ -26,7 +26,7 @@ $text-table-value-color: #747c89;
 $text-table-label-color: #9ea8b6;
 $text-danger: #DD2C2C;
 
-$highlight-default: #1977d6;
+$highlight-default: #195AD6;
 $highlight-secondary: #3295de;
 $highlight-danger: #d02828;
 $highlight-danger-background: #f8cece;
@@ -36,9 +36,11 @@ $highlight-tutorial: #6EA9FC;
 $success-background: #dff0d3;
 $success-border: #cbe6b7;
 $success: #227855;
-$background-inverse-color: #262626;
-$border-inverse-color: #3b3b3b;
-$highlight-inverse-color: #dddddd;
+$background-inverse-color: #ffffff;
+$border-inverse-color: #F5F5F5;
+$highlight-inverse-color: #747C89;
+
+$disable-btn-background:#F2F2F2;
 
 $border-radius-standard: 3px;
 

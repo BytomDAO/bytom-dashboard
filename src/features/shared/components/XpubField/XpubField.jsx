@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import actions from 'features/mockhsm/actions'
 import {withNamespaces} from 'react-i18next'
 
-const methodOptions = ['mockhsm', 'provide']
+const methodOptions = ['provide']
 
 class XpubField extends React.Component {
   constructor(props) {
@@ -72,22 +72,38 @@ class XpubField extends React.Component {
           <tbody>
             {methodOptions.map((key) =>
               <tr key={`key-${this.props.index}-option-${key}`}>
-                <td className={styles.label}>
-                  <label>
-                    <input type='radio'
-                      className={styles.radio}
-                      name={`keys-${this.props.index}`}
-                      onChange={typeOnChange}
-                      checked={key == typeProps.value}
-                      value={key}
-                    />
-                    { t('xpub.methodOptions', { returnObjects: true })[key]}
-                  </label>
-                </td>
-
-                <td className={styles.field}>
-                  {typeProps.value == key && fields[key]}
-                </td>
+                {this.props.index === 0?
+                  <td>
+                    <label>
+                      <input type='radio'
+                             className={styles.radio}
+                             name={`keys-${this.props.index}`}
+                             onChange={typeOnChange}
+                             checked={key == typeProps.value}
+                             value={key}
+                             disabled
+                      />
+                      { t('xpub.methodOptions.currentAccount')}
+                    </label>
+                  </td>:[
+                    <td className={styles.label}>
+                      <label>
+                        <input type='radio'
+                          className={styles.radio}
+                          name={`keys-${this.props.index}`}
+                          onChange={typeOnChange}
+                          checked={key == typeProps.value}
+                          value={key}
+                          disabled
+                        />
+                        { t('xpub.methodOptions', { returnObjects: true })[key]}
+                      </label>
+                    </td>,
+                    <td className={styles.field}>
+                      {typeProps.value == key && fields[key]}
+                    </td>
+                  ]
+                }
               </tr>
             )}
           </tbody>

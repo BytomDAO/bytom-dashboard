@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+      }
+
+      .cls-2 {
+        fill: #20252d;
+      }
+    </style>
+  </defs>
+  <g id="vote" transform="translate(-61 -5)">
+    <rect id="Rectangle_3694" data-name="Rectangle 3694" class="cls-1" width="18" height="18" transform="translate(61 5)"/>
+    <path id="inbox_paper" class="cls-2" d="M180,113h13v-6.5l-1.3-3.9h-.65V100h-9.1v2.6h-.65l-1.3,3.9Zm9.75-6.5H187.8v2.6h-2.6v-2.6h-1.95v-5.2h6.5Zm-7.8-1.95v1.95h-.65Zm9.75,3.25v3.9H181.3v-3.9h2.6v2.6h5.2v-2.6Zm-.65-1.3v-1.95l.65,1.95Z" transform="translate(-116.5 -92.5)"/>
+  </g>
+</svg>

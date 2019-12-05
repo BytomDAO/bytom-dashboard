@@ -1,0 +1,10 @@
+.main {
+  th, td {
+    &:nth-child(2) {
+      width: 40%;
+    }
+    &:nth-child(3) {
+      width: 20%;
+    }
+  }
+}

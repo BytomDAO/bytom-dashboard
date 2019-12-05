@@ -3,6 +3,7 @@ import styles from './KeyValueTable.scss'
 import {Section} from 'features/shared/components'
 import {Link} from 'react-router'
 import {size, sample, isArray, isObject, toPairs} from 'lodash'
+import { copyToClipboard } from 'utility/clipboard'
 import {withNamespaces} from 'react-i18next'
 
 class KeyValueTable extends React.Component {
@@ -52,30 +53,39 @@ class KeyValueTable extends React.Component {
 
   render() {
     const t = this.props.t
-    return (
-      <Section
-        title={this.props.title}
-        actions={this.props.actions}>
-        <table className={styles.table}>
-          <tbody>
+    return <Section
+      title={this.props.title}
+      actions={this.props.actions}>
+      <table className={styles.table}>
+        <tbody>
           {this.props.items.map((item) => {
             return <tr key={item.label}>
               <td className={styles.label}>{item.label}</td>
               <td className={styles.value}>{this.renderValue(item)}
+                {item.copy &&  <button
+                  className={`btn btn-link ${styles.copyButton}`}
+                  onClick={() => copyToClipboard(this.renderValue(item))}
+                >
+                  <img src={require('images/copy.svg')}/>
+                </button>}
+                {item.note}
                 {item.editUrl && <Link to={item.editUrl} className={styles.edit}>
                   <span
                     className={`${styles.pencil} glyphicon glyphicon-pencil`}></span>{t('form.edit')}
                 </Link>}
-                {item.program && <button  onClick={item.program} className={`${styles.detail} ${styles.edit} btn btn-link`}>
-                  { t('commonWords.program')}
-                </button>}
+                {item.details && <Link to={item.details} className={styles.edit}>
+                  {t('form.detail')}
+                </Link>}
+                {item.program &&
+              <button onClick={item.program} className={`${styles.detail} ${styles.edit} btn btn-link`}>
+                {t('commonWords.program')}
+              </button>}
               </td>
             </tr>
           })}
-          </tbody>
-        </table>
-      </Section>
-    )
+        </tbody>
+      </table>
+    </Section>
   }
 }
 

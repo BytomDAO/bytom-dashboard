@@ -1,5 +1,5 @@
 .main {
-  background: $background-inverse-color;
+  background: $background-content-color;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -12,7 +12,7 @@
 
 .title{
   text-align: center;
-  color: white;
+  color: $text-strong-color;
 }
 
 .formWarpper {

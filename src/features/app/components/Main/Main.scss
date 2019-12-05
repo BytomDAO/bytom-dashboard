@@ -17,7 +17,11 @@
 }
 
 .sidebarContent {
+  background-image: url('images/sidebarBackground.svg');
   background-color: $background-inverse-color;
+  background-repeat: no-repeat;
+  background-position: 0px 60px;
+  background-size: cover;
   position: fixed;
   width: $sidebar-width;
   height: 100%;
@@ -36,7 +40,7 @@
   border-top: solid 1px $border-inverse-color;
 
   padding: $gutter-size/2 $gutter-size;
-  background: $background-inverse-color;
+  background: #FCFDFD;
   font-size: $font-size-chrome;
 }
 
@@ -77,8 +81,8 @@
   top: 50%;
   transform: translateY(-50%);
   border: none;
-  background-color: transparentize($background-content-color, 0.9);
-  color: $background-content-color;
+  background-color: transparentize($highlight-inverse-color, 0.9);
+  color: $highlight-inverse-color;
   height: 27px;
   line-height: 27px !important;
 }

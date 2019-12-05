@@ -4,6 +4,7 @@ import { chainClient } from 'utility/environment'
 const actions = {
   dismissFlash: (param) => ({type: 'DISMISS_FLASH', param}),
   displayedFlash: (param) => ({type: 'DISPLAYED_FLASH', param}),
+  updateAccountInit: (param) => ({type: 'UPDATE_ACCOUNT_INIT_STATUS', param}),
   showModal: (body, accept, cancel, options = {}) => ({type: 'SHOW_MODAL', payload: { body, accept, cancel, options }}),
   hideModal: { type: 'HIDE_MODAL' },
   showNavAdvanced: { type: 'SHOW_NAV_ADVANCE' },

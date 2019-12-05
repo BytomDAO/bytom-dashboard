@@ -1,6 +1,8 @@
 import { normalizeBTMAmountUnit, converIntToDec } from 'utility/buildInOutDisplay'
 import { btmID } from 'utility/environment'
 import { sum } from 'utility/math'
+import BigNumber from 'bignumber.js'
+
 
 export const balance = (values, assetDecimal, balances, btmAmountUnit) => {
   let filteredBalances = balances
@@ -19,7 +21,8 @@ export const balance = (values, assetDecimal, balances, btmAmountUnit) => {
 
   if(filteredBalances.length === 1){
     if (filteredBalances[0].assetId === btmID){
-      return normalizeBTMAmountUnit(filteredBalances[0].assetId, filteredBalances[0].amount, btmAmountUnit)
+      const voteNum = filteredBalances[0].totalVoteNumber || 0
+      return normalizeBTMAmountUnit(filteredBalances[0].assetId, ( BigNumber(filteredBalances[0].amount).minus(voteNum) ), btmAmountUnit)
     }else if( assetDecimal ){
       return converIntToDec(filteredBalances[0].amount, assetDecimal)
     }else{
@@ -53,8 +56,8 @@ export const normalTxActionBuilder = (transaction, gas, prop) =>{
   const totalAmount = sum(receivers, prop )
 
   const spendAction = {
-    accountAlias,
-    accountId,
+    accountAlias: typeof(accountAlias) !== 'string'?'':accountAlias,
+    accountId:  typeof(accountId) !== 'string'?'':accountId,
     assetAlias,
     assetId,
     amount: totalAmount,
@@ -62,14 +65,19 @@ export const normalTxActionBuilder = (transaction, gas, prop) =>{
   }
 
   const gasAction = {
-    accountAlias,
-    accountId,
+    accountAlias: typeof(accountAlias) !== 'string'?'':accountAlias,
+    accountId:  typeof(accountId) !== 'string'?'':accountId,
     assetAlias: 'BTM',
     amount: gas,
     type: 'spend_account'
   }
 
-  const actions = [spendAction, gasAction]
+  const actions = [spendAction]
+
+  if(gas>0){
+    actions.push(gasAction)
+  }
+
   receivers.forEach((receiver)=>{
     actions.push(
       {
@@ -102,14 +110,19 @@ export const issueAssetTxActionBuilder = (transaction, gas,prop) =>{
   }
 
   const gasAction = {
-    accountAlias,
-    accountId,
+    accountAlias: typeof(accountAlias) !== 'string'?'':accountAlias,
+    accountId:  typeof(accountId) !== 'string'?'':accountId,
     assetAlias: 'BTM',
     amount: gas,
     type: 'spend_account'
   }
 
-  const actions = [spendAction, gasAction]
+  const actions = [spendAction]
+
+  if(gas>0){
+    actions.push(gasAction)
+  }
+
   receivers.forEach((receiver)=>{
     actions.push(
       {
@@ -123,4 +136,111 @@ export const issueAssetTxActionBuilder = (transaction, gas,prop) =>{
   })
 
   return actions
+}
+
+export const crossChainTxActionBuilder = (transaction, gas) =>{
+  const accountAlias = transaction.accountAlias.value || transaction.accountAlias
+  const accountId = transaction.accountId.value || transaction.accountId
+  const assetAlias = transaction.assetAlias.value || transaction.assetAlias
+  const assetId = transaction.assetId.value || transaction.assetId
+  const amount = transaction.amount.value || transaction.amount
+  const address = transaction.address.value || transaction.address
+
+  const spendAction = {
+    accountAlias: typeof(accountAlias) !== 'string'?'':accountAlias,
+    accountId:  typeof(accountId) !== 'string'?'':accountId,
+    assetAlias,
+    assetId,
+    amount,
+    type: 'spend_account'
+  }
+
+  const gasAction = {
+    accountAlias: typeof(accountAlias) !== 'string'?'':accountAlias,
+    accountId:  typeof(accountId) !== 'string'?'':accountId,
+    assetAlias: 'BTM',
+    amount: gas,
+    type: 'spend_account'
+  }
+
+  const crossOutAction = {
+    amount,
+    assetAlias,
+    assetId,
+    address,
+    type:'cross_chain_out'
+  }
+
+  const actions = [spendAction, crossOutAction]
+
+  if(gas>0){
+    actions.push(gasAction)
+  }
+
+  return actions
+}
+
+export const voteTxActionBuilder = (transaction, gas, address) =>{
+
+  const accountAlias = transaction.accountAlias.value || transaction.accountAlias
+  const accountId = transaction.accountId.value || transaction.accountId
+  const nodePubkey = transaction.nodePubkey.value || transaction.nodePubkey
+  const amount = transaction.amount.value || transaction.amount
+  const action = transaction.action.value || transaction.action
+
+  const gasAction = {
+    accountAlias: typeof(accountAlias) !== 'string'?'':accountAlias,
+    accountId:  typeof(accountId) !== 'string'?'':accountId,
+    asset_id:btmID,
+    amount: gas,
+    type: 'spend_account'
+  }
+
+  if(action === 'vote'){
+    const spendAction = {
+      accountAlias: typeof(accountAlias) !== 'string'?'':accountAlias,
+      accountId:  typeof(accountId) !== 'string'?'':accountId,
+      assetId: btmID,
+      amount,
+      type: 'spend_account'
+    }
+
+    const voteAction ={
+      amount,
+      asset_id:btmID,
+      address,
+      vote: nodePubkey,
+      type:'vote_output'
+    }
+
+    if(gas>0){
+      return [spendAction, gasAction, voteAction]
+    }else{
+      return [spendAction, voteAction]
+    }
+  }else if(action === 'veto'){
+    const controlAction = {
+      assetId: btmID,
+      amount,
+      address,
+      type: 'control_address'
+    }
+
+    const vetoAction ={
+      accountAlias: typeof(accountAlias) !== 'string'?'':accountAlias,
+      accountId:  typeof(accountId) !== 'string'?'':accountId,
+      amount,
+      asset_id:btmID,
+      vote: nodePubkey,
+      type:'veto'
+    }
+
+    if(gas>0){
+      return [gasAction, vetoAction, controlAction]
+    }else{
+      return [vetoAction, controlAction]
+    }
+  }else{
+    throw 'invalid operation type.'
+  }
 }

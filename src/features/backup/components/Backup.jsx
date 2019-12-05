@@ -64,9 +64,9 @@ class Backup extends React.Component {
       {t('backup.selectFile')}
     </button>
 
-    const restoreMnemonicButton = <button className={`btn btn-primary btn-lg ${styles.submit}`} onClick={this.mnemonicPopup}>
-      {t('backup.restore')}
-    </button>
+    // const restoreMnemonicButton = <button className={`btn btn-primary btn-lg ${styles.submit}`} onClick={this.mnemonicPopup}>
+    //   {t('backup.restore')}
+    // </button>
 
     return (
       <div className='flex-container'>
@@ -105,20 +105,20 @@ class Backup extends React.Component {
                 </label>
               </div>
 
-              <div className={styles.choice_wrapper}>
-                <label>
-                  <input className={styles.choice_radio_button}
-                         type='radio'
-                         name='type'
-                         value='restoreMnemonic' />
-                  <div className={`${styles.choice} ${styles.restoreMnemonic}`}>
-                    <span className={styles.choice_title}>{t('backup.restoreMnemonic')}</span>
-                    <p>
-                      {t('backup.restoreMnemonicDescription')}
-                    </p>
-                  </div>
-                </label>
-              </div>
+              {/*<div className={styles.choice_wrapper}>*/}
+                {/*<label>*/}
+                  {/*<input className={styles.choice_radio_button}*/}
+                         {/*type='radio'*/}
+                         {/*name='type'*/}
+                         {/*value='restoreMnemonic' />*/}
+                  {/*<div className={`${styles.choice} ${styles.restoreMnemonic}`}>*/}
+                    {/*<span className={styles.choice_title}>{t('backup.restoreMnemonic')}</span>*/}
+                    {/*<p>*/}
+                      {/*{t('backup.restoreMnemonicDescription')}*/}
+                    {/*</p>*/}
+                  {/*</div>*/}
+                {/*</label>*/}
+              {/*</div>*/}
             </div>
 
             <div className={styles.choices}>

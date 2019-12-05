@@ -8,6 +8,7 @@ import {
   RawJsonButton,
 } from 'features/shared/components'
 import componentClassNames from 'utility/componentClassNames'
+import { Link } from 'react-router'
 
 class AccountShow extends BaseShow {
   constructor(props) {
@@ -29,6 +30,8 @@ class AccountShow extends BaseShow {
       const changeAddresses = data.data.filter(address => address.change).map((address) => {return {address: address.address, program: address.controlProgram}})
 
       this.setState({addresses: normalAddresses, changeAddresses})
+    }).catch(error =>{
+      return
     })
   }
 
@@ -111,29 +114,34 @@ class AccountShow extends BaseShow {
             <KeyValueTable
               key={index}
               title={t('account.xpubs', {id: index + 1})}
+              actions={ index===0 && [
+                <Link key='check-password-btn' className='btn btn-link' to={`/accounts/key/check-password/${key}`}>{t('key.tryPassword') }</Link>,
+                <Link key='reset-password-btn' className='btn btn-link' to={`/accounts/key/reset-password/${key}`}>{t('key.resetPassword')}</Link>
+              ]}
               items={[
                 {label: t('account.accountXpub'), value: key},
-                {label: t('account.keyIndex'), value: item.keyIndex},
               ]}
             />
           )}
 
           {(this.state.addresses || []).length > 0 &&
           <KeyValueTable title={t('account.address')}
-                         items={this.state.addresses.map((item, index) => ({
-                           label: index+1,
-                           value: item.address,
-                           program: (e => this.showProgram(item.program))
-                         }))}/>
+            items={this.state.addresses.map((item, index) => ({
+              label: index+1,
+              value: item.address,
+              program: (e => this.showProgram(item.program)),
+              copy:true
+            }))}/>
           }
 
           {(this.state.changeAddresses || []).length > 0 &&
           <KeyValueTable title={t('account.changeAddress')}
-                         items={this.state.changeAddresses.map((item, index) => ({
-                           label: index+1,
-                           value: item.address,
-                           program: (e => this.showProgram(item.program))
-                         }))}/>
+            items={this.state.changeAddresses.map((item, index) => ({
+              label: index+1,
+              value: item.address,
+              program: (e => this.showProgram(item.program)),
+              copy:true
+            }))}/>
           }
         </PageContent>
       </div>

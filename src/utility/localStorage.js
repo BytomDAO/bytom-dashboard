@@ -17,12 +17,17 @@ export const exportState = (store) => () => {
       requireClientToken: (state.core || {}).requireClientToken,
       validToken: (state.core || {}).validToken,
       btmAmountUnit: state.core.btmAmountUnit,
+      accountInit: state.core.accountInit
     },
     app:{
       navAdvancedState : state.app.navAdvancedState,
     },
+    account:{
+      currentAccount: state.account.currentAccount,
+    },
     transaction: {
       generated: (state.transaction || {}).generated,
+      pageIds: (state.transaction || {}).pageIds
     },
     tutorial: state.tutorial
   }

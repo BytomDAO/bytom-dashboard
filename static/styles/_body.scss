@@ -90,7 +90,8 @@ pre{
 }
 
 .btn-primary,
-.btn-default {
+.btn-default,
+.btn-outline-primary {
   height: 36px;
   padding: 0 20px;
   border-radius: $border-radius-standard;
@@ -115,6 +116,28 @@ pre{
   color: $text-inverse-color;
   background: $highlight-secondary;
   border-color: $highlight-secondary;
+}
+
+.btn-outline-primary {
+  color: $highlight-default;
+  background-color: transparent;
+  background-image: none;
+  border-color: $highlight-default;
+}
+
+.btn-outline-primary:hover,
+.btn-outline-primary:active,
+.btn-outline-primary:focus,
+.btn-outline-primary:active:hover,
+.btn-outline-primary:focus,
+.btn-outline-primary:active:focus,
+.btn-outline-primary:focus, .btn-outline-primary.focus
+.btn-outline-primary:active.focus, .btn-outline-primary.active:hover,
+.btn-outline-primary.active:focus, .btn-outline-primary.active.focus {
+  text-decoration: none;
+  color: $text-inverse-color;
+  background: $highlight-default;
+  border-color: $highlight-default;
 }
 
 .btn-default {

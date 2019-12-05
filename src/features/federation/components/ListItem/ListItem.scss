@@ -1,0 +1,68 @@
+.main {
+  margin-bottom: 30px;
+}
+
+.titleBar {
+  background: $background-color;
+  border-bottom: 1px solid $border-color;
+  display: flex;
+  align-items: center;
+  padding: 16px 25px;
+}
+
+.title {
+  flex-grow: 1;
+  align-items: center;
+  display: flex;
+
+  label {
+    color: $text-strong-color;
+    font-size: $font-size-chrome;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin: 0 8px 0 0;
+  }
+}
+
+.colAction {
+  text-transform: uppercase;
+  font-weight: 500;
+  color: $text-strong-color;
+  img {
+    width: 20px;
+    margin-bottom: 4px;
+    margin-right: 6px;
+  }
+}
+
+.confirmation {
+  position: absolute;
+  left: 43%;
+}
+
+.end{
+  display: flex;
+}
+
+.emphasisLabel{
+  color: $text-strong-color;
+}
+
+.colUnit {
+  text-align: right;
+  white-space: nowrap;
+
+  > a{
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+  }
+}
+.recievedAmount {
+  text-align: right;
+}
+
+.col {
+  padding-right: 10px;
+}

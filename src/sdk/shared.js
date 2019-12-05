@@ -77,7 +77,7 @@ module.exports = {
 
   query: (client, memberPath, path, params = {}, opts = {}) => {
     return tryCallback(
-      client.request(path, params).then(data => new Page(data, client, memberPath)),
+      client.request(path, params).then(data => new Page(data, client, memberPath)).catch(error => {throw error} ),
       opts.cb
     )
   },

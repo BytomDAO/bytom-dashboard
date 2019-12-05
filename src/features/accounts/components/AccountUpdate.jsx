@@ -13,7 +13,8 @@ class Form extends React.Component {
   }
 
   submitWithValidations(data) {
-    return this.props.submitForm(data, this.props.item.id).catch(err => {
+    const isCurrentAccount = this.props.item.alias === this.props.currentAccount
+    return this.props.submitForm(data, this.props.item.id, isCurrentAccount).catch(err => {
       throw {_error: err}
     })
   }
@@ -70,6 +71,7 @@ class Form extends React.Component {
 
 const mapStateToProps = (state, ownProps) => ({
   item: state.account.items[ownProps.params.id],
+  currentAccount: state.account.currentAccount
 })
 
 const initialValues = (state, ownProps) => {

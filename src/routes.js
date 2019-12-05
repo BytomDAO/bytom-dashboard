@@ -6,6 +6,7 @@ import { routes as assets } from 'features/assets'
 import { routes as balances } from 'features/balances'
 import { routes as configuration } from 'features/configuration'
 import { routes as core } from 'features/core'
+import { routes as federation } from 'features/federation'
 import { routes as initialization } from 'features/initialization'
 import { routes as transactions } from 'features/transactions'
 import { routes as transactionFeeds } from 'features/transactionFeeds'
@@ -24,6 +25,7 @@ const makeRoutes = (store) => ({
     balances(store),
     configuration,
     core,
+    federation(store),
     peers(store),
     initialization,
     transactions(store),

@@ -14,7 +14,7 @@ const balanceFields = [
   'assetTags' ,
   'assetIsLocal' ,
   'amount' ,
-  'accountId' ,
+  'totalVoteNumber',
   'accountAlias' ,
   'account' ,
   'accountTags' ,
@@ -46,6 +46,7 @@ const txOutputFields = [
   'account',
   'controlProgram',
   'address',
+  'vote'
 ]
 
 const unspentFields = [
@@ -109,10 +110,16 @@ const buildDisplay = (item, fields, btmAmountUnit, t) => {
     item.assetDefinition.decimals: null
   fields.forEach(key => {
     if (item.hasOwnProperty(key)) {
-      if(key === 'amount'){
+      if(key === 'amount' ){
         details.push({
           label: t(`form.${key}`),
           value: decimals? formatIntNumToPosDecimal(item[key], decimals) :normalizeGlobalBTMAmount(item['assetId'], item[key], btmAmountUnit)
+        })
+      }else if(key === 'totalVoteNumber' ){
+        details.push({
+          label: t(`form.${key}`),
+          value: decimals? formatIntNumToPosDecimal(item[key], decimals) :normalizeGlobalBTMAmount(item['assetId'], item[key], btmAmountUnit),
+          details:`/balances/vote/${item.accountId}`
         })
       }else if(key === 'asset' && item.assetId !=='0000000000000000000000000000000000000000000000000000000000000000'){
         details.push({
@@ -298,12 +305,5 @@ export function buildUnspentDisplay(output, btmAmountUnit, t) {
 }
 
 export function buildBalanceDisplay(balance, btmAmountUnit, t) {
-  let amount = (balance.assetDefinition && balance.assetDefinition.decimals && balance.assetId !== btmID)?
-    formatIntNumToPosDecimal(balance.amount, balance.assetDefinition.decimals): balance.amount
-  return buildDisplay({
-    amount: amount,
-    assetId: balance.assetId,
-    assetAlias: balance.assetAlias,
-    accountAlias: balance.accountAlias
-  }, balanceFields, btmAmountUnit, t)
+  return buildDisplay(balance, balanceFields, btmAmountUnit, t)
 }

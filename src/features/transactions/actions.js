@@ -1,15 +1,16 @@
 import uuid from 'uuid'
-import {chainClient} from 'utility/environment'
+import {chainClient, btmID} from 'utility/environment'
 import {parseNonblankJSON} from 'utility/string'
 import {push} from 'react-router-redux'
 import {baseCreateActions, baseListActions} from 'features/shared/actions'
-import { normalTxActionBuilder, issueAssetTxActionBuilder } from './transactions'
+import { voteTxActionBuilder, normalTxActionBuilder, issueAssetTxActionBuilder, crossChainTxActionBuilder } from './transactions'
 
 const type = 'transaction'
 
 const list = baseListActions(type, {
   defaultKey: 'id'
 })
+
 const form = baseCreateActions(type)
 
 function preprocessTransaction(formParams) {
@@ -22,6 +23,16 @@ function preprocessTransaction(formParams) {
   if (formParams.form === 'normalTx') {
     const gasPrice = formParams.state.estimateGas * Number(formParams.gasLevel)
     builder.actions = normalTxActionBuilder(formParams,  Number(gasPrice), 'amount')
+  }
+
+  if (formParams.form === 'crossChainTx') {
+    const gasPrice = formParams.state.estimateGas * Number(formParams.gasLevel)
+    builder.actions = crossChainTxActionBuilder(formParams,  Number(gasPrice))
+  }
+
+  if (formParams.form === 'voteTx') {
+    const gasPrice = formParams.state.estimateGas * Number(formParams.gasLevel)
+    builder.actions = voteTxActionBuilder(formParams,  Number(gasPrice), formParams.state.address)
   }
 
   if (formParams.form === 'issueAssetTx') {
@@ -40,7 +51,8 @@ function preprocessTransaction(formParams) {
   for (let i in builder.actions) {
     let a = builder.actions[i]
 
-    const intFields = ['amount', 'position']
+    delete a.ID
+    const intFields = ['amount', 'position','sourcePos','vmVersion']
     intFields.forEach(key => {
       const value = a[key]
       if (value) {
@@ -70,7 +82,6 @@ function preprocessTransaction(formParams) {
       throw new Error(`Action ${parseInt(i) + 1} receiver should be valid JSON.`)
     }
   }
-
   return builder
 }
 
@@ -97,11 +108,14 @@ form.submitForm = (formParams) => function (dispatch) {
   }
 
   // normal transactions
-  if( formParams.form === 'normalTx'){
+  if( formParams.form === 'normalTx' || formParams.form === 'voteTx' || formParams.form === 'crossChainTx'){
 
     const accountId = formParams.accountId
     const accountAlias = formParams.accountAlias
     const accountInfo = Object.assign({},  accountAlias!== ''? {alias: accountAlias}: {id: accountId})
+
+    const isChainTx = formParams.isChainTx
+    const isBTM = ((formParams.assetId === btmID) || (formParams.assetAlias === 'BTM')||(formParams.form === 'voteTx'))
 
     return client.accounts.query(accountInfo)
       .then( resp => {
@@ -115,17 +129,35 @@ form.submitForm = (formParams) => function (dispatch) {
         if(!result.data.checkResult){
           throw new Error('PasswordWrong')
         }
-        return client.transactions.build(builderFunction)
+
+        if(isChainTx && isBTM)
+          return client.transactions.buildChain(builderFunction)
+        else
+          return client.transactions.build(builderFunction)
       })
       .then( tpl => {
-        const body = Object.assign({}, {password: formParams.password, transaction: tpl.data})
-        return client.transactions.sign(body)
+
+        if(isChainTx && isBTM){
+          const body = Object.assign({}, {password: formParams.password, transactions: tpl.data})
+          return client.transactions.signBatch(body)
+        }
+        else{
+          const body = Object.assign({}, {password: formParams.password, transaction: tpl.data})
+          return client.transactions.sign(body)
+        }
       })
       .then(signed => {
         if(!signed.data.signComplete){
           throw {code: 'F_BTM100'}
         }
-        return client.transactions.submit(signed.data.transaction.rawTransaction)
+
+        if(isChainTx && isBTM){
+          const rawTransactions = signed.data.transaction.map(tx => tx.rawTransaction)
+          return client.transactions.submitBatch(rawTransactions)
+        }
+        else{
+          return client.transactions.submit(signed.data.transaction.rawTransaction)
+        }
       })
       .then(submitSucceeded)
   }
@@ -235,8 +267,77 @@ const decode = (data) => {
   }
 }
 
+const getAddresses =(params) => {
+  return new Promise((resolve, reject) => {
+    const body = Object.assign({from:0, count:1}, params)
+    chainClient().accounts.listAddresses(body)
+      .then((resp) =>{
+        const result = resp.data
+        if(result.length > 0){
+          resolve(result[0].address)
+        }else{
+          chainClient().accounts.createAddress(params)
+            .then((ret) =>{
+              resolve(ret.data.address)
+            }).catch((err) => reject( err))
+        }
+      })
+      .catch((err) => reject(err))
+  })
+}
+
+const estimateGas =(template) => {
+  return chainClient().transactions.estimateGas(template)
+}
+
+const buildTransaction = (builderBlock) =>{
+  const builderFunction = ( builder ) => {
+    const processed = preprocessTransaction(builderBlock)
+
+    builder.actions = processed.actions
+    builder.ttl = builderBlock.ttl
+    if (processed.baseTransaction) {
+      builder.baseTransaction = processed.baseTransaction
+    }
+
+  }
+  return chainClient().transactions.build(builderFunction)
+}
+
+const getTransaction = (params) => {
+
+  return (dispatch) => {
+    const promise = chainClient().transactions.getTransaction(params)
+
+    promise.then(
+      (resp) => {
+        if(resp.status == 'fail'){
+          dispatch({type: 'ERROR', payload: { 'message': resp.msg}})
+        }else{
+          resp.data = [resp.data]
+          dispatch({
+            type: `RECEIVED_${type.toUpperCase()}_ITEMS`,
+            param: resp
+          })
+        }
+      }
+    ).catch(error=>{
+      if(error.body){
+        dispatch({type: 'ERROR', payload: { 'message': error.body.msg}})
+      }
+      else throw error
+    })
+
+    return promise
+  }
+}
+
 export default {
   ...list,
   ...form,
   decode,
+  getAddresses,
+  estimateGas,
+  buildTransaction,
+  getTransaction
 }

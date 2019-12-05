@@ -71,6 +71,9 @@ const transactionsAPI = (client) => {
       Object.assign({}, params, {detail: true}),
       {cb}),
 
+    getTransaction: (params, cb) => shared.query(client, 'transactions', '/get-transaction',
+      params, {cb}),
+
     queryAll: (params, processor, cb) => shared.queryAll(client, 'transactions', params, processor, cb),
 
     build: (builderBlock, cb) => {
@@ -85,7 +88,22 @@ const transactionsAPI = (client) => {
       return shared.tryCallback(
         client.request('/build-transaction', builder),
         cb
-      ).then(resp => checkForError(resp))
+      ).then(resp => checkForError(resp)).catch(errors  => {throw checkForError(errors)})
+    },
+
+    buildChain: (builderBlock, cb) => {
+      const builder = new TransactionBuilder()
+
+      try {
+        builderBlock(builder)
+      } catch (err) {
+        return Promise.reject(err)
+      }
+
+      return shared.tryCallback(
+        client.request('/build-chain-transactions', builder),
+        cb
+      ).then(resp => checkForError(resp)).catch(errors  => {throw checkForError(errors)})
     },
 
     buildBatch: (builderBlocks, cb) => {
@@ -104,29 +122,36 @@ const transactionsAPI = (client) => {
     },
 
     decodeTransaction: (raw_transaction, cb) => shared.tryCallback(
-      client.request('/decode-raw-transaction', {'raw_transaction': raw_transaction}).then(resp => checkForError(resp)),
+      client.request('/decode-raw-transaction', {'raw_transaction': raw_transaction}).then(resp => checkForError(resp)).catch(errors  => {throw checkForError(errors)}),
       cb
     ),
 
     sign: (template, cb) => finalize(template)
-      .then(finalized => client.request('/sign-transaction', finalized ).then(resp => checkForError(resp)),
+      .then(finalized => client.request('/sign-transaction', finalized ).then(resp => checkForError(resp)).catch(errors  => {throw checkForError(errors)}),
         cb
       ),
 
-    signBatch: (templates, cb) => finalizeBatch(templates)
-      // TODO: merge batch errors from finalizeBatch
-      .then(finalized => client.signer.signBatch(finalized.successes, cb)),
+    signBatch: (template, cb) => finalize(template)
+      .then(finalized => client.request('/sign-transactions', finalized ).then(resp => checkForError(resp)).catch(errors  => {throw checkForError(errors)}),
+        cb
+      ),
 
     submit: (signed, cb) => shared.tryCallback(
-      client.request('/submit-transaction', {'raw_transaction': signed}).then(resp => checkForError(resp)),
+      client.request('/submit-transaction', {'raw_transaction': signed}).then(resp => checkForError(resp))
+        .catch(errors  => {throw checkForError(errors)}),
       cb
     ),
 
     submitBatch: (signed, cb) => shared.tryCallback(
-      client.request('/submit-transaction', {transactions: signed})
-            .then(resp => new shared.BatchResponse(resp)),
+      client.request('/submit-transactions', {'raw_transactions': signed}).then(resp => checkForError(resp))
+        .catch(errors  => {throw checkForError(errors)}),
       cb
     ),
+
+    estimateGas: (template, cb) => shared.tryCallback(
+      client.request('/estimate-transaction-gas', {'transactionTemplate': template}).then(resp => checkForError(resp)).catch(errors  => {throw checkForError(errors)}),
+      cb
+    )
   }
 }
 

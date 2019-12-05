@@ -25,11 +25,11 @@ class PasswordField extends React.Component {
     const {touched, error} = this.props.fieldProps
 
     const capLock = (e) => {
-      const charCode = e.charCode || e.which
-      const isShift  =  e.shiftKey ||(charCode  ==   16 ) || false
-      const visibility = ((charCode >= 65 && charCode <= 90) && !isShift) ||
-      ((charCode >= 97 && charCode <= 122) && isShift)
-      this.setState({capLock: visibility})
+      if (e.getModifierState('CapsLock')) {
+        this.setState({capLock: true})
+      } else {
+        this.setState({capLock: false})
+      }
     }
 
     return(
@@ -40,7 +40,7 @@ class PasswordField extends React.Component {
           type='text'
           placeholder={this.props.placeholder}
           autoFocus={!!this.props.autoFocus}
-          onKeyPress={capLock}
+          onKeyUp={capLock}
           {...disableAutocomplete}
           {...fieldProps} />
 

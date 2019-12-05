@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="210" height="690" viewBox="0 0 210 690">
+  <defs>
+    <style>
+      .cls-1, .cls-2 {
+        fill: #fff;
+      }
+
+      .cls-2 {
+        stroke: #707070;
+      }
+
+      .cls-3 {
+        clip-path: url(#clip-path);
+      }
+
+      .cls-4 {
+        opacity: 0.4;
+      }
+
+      .cls-4, .cls-5 {
+        fill: url(#radial-gradient);
+      }
+
+      .cls-5 {
+        opacity: 0.5;
+      }
+
+      .cls-6 {
+        clip-path: url(#clip-path-2);
+      }
+    </style>
+    <clipPath id="clip-path">
+      <rect id="sidebar" class="cls-1" width="210" height="690" transform="translate(0 60)"/>
+    </clipPath>
+    <radialGradient id="radial-gradient" cx="0.5" cy="0.5" r="0.5" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#fff"/>
+      <stop offset="0.901" stop-color="#fff"/>
+      <stop offset="1" stop-color="#f3f6f8"/>
+    </radialGradient>
+    <clipPath id="clip-path-2">
+      <rect id="Rectangle_4686" data-name="Rectangle 4686" class="cls-2" width="210" height="108"/>
+    </clipPath>
+  </defs>
+  <g id="Background" transform="translate(0 -60)">
+    <rect id="sidebar-2" data-name="sidebar" class="cls-1" width="210" height="690" transform="translate(0 60)"/>
+    <g id="Mask_Group_76" data-name="Mask Group 76" class="cls-3">
+      <ellipse id="Ellipse_2429" data-name="Ellipse 2429" class="cls-4" cx="494.5" cy="396.5" rx="494.5" ry="396.5" transform="translate(-270 506)"/>
+      <ellipse id="Ellipse_2430" data-name="Ellipse 2430" class="cls-5" cx="494.5" cy="487.5" rx="494.5" ry="487.5" transform="translate(513 661) rotate(90)"/>
+      <circle id="Ellipse_2429-2" data-name="Ellipse 2429" class="cls-5" cx="412" cy="412" r="412" transform="translate(-543 -292)"/>
+      <g id="Mask_Group_77" data-name="Mask Group 77" class="cls-6">
+        <path id="Path_26129" data-name="Path 26129" class="cls-4" d="M716,0c395.436,0,716,184.459,716,412S1111.436,824,716,824,0,639.541,0,412C0,275.249,281.883,0,281.883,0Z" transform="translate(-506 60)"/>
+      </g>
+    </g>
+  </g>
+</svg>

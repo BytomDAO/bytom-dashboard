@@ -1,6 +1,9 @@
 {
   "language": "EN",
   "languageFull": "English",
+  "main":{
+    "loading":"Connecting to Vapor Core..."
+  },
   "asset":{
     "asset": "Asset",
     "xpubs":"xpub __id__",
@@ -26,7 +29,9 @@
     "additionInfoKey":"Description",
     "additionInfoValue":"Value",
     "additionInfoKeyError":"Description is required.",
-    "additionInfoValueError":"Value is required."
+    "additionInfoValueError":"Value is required.",
+    "issuableLabel":"(Please issue the asset within approx. __time__ mins.)",
+    "noIssuableLabel":"(The asset can't be issued anymore.)"
   },
   "commonWords": {
     "version": "Version",
@@ -49,6 +54,7 @@
     "asset": "assets",
     "key":"keys",
     "account":"accounts",
+    "accountManagement":"Management",
     "unspent": "Unspent outputs",
     "balance":"balances",
     "accessControl":"Access control",
@@ -64,14 +70,15 @@
     "settings":"settings",
     "coreStatus":"Core status",
     "logout":"Log Out",
-    "backupRestore":"Backup and Restore",
+    "backupRestore":"Backup or Restore",
     "newTx":"Create a new transaction",
     "newAccount":"Create an account",
     "newKey":"Create a key",
     "newToken":"Create an access token",
     "newAsset":"Create an asset",
     "resetPassword":"Reset password",
-    "peer":"Peers information"
+    "peer":"Peers information",
+    "federation":"Federation"
   },
   "form":{
     "detail": "Details",
@@ -139,12 +146,18 @@
     "decimals":"Decimals",
     "reissueTitle":"Token reissuable",
     "reissueTrue":"Able to be reissued",
-    "reissueFalse":"Unable to be reissued"
+    "reissueFalse":"Unable to be reissued",
+    "vote": "Node Public Key",
+    "totalVoteNumber":"Vote",
+    "vmVersion":"VM Version",
+    "rawDefinitionByte":"Raw Definition Byte"
   },
   "xpub":{
     "methodOptions" : {
       "mockhsm": "Use existing key",
-      "provide": "Provide existing xpub"
+      "provide": "Provide existing xpub",
+      "generate": "Generate a new key",
+      "currentAccount": "Current account xpub"
     },
     "providePlaceholder": "Enter xpub"
   },
@@ -159,7 +172,7 @@
     "configuration":"Configuration",
     "version":"Core Versions",
     "advanced":"Advanced",
-    "mining":"Mining",
+    "mining":"Block Producing",
     "unit":"Unit to show amount in",
     "networkStatus":"Network status",
     "listening":"Peer Listening",
@@ -168,18 +181,20 @@
     "syncStatus":"Syncing",
     "synchronizing":"true",
     "synced":"false",
-    "miningStatus":"Mining",
+    "miningStatus":"Block Producing",
     "miningRuning":"true",
     "miningStopped":"false",
     "peer":"Peer Count",
     "currentBlock":"Current Block",
     "highestBlock":"Highest Block",
     "networkId":"Network Id",
-    "coreStatus":"Core Status"
+    "nodeXpub":"Node Xpub",
+    "coreStatus":"Core Status",
+    "fedAddress":"Federation Addr."
   },
   "console":{
     "title":"Console",
-    "message":"Welcome to the Bytom Core API console.<1/> Type <2>help</2> for an overview of available commands",
+    "message":"Welcome to the Vapor Core API console.<1/> Type <2>help</2> for an overview of available commands",
     "warning":"WARNING",
     "warningMessage":"Scammers have been active, telling users to type commands here, stealing their wallet contents. Do not use this console without fully understanding the ramification of a command.",
     "placeholder":"Enter \"help\" for an overview of available commands"
@@ -217,7 +232,7 @@
   },
   "account":{
     "account":"Account",
-    "formTitle":["Account Alias", "Account ID"],
+    "formTitle":["Account Alias", "Account ID", "Signature Structure"],
     "accountXpub":"Account Xpub",
     "keyIndex":"Key Index",
     "address":"Addresses",
@@ -227,6 +242,8 @@
     "copyAddress":"Copy this address to use in a transaction:",
     "copyProgram":"Copy this control program to use in a transaction:",
     "copyClipboard":"Copy to clipboard",
+    "select":"Select",
+    "selected":"Selected",
     "new":{
       "newAccount":"New account",
       "information":"Account Information",
@@ -242,25 +259,37 @@
     "transaction":"Transaction",
     "unconfirmedTx":"unconfirmed transaction",
     "id":"Tx ID:",
+    "crossChainId":"Tx ID(__id__):",
     "confirmed":"confirmed",
     "contractStatus":"Contract Execution Status",
     "confirmation":"__count__ confirmation",
     "confirmation_plural":"__count__ confirmations",
     "unconfirmedItem":"Unknown (0 confirmation)",
+    "pending":"Pending",
+    "completed":"Completed",
     "type":{
       "issue":"issue",
       "sent":"sent",
       "received":"received",
       "retire":"retire",
       "coinbase":"coinbase",
-      "immature":"immature"
+      "immature":"immature",
+      "vote":"vote",
+      "veto":"veto",
+      "crossOut":"Vapor -> Bytom",
+      "crossIn":"Bytom -> Vapor"
     },
     "new":{
       "unsaveWarning":"Your work is not saved! Are you sure you want to leave?",
       "new":"New transaction",
       "normal":"Normal",
+      "vote": "Vote",
       "submit":"Submit transaction",
-      "advanced" :"Advanced"
+      "advanced" :"Advanced",
+      "crossChain": "Cross Chain",
+      "submitType":"Transactions Submitted Type",
+      "chainTx":"Chain Transactions",
+      "chainTxNote":"Chain Transactions will generate multiple transactions, cost an extra fee and improve UTXO amount limit in a single transaction."
     },
     "normal":{
       "from":"From",
@@ -302,6 +331,32 @@
       "accountAddress":"Gas Paid Account Address",
       "gasAccount":"Gas Paid Account",
       "signTx":"Sign Transaction"
+    },
+    "vote":{
+      "info":"Vote Information",
+      "action":"Action",
+      "vote":{
+        "title":"Vote",
+        "voteAmount":"Amount Vote",
+        "for":"Vote for",
+        "confirm":"Confirm Vote",
+        "submit":"Submit Vote"
+      },
+      "veto":{
+        "title":"Veto",
+        "voteAmount":"Amount Veto",
+        "for":"Veto for",
+        "confirm":"Confirm Veto",
+        "submit":"Submit Veto"
+      }
+    },
+    "crossChain":{
+      "title":"Cross Chain info (Vapor->Bytom)",
+      "address":"Bytom Address",
+      "addressHint":"Note: the address must start with '__id__'.",
+      "submit":"Submit Cross Chain",
+      "confirm":"Confirm Cross Chain",
+      "crossChainAddress":"Cross Chain Address"
     }
   },
   "balances":{
@@ -313,7 +368,8 @@
       "successMsg":"Successfully rescanned spent outputs.",
       "startMsg":"Rescan is starting...",
       "rescanMsg":"Wallet Rescanning..."
-    }
+    },
+    "voteDetails":"Vote Details"
   },
   "errorMessage":{
     "password": "Your password is wrong, please check your password.",
@@ -323,7 +379,8 @@
     "tokenError":"Token name is required",
     "jsonObjectError":"Contents must be represented as a JSON object",
     "jsonRowError":" __error__ on row __row__`",
-    "parseError":"Error parsing JSON"
+    "parseError":"Error parsing JSON",
+    "rawDefinitionByteError":"Raw Definition Byte is required"
   },
   "emptyList":{
     "loading":"LOADING",
@@ -338,7 +395,7 @@
     "name":"Token Name"
   },
   "init":{
-    "title":"Init your account and key",
+    "title":"Init your account",
     "keyPassword":"Key Password",
     "repeatKeyPassword":"Repeat your key password",
     "register":"Register",
@@ -353,8 +410,8 @@
     "mnemonic":"mnemonic",
     "mnemonicRequire":"Mnemonic is Required",
     "create": "Create Wallet",
-    "createDescription":"This option will create a default account, key password and give you a option to keep you mnemonic.  Warning: key seed words will display only once, it's important to remember your password.",
-    "welcome":"Welcome to Bytom __network__"
+    "createDescription":"This option will create a default account, key password.  Warning: it's important to remember your password.",
+    "welcome":"Welcome to Vapor __network__"
   },
   "backup":{
     "title":"Backup and Restore",
@@ -394,19 +451,19 @@
         "Cryptographic private keys are the primary authorization mechanism on a blockchain. They control both the issuance and transfer of asset units. An asset or account will define one or more keys required for issuance or transfers."
       ],
       "account":[
-        "An account is an object in Bytom that tracks ownership of assets on a blockchain by creating and tracking control programs. The account object does not exist on the blockchain - it is local to this Bytom. Only the control programs created in the account are visible on the blockchain."
+        "An account is an object in Vapor that tracks ownership of assets on a blockchain by creating and tracking control programs. The account object does not exist on the blockchain - it is local to this Vapor. Only the control programs created in the account are visible on the blockchain."
       ],
       "asset":[
         "An asset is a type of value that can be issued on a blockchain. All units of an asset are fungible and can be transacted directly between parties without the involvement of the issuer."
       ],
       "balance":[
-        "The balance shows the amount and the type of asset that a local Bytom account possess."
+        "The balance shows the amount and the type of asset that a local Vapor account possess."
       ],
       "coreStatus":[
         "The core status shows the blockchain network status and the local setting."
       ],
       "accessControl":[
-        "Access token is used for remote authorizations. An access token is required to connect a remote Bytom Core."
+        "Access token is used for remote authorizations. An access token is required to connect a remote Vapor Core."
       ],
       "unspent":[
         "Each new transaction in the blockchain consumes some unspent outputs and creates others. An output is considered unspent when it has not yet been used as an input to a new transaction. All asset units on a blockchain exist in the unspent output set."
@@ -563,7 +620,7 @@
           {
             "title": "Enter and repeat the password for your key",
             "description": [
-              "It's important to memorize the password for your key and keep it somewhere safe. Bytom doesn't provide any lost and found. "
+              "It's important to memorize the password for your key and keep it somewhere safe. Vapor doesn't provide any lost and found. "
             ]
           },
           {
@@ -580,7 +637,7 @@
           {
             "title": "Enter and repeat the new password for your key",
             "description": [
-              "It's important to memorize the password for your key and keep it somewhere safe. Bytom doesn't provide any lost and found. "
+              "It's important to memorize the password for your key and keep it somewhere safe. Vapor doesn't provide any lost and found. "
             ]
           },
           {
@@ -615,7 +672,7 @@
     "CREATED_TOKEN_WITH_GRANT":"Access token has been created successfully."
   },
   "btmError":{
-    "BTM000": "Bytom API Error",
+    "BTM000": "Vapor API Error",
     "BTM001": "Request timed out",
     "BTM002": "Invalid request body",
     "BTM103": "A peer core is operating on a different blockchain network",

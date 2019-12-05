@@ -7,17 +7,29 @@ import Sync from '../Sync/Sync'
 import {docsRoot, releaseUrl} from '../../../../utility/environment'
 import { capitalize } from 'utility/string'
 import {withNamespaces} from 'react-i18next'
+import actions from 'actions'
 
 class Navigation extends React.Component {
   constructor(props) {
     super(props)
-
     this.openTutorial = this.openTutorial.bind(this)
+    this.state = {
+      showFed: false
+    }
   }
 
   openTutorial(event) {
     event.preventDefault()
     this.props.openTutorial()
+  }
+  componentDidMount() {
+    this.props.fetchFederationItem()
+      .then(resp =>{
+        this.setState({showFed: true})
+      })
+      .catch(e =>{
+        this.setState({showFed: false})
+      })
   }
 
   render() {
@@ -44,14 +56,29 @@ class Navigation extends React.Component {
               {capitalize(t('crumbName.asset'))}
             </Link>
           </li>
+          { this.state.showFed && <li>
+            <Link to='/federations' activeClassName={styles.active}>
+              {navIcon('federation', styles)}
+              {capitalize((t('crumbName.federation')))}
+            </Link>
+          </li>}
         </ul>
 
+        {/*<ul className={styles.navigation}>*/}
+          {/*<li className={styles.navigationTitle}>{ t('crumbName.services') }</li>*/}
+          {/*<li>*/}
+            {/*<Link to='/keys' activeClassName={styles.active}>*/}
+              {/*{navIcon('mockhsm', styles)}*/}
+              {/*{capitalize((t('crumbName.key')))}*/}
+            {/*</Link>*/}
+          {/*</li>*/}
+        {/*</ul>*/}
         <ul className={styles.navigation}>
-          <li className={styles.navigationTitle}>{ t('crumbName.services') }</li>
+          <li className={styles.navigationTitle}>{t('crumbName.account')}( {this.props.currentAccount} )</li>
           <li>
-            <Link to='/keys' activeClassName={styles.active}>
-              {navIcon('mockhsm', styles)}
-              {capitalize((t('crumbName.key')))}
+            <Link to='/accounts' activeClassName={styles.active}>
+              {navIcon('account', styles)}
+              {capitalize(t('crumbName.accountManagement'))}
             </Link>
           </li>
         </ul>
@@ -80,7 +107,11 @@ export default connect(
       update: state.core.update,
       coreData: state.core.coreData,
       routing: state.routing, // required for <Link>s to update active state on navigation
-      showNavAdvance: state.app.navAdvancedState === 'advance'
+      showNavAdvance: state.app.navAdvancedState === 'advance',
+      currentAccount: state.account.currentAccount
     }
-  }
+  },
+  (dispatch) => ({
+    fetchFederationItem: () => dispatch(actions.federation.fetchItems()),
+  })
 )( withNamespaces('translations')(Navigation))

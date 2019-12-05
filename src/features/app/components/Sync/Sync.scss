@@ -1,6 +1,5 @@
 .main {
   padding: $gutter-size;
-  border-top: 1px solid $border-inverse-color;
   margin-top: $gutter-size;
 }
 
@@ -13,7 +12,7 @@
 }
 
 .blockHightlight {
-  color: $navbar-default-link-color;
+  color: $highlight-inverse-color;
 }
 
 .progressBar{

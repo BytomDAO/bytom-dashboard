@@ -37,7 +37,7 @@ class Show extends BaseShow {
     if (item) {
       const confirmation = this.props.highestBlock - item.blockHeight + 1
       const btmInput = item.inputs.reduce((sum, input) => {
-        if (input.type === 'spend' && input.assetId === btmID) {
+        if ((input.type === 'spend' || input.type === 'cross_chain_in'|| input.type === 'veto') && input.assetId === btmID) {
           sum = BigNumber(input.amount).plus(sum)
         }
         return sum
@@ -46,7 +46,9 @@ class Show extends BaseShow {
       item.confirmations = confirmation
 
       const btmOutput = item.outputs.reduce((sum, output) => {
-        if ((output.type === 'control' || output.type === 'retire')&& output.assetId === btmID) {
+        if ((output.type === 'control' || output.type === 'retire'
+            || output.type === 'vote' ||  output.type === 'cross_chain_out')&&
+          output.assetId === btmID) {
           sum = BigNumber(output.amount).plus(sum)
         }
         return sum
@@ -76,6 +78,10 @@ class Show extends BaseShow {
 
         if(inout.accountAlias ||inout.accountId){
           resultoutput.account = inout.accountAlias ||inout.accountId
+        }
+
+        if(inout.type === 'vote'){
+          resultoutput.vote = inout.vote
         }
 
         resultoutput.accountId = inout.accountId
@@ -116,7 +122,7 @@ class Show extends BaseShow {
             title={t('政务区块详情')}
             items={[
               {label: 'ID', value: item.id},
-              {label: t('form.timestamp'), value:  unconfirmedItem ? '-' : moment.unix(item.timestamp).format()},
+              {label: t('form.timestamp'), value:  unconfirmedItem ? '-' : moment(item.timestamp).format()},
               {label: t('form.blockId'), value: unconfirmedItem? '-' : item.blockId},
               {label: t('form.blockHeight'), value: unconfirmedItem?
                   t('transaction.unconfirmedItem'): item.blockHeight },
@@ -161,7 +167,7 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = ( dispatch ) => ({
-  fetchItem: (id) => dispatch(actions.fetchItems({id: `${id}`}))
+  fetchItem: (id) => dispatch(actions.getTransaction({tx_id: `${id}`}))
 })
 
 export default connect(

@@ -5,8 +5,14 @@
 .table {
   margin-bottom: $grid-gutter-width;
 
+
   td {
     vertical-align: top;
+  }
+}
+.actionBtn{
+  img{
+    margin-bottom: 3px;
   }
 }
 
@@ -26,6 +32,11 @@
   text-align: right;
 }
 
+.shorten_value{
+  max-width: 220px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
 .block_hash {
   display: block;
   word-wrap: break-word;
@@ -45,6 +56,16 @@
     margin-top: 0;
   }
 }
+.wordWrap{
+  word-wrap: break-word;
+  word-break: break-all;
+}
+.copyButton{
+  padding: 0px 9px 4px;
+  img{
+    width: 18px;
+  }
+}
 
 .sub-row {
   padding: $grid-gutter-width $grid-gutter-width 0;
@@ -56,12 +77,12 @@
 
 .left {
   padding-left: 0;
-  width: 50%;
+  width: 67%;
 }
 
 .right {
   border-left: 1px solid $border-color;
-  width: 50%;
+  width: 33%;
 }
 
 .replication_lag {
@@ -89,6 +110,9 @@
 
 .mainContainer {
   background-color: $background-color;
+  padding: 0 $gutter-size;
+  display: flex;
+  flex-direction: row;
 }
 
 code {

@@ -46,6 +46,8 @@ export default {
       ]).then(result => {
         const grants = result[0].data
         return dispatch({ type: 'RECEIVED_ACCESS_GRANTS', grants, tokens })
+      }).catch(err =>{
+        return dispatch({type: 'ERROR', payload: err})
       })
     }
   },

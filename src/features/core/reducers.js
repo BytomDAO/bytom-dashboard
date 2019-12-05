@@ -225,6 +225,8 @@ const coreData = (state = null, action) => {
 const accountInit = (state = false, action) => {
   if (action.type == 'CREATE_REGISTER_ACCOUNT') {
     return true
+  } else if(action.type == 'UPDATE_ACCOUNT_INIT_STATUS'){
+    return action.param
   }
   return state
 }

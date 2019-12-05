@@ -59,6 +59,15 @@ class RestoreKeystore extends React.Component {
   }
 }
 
+const validate = (values, props) => {
+  const errors = {}
+  const t = props.t
+
+  if (!values.file) {
+    errors.file = ( t('form.required'))
+  }
+  return errors
+}
 
 export default withNamespaces('translations')( connect(
   () => ({}),
@@ -68,4 +77,5 @@ export default withNamespaces('translations')( connect(
 )(reduxForm({
   form: 'restoreKeystore',
   fields: ['file'],
+  validate
 })(RestoreKeystore)))
