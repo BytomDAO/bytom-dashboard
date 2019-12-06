@@ -40,7 +40,7 @@ const visibleFields = {
   [SPEND_UNSPENT_KEY]: {outputId: true, password: true},
   [CONTROL_RECEIVER_KEY]: {asset: true, receiver: true, amount: true},
   [CONTROL_ADDRESS_KEY]: {asset: true, address: true, amount: true},
-  [RETIRE_ASSET_KEY]: {asset: true, arbitrary:true, fileName:true},
+  [RETIRE_ASSET_KEY]: {asset: true, arbitrary:true,index:true, fileName:true},
   [TRANSACTION_REFERENCE_DATA]: {},
 }
 
@@ -76,6 +76,7 @@ class ActionItem extends React.Component {
       assetAlias,
       password,
       amount,
+      index,
       arbitrary,
       vote,
       fileName,
@@ -149,6 +150,12 @@ class ActionItem extends React.Component {
               alias: assetAlias
             }}
           />}
+
+        {visible.index &&
+        <TextField
+          title={'Index'}
+          fieldProps={index}
+        />}
 
         {visible.fileName &&
         <TextField

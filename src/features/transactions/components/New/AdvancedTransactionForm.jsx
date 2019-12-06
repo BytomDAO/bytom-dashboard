@@ -259,6 +259,7 @@ export default withNamespaces('translations') (BaseNew.connect(
       'actions[].assetId',
       'actions[].assetAlias',
       'actions[].type',
+      'actions[].index',
       'actions[].fileName',
       'actions[].arbitrary',
       'submitAction',
