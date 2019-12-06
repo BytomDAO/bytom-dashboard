@@ -40,7 +40,7 @@ const visibleFields = {
   [SPEND_UNSPENT_KEY]: {outputId: true, password: true},
   [CONTROL_RECEIVER_KEY]: {asset: true, receiver: true, amount: true},
   [CONTROL_ADDRESS_KEY]: {asset: true, address: true, amount: true},
-  [RETIRE_ASSET_KEY]: {asset: true, arbitrary:true, file:true},
+  [RETIRE_ASSET_KEY]: {asset: true, arbitrary:true, fileName:true},
   [TRANSACTION_REFERENCE_DATA]: {},
 }
 
@@ -78,7 +78,7 @@ class ActionItem extends React.Component {
       amount,
       arbitrary,
       vote,
-      file,
+      fileName,
       sourceId,
       sourcePos,
       vmVersion,
@@ -150,10 +150,10 @@ class ActionItem extends React.Component {
             }}
           />}
 
-        {visible.file &&
+        {visible.fileName &&
         <TextField
           title={'文件名'}
-          fieldProps={file}
+          fieldProps={fileName}
         />}
 
         {visible.amount &&

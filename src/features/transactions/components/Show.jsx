@@ -4,28 +4,17 @@ import {
   PageTitle,
   PageContent,
   KeyValueTable,
-  Section,
-  RawJsonButton,
 } from 'features/shared/components'
 import { normalizeGlobalBTMAmount } from 'utility/buildInOutDisplay'
 
-import { Summary } from './'
 import { buildTxInputDisplay, buildTxOutputDisplay } from 'utility/buildInOutDisplay'
 import { btmID } from 'utility/environment'
 import moment from 'moment/moment'
 import BigNumber from 'bignumber.js'
-import jsPDF from 'jspdf';
 
 class Show extends BaseShow {
   constructor(porps){
     super(porps)
-    // const doc = new jsPDF()
-    //
-    // doc.setFontSize(22)
-    // doc.text('This is a title', 20, 20)
-    //
-    // doc.save('two-by-four.pdf')
-
   }
 
   render() {
@@ -90,6 +79,7 @@ class Show extends BaseShow {
         resultoutput.assetDefinition =  inout.assetDefinition
         resultoutput.type = inout.type
         resultoutput.retireData = inout.retireData
+        resultoutput.fileName = inout.fileName
         resultoutput.index = inout.index
 
         return resultoutput

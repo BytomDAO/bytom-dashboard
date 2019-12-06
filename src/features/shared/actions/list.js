@@ -137,7 +137,6 @@ export default function(type, options = {}) {
       let promise
       const filter = query.filter || ''
       const unconfirmed = requestOptions.unconfirmed || true
-      const accountAlias = requestOptions.accountAlias || ''
 
       if (!refresh && latestResponse) {
         let responsePage
@@ -151,7 +150,6 @@ export default function(type, options = {}) {
       } else {
         const params = {}
         if (query.filter) params.filter = filter
-        if (requestOptions.accountAlias) params.accountAlias = accountAlias
         if (requestOptions.unconfirmed) params.unconfirmed = unconfirmed
         if (query.sumBy) params.sumBy = query.sumBy.split(',')
 
