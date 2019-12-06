@@ -19,7 +19,7 @@ const ISSUE_KEY = 'issue'
 const actionLabels = {
   [ISSUE_KEY]: '存证方',
   [CROSS_CHAIN_OUT_KEY]: 'Cross Chain Out',
-  [CROSS_CHAIN_IN_KEY]: 'Cross Chain In',
+  [CROSS_CHAIN_IN_KEY]: '存证方',
   [VOTE_OUTPUT_KEY]: 'Vote Output',
   [VETO_KEY]: 'Veto',
   [SPEND_ACCOUNT_KEY]: 'Spend from account',
