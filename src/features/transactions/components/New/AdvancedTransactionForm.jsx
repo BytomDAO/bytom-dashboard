@@ -38,6 +38,22 @@ class AdvancedTxForm extends React.Component {
     this.disableSubmit = this.disableSubmit.bind(this)
   }
 
+  componentDidMount(){
+    const counter = this.state.counter
+    this.props.fields.actions.addField({
+      type: 'cross_chain_in',
+      ID: counter,
+    })
+    this.props.fields.actions.addField({
+      type: 'retire',
+      ID: counter+1,
+    })
+
+    this.setState({
+      counter: counter+2
+    })
+  }
+
   toggleDropwdown() {
     this.setState({showDropdown: !this.state.showDropdown})
   }
