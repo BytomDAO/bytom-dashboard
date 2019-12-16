@@ -10,7 +10,14 @@ export default function(type, options = {}) {
   const created = (param) => ({ type: `CREATED_${type.toUpperCase()}`, param })
 
   return {
-    showCreate: push(createPath),
+    showCreate: (title) =>
+      title? push({
+      pathname: createPath,
+      state: {
+        title
+      }
+    })
+      :push(createPath),
     created,
     submitForm: (data) => {
       const clientApi = options.clientApi ? options.clientApi() : chainClient()[`${type}s`]
