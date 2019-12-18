@@ -54,12 +54,7 @@ class ListItem extends React.Component {
               <RelativeTime timestamp={item.timestamp} />
             </span>}
 
-          <Link className={styles.viewLink}
-                to={{
-                  pathname: `/transactions/${item.id}`,
-                  state: { title: this.props.title}
-                }}
-              >
+          <Link className={styles.viewLink} to={`/transactions/${item.id}`}>
             {t('commonWords.viewDetails')}
           </Link>
         </div>

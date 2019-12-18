@@ -22,10 +22,7 @@ class PageTitle extends React.Component {
             <ul className={styles.crumbs}>
               {this.props.breadcrumbs.map(crumb =>
                 <li className={styles.crumb} key={crumb.name}>
-                  {!crumb.last && <Link to={{
-                    pathname: '/' + crumb.path,
-                    state: { title: this.props.changedTitle }
-                  }}>
+                  {!crumb.last && <Link to={'/' + crumb.path}>
                     {capitalize(crumb.name)}
                     <img src={chevron} className={styles.chevron} />
                   </Link>}
@@ -61,8 +58,6 @@ const mapStateToProps = (state, ownProps) => {
   const pathname = state.routing.locationBeforeTransitions.pathname
   const breadcrumbs = []
 
-  const title = state.routing.locationBeforeTransitions.state && state.routing.locationBeforeTransitions.state.title
-
   let currentRoutes = routes.childRoutes
   let currentPath = []
   pathname.split('/').forEach(component => {
@@ -85,11 +80,7 @@ const mapStateToProps = (state, ownProps) => {
 
   breadcrumbs[breadcrumbs.length - 1].last = true
 
-  if(title){
-    breadcrumbs[0].name = title
-  }
   return {
-    changedTitle: title,
     breadcrumbs,
     flashMessages: state.app.flashMessages,
   }

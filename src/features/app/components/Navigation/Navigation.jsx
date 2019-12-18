@@ -13,9 +13,6 @@ class Navigation extends React.Component {
   constructor(props) {
     super(props)
     this.openTutorial = this.openTutorial.bind(this)
-    this.state={
-      transaction:0
-    }
   }
 
   openTutorial(event) {
@@ -35,35 +32,10 @@ class Navigation extends React.Component {
         </div>}
         <ul className={styles.navigation}>
           <li className={styles.navigationTitle}>{t('crumbName.coreData')}</li>
-          <li >
-            <Link to='/transactions'
-              onClick={() =>{this.setState({transaction:0})}}
-              activeClassName={this.state.transaction ==0 && styles.active}>
+          <li>
+            <Link to='/transactions' activeClassName={styles.active}>
               {navIcon('transaction', styles)}
               {capitalize(t('crumbName.transaction'))}
-            </Link>
-          </li>
-          <li>
-            <Link to={{
-              pathname: '/transactions',
-              state: { title: '"营业执照" 存证'}
-            }}
-            onClick={() =>{this.setState({transaction:1})}}
-            activeClassName={this.state.transaction ==1 && styles.active}
-            >
-              {navIcon('transaction', styles)}
-              {'"营业执照" 存证'}
-            </Link>
-          </li>
-          <li>
-            <Link activeClassName={this.state.transaction ==2 && styles.active} to={{
-              pathname: '/transactions',
-              state: { title: '"不动产证明" 存证' }
-            }}
-            onClick={() =>{this.setState({transaction:2})}}
-            >
-              {navIcon('transaction', styles)}
-              {'"不动产证明" 存证'}
             </Link>
           </li>
           <li>

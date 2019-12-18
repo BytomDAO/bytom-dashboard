@@ -15,9 +15,8 @@ class List extends React.Component {
     }
   }
   render() {
-    const title = this.props.location.state && this.props.location.state.title
     const ItemList = BaseList.ItemList
-    return (<ItemList title={ title} { ...this.props} />)
+    return (<ItemList {...this.props} />)
   }
 }
 

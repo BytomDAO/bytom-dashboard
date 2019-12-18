@@ -16,9 +16,9 @@ class ItemList extends React.Component {
     const t = this.props.t
 
     const objectName = humanize(t(`crumbName.${type.toLowerCase()}` ))
-    const title = this.props.title || capitalize(t(`crumbName.${type.toLowerCase()}` ) || label)
+    const title = capitalize(t(`crumbName.${type.toLowerCase()}` ) || label)
 
-    const newButton = <button key='showCreate' className='btn btn-primary' onClick={() =>this.props.showCreate(this.props.title)}>
+    const newButton = <button key='showCreate' className='btn btn-primary' onClick={this.props.showCreate}>
       + { this.props.createLabel || t('crumbName.new')}
     </button>
     if (!this.props.skipCreate) {
@@ -63,7 +63,6 @@ class ItemList extends React.Component {
         <this.props.listItemComponent
           key={item.id}
           item={item}
-          title={this.props.title}
           btmAmountUnit={this.props.btmAmountUnit}
           {...this.props.itemActions}/>)
 
@@ -133,7 +132,7 @@ export const mapStateToProps = (type, itemComponent, additionalProps = {}) => (s
 export const mapDispatchToProps = (type) => (dispatch) => {
   return {
     pushList: (query, pageNumber) => dispatch(actions[type].pushList(query, pageNumber)),
-    showCreate: (title) => dispatch(actions[type].showCreate(title)),
+    showCreate: () => dispatch(actions[type].showCreate),
   }
 }
 
