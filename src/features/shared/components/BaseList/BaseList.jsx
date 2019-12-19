@@ -4,7 +4,7 @@ import { connect as reduxConnect } from 'react-redux'
 import { pluralize, capitalize, humanize } from 'utility/string'
 import {UTXOpageSize, pageSize} from 'utility/environment'
 import componentClassNames from 'utility/componentClassNames'
-import { PageContent, PageTitle, Pagination } from '../'
+import { PageContent, PageTitle, Pagination, FilterField } from '../'
 import EmptyList from './EmptyList'
 import {withNamespaces} from 'react-i18next'
 import {currentBlockHeight} from '../../../core/reducers'
@@ -75,6 +75,9 @@ class ItemList extends React.Component {
           {header}
 
           <PageContent>
+
+            { type ==='transaction' &&<FilterField pushList={this.props.pushList}/> }
+
             {Wrapper ? <Wrapper {...this.props.wrapperProps}>{items}</Wrapper> : items}
 
             { ( label==='transactions' || label === 'unspent outputs') && pagination}

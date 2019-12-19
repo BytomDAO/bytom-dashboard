@@ -40,6 +40,7 @@
     "react-dom": "~15.5.0",
     "react-i18next": "^8.0.7",
     "react-markdown": "^2.5.0",
+    "react-modal": "^3.11.1",
     "react-overlays": "~0.8.3",
     "react-redux": "~4.4.5",
     "react-router": "~2.6.0",

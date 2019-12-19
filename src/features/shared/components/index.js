@@ -13,6 +13,7 @@ import ConsoleSection from './ConsoleSection/ConsoleSection'
 import EmptyContent from './EmptyContent/EmptyContent'
 import ErrorBanner from './ErrorBanner/ErrorBanner'
 import FieldLabel from './FieldLabel/FieldLabel'
+import FilterField from './FilterField/FilterField'
 import FileField from './FileField'
 import Flash from './Flash/Flash'
 import FormContainer from './FormContainer/FormContainer'
@@ -64,6 +65,7 @@ export {
   ErrorBanner,
   FieldLabel,
   FileField,
+  FilterField,
   Flash,
   FormContainer,
   FormSection,
