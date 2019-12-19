@@ -1,4 +1,4 @@
-import { chainClient, UTXOpageSize } from 'utility/environment'
+import { chainClient, UTXOpageSize ,btmID} from 'utility/environment'
 import { push, replace } from 'react-router-redux'
 
 export default function(type, options = {}) {
@@ -78,7 +78,18 @@ export default function(type, options = {}) {
                 dispatch(updateIdArray(updateId(response.data, requestOptions)))
                 dispatch(receive(resp))
               }
-            }else{
+            }else if(type === 'asset'){
+              for (let i = 0; i < resp.data.length; i++) {
+                let obj =  resp.data[i];
+
+                if (obj.id == btmID) {
+                  resp.data.splice(i, 1);
+                  i--;
+                }
+              }
+              dispatch(receive(resp))
+            }
+            else{
               dispatch(receive(resp))
             }
           }

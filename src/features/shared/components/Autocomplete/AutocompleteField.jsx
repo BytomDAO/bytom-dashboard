@@ -20,10 +20,6 @@ class AutocompleteField extends React.Component {
   getSuggestions(value) {
     const escapedValue = (value.trim()).replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 
-    if (escapedValue === '') {
-      return []
-    }
-
     const regex = new RegExp('^' + escapedValue, 'i')
 
     const suggestions = this.props.items.filter(item => regex.test(item.alias))
@@ -88,9 +84,10 @@ class AutocompleteField extends React.Component {
         suggestions={suggestions}
         onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
         onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-        onSuggestionSelected={(event) => event.preventDefault()}
+        onSuggestionSelected={this.props.onSuggestionSelected||((event) => event.preventDefault())}
         getSuggestionValue={this.getSuggestionValue}
         renderSuggestion={this.renderSuggestion}
+        shouldRenderSuggestions={this.props.shouldRenderSuggestions}
         focusFirstSuggestion={true}
         inputProps={{
           className: `form-control ${this.props.className}`,
