@@ -1,7 +1,6 @@
 import React from 'react'
 import styles from './EmptyList.scss'
 import componentClassNames from 'utility/componentClassNames'
-import { docsRoot } from 'utility/environment'
 import {withNamespaces} from 'react-i18next'
 
 class EmptyList extends React.Component {

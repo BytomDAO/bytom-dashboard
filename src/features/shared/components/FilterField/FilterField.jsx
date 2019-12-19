@@ -16,14 +16,25 @@ class FilterField extends React.Component {
     this.select = this.select.bind(this)
     this.toggleDropwdown = this.toggleDropwdown.bind(this)
     this.closeDropdown = this.closeDropdown.bind(this)
+    this.setAliasById = this.setAliasById.bind(this)
   }
 
   componentDidMount() {
     if (!this.props.autocompleteIsLoaded) {
       this.props.fetchAll().then(() => {
         this.props.didLoadAutocomplete()
+        const selectedId = this.props.selectedId
+        if(selectedId){
+          this.setAliasById(selectedId)
+        }
       })
+    }else{
+      const selectedId = this.props.selectedId
+      if(selectedId){
+        this.setAliasById(selectedId)
+      }
     }
+
   }
 
   toggleDropwdown() {
@@ -34,11 +45,19 @@ class FilterField extends React.Component {
     this.setState({ showDropdown: false })
   }
 
-  select(id) {
-
-    const alias = id == 'all'? '全部' : (this.props.items.filter((item) => item.id === id))[0].alias
+  setAliasById(id){
+    const alias =  (this.props.items.filter((item) => item.id === id))[0].alias
     this.setState({ selected: alias })
-    this.props.pushList({asset_id: id})
+  }
+
+  select(id) {
+    if(id == 'all'){
+      this.setState({ selected: '全部' })
+      this.props.pushList()
+    }else{
+      this.setAliasById(id)
+      this.props.pushList({assetId: id})
+    }
     this.closeDropdown()
   }
 

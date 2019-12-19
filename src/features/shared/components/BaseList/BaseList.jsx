@@ -7,6 +7,8 @@ import componentClassNames from 'utility/componentClassNames'
 import { PageContent, PageTitle, Pagination, FilterField } from '../'
 import EmptyList from './EmptyList'
 import {withNamespaces} from 'react-i18next'
+import styles from './BaseList.scss'
+
 
 class ItemList extends React.Component {
   render() {
@@ -38,23 +40,26 @@ class ItemList extends React.Component {
       return(
         <div className={rootClassNames}>
           {header}
+          <div className={styles.container}>
+            { type ==='transaction' &&<FilterField selectedId={this.props.assetId} pushList={this.props.pushList}/> }
 
-          <EmptyList
-            firstTimeContent={this.props.firstTimeContent}
-            type={this.props.type}
-            objectName={objectName}
-            newButton={newButton}
-            showFirstTimeFlow={this.props.showFirstTimeFlow}
-            skipCreate={this.props.skipCreate}
-            loadedOnce={this.props.loadedOnce}
-            />
+            <EmptyList
+              firstTimeContent={this.props.firstTimeContent}
+              type={this.props.type}
+              objectName={objectName}
+              newButton={newButton}
+              showFirstTimeFlow={this.props.showFirstTimeFlow}
+              skipCreate={this.props.skipCreate}
+              loadedOnce={this.props.loadedOnce}
+              />
+          </div>
 
         </div>
       )
     } else {
       let pagination = <Pagination
         currentPage={this.props.currentPage}
-        currentFilter={this.props.currentFilter}
+        currentFilter={{assetId: this.props.assetId}}
         isLastPage={this.props.isLastPage}
         pushList={this.props.pushList}
       />
@@ -74,7 +79,7 @@ class ItemList extends React.Component {
 
           <PageContent>
 
-            { type ==='transaction' &&<FilterField pushList={this.props.pushList}/> }
+            { type ==='transaction' &&<FilterField selectedId={this.props.assetId} pushList={this.props.pushList}/> }
 
             {Wrapper ? <Wrapper {...this.props.wrapperProps}>{items}</Wrapper> : items}
 
@@ -112,6 +117,7 @@ export const mapStateToProps = (type, itemComponent, additionalProps = {}) => (s
 
   const isLastPage = target.length <count
 
+  const assetId = ownProps && ownProps.location.query.assetId
   return {
     items: target,
     loadedOnce: state[type].queries.loadedOnce,
@@ -127,6 +133,8 @@ export const mapStateToProps = (type, itemComponent, additionalProps = {}) => (s
     listItemComponent: itemComponent,
     noResults: target.length == 0,
     showFirstTimeFlow: target.length == 0,
+
+    assetId: assetId,
 
     ...additionalProps
   }

@@ -161,6 +161,7 @@ export default function(type, options = {}) {
       } else {
         const params = {}
         if (query.filter) params.filter = filter
+        if (query.assetId) params.assetId = query.assetId
         if (requestOptions.unconfirmed) params.unconfirmed = unconfirmed
         if (query.sumBy) params.sumBy = query.sumBy.split(',')
 

@@ -4,7 +4,7 @@ import { UTXOpageSize, pageSize } from 'utility/environment'
 import actions from 'actions'
 
 const makeRoutes = (store, type, List, New, Show, options = {}) => {
-  const loadPage = ( state ) => {
+  const loadPage = ( state, replace ) => {
     const promise = new Promise((resolve, reject) => {
       let accountAlias = store.getState().account.currentAccount
       if(!accountAlias) {
@@ -23,6 +23,7 @@ const makeRoutes = (store, type, List, New, Show, options = {}) => {
         const pageNumber = parseInt(state.location.query.page || 1)
         const pageSizes = (type === 'unspent')? UTXOpageSize: pageSize
         let options = {pageSize: pageSizes}
+
         if (pageNumber == 1) {
           options = type==='transaction'? {...options,refresh: true,  accountAlias , unconfirmed:true }: options
           store.dispatch(actions[type].fetchPage(query, pageNumber, options))
