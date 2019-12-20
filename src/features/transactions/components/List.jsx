@@ -26,7 +26,7 @@ export default BaseList.connect(
   }),
   (dispatch) => ({
     ...BaseList.mapDispatchToProps(type)(dispatch),
-    getLatest: (query) => dispatch(actions.transaction.fetchPage(query, 1, { refresh: true, pageSize: pageSize, unconfirmed: true })),
+    getLatest: (query) => dispatch(actions.transaction.fetchPage(query, 1, { refresh: true, pageSize: pageSize })),
   }),
   List
 )

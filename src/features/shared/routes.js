@@ -19,16 +19,15 @@ const makeRoutes = (store, type, List, New, Show, options = {}) => {
     promise.then((accountAlias)=>{
       if(type === 'transaction' || type === 'unspent'){
         const query = state.location.query
-        const unconfirmed = store.getState().transaction.unconfirm
         const pageNumber = parseInt(state.location.query.page || 1)
         const pageSizes = (type === 'unspent')? UTXOpageSize: pageSize
         let options = {pageSize: pageSizes}
 
         if (pageNumber == 1) {
-          options = type==='transaction'? {...options,refresh: true,  accountAlias , unconfirmed:true }: options
+          options = type==='transaction'? {...options,refresh: true,  accountAlias }: options
           store.dispatch(actions[type].fetchPage(query, pageNumber, options))
         } else {
-          options = type==='transaction'? {...options, accountAlias , unconfirmed }: options
+          options = type==='transaction'? {...options, accountAlias }: options
           store.dispatch(actions[type].fetchPage(query, pageNumber,  options ))
         }
       }else if(type === 'balance'){

@@ -15,14 +15,6 @@ export default function(type, options = {}) {
     data: param
   })
 
-  const updateUnconfirmed = () => ({
-    type: 'UPDATE_CONFIRM_PARAMS',
-  })
-
-  const updateMixedPageNo = (param) => ({
-    type: 'UPDATE_MIXED_PAGES_NUMBER_PARAMS',
-    data: param
-  })
 
   const updateId = (arrayList, options) => {
     if(arrayList.length !== 0){
@@ -55,29 +47,9 @@ export default function(type, options = {}) {
             dispatch({type: 'ERROR', payload: { 'message': resp.msg}})
           }else{
             if(type === 'transaction'){
-              const result = resp.data
               let response = resp
-              if(requestOptions.unconfirmed &&result.length<requestOptions.pageSize ) {
-                params.unconfirmed = false
-                params.count = params.count - result.length
-                delete params.startTxId
-                return clientApi().query(params).then(
-                  (resp1) => {
-                    if (resp1.status == 'fail') {
-                      dispatch({type: 'ERROR', payload: {'message': resp1.msg}})
-                    } else {
-                      dispatch(updateMixedPageNo(requestOptions.pageNumber))
-                      response.data = result.concat(resp1.data)
-                      dispatch(updateIdArray(updateId(response.data, requestOptions)))
-                      dispatch(receive(response))
-                      dispatch(updateUnconfirmed())
-                    }
-                  }
-                )
-              }else{
-                dispatch(updateIdArray(updateId(response.data, requestOptions)))
-                dispatch(receive(resp))
-              }
+              dispatch(updateIdArray(updateId(response.data, requestOptions)))
+              dispatch(receive(resp))
             }else if(type === 'asset'){
               for (let i = 0; i < resp.data.length; i++) {
                 let obj =  resp.data[i];
@@ -147,7 +119,6 @@ export default function(type, options = {}) {
 
       let promise
       const filter = query.filter || ''
-      const unconfirmed = requestOptions.unconfirmed || true
 
       if (!refresh && latestResponse) {
         let responsePage
@@ -162,15 +133,11 @@ export default function(type, options = {}) {
         const params = {}
         if (query.filter) params.filter = filter
         if (query.assetId) params.assetId = query.assetId
-        if (requestOptions.unconfirmed) params.unconfirmed = unconfirmed
         if (query.sumBy) params.sumBy = query.sumBy.split(',')
 
         if(requestOptions.pageNumber !== -1){
           const count = requestOptions.pageSize
           params.count = count
-          if( type === 'transaction' &&  requestOptions.mixPageNo === requestOptions.pageNumber){
-            params.unconfirmed = requestOptions.unconfirmed = true
-          }
           if( type === 'transaction' && requestOptions.pageNumber > 1 ){
             params.startTxId = requestOptions.pageIds[requestOptions.pageNumber-2]
           }
