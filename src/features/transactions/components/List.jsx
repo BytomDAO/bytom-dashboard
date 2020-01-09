@@ -10,7 +10,7 @@ class List extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.currentBlock != this.props.currentBlock) {
       if (nextProps.currentPage == 1) {
-        this.props.getLatest()
+        this.props.getLatest({assetId: nextProps.assetId})
       }
     }
   }
