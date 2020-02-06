@@ -29,8 +29,8 @@ class Form extends React.Component {
       definition:{
         name: data.alias.trim(),
         symbol: data.symbol.trim(),
-        decimals: data.decimals,
-        quorum: data.quorum,
+        decimals: Number(data.decimals),
+        quorum: Number(data.quorum),
         reissue: data.reissue,
         description: data.description
       }
