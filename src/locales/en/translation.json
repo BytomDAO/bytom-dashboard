@@ -244,6 +244,7 @@
     "copyClipboard":"Copy to clipboard",
     "select":"Select",
     "selected":"Selected",
+    "createConfirm": "The new address uses the new index path, which may affect the transfer and recovery of the wallet. Please confirm your operation",
     "new":{
       "newAccount":"New account",
       "information":"Account Information",

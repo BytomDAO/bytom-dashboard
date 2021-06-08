@@ -83,7 +83,7 @@ class XpubField extends React.Component {
                              value={key}
                              disabled
                       />
-                      { t('xpub.methodOptions.currentAccount')}
+                      { t('xpub.methodOptions.generate')}
                     </label>
                   </td>:[
                     <td className={styles.label}>
