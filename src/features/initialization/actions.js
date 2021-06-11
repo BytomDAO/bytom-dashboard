@@ -109,9 +109,11 @@ const restoreMnemonic = (data, success) => {
                 .then((res) => {
                   if (res.status === 'fail') throw res
                   const keystore = res.data.key_images.xkeys.find((item) => item.xpub === xpub)
-                  if (!keystore) throw { _error: 'Unknown error' }
-                  bytom.saveMnemonic(data.mnemonic, xpub, data.password, keystore)
-
+                  if (keystore) {
+                    bytom.saveMnemonic(data.mnemonic, xpub, data.password, keystore)
+                  }
+                })
+                .finally(() => {
                   dispatch(success)
                 })
             })

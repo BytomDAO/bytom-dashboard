@@ -72,10 +72,11 @@ const createAccount = (data) => {
           .then((backupRes) => {
             if (backupRes.status === 'fail') throw backupRes
             const keystore = backupRes.data.key_images.xkeys.find((item) => item.xpub === keyRes.data.xpub)
-            const cryptoMnemonic = bytom.encryptMnemonic(keyRes.data.mnemonic, keyData.password, keystore)
-            localStorage.setItem(`mnemonic:${keyRes.data.xpub}`, cryptoMnemonic)
+            if (keystore) {
+              bytom.saveMnemonic(keyRes.data.mnemonic, keyRes.data.xpub, keyData.password, keystore)
+            }
           })
-          .then(() => {
+          .finally(() => {
             return chainClient()
               .accounts.create(accountData)
               .then((resp) => {
