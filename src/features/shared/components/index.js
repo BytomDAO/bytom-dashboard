@@ -34,6 +34,7 @@ import RawJsonButton from './RawJsonButton'
 import RelativeTime from './RelativeTime'
 import RestoreKeystore from './RestoreKeystore/RestoreKeystore'
 import RestoreMnemonic from './RestoreMnemonic/RestoreMnemonic'
+import ShowMnemonic from './ShowMnemonic/ShowMnemonic'
 import RoutingContainer from './RoutingContainer'
 import SearchBar from './SearchBar/SearchBar'
 import Section from './Section/Section'
@@ -96,4 +97,5 @@ export {
   TextField,
   TextareaField,
   XpubField,
+  ShowMnemonic
 }

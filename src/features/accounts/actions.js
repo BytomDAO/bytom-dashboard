@@ -1,8 +1,9 @@
 import { chainClient } from 'utility/environment'
 import { baseCreateActions, baseUpdateActions, baseListActions } from 'features/shared/actions'
-import {push} from 'react-router-redux'
+import { push } from 'react-router-redux'
 import action from 'actions'
 import uuid from 'uuid'
+import * as bytom from 'utility/bytom'
 
 const type = 'account'
 
@@ -13,44 +14,46 @@ const create = baseCreateActions(type, {
   redirectToShow: true,
 })
 const update = baseUpdateActions(type, {
-  jsonFields: ['tags']
+  jsonFields: ['tags'],
 })
 
 const switchAccount = (accountAlias) => {
   return (dispatch) => {
-    dispatch({type: 'SET_CURRENT_ACCOUNT', account: accountAlias})
+    dispatch({ type: 'SET_CURRENT_ACCOUNT', account: accountAlias })
   }
 }
 
-
-const setDefaultAccount = () =>{
+const setDefaultAccount = () => {
   return (dispatch) => {
-    return chainClient().accounts.query().then(result => {
-      const account = result.data[0].alias
-      dispatch(switchAccount((account)))
-      return account
-    })
+    return chainClient()
+      .accounts.query()
+      .then((result) => {
+        const account = result.data[0].alias
+        dispatch(switchAccount(account))
+        return account
+      })
   }
 }
 
 const createAccount = (data) => {
   return (dispatch) => {
-    if (typeof data.alias == 'string')  data.alias = data.alias.trim()
+    if (typeof data.alias == 'string') data.alias = data.alias.trim()
 
     const keyData = {
-      'alias': `${data.alias}Key-${uuid.v4()}`,
-      'password': data.password
+      alias: `${data.alias}Key-${uuid.v4()}`,
+      password: data.password,
     }
 
-    return chainClient().mockHsm.keys.create(keyData)
-      .then((resp) => {
-        if (resp.status === 'fail') {
-          throw resp
+    return chainClient()
+      .mockHsm.keys.create(keyData)
+      .then((keyRes) => {
+        if (keyRes.status === 'fail') {
+          throw keyRes
         }
 
         if (data.xpubs) {
-          data.rootXpubs = [resp.data.xpub]
-          data.xpubs.forEach(key => {
+          data.rootXpubs = [keyRes.data.xpub]
+          data.xpubs.forEach((key) => {
             if (key.value) {
               data.rootXpubs.push(key.value)
             }
@@ -59,28 +62,41 @@ const createAccount = (data) => {
         }
 
         const accountData = {
-          'root_xpubs':data.rootXpubs,
-          'quorum':  parseInt(data.quorum),
-          'alias': data.alias}
+          root_xpubs: data.rootXpubs,
+          quorum: parseInt(data.quorum),
+          alias: data.alias,
+        }
 
-        return chainClient().accounts.create(accountData)
-          .then((resp) => {
-            if (resp.status === 'fail') {
-              throw resp
-            }
-
-            if(resp.status === 'success') {
-              dispatch({type: 'SET_CURRENT_ACCOUNT', account: resp.data.alias})
-              return chainClient().accounts.createAddress({'account_alias':resp.data.alias})
-                .then(() =>{
-                  dispatch(createSuccess() )
-                }).catch((err) => {
-                  throw ( err)
-                })
-            }
+        return chainClient()
+          .backUp.backup()
+          .then((backupRes) => {
+            if (backupRes.status === 'fail') throw backupRes
+            const keystore = backupRes.data.key_images.xkeys.find((item) => item.xpub === keyRes.data.xpub)
+            const cryptoMnemonic = bytom.encryptMnemonic(keyRes.data.mnemonic, keyData.password, keystore)
+            localStorage.setItem(`mnemonic:${keyRes.data.xpub}`, cryptoMnemonic)
           })
-          .catch((err) => {
-            throw err
+          .then(() => {
+            return chainClient()
+              .accounts.create(accountData)
+              .then((resp) => {
+                if (resp.status === 'fail') {
+                  throw resp
+                }
+
+                dispatch({ type: 'SET_CURRENT_ACCOUNT', account: resp.data.alias })
+
+                return chainClient()
+                  .accounts.createAddress({ account_alias: resp.data.alias })
+                  .then(() => {
+                    dispatch(createSuccess())
+                  })
+                  .catch((err) => {
+                    throw err
+                  })
+              })
+              .catch((err) => {
+                throw err
+              })
           })
       })
       .catch((err) => {
@@ -89,7 +105,7 @@ const createAccount = (data) => {
   }
 }
 
-const createSuccess = ()=> (dispatch) =>{
+const createSuccess = () => (dispatch) => {
   dispatch(create.created())
   dispatch(push('/accounts'))
 }
@@ -105,12 +121,12 @@ let actions = {
     return chainClient().accounts.createAddress(data)
   },
   listAddresses: (accountId) => {
-    return chainClient().accounts.listAddresses({accountId})
+    return chainClient().accounts.listAddresses({ accountId })
   },
   switchAccount,
   setDefaultAccount,
   createAccount,
-  createSuccess
+  createSuccess,
 }
 
 export default actions

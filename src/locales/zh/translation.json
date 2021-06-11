@@ -93,7 +93,7 @@
     "keyAndSign":"密钥和签名",
     "selectPlaceholder": "请选择...",
     "enter":"输入",
-    "ok":"关闭",
+    "ok":"确认",
     "delete":"删除",
     "cancel":"返回",
     "more":"更多",
@@ -421,7 +421,8 @@
     "restoreMnemonicDescription":"这个选项将通过助记词恢复密钥相关的数据。 如果你的钱包余额显示不正确，请点击扫描钱包的按钮。",
     "download":"下载备份",
     "selectFile":"选择备份文件",
-    "restore":"恢复"
+    "restore":"恢复",
+    "showMnemonic": "显示助记词"
   },
   "peers":{
     "formTitle": ["远程地址", "高度", "Ping", "时长", "总字节"],

@@ -7,11 +7,10 @@ const type = 'asset'
 
 const mapStateToProps = (state, props) => {
   return {
-    skipCreate: true,
     ...BaseList.mapStateToProps(type, ListItem, {
       wrapperComponent: TableList,
       wrapperProps: {
-        titles: props.t('asset.formTitle', { returnObjects: true })
+        titles: props.t('asset.formTitle', { returnObjects: true }),
       }
     })(state)
   }

@@ -15,7 +15,8 @@ class KeyConfiguration extends React.Component {
       quorum,
       quorumHint,
       xpubs,
-      t
+      t,
+      autoGenerate
     } = this.props
 
     // Override onChange here rather than in a redux-form normalizer because
@@ -78,6 +79,7 @@ class KeyConfiguration extends React.Component {
             index={index}
             typeProps={xpub.type}
             valueProps={xpub.value}
+            autoGenerate={autoGenerate}
           />)}
       </div>
     )

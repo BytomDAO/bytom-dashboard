@@ -43,6 +43,7 @@ class Form extends React.Component {
 
         <FormSection title={ t('form.keyAndSign')}>
           <KeyConfiguration
+            autoGenerate
             xpubs={xpubs}
             quorum={quorum}
             quorumHint={t('account.new.quorumHint')}

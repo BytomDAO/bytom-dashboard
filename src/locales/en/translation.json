@@ -424,7 +424,8 @@
     "restoreMnemonicDescription":"This option will restore the key related data by mnemonic. You might need to rescan your wallet, if you balance is not up to date.",
     "download":"Download Backup",
     "selectFile":"Select Restore File",
-    "restore":"Restore"
+    "restore":"Restore",
+    "showMnemonic": "Show Mnemonic"
   },
   "peers":{
     "formTitle": ["Remote Address", "Height", "Ping", "Duration", "Total Byte"],

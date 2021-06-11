@@ -1,6 +1,7 @@
 import { chainClient } from 'utility/environment'
 import {push} from 'react-router-redux'
 import uuid from 'uuid'
+import * as bytom from 'utility/bytom'
 
 const registerKey = (data) => {
   return (dispatch) => {
@@ -59,6 +60,7 @@ const restoreKeystore = (data, success) => {
 
       fileReader.onload = function(e) {
         const result = JSON.parse(e.target.result)
+
         return chainClient().backUp.restore(result)
           .then(resp => {
             if (resp.status === 'fail') {
@@ -86,12 +88,14 @@ const restoreMnemonic = (data, success) => {
       'password': data.password,
       'mnemonic': data.mnemonic
     }
+    let xpub
 
     return chainClient().mockHsm.keys.create(keyData)
       .then((resp) => {
         if (resp.status === 'fail') {
           throw resp
         }else{
+          xpub = resp.data.xpub
           return chainClient().backUp.recovery({
             xpubs: [resp.data.xpub]
           })
@@ -100,7 +104,16 @@ const restoreMnemonic = (data, success) => {
                 throw resp
               }
 
-              dispatch(success)
+              return chainClient()
+                .backUp.backup()
+                .then((res) => {
+                  if (res.status === 'fail') throw res
+                  const keystore = res.data.key_images.xkeys.find((item) => item.xpub === xpub)
+                  if (!keystore) throw { _error: 'Unknown error' }
+                  bytom.saveMnemonic(data.mnemonic, xpub, data.password, keystore)
+
+                  dispatch(success)
+                })
             })
             .catch((err) => {
               throw err

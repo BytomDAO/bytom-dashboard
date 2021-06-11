@@ -1,13 +1,14 @@
 import { chainClient } from 'utility/environment'
 
 let actions = {
-  backup:()=>{
+  backup: (currentAccount)=>{
     return function(dispatch) {
       return chainClient().backUp.backup()
         .then(resp => {
           if (resp.status === 'fail') {
             throw resp
           }
+
           const date = new Date()
           const dateStr = date.toLocaleDateString().split(' ')[0]
           const timestamp = date.getTime()

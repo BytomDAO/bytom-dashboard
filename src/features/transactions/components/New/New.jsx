@@ -9,6 +9,7 @@ import Tutorial from 'features/tutorial/components/Tutorial'
 import NormalTxForm from './NormalTransactionForm'
 import CrossChain from './CrossChain/CrossChainTransaction'
 import AdvancedTxForm from './AdvancedTransactionForm'
+import IssueAssets from './IssueAssets'
 import Vote from './Vote'
 import { withRouter } from 'react-router'
 import {getValues} from 'redux-form'
@@ -92,6 +93,8 @@ class Form extends React.Component {
         }
       }
       return true
+    }else if(this.props.issueAssetSelected){
+      return true
     }
   }
 
@@ -135,6 +138,11 @@ class Form extends React.Component {
                   onClick={(e) => this.showForm(e, 'crossChain')}>
                   {t('transaction.new.crossChain')}
                   </button>
+                <button
+                  className={`btn btn-default ${this.props.issueAssetSelected && 'active'}`}
+                  onClick={(e) => this.showForm(e, 'issueAsset')}>
+                  {t('transaction.issue.issueAsset')}
+                  </button>
               </div>
             </div>
 
@@ -162,6 +170,12 @@ class Form extends React.Component {
 
               {this.props.crossChainSelected &&
               <CrossChain
+                handleKeyDown={this.handleKeyDown}
+                {...this.props}
+              />}
+
+              {this.props.issueAssetSelected &&
+              <IssueAssets
                 handleKeyDown={this.handleKeyDown}
                 {...this.props}
               />}
@@ -205,6 +219,7 @@ const mapStateToProps = (state, ownProps) => {
     advancedSelected : ownProps.location.query.type == 'advanced',
     voteSelected : ownProps.location.query.type == 'vote',
     crossChainSelected : ownProps.location.query.type == 'crossChain',
+    issueAssetSelected : ownProps.location.query.type == 'issueAsset',
   }
 }
 
