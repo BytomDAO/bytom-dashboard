@@ -12,7 +12,11 @@ var path = require('path');
 let publicPath = '/';
 let outPath = 'public';
 if (process.env.NODE_ENV === 'production') {
-  publicPath = '/dashboard/';
+  if (process.env.TARGET === 'electron') {
+    publicPath = '';
+  } else {
+    publicPath = '/dashboard/';
+  }
 } else {
   outPath = 'node_modules/dashboard-dlls';
 }
@@ -117,6 +121,7 @@ config.plugins.push(
     'process.env.PROXY_API_HOST': JSON.stringify(process.env.PROXY_API_HOST),
     'process.env.TESTNET_INFO_URL': JSON.stringify(process.env.TESTNET_INFO_URL),
     'process.env.TESTNET_GENERATOR_URL': JSON.stringify(process.env.TESTNET_GENERATOR_URL),
+    'process.env.TARGET': JSON.stringify(process.env.TARGET),
   }),
 );
 

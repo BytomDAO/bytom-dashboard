@@ -6,6 +6,7 @@
     "build:dll": "node ./bin/dependencies.js",
     "postinstall": "npm run build:dll",
     "build": "NODE_ENV=production webpack --config webpack/webpack.app.js",
+    "build:electron": "NODE_ENV=production TARGET=electron webpack --config webpack/webpack.app.js",
     "lint": "eslint \"src/**\"",
     "start": "hjs-dev-server webpack/webpack.app.js --hot --host 0.0.0.0",
     "generate-component": "babel-node bin/generate.js component",
