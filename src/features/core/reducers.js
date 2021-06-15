@@ -15,7 +15,7 @@ const coreConfigReducer = (key, state, defaultState, action) => {
 
 const buildConfigReducer = (key, state, defaultState, action) => {
   // if (action.type == 'UPDATE_CORE_INFO') {
-	// return action.param.buildConfig[key] || defaultState
+  // return action.param.buildConfig[key] || defaultState
   // }
 
   return state || defaultState
@@ -28,8 +28,20 @@ const configKnown = (state = false, action) => {
   return state
 }
 
-export const configured = (state, action) =>
-  coreConfigReducer('isConfigured', state, false, action)
+let configuredState = false
+if (window.remote) {
+  configuredState = window.remote.getGlobal('fileExist')
+}
+export const configured =
+  process.env.TARGET === 'electron'
+    ? (state = configuredState, action) => {
+        if (action.type == 'SET_CONFIGURED') {
+          return true
+        }
+        return state
+      }
+    : (state, action) => coreConfigReducer('isConfigured', state, false, action)
+
 export const configuredAt = (state, action) => {
   let value = coreConfigReducer('configuredAt', state, '', action)
   if (action.type == 'UPDATE_CORE_INFO' && value != '') {
@@ -46,12 +58,9 @@ export const configuredAt = (state, action) => {
 //   buildConfigReducer('isReset', state, false, action)
 // export const httpOk = (state, action) =>
 //   buildConfigReducer('isHttpOk', state, false, action)
-export const blockHeight = (state, action) =>
-  coreConfigReducer('highestBlock', state, 0, action)
-export const currentBlockHeight = (state, action) =>
-  coreConfigReducer('currentBlock', state, 0, action)
-export const peerCount = (state, action) =>
-  coreConfigReducer('peerCount', state, 0, action)
+export const blockHeight = (state, action) => coreConfigReducer('highestBlock', state, 0, action)
+export const currentBlockHeight = (state, action) => coreConfigReducer('currentBlock', state, 0, action)
+export const peerCount = (state, action) => coreConfigReducer('peerCount', state, 0, action)
 export const generatorBlockHeight = (state, action) => {
   if (action.type == 'UPDATE_CORE_INFO') {
     if (action.param.generatorBlockHeight == 0) return '???'
@@ -59,16 +68,11 @@ export const generatorBlockHeight = (state, action) => {
 
   return coreConfigReducer('generatorBlockHeight', state, 0, action)
 }
-export const signer = (state, action) =>
-  coreConfigReducer('isSigner', state, false, action)
-export const generator = (state, action) =>
-  coreConfigReducer('isGenerator', state, false, action)
-export const generatorUrl = (state, action) =>
-  coreConfigReducer('generatorUrl', state, false, action)
-export const generatorAccessToken = (state, action) =>
-  coreConfigReducer('generatorAccessToken', state, false, action)
-export const blockchainId = (state, action) =>
-  coreConfigReducer('blockchainId', state, 0, action)
+export const signer = (state, action) => coreConfigReducer('isSigner', state, false, action)
+export const generator = (state, action) => coreConfigReducer('isGenerator', state, false, action)
+export const generatorUrl = (state, action) => coreConfigReducer('generatorUrl', state, false, action)
+export const generatorAccessToken = (state, action) => coreConfigReducer('generatorAccessToken', state, false, action)
+export const blockchainId = (state, action) => coreConfigReducer('blockchainId', state, 0, action)
 // export const crosscoreRpcVersion = (state, action) =>
 //   coreConfigReducer('crosscoreRpcVersion', state, 0, action)
 //
@@ -178,30 +182,28 @@ export const requireClientToken = (state = false, action) => {
 }
 
 export const clientToken = (state = '', action) => {
-  if      (action.type == 'SET_CLIENT_TOKEN') return action.token
-  else if (action.type == 'ERROR' &&
-           action.payload.status == 401)      return ''
+  if (action.type == 'SET_CLIENT_TOKEN') return action.token
+  else if (action.type == 'ERROR' && action.payload.status == 401) return ''
 
   return state
 }
 
 export const validToken = (state = false, action) => {
-  if      (action.type == 'SET_CLIENT_TOKEN') return false
-  else if (action.type == 'USER_LOG_IN')      return true
-  else if (action.type == 'ERROR' &&
-           action.payload.status == 401)      return false
+  if (action.type == 'SET_CLIENT_TOKEN') return false
+  else if (action.type == 'USER_LOG_IN') return true
+  else if (action.type == 'ERROR' && action.payload.status == 401) return false
 
   return state
 }
 
 export const connected = (state = true, action) => {
-  if      (action.type == 'UPDATE_CORE_INFO') return true
-  else if (action.type == 'CORE_DISCONNECT')  return false
+  if (action.type == 'UPDATE_CORE_INFO') return true
+  else if (action.type == 'CORE_DISCONNECT') return false
 
   return state
 }
 
-export const btmAmountUnit = (state = 'BTM' , action) => {
+export const btmAmountUnit = (state = 'BTM', action) => {
   if (action.type == 'UPDATE_BTM_AMOUNT_UNIT') {
     return action.param
   }
@@ -225,7 +227,7 @@ const coreData = (state = null, action) => {
 const accountInit = (state = false, action) => {
   if (action.type == 'CREATE_REGISTER_ACCOUNT') {
     return true
-  } else if(action.type == 'UPDATE_ACCOUNT_INIT_STATUS'){
+  } else if (action.type == 'UPDATE_ACCOUNT_INIT_STATUS') {
     return action.param
   }
   return state
@@ -258,7 +260,6 @@ const update = (state = false, action) => {
   }
   return state
 }
-
 
 export default combineReducers({
   accountInit,
@@ -294,5 +295,5 @@ export default combineReducers({
   update,
   validToken,
   version,
-  btmAmountUnit
+  btmAmountUnit,
 })

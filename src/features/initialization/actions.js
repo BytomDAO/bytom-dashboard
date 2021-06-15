@@ -1,48 +1,64 @@
 import { chainClient } from 'utility/environment'
-import {push} from 'react-router-redux'
+import { push } from 'react-router-redux'
 import uuid from 'uuid'
 import * as bytom from 'utility/bytom'
 
 const registerKey = (data) => {
   return (dispatch) => {
-    if (typeof data.accountAlias == 'string')  data.accountAlias = data.accountAlias.trim()
+    if (typeof data.accountAlias == 'string') data.accountAlias = data.accountAlias.trim()
 
     const keyData = {
-      'alias': `${data.accountAlias}Key-${uuid.v4()}`,
-      'password': data.password
+      alias: `${data.accountAlias}Key-${uuid.v4()}`,
+      password: data.password,
     }
 
-    return chainClient().mockHsm.keys.create(keyData)
-      .then((resp) => {
-        if (resp.status === 'fail') {
-          throw resp
+    return chainClient()
+      .mockHsm.keys.create(keyData)
+      .then((keyRes) => {
+        if (keyRes.status === 'fail') {
+          throw keyRes
         }
 
         const accountData = {
-          'root_xpubs':[resp.data.xpub],
-          'quorum':1,
-          'alias': data.accountAlias}
+          root_xpubs: [keyRes.data.xpub],
+          quorum: 1,
+          alias: data.accountAlias,
+        }
 
-        dispatch({type: 'INIT_ACCOUNT', data: resp.data.mnemonic})
+        dispatch({ type: 'INIT_ACCOUNT', data: keyRes.data.mnemonic })
 
-        return chainClient().accounts.create(accountData)
-          .then((resp) => {
-            if (resp.status === 'fail') {
-              throw resp
-            }
-
-            if(resp.status === 'success') {
-              dispatch({type: 'SET_CURRENT_ACCOUNT', account: resp.data.alias})
-              return chainClient().accounts.createAddress({'account_alias':resp.data.alias})
-                .then(() =>{
-                  dispatch(initSucceeded() )
-                }).catch((err) => {
-                  throw ( err)
-                })
+        return chainClient()
+          .backUp.backup()
+          .then((backupRes) => {
+            if (backupRes.status === 'fail') throw backupRes
+            const keystore = backupRes.data.key_images.xkeys.find((item) => item.xpub === keyRes.data.xpub)
+            if (keystore) {
+              bytom.saveMnemonic(keyRes.data.mnemonic, keyRes.data.xpub, keyData.password, keystore)
             }
           })
-          .catch((err) => {
-            throw err
+          .finally(() => {
+            return chainClient()
+              .accounts.create(accountData)
+              .then((resp) => {
+                if (resp.status === 'fail') {
+                  throw resp
+                }
+
+                if (resp.status === 'success') {
+                  dispatch({ type: 'SET_CURRENT_ACCOUNT', account: resp.data.alias })
+                  return chainClient()
+                    .accounts.createAddress({ account_alias: resp.data.alias })
+                    .then(() => {
+                      dispatch(initSucceeded())
+                    })
+                    .catch((err) => {
+                      throw err
+                    })
+                }
+              })
+              .catch((err) => {
+                throw err
+              })
           })
       })
       .catch((err) => {
@@ -55,14 +71,15 @@ const restoreKeystore = (data, success) => {
   return (dispatch) => {
     const file = data.file
 
-    return new Promise(function(resolve, reject){
+    return new Promise(function (resolve, reject) {
       const fileReader = new FileReader()
 
-      fileReader.onload = function(e) {
+      fileReader.onload = function (e) {
         const result = JSON.parse(e.target.result)
 
-        return chainClient().backUp.restore(result)
-          .then(resp => {
+        return chainClient()
+          .backUp.restore(result)
+          .then((resp) => {
             if (resp.status === 'fail') {
               throw resp
             }
@@ -70,35 +87,41 @@ const restoreKeystore = (data, success) => {
             dispatch(success)
           })
           .catch((err) => {
-            reject(err) })
+            reject(err)
+          })
       }
 
       fileReader.readAsText(file, 'UTF-8')
-      fileReader.onerror = function(error) { reject(error) }
+      fileReader.onerror = function (error) {
+        reject(error)
+      }
     })
   }
 }
 
 const restoreMnemonic = (data, success) => {
   return (dispatch) => {
+    if (typeof data.keyAlias == 'string')  data.keyAlias = data.keyAlias.trim()
     if (typeof data.mnemonic == 'string') data.mnemonic = data.mnemonic.trim()
 
     const keyData = {
-      'alias': `key-${uuid.v4()}`,
-      'password': data.password,
-      'mnemonic': data.mnemonic
+      alias: data.keyAlias || `key-${uuid.v4()}`,
+      password: data.password,
+      mnemonic: data.mnemonic,
     }
     let xpub
 
-    return chainClient().mockHsm.keys.create(keyData)
+    return chainClient()
+      .mockHsm.keys.create(keyData)
       .then((resp) => {
         if (resp.status === 'fail') {
           throw resp
-        }else{
+        } else {
           xpub = resp.data.xpub
-          return chainClient().backUp.recovery({
-            xpubs: [resp.data.xpub]
-          })
+          return chainClient()
+            .backUp.recovery({
+              xpubs: [resp.data.xpub],
+            })
             .then((resp) => {
               if (resp.status === 'fail') {
                 throw resp
@@ -129,14 +152,14 @@ const restoreMnemonic = (data, success) => {
 }
 
 const initSucceeded = () => (dispatch) => {
-  dispatch({type: 'CREATE_REGISTER_ACCOUNT'})
+  dispatch({ type: 'CREATE_REGISTER_ACCOUNT' })
 }
 
 let actions = {
   initSucceeded,
   registerKey,
   restoreKeystore,
-  restoreMnemonic
+  restoreMnemonic,
 }
 
 export default actions

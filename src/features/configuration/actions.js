@@ -17,6 +17,18 @@ const retry = (dispatch, promise, count = 10) => {
 
 let actions = {
   submitConfiguration: (data) => {
+    // copy from bytom-electron
+    if (process.env.TARGET === 'electron') {
+      if (data.type == 'testnet'){
+        window.ipcRenderer.send('bytomdInitNetwork','testnet')
+      }else if(data.type == 'mainnet'){
+        window.ipcRenderer.send('bytomdInitNetwork','mainnet')
+      }else if(data.type == 'solonet'){
+        window.ipcRenderer.send('bytomdInitNetwork','solonet')
+      }
+      return (dispatch) => (dispatch)
+    }
+
     const configureWithRetry = (dispatch, config) => {
       return chainClient().config.configure(config)
         .then(() => retry(dispatch, coreActions.fetchCoreInfo({throw: true})))

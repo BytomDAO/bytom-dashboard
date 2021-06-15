@@ -5,15 +5,18 @@ import { store } from 'app'
 
 import { useRouterHistory } from 'react-router'
 import { createHistory } from 'history'
-
 let apiHost, basename
-if (process.env.NODE_ENV === 'production') {
+if (process.env.TARGET === 'electron') {
+  apiHost = 'http://localhost:9888'
+  basename = ''
+} else if (process.env.NODE_ENV === 'production') {
   apiHost = window.location.origin
   basename = '/dashboard'
 } else {
   apiHost = process.env.API_URL || 'http://localhost:9889'
   basename = ''
 }
+
 
 export const chainClient = () => new chainSdk.Client({
   url: apiHost,

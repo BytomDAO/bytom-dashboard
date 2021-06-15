@@ -414,6 +414,18 @@
     "createDescription":"This option will create a default account, key password.  Warning: it's important to remember your password.",
     "welcome":"Welcome to Vapor __network__"
   },
+  "welcome":{
+    "connect":"Connecting to Bytom Core...",
+    "join":"Joining network",
+    "joining":"Joining network...",
+    "title":"Configure Bytom Core",
+    "mainnetTitle":"Join the Bytom Mainnet",
+    "mainnetMsg":"For common users to enter. Mainnet is the production network, that carry real Bytom transactions.",
+    "testnetTitle":"Join the Bytom Testnet",
+    "testnetMsg":"For developers or bytom testers to enter. Testnet is an alternative Bytom blockchain, and to be used for testing.",
+    "solonetTitle":"Create the Bytom Solonet",
+    "solonetMsg":"For users/developers to run and test wallet's new function. Solonet is a private sandbox blockchain network."
+  },
   "backup":{
     "title":"Backup and Restore",
     "backup":"Back Up",

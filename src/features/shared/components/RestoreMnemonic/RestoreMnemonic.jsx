@@ -23,7 +23,7 @@ class RestoreMnemonic extends React.Component {
     const t = this.props.t
 
     const {
-      fields: {mnemonic, password, confirmPassword},
+      fields: {mnemonic, keyAlias, password, confirmPassword},
       error,
       handleSubmit,
       submitting
@@ -40,6 +40,10 @@ class RestoreMnemonic extends React.Component {
                 title={t('init.mnemonic')}
                 fieldProps={mnemonic}
               />
+              <TextField
+                title={t('form.keyAlias')}
+                placeholder={t('init.keyPlaceholder')}
+                fieldProps={keyAlias}/>
               <PasswordField
                 title={t('init.keyPassword')}
                 placeholder={t('init.passwordPlaceholder')}
@@ -72,6 +76,9 @@ const validate = (values, props) => {
   if (!values.mnemonic) {
     errors.mnemonic = t('init.mnemonicRequire')
   }
+  if (!values.keyAlias) {
+    errors.keyAlias = t('key.aliasRequired')
+  }
   if (!values.password) {
     errors.password = t('key.passwordRequired')
   } else if (values.password.length < 5) {
@@ -94,6 +101,7 @@ export default withNamespaces('translations')( connect(
   form: 'restoreMnemonic',
   fields: [
     'mnemonic',
+    'keyAlias',
     'password',
     'confirmPassword',
   ],
