@@ -31,7 +31,7 @@ class Main extends React.Component {
   }
 
   render() {
-    let logo = require('images/Logo-Vapor.svg')
+    let logo = require('images/Logo-Bytom.svg')
 
     const { t, i18n , version } = this.props
 

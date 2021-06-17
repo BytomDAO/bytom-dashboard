@@ -6,7 +6,7 @@ class Loading extends React.Component {
   render() {
     return (
       <div className={componentClassNames(this, styles.main)}>
-        <img src={require('images/logo-vapor-icon.svg')} className={styles.logo} />
+        <img src={require('images/Logo-Bytom.svg')} className={styles.logo} />
         {this.props.children}
       </div>
     )
