@@ -49,7 +49,8 @@ export default function(type, options = {}) {
               .then(() => {
                 const alias = (key.value || '').trim()
                   ? key.value.trim()
-                  : (data.alias || 'generated') + '-' + uuid.v4()
+                  : (data.alias || 'generated')
+                  //  + '-' + uuid.v4()
 
                 return chainClient().mockHsm.keys.create({alias})
               }).then(newKey => {

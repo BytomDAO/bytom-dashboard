@@ -40,7 +40,8 @@ const createAccount = (data) => {
     if (typeof data.alias == 'string') data.alias = data.alias.trim()
 
     const keyData = {
-      alias: `${data.alias}Key-${uuid.v4()}`,
+      // alias: `${data.alias}Key-${uuid.v4()}`,
+      alias: `${data.alias}`,
       password: data.password,
     }
 

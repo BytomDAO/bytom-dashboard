@@ -8,7 +8,8 @@ const registerKey = (data) => {
     if (typeof data.accountAlias == 'string') data.accountAlias = data.accountAlias.trim()
 
     const keyData = {
-      alias: `${data.accountAlias}Key-${uuid.v4()}`,
+      // alias: `${data.accountAlias}Key-${uuid.v4()}`,
+      alias: `${data.accountAlias}`,
       password: data.password,
     }
 
@@ -46,6 +47,8 @@ const registerKey = (data) => {
 
                 if (resp.status === 'success') {
                   dispatch({ type: 'SET_CURRENT_ACCOUNT', account: resp.data.alias })
+                  // dispatch({ type: 'SET_CURRENT_XPUB', xpubs: accountData.root_xpubs })
+
                   return chainClient()
                     .accounts.createAddress({ account_alias: resp.data.alias })
                     .then(() => {

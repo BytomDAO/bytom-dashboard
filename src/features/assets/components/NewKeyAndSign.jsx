@@ -59,6 +59,7 @@ const validate = (values, props) => {
   const t = props.t
 
   values.xpubs.forEach((xpub, index) => {
+    if (xpub.type === 'currentAccount') return
     if (!values.xpubs[index].value) {
       errors.xpubs[index] = {...errors.xpubs[index], value: t('asset.keysError')}
     }

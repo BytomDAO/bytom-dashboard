@@ -194,7 +194,7 @@
   },
   "console":{
     "title":"Console",
-    "message":"Welcome to the Bytom Core API console.<1/> Type <2>help</2> for an overview of available commands",
+    "message":"Welcome to the Bytom Core API console.<1/> Type \"help\" for an overview of available commands",
     "warning":"WARNING",
     "warningMessage":"Scammers have been active, telling users to type commands here, stealing their wallet contents. Do not use this console without fully understanding the ramification of a command.",
     "placeholder":"Enter \"help\" for an overview of available commands"

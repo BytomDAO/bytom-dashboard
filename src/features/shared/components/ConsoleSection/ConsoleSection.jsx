@@ -97,7 +97,8 @@ class ConsoleSection extends React.Component {
           ref={(el) => { this.messagesContainer = el }}
         >
           <Trans i18nKey='console.message' parent='p'>
-            Welcome to the Bytom Core API console.<br/> Type <code>help</code> for an overview of available commands
+            {t('console.message')}
+            {/* Welcome to the Bytom Core API console.<br/> Type <code>help</code> for an overview of available commands */}
           </Trans>
           <p className='text-danger'>
             <strong>
