@@ -4,26 +4,27 @@
   margin-top: $gutter-size;
 }
 
-.main {
-  a {
-    display: block;
-    padding: 5px 0;
-    color: $highlight-inverse-color;
-    font-size: $font-size-nav;
-  }
+// .main {
+//   a {
+//     display: block;
+//     padding: 5px 0;
+//     color: $highlight-inverse-color;
+//     font-size: $font-size-nav;
+//   }
 
-  .active,
-  .active:hover,
-  .active:focus {
-    color: $highlight-default;
-  }
+//   .active,
+//   .active:hover,
+//   .active:focus {
+//     color: #444B57;
+//     background: #fff;
+//   }
 
-  a:hover,
-  a:focus {
-    text-decoration: none;
-    color: lighten($highlight-inverse-color, 15%);
-  }
-}
+//   a:hover,
+//   a:focus {
+//     text-decoration: none;
+//     color: lighten($highlight-inverse-color, 15%);
+//   }
+// }
 
 .langBtn {
   width: 80px !important;
@@ -38,38 +39,30 @@
 }
 
 .navigation {
-  padding: 0;
   list-style-type: none;
-  margin-top: $gutter-size/2;
-  margin-bottom: 0;
-  padding: 0 $gutter-size;
+  padding: 0 24px;
+
+  a {
+    display: block;
+    margin-bottom: 10px;
+    padding: 0 18px;
+    height: 48px;
+    line-height: 48px;
+    color: #78808D;
+    font-size: 18px;
+    border-radius: 8px;
+
+    &.active {
+      background: #fff;
+      font-weight: 500;
+    }
+  }
 }
 
-.navigationTitle {
-  color: $highlight-inverse-color;
-  //font-size: $font-size-caps;
-  text-transform: uppercase;
-  padding: 3px 0;
-  font-size: $font-size-chrome;
-
-  transform:scale(0.916);
-  transform-origin-x: 0%;
-
-  -ms-transform:scale(0.916);
-  -ms-transform-origin-x: 0%;
-
-  -moz-transform:scale(0.916);
-  -moz-transform-origin-x: 0%;
-
-  -o-transform:scale(0.916);
-  -o-transform-origin-x: 0%;
-
-  -webkit-transform: scale(0.916);
-  -webkit-transform-origin-x: 0%;
-}
 
 .activeIcon {
   display: none;
+  color: #78808D;
 }
 
 .active .activeIcon {

@@ -1,6 +1,7 @@
 .main {
-  padding: $gutter-size;
-  margin-top: $gutter-size;
+  padding: 0 26px; 
+  margin-top: 36px;
+  color: #78808D;
 }
 
 .testnetError {
@@ -19,4 +20,19 @@
   margin-top: 6px;
   height: 5px;
   border-radius: 0;
+}
+
+.status {
+  font-size: 12px;
+}
+
+.peerCount {
+  margin-top: 14px;
+  margin-bottom: 16px;
+
+  a {
+    padding: 0;
+    line-height: 20px;
+    height: unset;
+  }
 }

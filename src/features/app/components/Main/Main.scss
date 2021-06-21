@@ -2,12 +2,14 @@
   display: flex;
   flex-direction: column;
   flex: 1;
+  background: rgba(248, 248, 248, 0.95);
 }
 
 .sidebar {
   width: $sidebar-width;
   position: fixed;
   z-index: 10;
+  color: #78808D;
 }
 
 .content {
@@ -17,15 +19,11 @@
 }
 
 .sidebarContent {
-  background-image: url('images/sidebarBackground.svg');
-  background-color: $background-inverse-color;
-  background-repeat: no-repeat;
-  background-position: 0px 60px;
-  background-size: cover;
   position: fixed;
   width: $sidebar-width;
   height: 100%;
   padding-bottom: 30px;
+  background: rgba(248, 248, 248, 0.95);
 
   overflow-y: auto;
   -ms-overflow-style: none; // MS Edge fix
@@ -34,25 +32,31 @@
 }
 
 .version {
-  position: fixed;
   width: $sidebar-width;
-  bottom: 0;
   border-top: solid 1px $border-inverse-color;
-
-  padding: $gutter-size/2 $gutter-size;
-  background: #FCFDFD;
+  padding: 0 26px 0;
   font-size: $font-size-chrome;
 }
 
-.logo {
-  border-bottom: 1px solid $border-inverse-color;
-  height: $title-height;
-  padding-left: $gutter-size;
+.header {
   display: flex;
   align-items: center;
+  margin: 30px 24px;
 
   img {
-    height: 28px;
+    height: 64px;
+    width: 64px;
+  }
+}
+.headerInfo {
+  margin-left: 12px;
+  color: #78808D;
+  font-size: 16px;
+
+  >div:last-child {
+    color: #444B57;
+    font-size: 18px;
+    font-weight: bold;
   }
 }
 
@@ -70,21 +74,32 @@
   }
 }
 
-.languagesContainer {
-  position: absolute;
-  right: 38px;
-  top: 0px;
-  height: 60px;
+.action {
+  margin-top: 16px;
+  padding: 0 26px;
 }
 
-.languages {
-  top: 50%;
-  transform: translateY(-50%);
-  border: none;
-  background-color: transparentize($highlight-inverse-color, 0.9);
-  color: $highlight-inverse-color;
-  height: 27px;
-  line-height: 27px !important;
+.actionButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 24px;
+  width: 62px;
+  height: 48px;
+  border: 1px solid #E1E3E6;
+  border-radius: 8px !important;
+  box-shadow: 0px 4px 2px -2px rgba(27, 46, 94, 0.02);
+
+  img {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.actionMenu {
+  a {
+    color: #78808D !important;
+  }
 }
 
 .connectionIssue {
@@ -95,6 +110,6 @@
   border-bottom: 1px solid $highlight-danger;
 }
 
-.languagesMenu {
-  right: -26px;
-}
+// .languagesMenu {
+//   right: -26px;
+// }

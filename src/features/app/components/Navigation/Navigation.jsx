@@ -1,12 +1,12 @@
 import React from 'react'
-import {connect} from 'react-redux'
-import {Link} from 'react-router'
+import { connect } from 'react-redux'
+import { Link } from 'react-router'
 import styles from './Navigation.scss'
-import {navIcon} from '../../utils'
+import { navIcon } from '../../utils'
 import Sync from '../Sync/Sync'
-import {docsRoot, releaseUrl} from '../../../../utility/environment'
+import { docsRoot, releaseUrl } from '../../../../utility/environment'
 import { capitalize } from 'utility/string'
-import {withNamespaces} from 'react-i18next'
+import { withNamespaces } from 'react-i18next'
 import actions from 'actions'
 
 class Navigation extends React.Component {
@@ -14,7 +14,7 @@ class Navigation extends React.Component {
     super(props)
     this.openTutorial = this.openTutorial.bind(this)
     this.state = {
-      showFed: false
+      showFed: false,
     }
   }
 
@@ -23,12 +23,13 @@ class Navigation extends React.Component {
     this.props.openTutorial()
   }
   componentDidMount() {
-    this.props.fetchFederationItem()
-      .then(resp =>{
-        this.setState({showFed: true})
+    this.props
+      .fetchFederationItem()
+      .then((resp) => {
+        this.setState({ showFed: true })
       })
-      .catch(e =>{
-        this.setState({showFed: false})
+      .catch((e) => {
+        this.setState({ showFed: false })
       })
   }
 
@@ -36,39 +37,105 @@ class Navigation extends React.Component {
     const t = this.props.t
     return (
       <div className={styles.main}>
-        {this.props.update && <div className={`${styles.updateWarning} ${styles.smallFont}`}>
-          <a href={releaseUrl} target='_blank'>
-            <img src={require('images/warning.svg')} className={styles.warningIcon} />
-            {this.props.newVersionCode}{t('crumbName.update')}
-          </a>
-        </div>}
+        {this.props.update && (
+          <div className={`${styles.updateWarning} ${styles.smallFont}`}>
+            <a href={releaseUrl} target="_blank">
+              <img src={require('images/warning.svg')} className={styles.warningIcon} />
+              {this.props.newVersionCode}
+              {t('crumbName.update')}
+            </a>
+          </div>
+        )}
+        <ul className={styles.navigation}>
+          <li>
+            <Link to="/transactions" activeClassName={styles.active}>
+              {navIcon('transaction', styles)}
+              {capitalize(t('crumbName.transaction'))}
+            </Link>
+          </li>
+          <li>
+            <Link to="/assets" activeClassName={styles.active}>
+              {navIcon('asset', styles)}
+              {capitalize(t('crumbName.asset'))}
+            </Link>
+          </li>
+          <li>
+            <Link to="/balances" activeClassName={styles.active}>
+              {navIcon('balance', styles)}
+              {capitalize(t('crumbName.balance'))}
+            </Link>
+          </li>
+          <li>
+            <Link to="/accounts" activeClassName={styles.active}>
+              {navIcon('account', styles)}
+              {capitalize(t('crumbName.accountManagement'))}
+            </Link>
+          </li>
+          {this.props.showNavAdvance && (
+            <div>
+              <li>
+                <Link to="/unspents" activeClassName={styles.active}>
+                  {navIcon('unspent', styles)}
+                  {capitalize(t('crumbName.unspent'))}
+                </Link>
+              </li>
+              <li>
+                <Link to="/keys" activeClassName={styles.active}>
+                  {navIcon('mockhsm', styles)}
+                  {capitalize(t('crumbName.key'))}
+                </Link>
+              </li>
+            </div>
+          )}
+          <li>
+            <Link to="/keys" activeClassName={styles.active}>
+              {navIcon('mockhsm', styles)}
+              {capitalize(t('crumbName.key'))}
+            </Link>
+          </li>
+        </ul>
+      </div>
+    )
+    return (
+      <div className={styles.main}>
+        {this.props.update && (
+          <div className={`${styles.updateWarning} ${styles.smallFont}`}>
+            <a href={releaseUrl} target="_blank">
+              <img src={require('images/warning.svg')} className={styles.warningIcon} />
+              {this.props.newVersionCode}
+              {t('crumbName.update')}
+            </a>
+          </div>
+        )}
         <ul className={styles.navigation}>
           <li className={styles.navigationTitle}>{t('crumbName.coreData')}</li>
           <li>
-            <Link to='/transactions' activeClassName={styles.active}>
+            <Link to="/transactions" activeClassName={styles.active}>
               {navIcon('transaction', styles)}
               {capitalize(t('crumbName.transaction'))}
             </Link>
           </li>
 
           <li>
-            <Link to='/assets' activeClassName={styles.active}>
+            <Link to="/assets" activeClassName={styles.active}>
               {navIcon('asset', styles)}
-              {capitalize((t('crumbName.asset')))}
+              {capitalize(t('crumbName.asset'))}
             </Link>
           </li>
           <li>
-            <Link to='/balances' activeClassName={styles.active}>
+            <Link to="/balances" activeClassName={styles.active}>
               {navIcon('balance', styles)}
-              {capitalize((t('crumbName.balance')))}
+              {capitalize(t('crumbName.balance'))}
             </Link>
           </li>
-          { this.state.showFed && <li>
-            <Link to='/federations' activeClassName={styles.active}>
-              {navIcon('federation', styles)}
-              {capitalize((t('crumbName.federation')))}
-            </Link>
-          </li>}
+          {this.state.showFed && (
+            <li>
+              <Link to="/federations" activeClassName={styles.active}>
+                {navIcon('federation', styles)}
+                {capitalize(t('crumbName.federation'))}
+              </Link>
+            </li>
+          )}
         </ul>
 
         {/* <ul className={styles.navigation}>
@@ -81,35 +148,39 @@ class Navigation extends React.Component {
           </li>
         </ul> */}
         <ul className={styles.navigation}>
-          <li className={styles.navigationTitle}>{t('crumbName.account')}( {this.props.currentAccount} )</li>
+          <li className={styles.navigationTitle}>
+            {t('crumbName.account')}( {this.props.currentAccount} )
+          </li>
           <li>
-            <Link to='/accounts' activeClassName={styles.active}>
+            <Link to="/accounts" activeClassName={styles.active}>
               {navIcon('account', styles)}
               {capitalize(t('crumbName.accountManagement'))}
             </Link>
           </li>
         </ul>
 
-        { this.props.showNavAdvance && <ul className={styles.navigation}>
-          <li className={styles.navigationTitle}>{ t('crumbName.advanced') }</li>
-          <li>
-            <Link to='/unspents' activeClassName={styles.active}>
-              {navIcon('unspent', styles)}
-              {capitalize((t('crumbName.unspent')))}
-            </Link>
-          </li>
-          <li>
-            <Link to='/keys' activeClassName={styles.active}>
-              {navIcon('mockhsm', styles)}
-              {capitalize((t('crumbName.key')))}
-            </Link>
-          </li>
-        </ul>}
+        {this.props.showNavAdvance && (
+          <ul className={styles.navigation}>
+            <li className={styles.navigationTitle}>{t('crumbName.advanced')}</li>
+            <li>
+              <Link to="/unspents" activeClassName={styles.active}>
+                {navIcon('unspent', styles)}
+                {capitalize(t('crumbName.unspent'))}
+              </Link>
+            </li>
+            <li>
+              <Link to="/keys" activeClassName={styles.active}>
+                {navIcon('mockhsm', styles)}
+                {capitalize(t('crumbName.key'))}
+              </Link>
+            </li>
+          </ul>
+        )}
 
         <ul className={styles.navigation}>
-          <li className={styles.navigationTitle}>{t('crumbName.help') }</li>
+          <li className={styles.navigationTitle}>{t('crumbName.help')}</li>
           <li>
-            <a href={docsRoot} target='_blank'>
+            <a href={docsRoot} target="_blank">
               {navIcon('docs', styles)}
               {t('crumbName.doc')}
             </a>
@@ -117,35 +188,33 @@ class Navigation extends React.Component {
         </ul>
 
         {/*<ul className={styles.navigation}>*/}
-          {/*<li className={styles.navigationTitle}>{ t('crumbName.developer') }</li>*/}
-          {/*<li>*/}
-            {/*<a href='/equity' target='_blank'>*/}
-              {/*{navIcon('transaction', styles)}*/}
-              {/*{ t('crumbName.equity')}*/}
-            {/*</a>*/}
-          {/*</li>*/}
+        {/*<li className={styles.navigationTitle}>{ t('crumbName.developer') }</li>*/}
+        {/*<li>*/}
+        {/*<a href='/equity' target='_blank'>*/}
+        {/*{navIcon('transaction', styles)}*/}
+        {/*{ t('crumbName.equity')}*/}
+        {/*</a>*/}
+        {/*</li>*/}
         {/*</ul>*/}
 
-
-        <Sync/>
-
+        <Sync />
       </div>
     )
   }
 }
 
 export default connect(
-  state => {
+  (state) => {
     return {
       newVersionCode: state.core.newVersionCode,
       update: state.core.update,
       coreData: state.core.coreData,
       routing: state.routing, // required for <Link>s to update active state on navigation
       showNavAdvance: state.app.navAdvancedState === 'advance',
-      currentAccount: state.account.currentAccount
+      currentAccount: state.account.currentAccount,
     }
   },
   (dispatch) => ({
     fetchFederationItem: () => dispatch(actions.federation.fetchItems()),
-  })
-)( withNamespaces('translations')(Navigation))
+  }),
+)(withNamespaces('translations')(Navigation))
