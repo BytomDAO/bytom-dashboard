@@ -228,16 +228,16 @@ class DetailSummary extends React.Component {
     })
 
 
-    return(<div className={styles.main}>
+    return(<div className={styles.main} style={{ display: items.length ? 'block' : 'none' }}>
         {items.map((item, index) =>
           <div className={styles.row} key={index}>
             <div className={`${styles.colAction} ${styles.col}`}>
               {
                 isCoinbase ?
-                  [<img src={require('images/transactions/coinbase.svg')}/>, t('transaction.type.coinbase'),
+                  [t('transaction.type.coinbase'),
                   !mature && <small className={styles.immature}>{ t('transaction.type.immature') }</small>]
                 :
-                  [<img src={require(`images/transactions/${item.type}.svg`)}/> , t(`transaction.type.${item.type}`)]
+                  [t(`transaction.type.${item.type}`)]
 
               }
             </div>

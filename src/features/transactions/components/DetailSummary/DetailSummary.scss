@@ -1,19 +1,17 @@
 .main {
   background: $background-color;
   width: 100%;
+  font-size: 16px;
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid #E1E3E6;
 
   .row {
     display: flex;
     border-bottom: 1px solid $border-light-color;
   }
   .col {
-    padding-top: 13px;
-    padding-bottom: 13px;
     padding-right: 10px;
-  }
-
-  .col:last-child {
-    padding-right: $gutter-size;
   }
 
   .row:last-child {
@@ -34,9 +32,11 @@
 
 
 .colAction {
-  padding-left: 25px ;
   text-transform: uppercase;
-  font-weight: 500;
+  margin-right: 120px;
+  width: 360px;
+  min-width: 360px;
+  
   img {
     width: 20px;
     margin-bottom: 4px;
@@ -45,7 +45,8 @@
 }
 
 .colAction, .colAmount {
-  color: $text-strong-color;
+  color: #78808D;
+  font-size: 16px;
 }
 
 .colAction{
@@ -72,15 +73,18 @@
 }
 .amount {
   background: none;
+  font-size: 16px;
 }
 
 .emphasisLabel{
-  color: $text-strong-color;
+  font-size: 16px;
+  color: #444B57;
 }
 
 .colLabel {
-  color: $text-light-color;
+  color: #78808D;
   text-align: right;
+  font-size: 16px;
 }
 
 .colUnit {
@@ -96,9 +100,16 @@
 }
 
 .immature {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
   text-transform: lowercase;
-  margin-left: 5px;
-  color: $text-danger;
+  margin-left: 12px;
+  width: 87px;
+  height: 32px;
+  background: #FEF0F0;
+  border-radius: 8px;
+  color: #F43C3C;
 }
 
 .rawId {
@@ -107,6 +118,7 @@
   text-overflow: ellipsis;
   max-width: 150px;
   vertical-align: middle;
+  font-size: 16px;
 }
 
 .recievedAmount {

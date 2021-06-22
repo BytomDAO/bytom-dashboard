@@ -1,7 +1,10 @@
 .main {
   display: flex;
-  position: relative;
-  top: $title-height;
+  position: fixed;
+  top: 96px;
+  left: 280px;
+  z-index: 1000;
+  width: calc(100vw - 280px);
 }
 
 .alert {

@@ -2,13 +2,13 @@
   background: $background-color;
   padding: $gutter-size/2 $gutter-size;
   border-bottom: 1px solid $border-color;
-  height: $title-height;
+  height: 96px;
   display: flex;
   align-items: center;
   left: $sidebar-width;
   z-index: 99;
   position:fixed;
-  right:0;
+  right:0;  
   code {
     display: inline-block;
     font-size: $font-size-code;
@@ -26,10 +26,14 @@
   }
 }
 .title {
-  color: $text-strong-color;
+  color: #444B57;
+  font-size: 32px;
+  font-weight: bold;
 }
 
 .navigation {
+  display: flex;
+  align-items: center;
   flex-grow: 1;
 }
 
@@ -67,3 +71,18 @@
   width: calc(100% - 220px);
 }
 
+.back {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 20px;
+  width: 62px;
+  height: 48px;
+  background: #F8F8F8;
+  border-radius: 99px;
+
+  img {
+    width: 16px;
+    height: 14px;
+  }
+}

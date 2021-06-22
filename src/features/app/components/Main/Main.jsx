@@ -78,7 +78,7 @@ class Main extends React.Component {
               <Dropdown id="dropdown-custom-1" bsSize="xsmall" dropup>
                 <Dropdown.Toggle noCaret className={styles.actionButton}>
                   <div>
-                    <img src={require(`images/navigation/language.png`)} />
+                    <img src={require(`images/navigation/settings.png`)} />
                   </div>
                 </Dropdown.Toggle>
                 <Dropdown.Menu className={styles.actionMenu}>

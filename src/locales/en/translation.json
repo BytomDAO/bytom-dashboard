@@ -202,7 +202,7 @@
   "key":{
     "keys":"Keys",
     "xpub":"xpub",
-    "formTitle":["Alias", "xpub"],
+    "formTitle":["ALIAS", "XPUB"],
     "reset":{
       "title":"Reset key password",
       "label":"Reset the password",

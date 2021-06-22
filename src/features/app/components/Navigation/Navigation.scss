@@ -55,7 +55,13 @@
     &.active {
       background: #fff;
       font-weight: 500;
+      color: #444B57;
     }
+  }
+  img {
+    margin-right: 18px;
+    width: 20px;
+    height: 20px;
   }
 }
 
@@ -73,13 +79,13 @@
   display: none;
 }
 
-.iconWrapper {
-  img {
-    width: 28px;
-    height: 28px;
-    margin-top: -2px;
-  }
-}
+// .iconWrapper {
+//   img {
+//     margin-right: 18px;
+//     width: 20px;
+//     height: 20px;
+//   }
+// }
 
 .warningIcon {
   height: 10px;
