@@ -1,7 +1,7 @@
 .mainContainer {
   background: $background-color;
   padding: 0 $gutter-size;
-  margin: $title-height+$gutter-size $gutter-size $gutter-size $gutter-size;
+  margin: $title-height+$gutter-size $gutter-size $gutter-size 0;
   display: flex;
   flex-direction: row;
 }
@@ -15,11 +15,7 @@
   width: 50%;
   margin-left: $gutter-size;
   margin-bottom: $gutter-size;
-}
-
-.center{
-  margin: 0 auto;
-  width: 100%;
+  color: #78808D;
 }
 
 .content {
@@ -30,7 +26,6 @@
 .container{
   max-width: 870px;
   width: 100%;
-  margin: 0 auto;
 }
 
 .submit {
@@ -70,22 +65,30 @@
 }
 
 .btnGroup {
-  margin-top: $gutter-size;
-  margin-bottom: $gutter-size;
-  text-align: center;
+  margin: 32px 0 36px;
   button{
     padding: 0 40px;
-    color: $text-color;
+    border-radius: 0 !important;
+    border: 1px solid #E1E3E6;
+    color: #78808D;
+    &:first-child {
+      border-radius: 8px 0 0 8px !important;
+    }
+    &:last-child {
+      border-radius: 0 8px 8px 0 !important;
+    }
     &.active{
-      background-color: $highlight-default;
+      background: linear-gradient(180deg, #3177FF 0%, #004EE4 100%);
       color: white;
     }
   }
 }
 
 .title {
-  color: $text-strong-color;
-  font-size: $font-size-btn-lg;
+  margin-bottom: 24px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #444B57;
 }
 
 .estimateGas {
@@ -95,8 +98,6 @@
 }
 
 .mainBox {
-  border: 1px solid $border-color;
-  padding: $gutter-size;
   margin-bottom: $gutter-size;
 }
 
@@ -137,7 +138,7 @@
   }
 
   .deleteButton{
-    margin-top: 35px;
+    margin-top: 38px;
   }
 }
 
@@ -194,8 +195,8 @@
   margin-top: 5px;
   position: relative;
   display: inline-block;
-  width: 44px;
-  height: 22px;
+  width: 48px;
+  height: 26px;
 
   /* Hide default HTML checkbox */
   input {display:none;}
@@ -232,8 +233,8 @@
 .slider:before {
   position: absolute;
   content: "";
-  height: 18px;
-  width: 18px;
+  height: 22px;
+  width: 22px;
   left: 2px;
   bottom: 2px;
   background-color: white;
@@ -250,10 +251,16 @@
 
 .label{
   margin-right: $grid-gutter-width/4;
+  color: #444B57;
 }
 
 .submitSwitchSet{
   display: flex;
   margin-bottom: $grid-gutter-width;
   align-items: center;
+  color: #78808D;
+}
+
+.center {
+  width: 100%;
 }

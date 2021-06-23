@@ -38,7 +38,7 @@ class Modal extends React.Component {
               </div>
           }
           {body}
-          {!noCloseBtn && <button className={`btn btn-${this.props.options.danger ? 'danger' : 'primary'} ${styles.accept}`} onClick={accept}>
+          {!noCloseBtn && <button className={`btn btn-large btn-${this.props.options.danger ? 'danger' : 'primary'} ${styles.accept}`} onClick={accept}>
             { t('form.ok') }</button>}
           {!noCloseBtn && cancel && <button className={`btn btn-link ${styles.cancel}`} onClick={cancel}>Cancel</button>}
         </div>

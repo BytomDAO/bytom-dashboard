@@ -1,27 +1,39 @@
 .table {
   table-layout: fixed;
   width: 100%;
-  box-shadow: 0px 4px 2px -2px rgba(27, 46, 94, 0.02);
-  border-radius: 8px;
-  border: 1px solid #E1E3E6;
+  font-size: 16px;
+
+  &.border {
+    box-shadow: 0px 4px 2px -2px rgba(27, 46, 94, 0.02);
+    border-radius: 8px;
+    border: 1px solid #e1e3e6;
+
+    td {
+      padding: 10px $gutter-size;
+    }
+  }
 
   td {
     vertical-align: top;
-    padding: 10px $gutter-size;
     line-height: 15px;
+    padding: 10px $gutter-size 10px 0;
   }
 
   a .pre {
-    color: $highlight-default;
+    color: #444B57;
+  }
+  a[href] {
+    color: #444B57;
+    text-decoration: underline;
   }
 
   tr:first-child td {
-    padding-top: 20px;
+    padding-top: 24px;
   }
 
   tr:last-child td {
     border-bottom: none;
-    padding-bottom: 20px;
+    padding-bottom: 24px;
   }
 }
 
@@ -44,15 +56,16 @@
 
 .label {
   background: $background-color;
-  color: #78808D;
+  color: #78808d;
   width: 200px;
   font-size: 16px;
   text-transform: uppercase;
 }
 
-.value, .pre {
+.value,
+.pre {
   font-size: $font-size-code;
-  color: #444B57;
+  color: #444b57;
   font-size: 16px;
 }
 
@@ -74,9 +87,9 @@
   line-height: 1.4;
 }
 
-.copyButton{
+.copyButton {
   padding: 0px 8px 2px;
-  img{
+  img {
     width: 18px;
   }
 }

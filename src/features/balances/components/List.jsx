@@ -11,7 +11,8 @@ const type = 'balance'
 
 class List extends React.Component {
   componentDidMount() {
-    this.props.getVoteDetail()
+    // TODO:2.0
+    // this.props.getVoteDetail()
   }
 
   rescanWallet(){
@@ -24,7 +25,7 @@ class List extends React.Component {
 
   render() {
     const ItemList = BaseList.ItemList
-    const newButton = <button key='showRescan' className='btn btn-primary' onClick={() => this.rescanWallet()}>
+    const newButton = <button key='showRescan' className='btn btn-primary btn-large' style={{ width: '150px' }} onClick={() => this.rescanWallet()}>
       {this.props.t('balances.rescan')}
     </button>
 

@@ -54,7 +54,7 @@ class Register extends React.Component {
                 title={t('init.errorTitle')}
                 error={error}/>}
 
-              <button type='submit' className='btn btn-primary' disabled={submitting}>
+              <button type='submit' className='btn btn-primary btn-large' disabled={submitting}>
                 {t('init.register')}
               </button>
               <Link

@@ -75,6 +75,7 @@ class Index extends React.Component {
                     {...typeProps}
                     value='mainnet' />
               <div className={`${styles.choice} ${styles.join}`}>
+                    <img className={styles.choice_img} src={require('images/config/join.svg')} />
                 <span className={styles.choice_title}>{t('welcome.mainnetTitle')}</span>
 
                 <p>
@@ -91,6 +92,7 @@ class Index extends React.Component {
                     {...typeProps}
                     value='testnet' />
               <div className={`${styles.choice} ${styles.testnet}`}>
+                    <img className={styles.choice_img} src={require('images/config/testnet.svg')} />
                   <span className={styles.choice_title}>{t('welcome.testnetTitle') }</span>
 
                   <p>
@@ -107,6 +109,7 @@ class Index extends React.Component {
                      {...typeProps}
                      value='solonet' />
               <div className={`${styles.choice} ${styles.new}`}>
+                    <img className={styles.choice_img} src={require('images/config/new.svg')} />
                 <span className={styles.choice_title}>{t('welcome.solonetTitle') }</span>
 
                 <p>

@@ -102,7 +102,7 @@ class ActionItem extends React.Component {
 
         <div className={styles.header}>
           <label className={styles.title}>{actionLabels[type.value]}</label>
-          <a href='#' className='btn btn-sm btn-danger' onClick={remove}>{ t('commonWords.remove') }</a>
+          <a href='#' className='btn btn-large btn-danger' onClick={remove}>{ t('commonWords.remove') }</a>
         </div>
 
         {type.error && <ErrorBanner message={type.error} />}

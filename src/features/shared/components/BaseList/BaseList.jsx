@@ -18,7 +18,7 @@ class ItemList extends React.Component {
     const objectName = humanize(t(`crumbName.${type.toLowerCase()}` ))
     const title = capitalize(t(`crumbName.${type.toLowerCase()}` ) || label)
 
-    const newButton = <button key='showCreate' className='btn btn-primary btn-large'onClick={this.props.showCreate}>
+    const newButton = <button key='showCreate' className='btn btn-primary btn-large' style={{ width: '150px' }} onClick={this.props.showCreate}>
       + {t('crumbName.new')}
     </button>
     if (!this.props.skipCreate) {

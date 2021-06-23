@@ -118,7 +118,7 @@ class ConfirmModal extends Component {
 
           <div className={styles.btnGroup}>
             <div>
-              <button type='submit' className='btn btn-primary'
+              <button type='submit' className='btn btn-primary btn-large'
                       disabled={submitting}>
                 {submitLabel}
               </button>
@@ -127,7 +127,7 @@ class ConfirmModal extends Component {
               <SubmitIndicator className={styles.submitIndicator} />
               }
             </div>
-            <button type='button'  className='btn btn-default' onClick={cancel}>
+            <button type='button'  className='btn btn-default btn-large' onClick={cancel}>
               <i/> {t('form.cancel')}
             </button>
           </div>

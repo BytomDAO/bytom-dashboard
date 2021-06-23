@@ -118,7 +118,7 @@ class ConsoleSection extends React.Component {
                 onKeyDown={(event) => this.keyDownEvent(event)}
                 placeholder={t('console.placeholder')} />
             </span>
-            <button type='submit' className={'btn btn-primary'} tabIndex='-1'>
+            <button type='submit' className={'btn btn-primary btn-large'} tabIndex='-1'>
               > { t('form.enter') }
             </button>
           </form>

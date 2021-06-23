@@ -129,7 +129,8 @@ class AccountShow extends BaseShow {
               id={item.id}
               object="account"
               title={t('form.detail')}
-              actions={[
+                border={false}
+                actions={[
                 // TODO: add back first 2 buttons
                 // <button key='show-txs' className='btn btn-link' onClick={this.props.showTransactions.bind(this, item)}>Transactions</button>,
                 // <button key='show-balances' className='btn btn-link' onClick={this.props.showBalances.bind(this, item)}>Balances</button>,
@@ -147,6 +148,7 @@ class AccountShow extends BaseShow {
               <KeyValueTable
                 key={index}
                 title={t('account.xpubs', { id: index + 1 })}
+                border={false}
                 actions={
                   index === 0 && [
                     <Link key="check-password-btn" className="btn btn-link" to={`/accounts/key/check-password/${key}`}>
@@ -164,6 +166,7 @@ class AccountShow extends BaseShow {
             {(this.state.addresses || []).length > 0 && (
               <KeyValueTable
                 title={t('account.address')}
+                border={false}
                 items={this.state.addresses.map((item, index) => ({
                   label: index + 1,
                   value: item.address,

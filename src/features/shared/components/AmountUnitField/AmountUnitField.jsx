@@ -104,7 +104,7 @@ class AmountUnitField extends React.Component {
         {this.props.title && <FieldLabel>{this.props.title}</FieldLabel>}
         <div className='input-group'>
           <input className='form-control'
-            type={this.state.type}
+            type={'text'}
             {...fieldProps}
             value={formatBTMAmount(this.state.value, this.state.pos)}
             placeholder={this.props.placeholder}

@@ -48,10 +48,11 @@ class KeyValueTable extends React.Component {
 
   render() {
     const t = this.props.t
+    const border = this.props.border !== false
     return <Section
       title={this.props.title}
       actions={this.props.actions}>
-      <table className={styles.table}>
+      <table className={`${styles.table} ${border ? styles.border : null}`}>
         <tbody>
           {this.props.items.map((item) => {
             return <tr key={item.label}>

@@ -9,7 +9,7 @@ class RawJsonButton extends React.Component {
 
   render() {
     return (
-        <button className='btn btn-link' onClick={this.showRawJson.bind(this, this.props.item)}>
+        <button className='btn btn-default btn-large' stlye={this.props.style} onClick={this.showRawJson.bind(this, this.props.item)}>
           Raw JSON
         </button>
     )

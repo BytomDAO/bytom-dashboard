@@ -1,4 +1,5 @@
 import React from 'react'
+import { Button } from 'react-bootstrap'
 import {
   BaseShow,
   PageTitle,
@@ -101,19 +102,17 @@ class Show extends BaseShow {
       </span>
 
       view = <div>
-        <PageTitle title={title} />
+        <PageTitle title={title} extraHeader={<div style={{ marginLeft: 'auto' }}><RawJsonButton key='raw-json' item={item} /></div>} />
 
         <PageContent>
           <Section
-            title={t('form.summary')}
-            actions={[
-              <RawJsonButton key='raw-json' item={item} />
-            ]}>
+            title={t('form.summary')}>
             <Summary transaction={item}  btmAmountUnit={btmAmountUnit}/>
           </Section>
 
           <KeyValueTable
             title={t('form.detail')}
+            border={false}
             items={[
               {label: 'ID', value: item.id},
               {label: t('form.timestamp'), value:  unconfirmedItem ? '-' : moment(item.timestamp).format()},
@@ -130,6 +129,7 @@ class Show extends BaseShow {
             <KeyValueTable
               key={index}
               title={index == 0 ? t('form.input') : ''}
+              border={false}
               items={buildTxInputDisplay(input, btmAmountUnit, t)}
             />
           )}
@@ -138,6 +138,7 @@ class Show extends BaseShow {
             <KeyValueTable
               key={index}
               title={index == 0 ?t('form.output') : ''}
+              border={false}
               items={buildTxOutputDisplay(output, btmAmountUnit, t)}
             />
           )}

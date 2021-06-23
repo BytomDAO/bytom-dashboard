@@ -27,9 +27,9 @@ class Index extends React.Component {
     }
 
     const networkID = coreData.networkId
-    const createButton = <Link className={`btn btn-primary ${styles.submit}`} to='/initialization/register'>{t('init.create')}</Link>
-    const restoreKeystore = <Link className={`btn btn-primary ${styles.submit}`}to='/initialization/restoreKeystore'>{t('init.restoreWallet')}</Link>
-    const restoreMnemonic = <Link className={`btn btn-primary ${styles.submit}`} to='/initialization/restoreMnemonic'>{t('init.restoreWallet')}</Link>
+    const createButton = <Link className={`btn btn-primary btn-large ${styles.submit}`} to='/initialization/register'>{t('init.create')}</Link>
+    const restoreKeystore = <Link className={`btn btn-primary btn-large ${styles.submit}`}to='/initialization/restoreKeystore'>{t('init.restoreWallet')}</Link>
+    const restoreMnemonic = <Link className={`btn btn-primary btn-large ${styles.submit}`} to='/initialization/restoreMnemonic'>{t('init.restoreWallet')}</Link>
 
     return (
       <div onChange={e => this.setValue(e)}>
@@ -43,6 +43,7 @@ class Index extends React.Component {
                      name='type'
                      value='backup'/>
               <div className={`${styles.choice} ${styles.backup} `}>
+                    <img className={styles.choice_img} src={require('images/backup/create.svg')} />
                 <span className={styles.choice_title}>{t('init.create')}</span>
                 <p>
                   {t('init.createDescription')}
@@ -58,6 +59,7 @@ class Index extends React.Component {
                      name='type'
                      value='restoreKeystore' />
               <div className={`${styles.choice} ${styles.restoreKeystore}`}>
+                    <img className={styles.choice_img} src={require('images/backup/restore-keystore.svg')} />
                 <span className={styles.choice_title}>{t('backup.restoreKeystore')}</span>
                 <p>
                   {t('backup.restoreKeystoreDescription')}
@@ -73,6 +75,7 @@ class Index extends React.Component {
                      name='type'
                      value='restoreMnemonic' />
               <div className={`${styles.choice} ${styles.restoreMnemonic}`}>
+                    <img className={styles.choice_img} src={require('images/backup/restore-mnemonic.svg')} />
                 <span className={styles.choice_title}>{t('backup.restoreMnemonic')}</span>
                 <p>
                   {t('backup.restoreMnemonicDescription')}

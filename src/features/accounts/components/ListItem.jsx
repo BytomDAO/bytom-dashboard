@@ -32,14 +32,14 @@ class ListItem extends React.Component {
         <div className={`${styles.td} ${styles.right}`}>
           <div className={styles.value}>
             {item.isUsed ? (
-              <Button disabled>
+              <Button className="btn-large" disabled>
                 {t('account.selected')}
               </Button>
             ) : (
               // <button className={`btn btn-default btn-sm ${styles.selectButton} ${styles.buttonDisable}`} disabled>
 
               // </button>
-              <Button className="btn btn-primary btn-ghost" onClick={() => this.props.switch(item.alias)}>
+              <Button className="btn btn-primary btn-ghost btn-large" onClick={() => this.props.switch(item.alias)}>
                 {t('account.select')}
               </Button>
               // <button

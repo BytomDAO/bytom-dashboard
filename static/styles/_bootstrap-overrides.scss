@@ -2,7 +2,7 @@ $grid-gutter-width: 30px;
 
 $font-size-caps: 12px;
 $font-size-chrome: 12px;
-$font-size-base: 13px;
+$font-size-base: 18px;
 $font-size-code: $font-size-base;
 $font-size-nav: 14px;
 $font-size-form-section-title: $font-size-nav;
@@ -53,26 +53,4 @@ $border-radius-large: 3px;
 $form-group-margin-bottom: 30px;
 
 $input-border-focus: #257bf2;
-
-#root {
-  .btn {
-    border-radius: 8px;
-    min-width: 100px;
-  }
-  .btn-large {
-    height: 48px;
-    min-width: 150px;
-    font-size: 18px;
-  }
-  .btn-primary {
-    background: linear-gradient(180deg, #3177ff 0%, #004ee4 100%);
-    &.btn-ghost {
-      color: #004EE4;
-    }
-  }
-  .btn-ghost {
-    background: transparent;
-    border-color: currentColor;
-  }
-}
 

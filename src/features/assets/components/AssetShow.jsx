@@ -36,6 +36,7 @@ class AssetShow extends BaseShow {
           actions={[
             item.id!==btmID && <Link key='create-asset-btn' className='btn btn-link' to={`/transactions/create?type=issueAsset&alias=${item.alias}`}>{t('transaction.issue.issueAsset')}</Link>,
           ]}
+          extraHeader={<div style={{ marginLeft: 'auto'}}><RawJsonButton key='raw-json' item={item} /></div>}
         />
 
         <PageContent>
@@ -43,9 +44,7 @@ class AssetShow extends BaseShow {
             id={item.id}
             object='asset'
             title={t('form.detail')}
-            actions={[
-              <RawJsonButton key='raw-json' item={item} />
-            ]}
+            border={false}
             items={[
               {label: 'ID', value: item.id},
               {label: t('form.alias'), value: item.alias, editUrl: item.alias === 'BTM' ? null : `/assets/${item.id}/alias`},

@@ -19,7 +19,7 @@ class TxContainer extends React.Component {
             error={this.props.error} />}
 
           <div className={styles.submit}>
-            <button type='submit' className='btn btn-primary' disabled={this.props.submitting || this.props.disabled}>
+            <button type='submit' className='btn btn-primary btn-large' disabled={this.props.submitting || this.props.disabled}>
               {this.props.submitLabel ||  (t('form.submit'))}
             </button>
 

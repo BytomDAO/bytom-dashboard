@@ -24,6 +24,7 @@ class PageTitle extends React.Component {
               </Link>
             )}
             <span className={styles.title}>{this.props.title}</span>
+            {this.props.extraHeader}
             {/* <ul className={styles.crumbs}>
               {this.props.breadcrumbs.map(crumb =>
                 <li className={styles.crumb} key={crumb.name}>

@@ -25,9 +25,11 @@ class Form extends React.Component {
   componentDidMount() {
     if (!this.props.autocompleteIsBalanceLoaded) {
       this.props.fetchBalanceAll().then(() => {
-        this.props.getVoteDetail().then(()=>{
-          this.props.didLoadBalanceAutocomplete()
-        })
+        // TODO:2.0
+        // this.props.getVoteDetail().then(()=>{
+        //   this.props.didLoadBalanceAutocomplete()
+        // })
+        this.props.didLoadBalanceAutocomplete()
       })
     }
     if (!this.props.autocompleteIsAssetLoaded) {
@@ -116,30 +118,31 @@ class Form extends React.Component {
         <div className={`${styles.mainContainer} flex-container`}>
 
           <div className={styles.center}>
+
             <div className={styles.btnGroup} >
               <div className={'btn-group'} role='group'>
                 <button
-                  className={`btn btn-default ${this.props.normalSelected && 'active'}`}
+                  className={`btn btn-default btn-large ${this.props.normalSelected && styles.active}`}
                   onClick={(e) => this.showForm(e, 'normal')}>
                   {t('transaction.new.normal')}
                   </button>
                 <button
-                  className={`btn btn-default ${this.props.advancedSelected && 'active'}`}
+                  className={`btn btn-default btn-large ${this.props.advancedSelected && styles.active}`}
                   onClick={(e) => this.showForm(e, 'advanced')}>
                   {t('transaction.new.advanced')}
                   </button>
                 <button
-                  className={`btn btn-default ${this.props.voteSelected && 'active'}`}
+                  className={`btn btn-default btn-large ${this.props.voteSelected && styles.active}`}
                   onClick={(e) => this.showForm(e, 'vote')}>
                   {t('transaction.new.vote')}
                   </button>
-                <button
-                  className={`btn btn-default ${this.props.crossChainSelected && 'active'}`}
+                {/* <button
+                  className={`btn btn-default btn-large ${this.props.crossChainSelected && styles.active}`}
                   onClick={(e) => this.showForm(e, 'crossChain')}>
                   {t('transaction.new.crossChain')}
-                  </button>
+                  </button> */}
                 <button
-                  className={`btn btn-default ${this.props.issueAssetSelected && 'active'}`}
+                  className={`btn btn-default btn-large ${this.props.issueAssetSelected && styles.active}`}
                   onClick={(e) => this.showForm(e, 'issueAsset')}>
                   {t('transaction.issue.issueAsset')}
                   </button>

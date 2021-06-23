@@ -48,7 +48,6 @@
 }
 
 .title {
-  height: 55px;
   padding: $gutter-size/2 $gutter-size;
   border-bottom: 1px solid $border-color;
   font-size: $font-size-section-title;
@@ -59,4 +58,7 @@
   position: absolute;
   right: 10px;
   top: 10px;
+  height: 36px;
+  line-height: 36px;
+  padding: 0;
 }

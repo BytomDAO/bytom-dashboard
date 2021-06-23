@@ -4,8 +4,8 @@
 
 .reactConsoleContainer {
   box-sizing: border-box;
-  height: calc(100% - 121px);
-  padding: 30px;
+  height: calc(100% - 141px);
+  padding: 30px 24px;
   overflow: scroll;
   background-color: $background-content-color;
 }
@@ -14,8 +14,9 @@
   height: 65px;
   border: none;
   color: $text-strong-color;
+  margin-right: 20px;
   padding: 10px 12px;
-  width: 750px;
+  width: 700px;
 }
 
 .inputBox{

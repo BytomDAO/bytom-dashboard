@@ -175,7 +175,7 @@ class NormalTxForm extends React.Component {
               />
 
               <button
-                className={`btn btn-danger btn-xs ${styles.deleteButton}`}
+                className={`btn btn-danger btn-large ${styles.deleteButton}`}
                 tabIndex='-1'
                 type='button'
                 onClick={() => this.removeReceiverItem(index)}
@@ -186,7 +186,7 @@ class NormalTxForm extends React.Component {
           )}
           <button
             type='button'
-            className='btn btn-default'
+            className='btn btn-default btn-large'
             onClick={this.addReceiverItem}
           >
             {t('commonWords.addField')}

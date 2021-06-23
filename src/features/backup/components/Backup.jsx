@@ -110,6 +110,7 @@ class Backup extends React.Component {
                 <label>
                   <input className={styles.choice_radio_button} type="radio" name="type" value="backup" />
                   <div className={`${styles.choice} ${styles.backup} `}>
+                    <img className={styles.choice_img} src={require('images/backup/backup.svg')} />
                     <span className={styles.choice_title}>{t('backup.backup')}</span>
                     <p>{t('backup.backupDescription')}</p>
                   </div>
@@ -120,6 +121,7 @@ class Backup extends React.Component {
                 <label>
                   <input className={styles.choice_radio_button} type="radio" name="type" value="restoreKeystore" />
                   <div className={`${styles.choice} ${styles.restoreKeystore}`}>
+                    <img className={styles.choice_img} src={require('images/backup/restore-keystore.svg')} />
                     <span className={styles.choice_title}>{t('backup.restoreKeystore')}</span>
                     <p>{t('backup.restoreKeystoreDescription')}</p>
                   </div>
@@ -130,6 +132,7 @@ class Backup extends React.Component {
                 <label>
                   <input className={styles.choice_radio_button} type="radio" name="type" value="restoreMnemonic" />
                   <div className={`${styles.choice} ${styles.restoreMnemonic}`}>
+                    <img className={styles.choice_img} src={require('images/backup/restore-mnemonic.svg')} />
                     <span className={styles.choice_title}>{t('backup.restoreMnemonic')}</span>
                     <p>{t('backup.restoreMnemonicDescription')}</p>
                   </div>
