@@ -128,7 +128,7 @@ class NormalTxForm extends React.Component {
     >
       <div className={styles.borderBottom}>
         <label className={styles.title}>{t('transaction.normal.from')}</label>
-        <div className={`${styles.mainBox} `}>
+        <div className={`${styles.mainBox} `} style={{ width: '560px' }}>
           <ObjectSelectorField
             key='account-selector-field'
             keyIndex='normaltx-account'

@@ -32,7 +32,7 @@ class NewCertificate extends React.Component {
               <SelectField title='Field Name' options={subjectFieldOptions} fieldProps={line.key} />
               <TextField title='Field Value' fieldProps={line.value} />
               <button
-                className='btn btn-danger btn-xs'
+                className='btn btn-danger btn-large'
                 tabIndex='-1'
                 type='button'
                 onClick={() => subject.removeField(index)}

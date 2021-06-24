@@ -43,7 +43,7 @@ class Index extends React.Component {
                      name='type'
                      value='backup'/>
               <div className={`${styles.choice} ${styles.backup} `}>
-                    <img className={styles.choice_img} src={require('images/backup/create.svg')} />
+                    <img className={styles.choice_img} src={require('images/backup/create.png')} />
                 <span className={styles.choice_title}>{t('init.create')}</span>
                 <p>
                   {t('init.createDescription')}
@@ -59,7 +59,7 @@ class Index extends React.Component {
                      name='type'
                      value='restoreKeystore' />
               <div className={`${styles.choice} ${styles.restoreKeystore}`}>
-                    <img className={styles.choice_img} src={require('images/backup/restore-keystore.svg')} />
+                    <img className={styles.choice_img} src={require('images/backup/restore-keystore.png')} />
                 <span className={styles.choice_title}>{t('backup.restoreKeystore')}</span>
                 <p>
                   {t('backup.restoreKeystoreDescription')}
@@ -75,7 +75,7 @@ class Index extends React.Component {
                      name='type'
                      value='restoreMnemonic' />
               <div className={`${styles.choice} ${styles.restoreMnemonic}`}>
-                    <img className={styles.choice_img} src={require('images/backup/restore-mnemonic.svg')} />
+                    <img className={styles.choice_img} src={require('images/backup/restore-mnemonic.png')} />
                 <span className={styles.choice_title}>{t('backup.restoreMnemonic')}</span>
                 <p>
                   {t('backup.restoreMnemonicDescription')}

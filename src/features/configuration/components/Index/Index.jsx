@@ -74,7 +74,7 @@ class Index extends React.Component {
       <button
         key='configSubmit'
         type='submit'
-        className={`btn btn-primary btn-lg ${styles.submit}`}
+        className={`btn btn-primary btn-large ${styles.submit}`}
         disabled={submitting}>
           &nbsp;{this.showNewFields() ? 'Create' : 'Join'} network
       </button>

@@ -6,8 +6,6 @@ import actions from 'features/mockhsm/actions'
 import { withNamespaces } from 'react-i18next'
 import { chainClient } from 'utility/environment'
 
-const methodOptions = ['currentAccount', 'provide']
-
 class XpubField extends React.Component {
   constructor(props) {
     super(props)
@@ -18,6 +16,7 @@ class XpubField extends React.Component {
       provide: '',
       autofocusInput: false,
       currentAccount: '',
+      methodOptions: ['currentAccount', 'provide']
     }
   }
 
@@ -27,7 +26,7 @@ class XpubField extends React.Component {
         this.props.didLoadAutocomplete()
       })
     }
-    this.props.typeProps.onChange(methodOptions[0])
+
 
     if (!this.props.autoGenerate) {
       chainClient()
@@ -44,6 +43,14 @@ class XpubField extends React.Component {
           }
         })
     }
+
+    if (this.props.index > 0 ) {
+      this.state.methodOptions.shift()
+      this.setState({
+        methodOptions: this.state.methodOptions
+      })
+    }
+    this.props.typeProps.onChange(this.state.methodOptions[0])
   }
 
   render() {
@@ -112,7 +119,9 @@ class XpubField extends React.Component {
                   </label>
                 </td>
               ) : (
-                methodOptions.map((key) => (
+                this.state.methodOptions.map((key) => {
+                  if (this.props.index > 0 && key === 'currentAccount') { return null }
+                  return (
                   <tr key={`key-${this.props.index}-option-${key}`}>
                     <td className={styles.label}>
                       <label>
@@ -129,7 +138,8 @@ class XpubField extends React.Component {
                     </td>
                     <td className={styles.field}>{typeProps.value == key && fields[key]}</td>
                   </tr>
-                ))
+                  )
+                })
               )}
             </tbody>
           </table>

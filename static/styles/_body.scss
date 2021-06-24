@@ -198,6 +198,7 @@ a:focus {
 
 .text-danger{
   color: $text-danger;
+  font-size: 14px;
 }
 
 div.react-console-prompt-box {
@@ -351,11 +352,18 @@ input[type=range]:focus::-ms-fill-upper {
   &.btn-ghost {
     color: #004EE4;
   }
+  &[disabled] {
+    opacity: 0.4;
+  }
 }
 .btn-default {
   border: 1px solid #E1E3E6;
   box-shadow: 0px 4px 2px -2px rgba(27, 46, 94, 0.02);
   color: #444B57;
+}
+.btn-link {
+  color: inherit;
+  text-decoration: underline;
 }
 .btn-ghost {
   background: transparent;
@@ -375,12 +383,14 @@ input[type=range]:focus::-ms-fill-upper {
 
 input[type="text"], .form-control {
   height: 48px;
-  border-radius: 8px;
+  border-radius: 8px !important;
   border: 1px solid #E1E3E6;
+  box-shadow: none;
   font-size: 18px;
 
   &:focus {
     border: 1px solid #004EE4;
+    box-shadow: 0 0 0 4px rgb(0 78 228 / 20%);
   }
   &.disabled {
     background: #F8F8F8;

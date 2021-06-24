@@ -61,7 +61,7 @@ class NewAssetInfo extends React.Component {
                 <TextField title={t('asset.additionInfoKey')} fieldProps={descript.key}/>
                 <TextField title={t('asset.additionInfoValue')} fieldProps={descript.value}/>
                 <button
-                  className='btn btn-danger btn-xs'
+                  className='btn btn-danger btn-large'
                   tabIndex='-1'
                   type='button'
                   onClick={() => this.removeReceiverItem(index)}

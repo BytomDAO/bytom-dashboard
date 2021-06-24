@@ -65,7 +65,7 @@ class Generated extends React.Component {
               <p>{t('transaction.advance.generated.lead')}</p>
 
               <button
-                className='btn btn-primary'
+                className='btn btn-primary btn-large'
                 onClick={() => copyToClipboard(this.props.hex)}
               >
                 {t('account.copyClipboard')}

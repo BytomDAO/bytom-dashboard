@@ -50,7 +50,7 @@ class Index extends React.Component {
       <button
         key='configSubmit'
         type='submit'
-        className={`btn btn-primary btn-lg ${styles.submit}`}
+        className={`btn btn-primary btn-large ${styles.submit}`}
         disabled={ !type.value || submitting}>
           &nbsp;{t('welcome.join')}
       </button>
@@ -75,7 +75,7 @@ class Index extends React.Component {
                     {...typeProps}
                     value='mainnet' />
               <div className={`${styles.choice} ${styles.join}`}>
-                    <img className={styles.choice_img} src={require('images/config/join.svg')} />
+                    <img className={styles.choice_img} src={require('images/config/join.png')} />
                 <span className={styles.choice_title}>{t('welcome.mainnetTitle')}</span>
 
                 <p>
@@ -92,7 +92,7 @@ class Index extends React.Component {
                     {...typeProps}
                     value='testnet' />
               <div className={`${styles.choice} ${styles.testnet}`}>
-                    <img className={styles.choice_img} src={require('images/config/testnet.svg')} />
+                    <img className={styles.choice_img} src={require('images/config/testnet.png')} />
                   <span className={styles.choice_title}>{t('welcome.testnetTitle') }</span>
 
                   <p>
@@ -109,7 +109,7 @@ class Index extends React.Component {
                      {...typeProps}
                      value='solonet' />
               <div className={`${styles.choice} ${styles.new}`}>
-                    <img className={styles.choice_img} src={require('images/config/new.svg')} />
+                    <img className={styles.choice_img} src={require('images/config/new.png')} />
                 <span className={styles.choice_title}>{t('welcome.solonetTitle') }</span>
 
                 <p>

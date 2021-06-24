@@ -105,7 +105,7 @@ class CrossChainConfirmModal extends Component {
 
           <div className={styles.btnGroup}>
             <div>
-              <button type='submit' className='btn btn-primary'
+              <button type='submit' className='btn btn-primary btn-large'
                       disabled={submitting}>
                 {submitLabel}
               </button>

@@ -44,7 +44,7 @@ class Next extends React.Component {
 
     return (
       <button
-        className={`btn btn-primary ${styles.floatLeft}`}
+        className={`btn btn-primary btn-large ${styles.floatLeft}`}
         onClick={() => this.props.goToNextStep()}>
         {label}
       </button>

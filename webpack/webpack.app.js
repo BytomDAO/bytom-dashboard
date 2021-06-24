@@ -83,8 +83,10 @@ for (let item of loaders) {
   if ('.scss'.match(item.test) != null) {
     item.loader = item.loader.replace('sass-loader', 'sass-loader!sass-resources-loader');
   }
-
-  // Enable babel-loader caching
+  if ('.png'.match(item.test) != null) {
+    item.loader = item.loader.replace('limit=10000', 'limit=20000')
+  }
+    // Enable babel-loader caching
   if (item.loader == 'babel-loader') {
     // item.test = /\.js$/
     item.loader = 'babel-loader?cacheDirectory';

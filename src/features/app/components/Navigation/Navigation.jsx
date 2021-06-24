@@ -4,7 +4,7 @@ import { Link } from 'react-router'
 import styles from './Navigation.scss'
 import { navIcon } from '../../utils'
 import Sync from '../Sync/Sync'
-import { docsRoot, releaseUrl } from '../../../../utility/environment'
+import { docsRoot, equityRoot, releaseUrl } from '../../../../utility/environment'
 import { capitalize } from 'utility/string'
 import { withNamespaces } from 'react-i18next'
 import actions from 'actions'
@@ -90,6 +90,13 @@ class Navigation extends React.Component {
                   <img src={require('images/navigation/mockhsm.svg')}/>
                   {capitalize(t('crumbName.key'))}
                 </Link>
+              </li>
+              <li>
+                <a href={equityRoot} target="_blank">
+                  {/* {navIcon('docs', styles)} */}
+                  <img src={require('images/navigation/equity.svg')}/>
+                  {capitalize(t('crumbName.equity'))}
+                </a>
               </li>
             </div>
           )}

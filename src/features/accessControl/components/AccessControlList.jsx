@@ -42,7 +42,7 @@ class AccessControlList extends React.Component {
 
         {this.props.tokensSelected && <div>
           <button
-            className={`btn btn-primary ${styles.newBtn}`}
+            className={`btn btn-primary btn-large ${styles.newBtn}`}
             onClick={this.props.showTokenCreate}>
             + {t('token.new')}
           </button>

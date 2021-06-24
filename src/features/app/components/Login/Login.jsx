@@ -44,7 +44,7 @@ class Login extends React.Component {
                 title='Error logging in'
                 error={error} />}
 
-            <button type='submit' className='btn btn-primary' disabled={submitting}>
+            <button type='submit' className='btn btn-primary btn-large' disabled={submitting}>
               Log In
             </button>
           </form>

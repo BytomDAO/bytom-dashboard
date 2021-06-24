@@ -65,7 +65,7 @@ class ObjectSelectorField extends React.Component {
       <div className='form-group'>
         {this.props.title && <FieldLabel>{this.props.title}</FieldLabel>}
         <div className='input-group'>
-          <div className={`input-group-btn ${this.state.showDropdown && 'open'}`}>
+          <div className={`input-group-btn ${styles.btn} ${this.state.showDropdown && 'open'}`}>
             <DropdownButton
               className={styles.dropdownButton}
               id={ this.props.keyIndex? `input-dropdown-addon-${this.props.keyIndex}` : 'input-dropdown-addon' }

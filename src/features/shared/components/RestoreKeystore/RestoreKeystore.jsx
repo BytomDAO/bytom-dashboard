@@ -47,7 +47,7 @@ class RestoreKeystore extends React.Component {
                 title={t('init.errorTitle')}
                 error={error}/>}
 
-              <button type='submit' className={`btn btn-primary ${style.submitButton}`} disabled={submitting}>
+              <button type='submit' className={`btn btn-primary btn-large ${style.submitButton}`} disabled={submitting}>
                 {t('init.restore')}
               </button>
 

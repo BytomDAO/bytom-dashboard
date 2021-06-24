@@ -81,7 +81,7 @@ class QrCode extends React.Component {
         {
           arrayLength>1  &&
             <button
-            className='btn btn-primary'
+            className='btn btn-primary btn-large'
             onClick={this.next}
             disabled={this.state.step === arrayLength-1}
           >

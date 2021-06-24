@@ -28,7 +28,7 @@ class EditPolicies extends React.Component {
             }} />
         })}
 
-        <button className='btn btn-primary' onClick={handleSubmit(this.props.submitForm)}>Save</button>
+        <button className='btn btn-primary btn-large' onClick={handleSubmit(this.props.submitForm)}>Save</button>
       </div>
     )
   }

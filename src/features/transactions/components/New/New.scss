@@ -24,7 +24,7 @@
 }
 
 .container{
-  max-width: 870px;
+  max-width: 970px;
   width: 100%;
 }
 
@@ -79,7 +79,7 @@
     }
     &.active{
       background: linear-gradient(180deg, #3177FF 0%, #004EE4 100%);
-      color: white;
+      color: #fff !important;
     }
   }
 }
@@ -105,11 +105,9 @@
   display: flex;
   position: relative;
   flex-direction: column;
-
-  >div:first-of-type{
-    width: 60%;
-    min-width: 350px;
-  }
+  width: 60%;
+  min-width: 350px;
+  margin-bottom: 20px;
 }
 
 .item{
@@ -262,5 +260,6 @@
 }
 
 .center {
+  max-width: 970px;
   width: 100%;
 }

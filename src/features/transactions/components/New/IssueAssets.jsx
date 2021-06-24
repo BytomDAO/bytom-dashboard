@@ -327,7 +327,7 @@ class IssueAssets extends React.Component {
                 }
 
                 <button
-                  className={`btn btn-danger btn-xs ${styles.deleteButton}`}
+                  className={`btn btn-danger btn-large ${styles.deleteButton}`}
                   tabIndex='-1'
                   type='button'
                   disabled = {submitAction.value === 'sign'}

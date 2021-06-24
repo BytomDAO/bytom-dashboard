@@ -70,7 +70,7 @@ class RescanDialog extends React.Component {
         <div className={styles.submitBtn}>
           <button
             key='submit'
-            className={'btn btn-primary'}
+            className={'btn btn-primary btn-large'}
             onClick={() => this.props.closeModal()}
             disabled={ now!==100 }
           >
