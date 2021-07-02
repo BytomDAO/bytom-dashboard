@@ -7,13 +7,13 @@
   background-color: #F8F8F8;
   border-radius: 3px;
   border: 1px solid $border-color;
-  padding: 6px 0px;
   color: $text-strong-color;
 }
 
 .seedWord{
   width: 22%;
-  height: 36px;
+  height: 48px;
+  line-height: 48px;
   margin: 5px 10px 5px 0;
   &, input{
     text-align: center;

@@ -45,19 +45,23 @@ const registerKey = (data) => {
                   throw resp
                 }
 
-                if (resp.status === 'success') {
-                  dispatch({ type: 'SET_CURRENT_ACCOUNT', account: resp.data.alias })
-                  // dispatch({ type: 'SET_CURRENT_XPUB', xpubs: accountData.root_xpubs })
-
-                  return chainClient()
-                    .accounts.createAddress({ account_alias: resp.data.alias })
-                    .then(() => {
-                      dispatch(initSucceeded())
-                    })
-                    .catch((err) => {
-                      throw err
-                    })
+                if(resp.status === 'success') {
+                  dispatch(push('/initialization/mnemonic'))
                 }
+
+                // if (resp.status === 'success') {
+                //   dispatch({ type: 'SET_CURRENT_ACCOUNT', account: resp.data.alias })
+                //   // dispatch({ type: 'SET_CURRENT_XPUB', xpubs: accountData.root_xpubs })
+
+                //   return chainClient()
+                //     .accounts.createAddress({ account_alias: resp.data.alias })
+                //     .then(() => {
+                //       dispatch(initSucceeded())
+                //     })
+                //     .catch((err) => {
+                //       throw err
+                //     })
+                // }
               })
               .catch((err) => {
                 throw err

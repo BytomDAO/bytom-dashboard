@@ -82,7 +82,7 @@ class ConfirmMnemonic extends React.Component {
         {error&& <ErrorBanner error={error} />}
 
         <button
-          className={`btn btn-primary ${style.submit}`}
+          className={`btn btn-primary btn-large ${style.submit}`}
           type='submit'
           disabled={submitting}>
           {t('mnemonic.confirm')}
