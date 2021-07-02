@@ -25,11 +25,9 @@ class Form extends React.Component {
   componentDidMount() {
     if (!this.props.autocompleteIsBalanceLoaded) {
       this.props.fetchBalanceAll().then(() => {
-        // TODO:2.0
-        // this.props.getVoteDetail().then(()=>{
-        //   this.props.didLoadBalanceAutocomplete()
-        // })
-        this.props.didLoadBalanceAutocomplete()
+        this.props.getVoteDetail().then(()=>{
+          this.props.didLoadBalanceAutocomplete()
+        })
       })
     }
     if (!this.props.autocompleteIsAssetLoaded) {

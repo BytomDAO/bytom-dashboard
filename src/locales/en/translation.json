@@ -187,6 +187,7 @@
     "peer":"Peer Count",
     "currentBlock":"Current Block",
     "highestBlock":"Highest Block",
+    "finalizedBlock": "No rollback",
     "networkId":"Network Id",
     "nodeXpub":"Node Xpub",
     "coreStatus":"Core Status",

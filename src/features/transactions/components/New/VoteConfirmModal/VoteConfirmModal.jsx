@@ -44,25 +44,25 @@ class VoteConfirmModal extends Component {
           <tbody>
             <tr>
               <td className={styles.colLabel}>{ t('form.account') }</td>
-              <td> <span>{accountAlias.value || accountId.value}</span></td>
+              <td className={styles.colValue}> <span>{accountAlias.value || accountId.value}</span></td>
             </tr>
             <tr>
               <td className={styles.colLabel}>{ t(`transaction.vote.${action.value}.for`) }</td>
-              <td> <span>{nodePubkey.value}</span> </td>
+              <td className={styles.colValue}> <span>{nodePubkey.value}</span> </td>
             </tr>
             <tr>
               <td className={styles.colLabel}>{ t(`transaction.vote.${action.value}.voteAmount`) }</td>
-              <td> <code>{normalize(amount.value)}</code> </td>
+              <td className={styles.colValue}> {normalize(amount.value)} </td>
             </tr>
 
             <tr>
               <td className={styles.colLabel}>{t('form.fee')}</td>
-              <td> <code>{normalize(fee)}</code> </td>
+              <td className={styles.colValue}> {normalize(fee)} </td>
             </tr>
 
             <tr>
               <td className={styles.colLabel}>{t('transaction.normal.total')}</td>
-              <td> <code>{normalize(Total)}</code> </td>
+              <td className={styles.colValue}> {normalize(Total)} </td>
             </tr>
           </tbody>
         </table>
@@ -94,7 +94,7 @@ class VoteConfirmModal extends Component {
               <SubmitIndicator className={styles.submitIndicator} />
               }
             </div>
-            <button type='button'  className='btn btn-default' onClick={cancel}>
+            <button type='button'  className='btn btn-default btn-large' onClick={cancel}>
               <i/> {t('form.cancel')}
             </button>
           </div>

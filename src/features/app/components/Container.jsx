@@ -10,7 +10,7 @@ const CORE_POLLING_TIME = 2 * 1000
 class Container extends React.Component {
   constructor(props) {
     super(props)
-    if(props.location.pathname.includes('index.html')) {
+    if (props.location.pathname.includes('index.html')) {
       this.redirectRoot(props)
     }
     this.redirectRoot = this.redirectRoot.bind(this)
@@ -26,7 +26,11 @@ class Container extends React.Component {
     if (process.env.TARGET === 'electron' && !configured) {
       this.props.showConfiguration()
     } else if (accountInit) {
-      if (location.pathname === '/' || location.pathname.indexOf('initialization') >= 0 || location.pathname.includes('index.html')) {
+      if (
+        location.pathname === '/' ||
+        location.pathname.indexOf('initialization') >= 0 ||
+        location.pathname.includes('index.html')
+      ) {
         this.props.showRoot()
       }
     } else {
@@ -143,7 +147,7 @@ class Container extends React.Component {
         moment.locale(lng)
       }
     })
-console.log(this.props);
+    console.log(this.props)
     if (!this.props.authOk) {
       layout = <Login />
     } else if (!this.props.configured) {
@@ -158,6 +162,17 @@ console.log(this.props);
 
     return (
       <div>
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100vw',
+            height: '25px',
+            zIndex: 100000,
+            '-webkit-app-region': 'drag',
+          }}
+        ></div>
         {layout}
         <Modal />
 

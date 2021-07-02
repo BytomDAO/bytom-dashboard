@@ -19,8 +19,14 @@
 
 .progressBar{
   margin-top: 6px;
-  height: 5px;
-  border-radius: 0;
+  height: 10px;
+  background: rgba(0, 78, 228, 0.08);
+  border-radius: 8px;
+
+  >div {
+    background: linear-gradient(180deg, #3177FF 0%, #004EE4 100%);
+    border-radius: 8px;
+  }
 }
 
 .status {

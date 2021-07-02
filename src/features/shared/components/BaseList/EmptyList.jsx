@@ -31,7 +31,7 @@ class EmptyList extends React.Component {
 
     return (
       <div className={componentClassNames(this, ...classNames)}>
-        {emptyImage && <img className={styles.image} src={emptyImage} />}
+        {/* {emptyImage && <img className={styles.image} src={emptyImage} />} */}
         {emptyBlock}
       </div>
     )

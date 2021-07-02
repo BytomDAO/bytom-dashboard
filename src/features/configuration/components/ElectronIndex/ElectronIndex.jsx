@@ -3,7 +3,7 @@ import { ErrorBanner, SubmitIndicator } from 'features/shared/components'
 import pick from 'lodash/pick'
 import actions from 'actions'
 import React from 'react'
-import styles from '../Index/Index.scss'
+import styles from './ElectronIndex.scss'
 import {connect} from 'react-redux'
 import {withNamespaces} from 'react-i18next'
 
@@ -68,7 +68,7 @@ class Index extends React.Component {
 
         <div className={styles.choices}>
 
-          <div className={styles.choice_wrapper}>
+          <div className={styles.choice_wrapper} style={{ opacity: 0.6, 'pointer-events': 'none'}}>
             <label>
               <input className={styles.choice_radio_button}
                     type='radio'

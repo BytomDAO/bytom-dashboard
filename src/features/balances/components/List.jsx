@@ -11,8 +11,7 @@ const type = 'balance'
 
 class List extends React.Component {
   componentDidMount() {
-    // TODO:2.0
-    // this.props.getVoteDetail()
+    this.props.getVoteDetail()
   }
 
   rescanWallet(){

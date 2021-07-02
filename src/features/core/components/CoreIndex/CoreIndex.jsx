@@ -95,7 +95,7 @@ class CoreIndex extends React.Component {
             </tr>
             <tr className={styles.row}>
               <td className={styles.row_label}>{t('coreIndex.fedAddress')}:</td>
-              <td className={styles.wordWrap}><code>{String(coreData['federationAddress'])}</code></td>
+              <td className={styles.wordWrap}><code>{String(coreData['federationAddress'] || '')}</code></td>
             </tr>
             <tr className={styles.row}>
               <td colSpan={3}>
@@ -150,7 +150,6 @@ class CoreIndex extends React.Component {
 
     let requestStatusBlock
 
-
     if(!coreData){
       requestStatusBlock = (<div>loading...</div>)
     }else {
@@ -182,6 +181,10 @@ class CoreIndex extends React.Component {
               <tr className={styles.row} key={'core-highestBlock'}>
                 <td className={styles.row_label}> {t('coreIndex.highestBlock')}:</td>
                 <td className={styles.row_value}><code>{String(coreData['highestBlock'])}</code></td>
+              </tr>
+              <tr className={styles.row} key={'core-finalizedBlock'}>
+                <td className={styles.row_label}> {t('coreIndex.finalizedBlock')}:</td>
+                <td className={styles.row_value}><code>{String(coreData['finalizedBlock'])}</code></td>
               </tr>
               <tr className={styles.row} key={'core-networkID'}>
                 <td className={styles.row_label}> {t('coreIndex.networkId')}:</td>

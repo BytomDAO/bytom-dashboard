@@ -44,7 +44,7 @@ class Main extends React.Component {
       <div className={styles.main} onClick={this.props.closeDropdown}>
         <div className={styles.sidebar}>
           <div className={styles.sidebarContent}>
-            <div className={styles.header}>
+            <div className={styles.header} style={{ marginTop: process.env.TARGET === 'electron' ? '40px' : '30px' }}>
               <Link to={'/'}>
                 <img src={logo} className={styles.brand_image} />
               </Link>
@@ -55,39 +55,53 @@ class Main extends React.Component {
             </div>
 
             <Navigation />
-            <Sync />
 
-            <div className={styles.version}>
-              <span>
-                {t('commonWords.version')}: {version}
-              </span>
-            </div>
-            <div className={styles.action}>
-              <Dropdown id="dropdown-custom-1" bsSize="xsmall" onSelect={changeLanguage} dropup>
-                <Dropdown.Toggle noCaret className={styles.actionButton}>
-                  <div>
-                    <img src={require(`images/navigation/language.png`)} />
-                  </div>
-                </Dropdown.Toggle>
-                <Dropdown.Menu className={styles.actionMenu}>
-                  <MenuItem eventKey="zh">中文</MenuItem>
-                  <MenuItem eventKey="en">ENGLISH</MenuItem>
-                </Dropdown.Menu>
-              </Dropdown>
+            <div className={styles.footer}>
+              <Sync />
+              <div className={styles.version}>
+                <span>
+                  {t('commonWords.version')}: {version}
+                </span>
+              </div>
+              <div className={styles.action}>
+                <Dropdown id="dropdown-custom-1" bsSize="xsmall" onSelect={changeLanguage} dropup>
+                  <Dropdown.Toggle noCaret className={styles.actionButton}>
+                    <div>
+                      <img src={require(`images/navigation/language.png`)} />
+                    </div>
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu className={styles.actionMenu}>
+                    <MenuItem eventKey="zh">中文</MenuItem>
+                    <MenuItem eventKey="en">ENGLISH</MenuItem>
+                  </Dropdown.Menu>
+                </Dropdown>
 
-              <Dropdown id="dropdown-custom-1" bsSize="xsmall" dropup>
-                <Dropdown.Toggle noCaret className={styles.actionButton}>
-                  <div>
-                    <img src={require(`images/navigation/settings.png`)} />
-                  </div>
-                </Dropdown.Toggle>
-                <Dropdown.Menu className={styles.actionMenu}>
-                  <MenuItem eventKey="coreStatus"><Link to="/core">{ t('crumbName.coreStatus') }</Link></MenuItem>
-                  <MenuItem eventKey="backupRestore"><Link to="/backup">{ t('crumbName.backupRestore') }</Link></MenuItem>
-                  {this.props.canViewTokens && <MenuItem eventKey="accessControl"><Link to="/access-control">{ t('crumbName.accessControl') }</Link></MenuItem>}
-                  {this.props.canLogOut && <MenuItem eventKey="logout" onClick={this.props.logOut}>{ t('crumbName.logout') }</MenuItem>}
-                </Dropdown.Menu>
-              </Dropdown>
+                <Dropdown id="dropdown-custom-1" bsSize="xsmall" dropup>
+                  <Dropdown.Toggle noCaret className={styles.actionButton}>
+                    <div>
+                      <img src={require(`images/navigation/settings.png`)} />
+                    </div>
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu className={styles.actionMenu}>
+                    <MenuItem eventKey="coreStatus">
+                      <Link to="/core">{t('crumbName.coreStatus')}</Link>
+                    </MenuItem>
+                    <MenuItem eventKey="backupRestore">
+                      <Link to="/backup">{t('crumbName.backupRestore')}</Link>
+                    </MenuItem>
+                    {this.props.canViewTokens && (
+                      <MenuItem eventKey="accessControl">
+                        <Link to="/access-control">{t('crumbName.accessControl')}</Link>
+                      </MenuItem>
+                    )}
+                    {this.props.canLogOut && (
+                      <MenuItem eventKey="logout" onClick={this.props.logOut}>
+                        {t('crumbName.logout')}
+                      </MenuItem>
+                    )}
+                  </Dropdown.Menu>
+                </Dropdown>
+              </div>
             </div>
           </div>
         </div>
@@ -121,7 +135,7 @@ export default withNamespaces('translations')(
     (dispatch) => ({
       toggleDropdown: () => dispatch(actions.app.toggleDropdown),
       closeDropdown: () => dispatch(actions.app.closeDropdown),
-      logOut: () => dispatch(actions.core.clearSession)
+      logOut: () => dispatch(actions.core.clearSession),
     }),
   )(Main),
 )

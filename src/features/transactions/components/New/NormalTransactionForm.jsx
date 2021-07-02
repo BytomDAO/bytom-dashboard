@@ -161,7 +161,7 @@ class NormalTxForm extends React.Component {
         <div className={styles.mainBox}>
           {receivers.map((receiver, index) =>
             <div
-              className={this.props.tutorialVisible ? styles.tutorialItem : styles.subjectField}
+              className={styles.subjectField}
               key={receiver.id.value}>
               <TextField title={t('form.address')} fieldProps={{
                 ...receiver.address
