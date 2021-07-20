@@ -162,7 +162,8 @@ export default function(type, options = {}) {
             params.unconfirmed = requestOptions.unconfirmed = true
           }
           if( type === 'transaction' && requestOptions.pageNumber > 1 ){
-            params.startTxId = requestOptions.pageIds[requestOptions.pageNumber-2]
+            params.from = (requestOptions.pageNumber - 1) * 25
+            // params.startTxId = requestOptions.pageIds[requestOptions.pageNumber-2]
           }
           if(type === 'unspent'){
             params.from = (requestOptions.pageNumber-1)*UTXOpageSize
