@@ -45,9 +45,16 @@ const registerKey = (data) => {
                   throw resp
                 }
 
-                if(resp.status === 'success') {
-                  dispatch(push('/initialization/mnemonic'))
-                }
+                return chainClient()
+                  .accounts.createAddress({ account_alias: resp.data.alias })
+                  .then((resp) => {
+                    if (resp.status === 'success') {
+                      dispatch(push('/initialization/mnemonic'))
+                    }
+                  })
+                  .catch((err) => {
+                    throw err
+                  })
 
                 // if (resp.status === 'success') {
                 //   dispatch({ type: 'SET_CURRENT_ACCOUNT', account: resp.data.alias })
@@ -108,7 +115,7 @@ const restoreKeystore = (data, success) => {
 
 const restoreMnemonic = (data, success) => {
   return (dispatch) => {
-    if (typeof data.keyAlias == 'string')  data.keyAlias = data.keyAlias.trim()
+    if (typeof data.keyAlias == 'string') data.keyAlias = data.keyAlias.trim()
     if (typeof data.mnemonic == 'string') data.mnemonic = data.mnemonic.trim()
 
     const keyData = {

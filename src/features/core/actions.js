@@ -22,8 +22,20 @@ const updateMiningState = (param) => {
 
 const fetchCoreInfo = (options = {}) => {
   return (dispatch) => {
-    return chainClient().config.info()
-      .then((info) => {
+    // return chainClient().config.info()
+    // .then((info) => {
+    //   console.log(info);
+    //   dispatch(updateInfo(info))
+    // })
+    return Promise.all([
+      chainClient().config.info(),
+      chainClient().config.chainStatus()
+    ])
+      .then(([info, status]) => {
+        info.data.finalizedBlock = status.data.finalizedHeight
+        info.data.justifiedBlock = status.data.justifiedHeight
+        info.data.currentBlock = status.data.currentHeight
+        info.data.highestBlock = info.data.highestHeight
         dispatch(updateInfo(info))
       })
       .catch((err) => {

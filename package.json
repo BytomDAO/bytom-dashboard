@@ -10,8 +10,7 @@
     "lint": "eslint \"src/**\"",
     "start": "hjs-dev-server webpack/webpack.app.js --hot --host 0.0.0.0",
     "generate-component": "babel-node bin/generate.js component",
-    "dev": "API_URL=http://localhost:3000/api PROXY_API_HOST=http://localhost:9888 npm run start",
-    "dev:testnet": "API_URL=http://localhost:3000/api PROXY_API_HOST=http://47.101.140.15:9888 npm run start"
+    "dev": "API_URL=http://localhost:3000/api PROXY_API_HOST=http://localhost:9888 npm run start"
   },
   "author": "Chain",
   "license": "",

@@ -21,6 +21,11 @@ const configAPI = (client) => {
       client.request('/net-info'),
       cb
     ),
+
+    chainStatus: (cb) => shared.tryCallback(
+      client.request('/chain-status'),
+      cb
+    ),
   }
 }
 
