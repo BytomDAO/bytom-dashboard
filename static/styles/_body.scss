@@ -355,10 +355,13 @@ input[type=range]:focus::-ms-fill-upper {
   &[disabled] {
     opacity: 0.4;
   }
-  &:hover, &:active, &:focus {
-    background: linear-gradient(180deg, #3177ff 0%, #004ee4 100%) !important;
-    opacity: 0.8;
+  &:not(.btn-ghost) {
+    &:hover, &:active, &:focus {
+      background: linear-gradient(180deg, #3177ff 0%, #004ee4 100%) !important;
+      opacity: 0.8;
+    }
   }
+  
 }
 .btn-default {
   border: 1px solid #E1E3E6;
@@ -368,6 +371,16 @@ input[type=range]:focus::-ms-fill-upper {
 .btn-link {
   color: inherit;
   text-decoration: underline;
+}
+.btn-icon {
+  padding: 4px 10px;
+  margin: 0;
+  line-height: 1;
+  min-width: 20px;
+
+  &:active {
+    background: #eee;
+  }
 }
 .btn-ghost {
   background: transparent;

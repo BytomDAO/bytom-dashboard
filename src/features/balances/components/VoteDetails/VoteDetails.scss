@@ -28,11 +28,6 @@
     padding: 13px $gutter-size 13px 0;
   }
   th, td {
-
-    &:first-child {
-      padding-left: $gutter-size * 2;
-    }
-
     &:last-child {
       width: 30%;
     }

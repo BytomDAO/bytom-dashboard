@@ -1,5 +1,6 @@
 import React from 'react'
 import styles from './KeyValueTable.scss'
+import tableStyles from '../TableList/TableList.scss'
 import {Section} from 'features/shared/components'
 import {Link} from 'react-router'
 import {size, sample, isArray, isObject, toPairs} from 'lodash'
@@ -59,7 +60,7 @@ class KeyValueTable extends React.Component {
               <td className={styles.label}>{item.label}</td>
               <td className={styles.value}>{this.renderValue(item)}
                 {item.copy &&  <button
-                  className={`btn btn-link ${styles.copyButton}`}
+                  className={`btn btn-link btn-icon ${styles.copyButton}`}
                   onClick={() => copyToClipboard(this.renderValue(item))}
                 >
                   <img src={require('images/copy.svg')}/>
@@ -69,7 +70,7 @@ class KeyValueTable extends React.Component {
                   <span
                     className={`${styles.pencil} glyphicon glyphicon-pencil`}></span>{t('form.edit')}
                 </Link>}
-                {item.details && <Link to={item.details} className={styles.edit}>
+                {item.details && <Link className={`${styles.edit} ${tableStyles.link}`} to={item.details}>
                   {t('form.detail')}
                 </Link>}
                 {item.program &&

@@ -19,7 +19,7 @@ class Mnemonic extends React.Component {
        <div className={styles.flexContainer}>
          <h4>{t('init.mnemonic')}</h4>
          <button
-           className='btn btn-link'
+           className='btn btn-link btn-icon'
            onClick={() => copyToClipboard(this.props.mnemonic)}
          >
            <img className={styles.copy} src={require('images/copy.svg')}/>

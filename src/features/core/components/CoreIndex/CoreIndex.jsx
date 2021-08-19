@@ -52,6 +52,10 @@ class CoreIndex extends React.Component {
     }
   }
 
+  handleCopy(text) {
+    copyToClipboard(text)
+  }
+
   consolePopup(e) {
     e.preventDefault()
     this.props.showModal(
@@ -86,8 +90,8 @@ class CoreIndex extends React.Component {
               <td className={styles.shorten_value}><code>{String(coreData['nodeXpub'])}</code></td>
               <td>
                 <button
-                  className={`btn btn-link ${styles.copyButton}`}
-                  onClick={() => copyToClipboard(coreData['nodeXpub'])}
+                  className={`btn btn-link btn-icon ${styles.copyButton}`}
+                  onClick={() => this.handleCopy(coreData['nodeXpub'])}
                 >
                   <img src={require('images/copy.svg')}/>
                 </button>

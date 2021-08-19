@@ -50,15 +50,20 @@ class ConfirmMnemonic extends React.Component {
     })
   }
 
+  skip() {
+    this.props.succeeded()
+  }
+
   render() {
     const {
       fields: {words},
       error,
       handleSubmit,
       submitting,
-      t
+      t,
+      canSkip
     } = this.props
-
+    console.log(this.props);
     const { seedWords } = this.state
     let counter = 0
 
@@ -87,7 +92,9 @@ class ConfirmMnemonic extends React.Component {
           disabled={submitting}>
           {t('mnemonic.confirm')}
         </button>
-
+        {canSkip && 
+          <a className={`btn btn-link ${style.skip}`} onClick={this.props.succeeded}>跳过</a>
+        }
       </form>
     )
   }

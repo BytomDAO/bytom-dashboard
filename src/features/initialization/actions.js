@@ -44,7 +44,7 @@ const registerKey = (data) => {
                 if (resp.status === 'fail') {
                   throw resp
                 }
-
+                dispatch({type: 'SET_CURRENT_ACCOUNT', account: resp.data.alias})
                 return chainClient()
                   .accounts.createAddress({ account_alias: resp.data.alias })
                   .then((resp) => {

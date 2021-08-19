@@ -233,7 +233,7 @@
   },
   "account":{
     "account":"Account",
-    "formTitle":["Account Alias", "Account ID", "Signature Structure"],
+    "formTitle":["Account Alias", "Account ID", "Signature Structure", "Address"],
     "accountXpub":"Account Xpub",
     "keyIndex":"Key Index",
     "address":"Addresses",
@@ -684,7 +684,8 @@
     "UPDATED_ASSET":"Updated asset alias.",
     "UPDATED_ACCOUNT":"Updated account alias.",
     "UPDATED_KEY":"Updated key alias.",
-    "CREATED_TOKEN_WITH_GRANT":"Access token has been created successfully."
+    "CREATED_TOKEN_WITH_GRANT":"Access token has been created successfully.",
+    "COPY_SUCCESS": "复制成功"
   },
   "btmError":{
     "BTM000": "Bytom API Error",

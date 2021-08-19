@@ -1,6 +1,7 @@
 .main {
   background: $background-color;
   width: 100%;
+  margin-top: 24px;
 
   code{
     font-size: $font-size-code;
@@ -59,9 +60,21 @@
   width: 7%;
 }
 
+// .immature {
+//   margin-left: 5px;
+//   color: $text-danger;
+// }
 .immature {
-  margin-left: 5px;
-  color: $text-danger;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: lowercase;
+  margin-left: 12px;
+  width: 87px;
+  height: 32px;
+  background: #FEF0F0;
+  border-radius: 8px;
+  color: #F43C3C;
 }
 
 .rawId {

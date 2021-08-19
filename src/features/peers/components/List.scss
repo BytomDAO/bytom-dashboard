@@ -1,7 +1,7 @@
 .main {
   th, td {
+    padding: 0 20px;
     &:first-child {
-      padding-left: $gutter-size;
       width: 33%;
     }
 

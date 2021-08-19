@@ -147,7 +147,6 @@ class Container extends React.Component {
         moment.locale(lng)
       }
     })
-    console.log(this.props)
     if (!this.props.authOk) {
       layout = <Login />
     } else if (!this.props.configured) {

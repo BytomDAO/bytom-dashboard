@@ -25,7 +25,7 @@ class AssetShow extends BaseShow {
       const time = (item.limitHeight-this.props.blockHeight) *2.5
       let assetLabel
       if(this.props.blockHeight<item.limitHeight){
-        assetLabel = <span className='text-danger'>{t('asset.issuableLabel',{time:time})}</span>
+        // assetLabel = <span className='text-danger'>{t('asset.issuableLabel',{time:time})}</span>
       }else if(item.limitHeight>0){
         assetLabel = <span className='text-danger'>{t('asset.noIssuableLabel')}</span>
       }

@@ -447,21 +447,23 @@ const mapDispatchToProps = (dispatch) => ({
   showError: err => dispatch({type: 'ERROR', payload: err}),
 })
 
-const mapStateToProps = (state, ownProps) => ({
-  ...BaseNew.mapStateToProps('transaction')(state, ownProps),
-  decodedTx: state.transaction.decodedTx,
-  initialValues:{
-    assetAlias: ownProps.location.query.alias,
-    assetId:'',
-    submitAction: 'submit',
-    gasLevel: '1',
-    receivers:[{
-      id: 0,
-      amount:'',
-      address:''
-    }]
-  }
-})
+const mapStateToProps = (state, ownProps) => {
+  return {
+    ...BaseNew.mapStateToProps('transaction')(state, ownProps),
+    decodedTx: state.transaction.decodedTx,
+    initialValues:{
+      assetAlias: ownProps.location.query.alias,
+      accountAlias: ownProps.location.query.accountAlias || state.account.currentAccount,
+      assetId:'',
+      submitAction: 'submit',
+      gasLevel: '1',
+      receivers:[{
+        id: 0,
+        amount:'',
+        address:''
+      }]
+    }
+}}
 
 export default withNamespaces('translations') (BaseNew.connect(
   mapStateToProps,

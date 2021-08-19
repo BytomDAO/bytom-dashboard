@@ -108,6 +108,11 @@ export const flashMessages = (state = {}, action) => {
       return newSuccess(state, 'RESTORE_SUCCESS')
     }
 
+    case 'COPY_SUCCESS': {
+      console.log('success');
+      return newSuccess(state, 'COPY_SUCCESS')
+    }
+
     default: {
       return state
     }

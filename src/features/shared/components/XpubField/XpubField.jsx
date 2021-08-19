@@ -67,8 +67,6 @@ class XpubField extends React.Component {
       this.setState({ [typeProps.value]: value })
     }
 
-    console.log(this.state)
-
     const fields = {
       mockhsm: (
         <SelectField

@@ -14,7 +14,7 @@
 }
 
 .logo {
-  width: 175px;
+  width: 128px;
   padding-bottom: $gutter-size;
   @include animation(pulsing 2s infinite);
   @include animation-timing-function(ease-in-out);

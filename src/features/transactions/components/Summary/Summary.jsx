@@ -4,6 +4,8 @@ import { converIntToDec } from 'utility/buildInOutDisplay'
 import { btmID } from 'utility/environment'
 import styles from './Summary.scss'
 import {withNamespaces} from 'react-i18next'
+import { KeyValueTable } from 'features/shared/components'
+import tableStyles from 'features/shared/components/TableList/TableList.scss'
 
 const INOUT_TYPES = {
   issue: 'Issue',
@@ -168,44 +170,89 @@ class Summary extends React.Component {
     items.sort((a,b) => {
       return ordering.indexOf(a.rawAction) - ordering.indexOf(b.rawAction)
     })
+    
+    return (
+      <div style={{marginTop: '24px'}}>
+        {items.map((item, index) => {
+          return (
+            <div className={tableStyles.tr} key={index}>
+              <div className={tableStyles.td}>
+                { !isCoinbase  
+                  ? <span className={tableStyles.value}>{item.type}</span>  
+                  : (
+                    <div>
+                      <span className={tableStyles.label}>Coinbase</span>
+                      {!mature && <small className={styles.immature}>{ t('transaction.type.immature') }</small>}
+                    </div>
+                  )
+                }
+              </div>
+              <div className={tableStyles.td} style={{ minWidth: '160px' }}>
+                <span className={tableStyles.label}>{ t('form.amount') }</span>
+                <span className={`${tableStyles.value}`}>{item.amount}</span>
+              </div>
+              <div className={tableStyles.td}>
+                <span className={tableStyles.label}>{ t('form.asset') }</span>
+                <span className={`${tableStyles.value}`}>
+                  <Link to={`/assets/${item.assetId}`}>
+                    {item.asset}
+                  </Link>
+                </span>
+              </div>
+              <div className={tableStyles.td}>
+                <span className={tableStyles.label}>{ t('form.account') }</span>
+                <span className={`${tableStyles.value}`}>
+                  {item.accountId 
+                    ? <Link to={`/accounts/${item.accountId}`}>
+                      {item.account}
+                    </Link>
+                    : item.account
+                  }
+                </span>
+              </div>
+            </div>
+          )
+        })}
+      </div>
+    )
 
-    return(<table className={styles.main}>
-      <tbody>
-        {items.map((item, index) =>
-          <tr key={index}>
-            {
-              !isCoinbase && <td className={styles.colAction}>{item.type}</td>
-            }
-            {
-              isCoinbase && <td className={styles.colAction}>
-                Coinbase
-                {!mature && <small className={styles.immature}>{ t('transaction.type.immature') }</small>}
-              </td>
-            }
-            <td className={styles.colLabel}>{ t('form.amount') }</td>
-            <td className={item.rawAction==='vote'? styles.colVote: styles.colAmount}>
-              <code className={styles.amount}>{item.amount}</code>
-            </td>
-            <td className={styles.colLabel}>{ t('form.asset') }</td>
-            <td className={item.rawAction==='vote'? styles.colVote: styles.colAccount}>
-              <Link to={`/assets/${item.assetId}`}>
-                {item.asset}
-              </Link>
-            </td>
-            <td className={styles.colLabel}>{item.account && t('form.account')}</td>
-            <td className={item.rawAction==='vote'? styles.colVote: styles.colAccount}>
-              {item.accountId && <Link to={`/accounts/${item.accountId}`}>
-                {item.account}
-              </Link>}
-              {!item.accountId && item.account}
-            </td>
-            {item.rawAction ==='vote'? [<td className={`${styles.colLabel} ${styles.nodePubkey}`}> {t('form.vote')}</td>,
-              <td className={styles.colVote}>{item.nodePubkey}
-              </td>]:[<td></td>,<td></td>]}
-          </tr>
-        )}
-      </tbody>
-    </table>)
+    // return(<table className={styles.main}>
+    //   <tbody>
+    //     {items.map((item, index) =>
+    //       <tr key={index}>
+    //         {
+    //           !isCoinbase && <td className={styles.colAction}>{item.type}</td>
+    //         }
+    //         {
+    //           isCoinbase && <td className={styles.colAction}>
+    //             Coinbase
+    //             {!mature && <small className={styles.immature}>{ t('transaction.type.immature') }</small>}
+    //           </td>
+    //         }
+    //         <td className={styles.colLabel}>{ t('form.amount') }</td>
+    //         <td className={item.rawAction==='vote'? styles.colVote: styles.colAmount}>
+    //           <code className={styles.amount}>{item.amount}</code>
+    //         </td>
+    //         <td className={styles.colLabel}>{ t('form.asset') }</td>
+    //         <td className={item.rawAction==='vote'? styles.colVote: styles.colAccount}>
+    //           <Link to={`/assets/${item.assetId}`}>
+    //             {item.asset}
+    //           </Link>
+    //         </td>
+    //         <td className={styles.colLabel}>{item.account && t('form.account')}</td>
+    //         <td className={item.rawAction==='vote'? styles.colVote: styles.colAccount}>
+    //           {item.accountId && <Link to={`/accounts/${item.accountId}`}>
+    //             {item.account}
+    //           </Link>}
+    //           {!item.accountId && item.account}
+    //         </td>
+    //         {item.rawAction ==='vote'? [<td className={`${styles.colLabel} ${styles.nodePubkey}`}> {t('form.vote')}</td>,
+    //           <td className={styles.colVote}>{item.nodePubkey}
+    //           </td>]:[<td></td>,<td></td>]}
+    //       </tr>
+    //     )}
+    //   </tbody>
+    // </table>)
   }
 }
 

@@ -123,7 +123,7 @@ class Index extends React.Component {
         {type.value &&<div className={`${styles.choices} ${styles.flexCenter}`}>
           <div> {configSubmit} </div>
         </div>}
-       </form>
+      </form>
     )
   }
 }

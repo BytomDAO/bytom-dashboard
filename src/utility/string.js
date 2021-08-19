@@ -23,6 +23,12 @@ export const parseNonblankJSON = (json) => {
   return JSON.parse(json)
 }
 
+export const ellText = (text, width) => {
+  if (!text.length) return ''
+  if (text.length <= width) return text
+  return `${text.substr(0, width / 2)}...${text.substr(-width / 2)}`
+}
+
 String.prototype.isUpperCase = function() {
   return this.valueOf().toUpperCase() === this.valueOf();
 }

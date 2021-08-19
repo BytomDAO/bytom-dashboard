@@ -15,7 +15,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     color: $text-color;
-    line-height: 20px;
+    line-height: 24px;
     vertical-align: top;
   }
 
@@ -71,7 +71,7 @@
 
 .td {
   display: inline-block;
-  margin-right: 60px;
+  margin-right: 80px;
   font-size: 16px;
 
   &:last-child {
@@ -115,5 +115,22 @@
 
 .right {
   margin-left: auto;
-  margin-right: 0;
+  margin-right: 0 !important;
+}
+
+.link {
+  margin: -15px 0;
+  padding: 15px;
+  position: relative;
+
+  background: url('images/chevron-dark.png');
+  background-repeat: no-repeat;
+  background-position: right center;
+  background-size: 7px 14px;
+}
+
+@media (max-width: 1440px) {
+  .td {
+    margin-right: 45px;
+  }
 }

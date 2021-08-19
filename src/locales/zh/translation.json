@@ -233,7 +233,7 @@
   },
   "account":{
     "account":"账户",
-    "formTitle":["账户别名","账户ID","签名构成"],
+    "formTitle":["账户别名","账户ID","签名构成","账户地址"],
     "accountXpub":"账户公钥",
     "keyIndex":"密钥索引",
     "address":"地址",
@@ -663,7 +663,8 @@
     "UPDATED_ASSET":"资产别名更改成功。",
     "UPDATED_ACCOUNT":"账户别名更改成功。",
     "UPDATED_KEY":"密钥别名更改成功。",
-    "CREATED_TOKEN_WITH_GRANT":"访问令牌创建成功。"
+    "CREATED_TOKEN_WITH_GRANT":"访问令牌创建成功。",
+    "COPY_SUCCESS": "复制成功"
   },
   "btmError":{
     "BTM000": "非比原标准错误",

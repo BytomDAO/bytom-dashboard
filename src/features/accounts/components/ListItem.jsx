@@ -4,21 +4,36 @@ import { withNamespaces } from 'react-i18next'
 import { Button } from 'react-bootstrap'
 // import styles from './ListItem.scss'
 import styles from 'features/shared/components/TableList/TableList.scss'
+import { chainClient } from 'utility/environment'
+import { ellText } from 'utility/string'
 
 class ListItem extends React.Component {
+  componentWillMount() {
+    this.state = {
+      address: ''
+    }
+
+    chainClient().accounts.listAddresses({ accountId: this.props.item.id }).then(res => {
+      if (res.status === 'success' && res.data.length) {
+        this.setState({
+          address: res.data[0].address
+        })
+      }
+    })
+  }
+
   render() {
     const item = this.props.item
     const t = this.props.t
     const signStuct = `${item.quorum} / ${item.xpubs.length}`
 
     const titles = t('account.formTitle', { returnObjects: true })
-
     return (
       <div className={styles.tr}>
         <div className={styles.td}>
           <div className={styles.label}>{titles[0]}</div>
           <div className={styles.value}>
-            <Link className={styles.link} to={`/accounts/${item.id}`}>{item.alias || '-'}</Link>
+            <Link to={`/accounts/${item.id}`}>{item.alias || '-'}</Link>
           </div>
         </div>
         <div className={styles.td}>
@@ -28,6 +43,10 @@ class ListItem extends React.Component {
         <div className={styles.td}>
           <div className={styles.label}>{titles[2]}</div>
           <div className={styles.value}>{signStuct}</div>
+        </div>
+        <div className={styles.td}>
+          <div className={styles.label}>{titles[3]}</div>
+          <div className={styles.value} title={this.state.address}>{this.state.address ? ellText(this.state.address, 12) : '-'}</div>
         </div>
         <div className={`${styles.td} ${styles.right}`}>
           <div className={styles.value}>

@@ -30,6 +30,7 @@ class MnemonicStepper extends React.Component {
                   <ConfirmMnemonic
                     mnemonic={this.props.mnemonic}
                     succeeded={this.props.succeeded}
+                    canSkip={this.props.coreData.networkId === 'testnet' || this.props.coreData.networkId === 'solonet'}
                   />
                 </Step>
               </StepList>
@@ -42,9 +43,16 @@ class MnemonicStepper extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+  console.log(state)
+  const data = {
+    coreData: state.core.coreData
+  }
   const mnemonic = (state.initialization || {}).mnemonic || []
-  if (mnemonic) return {mnemonic}
-  return {}
+  if (mnemonic) {
+    data.mnemonic = mnemonic
+  }
+  console.log(data)
+  return data
 }
 
 const mapDispatchToProps = ( dispatch ) => ({

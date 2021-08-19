@@ -156,11 +156,13 @@ import { actions } from 'features/transactions'
 import { connect } from 'react-redux'
 import {withNamespaces} from 'react-i18next'
 
-const mapStateToProps = (state, ownProps) => ({
-  item: state.transaction.items[ownProps.params.id],
-  btmAmountUnit: state.core.btmAmountUnit,
-  highestBlock: state.core.coreData && state.core.coreData.highestBlock
-})
+const mapStateToProps = (state, ownProps) => {
+  return {
+    item: state.transaction.items[ownProps.params.id],
+    btmAmountUnit: state.core.btmAmountUnit,
+    highestBlock: state.core.coreData && state.core.coreData.highestBlock
+  }
+}
 
 const mapDispatchToProps = ( dispatch ) => ({
   fetchItem: (id) => dispatch(actions.getTransaction({tx_id: `${id}`}))

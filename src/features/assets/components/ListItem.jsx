@@ -19,7 +19,7 @@ class ListItem extends React.Component {
           <span className={`${styles.value} ${styles.break}`} style={{ maxWidth: '400px' }}>{item.id}</span>
         </div>
         <div className={`${styles.td} ${styles.right}`} style={{ minWidth: '70px' }}>
-          <Link to={`/assets/${item.id}`}>{t('commonWords.viewDetails')} →</Link>
+          <Link className={styles.link} to={`/assets/${item.id}`}>{t('commonWords.viewDetails')}</Link>
         </div>
       </div>
     )
