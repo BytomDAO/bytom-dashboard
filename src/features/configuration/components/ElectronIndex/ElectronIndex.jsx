@@ -68,7 +68,7 @@ class Index extends React.Component {
 
         <div className={styles.choices}>
 
-          <div className={styles.choice_wrapper} style={{ opacity: 0.6, 'pointer-events': 'none'}}>
+          <div className={styles.choice_wrapper}>
             <label>
               <input className={styles.choice_radio_button}
                     type='radio'

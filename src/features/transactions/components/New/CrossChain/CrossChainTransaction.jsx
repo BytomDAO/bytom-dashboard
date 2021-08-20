@@ -159,7 +159,7 @@ class CrossChainTransaction extends React.Component {
               fieldProps={gasLevel}
               btmAmountUnit={this.props.btmAmountUnit}
             />
-            <span className={styles.feeDescription}> {t('transaction.normal.feeDescription')}</span>
+            <span className={styles.feeDescription}></span>
           </div>]}
       </div>
     </TxContainer>

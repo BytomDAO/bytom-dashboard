@@ -28,9 +28,11 @@ const setDefaultAccount = () => {
     return chainClient()
       .accounts.query()
       .then((result) => {
-        const account = result.data[0].alias
-        dispatch(switchAccount(account))
-        return account
+        if (result.data && result.data[0]) {
+          const account = result.data[0].alias
+          dispatch(switchAccount(account))
+          return account
+        }
       })
   }
 }
