@@ -8,7 +8,7 @@
 .sidebar {
   width: $sidebar-width;
   position: fixed;
-  min-height: 768px;
+  height: 100vh;
   overflow-y: auto;
   z-index: 10;
   color: #78808D;
@@ -21,10 +21,9 @@
 }
 
 .sidebarContent {
-  position: fixed;
   width: $sidebar-width;
-  height: 100%;
   padding-bottom: 30px;
+  min-height: 100%;
   background: rgba(248, 248, 248, 0.95);
   backdrop-filter: blur(30px);
 
@@ -116,7 +115,14 @@
   border-bottom: 1px solid $highlight-danger;
 }
 
-.footer {
+.bottom {
   position: absolute;
   bottom: 20px;
+}
+
+@media (min-height: 790px) {
+  .footer {
+    position: absolute;
+    bottom: 20px;
+  }
 }

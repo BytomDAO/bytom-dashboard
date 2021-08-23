@@ -260,7 +260,7 @@ class DetailSummary extends React.Component {
               {
                 item.type ==='vote'&&
                   [
-                    <div className={`${styles.colLabel}  ${styles.col}`}> {t('form.vote')}</div>,
+                    <div className={`${styles.colLabel}  ${styles.col}`} style={{ marginLeft: '20px' }}> {t('form.vote')}</div>,
                     <div className={`${styles.col}`}>{item.nodePubkey}</div>
                   ]
 

@@ -30,7 +30,6 @@
 }
 
 
-
 .colAction {
   text-transform: uppercase;
   margin-right: 120px;
@@ -89,6 +88,7 @@
   color: #78808D;
   text-align: right;
   font-size: 16px;
+  white-space: nowrap;
 }
 
 .colUnit {
@@ -120,11 +120,19 @@
   display: inline-block;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 150px;
+  max-width: 120px;
   vertical-align: middle;
   font-size: 16px;
 }
 
 .recievedAmount {
   text-align: right;
+}
+
+@media (max-width: 1440px) {
+  .colAction {
+    min-width: 100px;
+    width: 100px;
+    margin-right: 10px;
+  } 
 }

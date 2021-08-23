@@ -56,7 +56,7 @@ class Main extends React.Component {
 
             <Navigation />
 
-            <div className={styles.footer}>
+            <div className={`${styles.footer} ${!this.props.showNavAdvance ? styles.bottom : ''}`}>
               <Sync />
               <div className={styles.version}>
                 <span>
@@ -131,6 +131,7 @@ export default withNamespaces('translations')(
       version: state.core.version,
       connected: true,
       showDropwdown: state.app.dropdownState == 'open',
+      showNavAdvance: state.app.navAdvancedState === 'advance',
     }),
     (dispatch) => ({
       toggleDropdown: () => dispatch(actions.app.toggleDropdown),
