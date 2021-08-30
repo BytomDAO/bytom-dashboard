@@ -40,6 +40,7 @@ export const federationApiHost = `${window.location.protocol}//${window.location
 export const testnetInfoUrl = process.env.TESTNET_INFO_URL || 'https://testnet-info.chain.com'
 export const testnetUrl = process.env.TESTNET_GENERATOR_URL || 'https://testnet.chain.com'
 export const equityRoot = process.env.TARGET === 'electron' ? 'http://localhost:9888/equity' : '/equity'
-export const docsRoot = 'https://github.com/Bytom/bytom/wiki'
+export const docsRoot = 'https://developer.bytom.io/'
+export const docsRootZH = 'https://developer.bytom.io/zh/'
 
 export const releaseUrl = 'https://github.com/Bytom/bytom/releases'

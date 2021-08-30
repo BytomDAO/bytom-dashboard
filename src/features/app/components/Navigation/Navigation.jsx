@@ -4,7 +4,7 @@ import { Link } from 'react-router'
 import styles from './Navigation.scss'
 import { navIcon } from '../../utils'
 import Sync from '../Sync/Sync'
-import { docsRoot, equityRoot, releaseUrl } from '../../../../utility/environment'
+import { docsRoot, docsRootZH, equityRoot, releaseUrl } from '../../../../utility/environment'
 import { capitalize } from 'utility/string'
 import { withNamespaces } from 'react-i18next'
 import actions from 'actions'
@@ -101,7 +101,7 @@ class Navigation extends React.Component {
             </div>
           )}
           <li>
-            <a href={docsRoot} target="_blank">
+            <a href={this.props.lng === 'zh' ? docsRootZH : docsRoot} target="_blank">
               {/* {navIcon('docs', styles)} */}
               <img src={require('images/navigation/docs.svg')}/>
               {capitalize(t('crumbName.doc'))}
