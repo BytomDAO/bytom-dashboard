@@ -15,10 +15,9 @@ class List extends React.Component {
   }
   render() {
     const ItemList = BaseList.ItemList
-    return (<ItemList {...this.props} />)
+    return (<ItemList {...this.props}/>)
   }
 }
-
 
 const mapStateToProps = (state, props) => {
   return {
@@ -28,7 +27,8 @@ const mapStateToProps = (state, props) => {
       wrapperComponent: TableList,
       wrapperProps: {
         titles: props.t('peers.formTitle', { returnObjects: true }),
-        styles: styles.main
+        styles: styles.main,
+        showHead: true
       }
     })(state)
   }

@@ -8,11 +8,11 @@ class ListItem extends React.Component {
 
     return(
       <tr>
-        <td>{item.remoteAddr || '-'}</td>
+        <td><code>{item.remoteAddr || '-'}</code></td>
         <td><code>{item.height}</code></td>
         <td><code>{item.ping}</code></td>
         <td><code>{item.duration}</code></td>
-        <td><code>{ formatBytes(item.totalSent+ item.totalReceived, 0) }</code></td>
+        <td style={{ whiteSpace: 'nowrap' }}><code>{ formatBytes(item.totalSent+ item.totalReceived, 0) }</code></td>
         <td>
           <button className='btn btn-link' onClick={() => this.props.disconnect(item.peerId)}>
             {t('peers.disconnect')}

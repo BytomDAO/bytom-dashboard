@@ -2,45 +2,29 @@
   background: $background-color;
   color: $text-strong-color;
   width: 100%;
-  table-layout: fixed;
   margin-bottom: $gutter-size;
 
-  code {
-    padding: 0;
-    font-size: $font-size-code;
-  }
-
-  td {
-    border-top: 1px solid $border-light-color;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    color: $text-color;
-    line-height: 24px;
-    vertical-align: top;
-  }
 
   th {
-    color: $text-strong-color;
-    //font-size: $font-size-caps;
-    text-transform: uppercase;
+    height: 60px;
     font-weight: 500;
-    font-size: $font-size-chrome;
-  }
 
-  td,
-  th {
-    padding: 13px $gutter-size 13px 0;
-  }
-  th,
-  td {
     &:first-child {
-      padding-left: $gutter-size * 2;
-    }
-
-    &:last-child {
-      text-align: right;
+      padding-left: 0;
+      width: auto;
     }
   }
+  td {
+    height: 60px;
+    border-bottom: solid 1px #eee;
+    color: #747c89;
+
+    &:first-child {
+      padding-left: 0;
+      width: initial !important;
+    }
+  }
+
 
   :global {
     .btn-link {
