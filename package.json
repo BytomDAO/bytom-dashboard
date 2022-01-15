@@ -83,7 +83,7 @@
     "resolve-url-loader": "~1.6.0",
     "sass-loader": "~7.1.0",
     "sass-resources-loader": "~1.1.0",
-    "shelljs": "~0.7.4",
+    "shelljs": "~0.8.5",
     "style-loader": "~0.13.1",
     "url-loader": "~0.5.7"
   }
